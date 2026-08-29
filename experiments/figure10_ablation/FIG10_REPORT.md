@@ -52,7 +52,7 @@ between A/B/C/D is exactly what Table 3 ablates.
 | A: fixed Hₜ + Tr.Conv.Up + freq | 0.9048 | 0.00125 | 4 |
 | B: (+) learnable Hₜ | 0.9103 | 0.00108 | 8 |
 | C: (+) locality upsampling *(paper best)* | 0.9103 | 0.00100 | 8 |
-| **D: (−) freq-domain optimization** | **0.9269** | **0.00063** | 8 |
+| **D: (−) freq-domain optimization** | **0.9269** | **0.00063** | 2 |
 
 Absolute SSIM is higher / MSE lower than the paper's U2OS numbers because BBBC022 Hoechst nuclei are
 simpler and more stationary than U2OS Cell-Painting fields — **magnitudes are not comparable; only the
@@ -73,21 +73,19 @@ A/B/C/D ordering is.**
 
 **Does NOT reproduce (data-dependent claim):**
 - **"Frequency-domain optimization is important":** on the substitute, **D (no freq-domain opt) is
-  the *best* variant**, not the worst. The spatial-domain parametrization has more per-pixel degrees
-  of freedom and, with 1980 training images of fairly stationary densely-packed nuclei, fits the
-  substitute distribution better (lowest MSE). The paper's argument for freq-domain optimization is
-  spatial invariance ("cells might appear anywhere") — a property that is far weaker for BBBC022
-  nuclei (uniformly tiled across the FOV) than for sparser U2OS fields. This is a genuine
-  **substitute-data effect**, not a wiring/implementation bug (all four wiring audits pass; the
-  grid-like D pattern is exactly the pathology the paper describes, it simply is not penalized on
-  this data distribution).
+  the *best* variant**, not the worst. This is not evidence that the spatial branch has more degrees
+  of freedom: the implemented Fourier branch is full-spectrum and untruncated, so both branches
+  span the same attainable spatial-logit family. The result instead reflects a coordinate-dependent
+  optimization interaction with the data and shared hyperparameters. The diagnostics show that B
+  and C moved their illumination far less than D, and D's selected checkpoint is at m=2. The proxy
+  therefore does not establish a translation-invariance mechanism or a purely distribution-specific
+  explanation.
 
-**Bottom line:** 3 of the paper's 4 monotonic ablation steps reproduce on the substitute
-(fixed→learnable→locality is strictly monotonically improving, matching the paper). The
-frequency-domain-optimization benefit is U2OS-distribution-specific and does not carry over to the
-BBBC022 nuclei substitute. This is consistent with, and refines, the pre-existing
-`am3_table3_resolution` conclusion that Table 3 is numerically **DATA_BLOCKED** without the paper's
-U2OS data.
+**Bottom line:** the fixed→learnable→locality sequence reproduces on the substitute, but the
+reported frequency-domain benefit does not. Because the original U2OS data are unavailable and
+the two coordinate systems were not tuned separately, the source of the disagreement cannot be
+assigned uniquely to the specimen distribution. Table 3 remains numerically **DATA_BLOCKED**
+without the paper's U2OS data.
 
 ## Follow-up: the same ablation on PatchMNIST
 
