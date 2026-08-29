@@ -108,13 +108,13 @@ learnable variants move comparably far, B and C harden properly (binary fraction
 0.77 and 0.78, both best at m=8), and once they actually train, C closes almost the
 entire gap to D.
 
-The residual 5.7% is consistent with the mechanism the paper itself describes: the
-spatial parametrization has far more per-pixel degrees of freedom than the truncated
-Fourier one, so it fits a fixed training distribution better. The paper's argument
-for frequency-domain optimization is spatial invariance ("cells might appear
-anywhere"), which is a generalization claim; neither substitute here is sparse and
-translation-varying in the way the paper's U2OS fields are, so neither penalizes the
-spatial parametrization the way the paper reports. Table 3 remains numerically
+The residual 5.7% should be interpreted as an optimizer-coordinate effect under
+the evaluated recipe. No Fourier coefficients are truncated, so the Fourier and
+spatial branches span the same attainable spatial-logit family; neither branch has
+more per-pixel degrees of freedom. Adam is not invariant to this coordinate change,
+and a shared nominal illumination learning rate does not equalize physical pattern
+updates. A parameterization-specific learning-rate sweep would be needed to claim
+that one coordinate system is intrinsically better. Table 3 remains numerically
 **DATA_BLOCKED** without the paper's U2OS data (see
 `experiments/table03_ablation/U2OS_DATA_STATUS.md`).
 
