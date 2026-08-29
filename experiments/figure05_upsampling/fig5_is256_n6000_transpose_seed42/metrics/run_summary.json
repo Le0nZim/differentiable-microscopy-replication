@@ -1,0 +1,18 @@
+{
+  "run_dir": "experiments/figure05_upsampling/fig5_is256_n6000_transpose_seed42",
+  "test_mse": 0.03608345581839482,
+  "test_ssim": 0.7070359537998835,
+  "checkpoint_path": "experiments/figure05_upsampling/fig5_is256_n6000_transpose_seed42/checkpoints/best.pt",
+  "best_val_mse": 0.035729125452538334,
+  "best_step": 3600,
+  "final_val_mse": 0.035937401466071606,
+  "final_loss": 0.07412578910589218,
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 0.0,
+  "max_grad_norm_W": 0.0,
+  "H_t_min": 9.642706125646334e-21,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.5000282526016235,
+  "H_t_binary_fraction": 0.76873779296875
+}

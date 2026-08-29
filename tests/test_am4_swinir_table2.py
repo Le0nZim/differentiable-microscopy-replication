@@ -19,11 +19,11 @@ import yaml
 from baselines.swinir import am4_table2 as A
 
 ROOT = Path(__file__).resolve().parents[1]
-CFG_DIR = ROOT / "configs/swinir"
+CFG_DIR = ROOT / "configs/table02_swinir_sr"
 CONFIGS = {
-    "smoke": CFG_DIR / "am4_table2_smoke.yaml",
-    "budget": CFG_DIR / "am4_table2_budget.yaml",
-    "full": CFG_DIR / "am4_table2_full.yaml",
+    "smoke": CFG_DIR / "smoke.yaml",
+    "budget": CFG_DIR / "budget.yaml",
+    "full": CFG_DIR / "full.yaml",
 }
 
 
@@ -178,7 +178,7 @@ def test_eval_dataset_fair_reproducible(tmp_path):
 # ---------------------------------------------------------------------------
 def _load_audit_module():
     spec = importlib.util.spec_from_file_location(
-        "audit_am4_swinir_fairness", ROOT / "scripts" / "audit_am4_swinir_fairness.py"
+        "audit_am4_swinir_fairness", ROOT / "scripts" / "table02_swinir_sr" / "audit_fairness.py"
     )
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
@@ -200,7 +200,7 @@ def test_checkpoint_metadata_structure_from_smoke():
     """If the frozen smoke run exists, its checkpoint metadata must be complete."""
     meta_path = (
         ROOT
-        / "experiments/swinir_or_highres/am4_swinir_table2_resolution/smoke/swinir_wo_li/checkpoint_metadata.json"
+        / "experiments/table02_swinir_sr/smoke/swinir_wo_li/checkpoint_metadata.json"
     )
     if not meta_path.exists():
         pytest.skip("smoke run not present")

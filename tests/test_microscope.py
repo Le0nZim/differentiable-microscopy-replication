@@ -9,7 +9,7 @@ from utils.config import load_yaml_config
 
 
 def test_microscope_end_to_end_shapes():
-    config = load_yaml_config("configs/base_patchmnist.yaml")
+    config = load_yaml_config("configs/_shared/base_patchmnist.yaml")
     model = DifferentiableMicroscope.from_run_config(config)
 
     batch_size = 2
@@ -28,7 +28,7 @@ def test_microscope_end_to_end_shapes():
 
 
 def test_microscope_gradient_flows_to_illumination_parameters():
-    config = load_yaml_config("configs/base_patchmnist.yaml")
+    config = load_yaml_config("configs/_shared/base_patchmnist.yaml")
     model = DifferentiableMicroscope.from_run_config(config)
     model.set_illumination_trainable(True)
 

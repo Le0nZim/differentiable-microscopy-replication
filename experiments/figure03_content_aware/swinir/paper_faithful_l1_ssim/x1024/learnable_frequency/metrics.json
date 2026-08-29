@@ -1,0 +1,39 @@
+{
+  "comp": "x1024",
+  "pattern": "learnable_frequency",
+  "loss_mode": "l1_ssim",
+  "config_name": "paper_faithful_l1_ssim",
+  "iterations": 50000,
+  "iterations_reached": 50000,
+  "effective_batch": 32,
+  "train_patch_size": 64,
+  "swinir_params_M": 11.498,
+  "swinir_embed_dim": 180,
+  "swinir_depths": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+  ],
+  "selection": "max_val_ssim+mse_gate",
+  "best_step": 38000,
+  "best_val_ssim": 0.7193530589342118,
+  "best_val_mse": 0.02244235389516689,
+  "base_val_ssim": 0.6752232804894447,
+  "base_val_mse": 0.021759931673295797,
+  "test": {
+    "n": 60,
+    "base_mse": 0.02333360153522032,
+    "base_ssim": 0.6480751300851504,
+    "base_psnr": 16.778604141871135,
+    "ref_mse": 0.024089913617353888,
+    "ref_ssim": 0.6953691254059474,
+    "ref_psnr": 16.749299844106037
+  },
+  "delta_test_ssim": 0.04729399532079703,
+  "delta_test_mse": 0.0007563120821335693,
+  "checkpoint_path": "./experiments/figure03_content_aware/swinir/paper_faithful_l1_ssim/x1024/learnable_frequency/checkpoints/best.pt",
+  "minutes": 511.13187853892646
+}

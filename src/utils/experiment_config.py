@@ -62,9 +62,12 @@ def load_experiment_config(path: str | Path) -> dict[str, Any]:
 
 
 def _resolve_config_path(matrix_path: Path, relative: str) -> Path:
+    repo_root = Path(__file__).resolve().parents[2]
     candidates = [
         matrix_path.parent / relative,
         matrix_path.parent.parent / relative,
+        repo_root / "configs" / "_shared" / relative,
+        repo_root / relative,
         Path(relative),
     ]
     for candidate in candidates:
@@ -103,7 +106,7 @@ def build_noise_sweep_experiments(
     photon_counts: list[float],
     sigma_reads: list[float],
     pattern_modes: list[str],
-    results_csv: str = "experiments/noise_robustness/noise_table/results.csv",
+    results_csv: str = "experiments/table01_noise_robustness/results.csv",
 ) -> list[dict[str, Any]]:
     """Build a full noise-robustness experiment cartesian product."""
     experiments: list[dict[str, Any]] = []

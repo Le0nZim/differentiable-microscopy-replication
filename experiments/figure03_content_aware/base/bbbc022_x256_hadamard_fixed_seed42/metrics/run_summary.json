@@ -1,0 +1,18 @@
+{
+  "run_dir": "./experiments/figure03_content_aware/base/bbbc022_x256_hadamard_fixed_seed42",
+  "test_mse": 0.019435863010585308,
+  "test_ssim": 0.6355020105838776,
+  "checkpoint_path": "./experiments/figure03_content_aware/base/bbbc022_x256_hadamard_fixed_seed42/checkpoints/best.pt",
+  "best_val_mse": 0.017331337556242943,
+  "best_step": 4000,
+  "final_val_mse": 0.017331337556242943,
+  "final_loss": 0.06682746857404709,
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 0.0,
+  "max_grad_norm_W": 0.0,
+  "H_t_min": 0.0,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.625,
+  "H_t_binary_fraction": 1.0
+}

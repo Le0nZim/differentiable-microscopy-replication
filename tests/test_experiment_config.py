@@ -28,7 +28,7 @@ def test_deep_merge_overrides_nested_fields():
 
 
 def test_expand_debug_patchmnist_matrix():
-    matrix_path = Path("configs/matrices/patchmnist_x8_matrix_debug.yaml")
+    matrix_path = Path("configs/_shared/patchmnist_x8_matrix_debug.yaml")
     experiments = expand_experiment_matrix(matrix_path)
     assert len(experiments) == 2
     assert experiments[0]["experiment"]["run_id"].startswith("smoke_patchmnist")
@@ -37,13 +37,13 @@ def test_expand_debug_patchmnist_matrix():
 
 
 def test_load_experiment_config_syncs_derived_fields():
-    config = load_experiment_config("configs/base_patchmnist.yaml")
+    config = load_experiment_config("configs/_shared/base_patchmnist.yaml")
     assert config["pattern_generator"]["height"] == config["dataset"]["image_size"]
     assert config["inverse_model"]["reconstruction"]["in_channels"] == config["pattern_generator"]["num_patterns"]
 
 
 def test_build_noise_sweep_experiments_count():
-    base = load_experiment_config("configs/base_patchmnist.yaml")
+    base = load_experiment_config("configs/_shared/base_patchmnist.yaml")
     experiments = build_noise_sweep_experiments(
         base,
         photon_counts=[10.0, 10000.0],

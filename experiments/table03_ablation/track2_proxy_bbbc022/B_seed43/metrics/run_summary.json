@@ -1,0 +1,14 @@
+{
+  "variant": "B",
+  "label": "learnable Ht + Tr.Conv.Up + freq",
+  "seed": 43,
+  "test_mse": 0.00239995657466352,
+  "test_ssim": 0.8929576873779297,
+  "best_val_mse": 0.002429278800264001,
+  "best_train_mse": 0.002475968562066555,
+  "final_train_mse": 0.002271548903081566,
+  "overfit_gap": -4.668976180255413e-05,
+  "best_m": 8.0,
+  "elapsed_sec": 641.0014638900757,
+  "run_dir": "./experiments/table03_ablation/track2_proxy_bbbc022/B_seed43"
+}

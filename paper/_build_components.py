@@ -35,7 +35,7 @@ import torch
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = Path(__file__).resolve().parent / "figures"
+OUT = Path(__file__).resolve().parent
 REPL = ROOT
 SCRIPTS = ROOT / "scripts"
 SRC = ROOT / "src"
@@ -221,8 +221,8 @@ def scale_bars(fig_dir: Path) -> None:
 # ===========================================================================
 def build_fig3() -> None:
     d = OUT / "figure03_content_aware"
-    R = _load_module("render_fig03", SCRIPTS / "render_fig03_content_aware.py")
-    F3 = _load_module("fig3_report", SCRIPTS / "fig3_swinir_fix_report.py")
+    R = _load_module("render_fig03", SCRIPTS / "figure03_content_aware" / "render.py")
+    F3 = _load_module("fig3_report", SCRIPTS / "figure03_content_aware" / "report.py")
     S = F3.S
     base_root = F3.BASE_ROOT
     out_root = F3.EXP / "paper_faithful_pixel_perceptual_gan"
@@ -236,9 +236,9 @@ def build_fig3() -> None:
     print(f"[fig3] specimen index={chosen} device={DEVICE}", flush=True)
 
     gt_rgb = to_rgb(specimen[0, 0].cpu().numpy(), "viridis", 0, 1)
-    image_svg(gt_rgb, d / "images/ground_truth.svg", source="ablations/bbbc022_content_aware_v2 (GT test field)")
+    image_svg(gt_rgb, d / "images/ground_truth.svg", source="figure03_content_aware/base (GT test field)")
     image_with_scalebar_svg(gt_rgb, d / "images/ground_truth_with_scalebar.svg",
-                            source="ablations/bbbc022_content_aware_v2 (GT test field)")
+                            source="figure03_content_aware/base (GT test field)")
     colorbar_svg(d / "colorbars/viridis_0to1.svg", "viridis",
                  note="Viridis 0.0->1.0; matches GT / reconstruction / detection display normalization.")
     colorbar_svg(d / "colorbars/gray_0to1.svg", "gray",
@@ -349,7 +349,7 @@ def build_fig3() -> None:
 # ===========================================================================
 def build_fig4() -> None:
     d = OUT / "figure04_segmentation"
-    F4 = _load_module("fig4_report", SCRIPTS / "fig4_seg_fix_report.py")
+    F4 = _load_module("fig4_report", SCRIPTS / "figure04_segmentation" / "report.py")
     seed, k = 42, 8
     imgs, masks = F4._test_examples(seed, k)
     k = len(imgs)
@@ -442,7 +442,7 @@ def build_fig4() -> None:
 # ===========================================================================
 def build_fig4_new_pre() -> None:
     d = OUT / "figure04_segmentation_new_pre"
-    F4 = _load_module("fig4_cal_report", SCRIPTS / "fig4_seg_calibrated_report.py")
+    F4 = _load_module("fig4_cal_report", SCRIPTS / "figure04_segmentation" / "calibrated_report.py")
     seed, k = 42, 8
     imgs, masks = F4._test_examples(seed, k)
     k = len(imgs)
@@ -519,9 +519,9 @@ def build_fig4_new_pre() -> None:
 # Figure 5 - upsampling analysis (plot only)
 # ===========================================================================
 def build_fig5() -> None:
-    d = OUT / "figure05_upsampling_fixed"
+    d = OUT / "figure05_upsampling"
     data: dict[tuple[int, str], dict[int, float]] = {}
-    src = REPL / "experiments/upsampling_ablation/patchmnist_upsampling_analysis_fixed/results.csv"
+    src = REPL / "experiments/figure05_upsampling/results.csv"
     with src.open() as fh:
         for r in csv.DictReader(fh):
             data.setdefault((int(r["image_size"]), r["upsampling"]), {})[int(r["num_train"])] = float(r["test_mse"])
@@ -556,8 +556,8 @@ def build_fig5() -> None:
 # Figure 6 - noise robustness (clean PatchMNIST samples, viridis)
 # ===========================================================================
 def build_fig6() -> None:
-    d = OUT / "figure06_noise_robustness_fixed"
-    base = REPL / "experiments/noise_robustness/rr1_v3_normalized_full_fixed"
+    d = OUT / "figure06_noise_robustness"
+    base = REPL / "experiments/table01_noise_robustness"
     srcs = {
         "A_ground_truth": base / "patchmnist_noise_random_fixed_pc10_sr6p0_seed42/figures/ground_truth.png",
         "B_fixed_random": base / "patchmnist_noise_random_fixed_pc10_sr6p0_seed42/figures/reconstruction.png",
@@ -579,8 +579,8 @@ def build_fig6() -> None:
 # ===========================================================================
 def build_fig7() -> None:
     import json
-    d = OUT / "figure07_swinir_standard_sr_fixed"
-    base = REPL / "experiments/swinir_or_highres/am4_swinir_table2_resolution_fixed/full/full_image_eval"
+    d = OUT / "figure07_swinir_sr"
+    base = REPL / "experiments/table02_swinir_sr/full/full_image_eval"
     meta = json.loads((base / "metadata.json").read_text())
     for ds, entry in meta["datasets"].items():
         for suffix, cond in (("GT", "ground_truth"), ("woLI", "swinir_without_li"), ("withLI", "swinir_with_li")):
@@ -605,9 +605,9 @@ def build_fig7() -> None:
 # ===========================================================================
 def build_fig8() -> None:
     d = OUT / "figure08_mcf7_swinir"
-    F8 = _load_module("reproduce_fig8", SCRIPTS / "reproduce_fig8.py")
-    cfg = F8._load_yaml(REPL / "configs/reproduce_fig8_bbbc021_tubulin_x16_swinir.yaml")
-    runs = REPL / "experiments/figure89_mcf7_swinir_highres_fix_v1/runs"
+    F8 = _load_module("reproduce_fig8", SCRIPTS / "figure08_mcf7" / "reproduce_fig8.py")
+    cfg = F8._load_yaml(REPL / "configs/figure08_mcf7/reproduce_fig8_tubulin.yaml")
+    runs = REPL / "experiments/figure08_mcf7/runs"
     eval_m = float(cfg["reproduce"].get("eval_sigmoid_m", 8.0))
     q_model, _, _ = F8._load_model("wswinir", cfg, runs, DEVICE)
     r_model, _, _ = F8._load_model("transpose256", cfg, runs, DEVICE)
@@ -639,10 +639,10 @@ def build_fig8() -> None:
 # ===========================================================================
 def build_fig9() -> None:
     d = OUT / "figure09_mcf7_widefield"
-    F9 = _load_module("reproduce_fig9", SCRIPTS / "reproduce_fig9.py")
-    cfg = F9._load_yaml(REPL / "configs/reproduce_fig9_bbbc021_tubulin_x16_swinir_vs_cnn.yaml")
+    F9 = _load_module("reproduce_fig9", SCRIPTS / "figure08_mcf7" / "reproduce_fig9.py")
+    cfg = F9._load_yaml(REPL / "configs/figure08_mcf7/reproduce_fig9_tubulin.yaml")
     rep = cfg["reproduce"]
-    runs = REPL / "experiments/figure89_mcf7_swinir_highres_fix_v1/runs"
+    runs = REPL / "experiments/figure08_mcf7/runs"
     eval_m = float(rep.get("eval_sigmoid_m", 8.0))
     overlap = float(rep.get("tile_overlap_frac", 0.25))
     swin, _ = F9._load_model("wswinir", cfg, runs, DEVICE)
@@ -685,7 +685,7 @@ def build_fig9() -> None:
 # ===========================================================================
 def build_fig10() -> None:
     d = OUT / "figure10_ablation"
-    F10 = _load_module("reproduce_fig10", SCRIPTS / "reproduce_fig10.py")
+    F10 = _load_module("reproduce_fig10", SCRIPTS / "figure10_ablation" / "reproduce.py")
     runs = F10.EXP / "runs"
     data = {L: F10._load(runs, L, 42) for L in F10.LETTERS}
     i0, i1 = F10._pick_two_samples(data["A"]["gt"])
@@ -753,7 +753,7 @@ def write_readme() -> None:
     lines += ["", "Rebuild:", "", "```bash",
               "python paper/_build_components.py",
               "```", "", "See `manifest.csv` for the source of every asset."]
-    (OUT / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (OUT / "FIGURE_COMPONENTS.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 BUILDERS = {
@@ -763,8 +763,8 @@ BUILDERS = {
 }
 FIGDIR = {
     "fig3": "figure03_content_aware", "fig4": "figure04_segmentation",
-    "fig4_new_pre": "figure04_segmentation_new_pre", "fig5": "figure05_upsampling_fixed",
-    "fig6": "figure06_noise_robustness_fixed", "fig7": "figure07_swinir_standard_sr_fixed",
+    "fig4_new_pre": "figure04_segmentation_new_pre", "fig5": "figure05_upsampling",
+    "fig6": "figure06_noise_robustness", "fig7": "figure07_swinir_sr",
     "fig8": "figure08_mcf7_swinir", "fig9": "figure09_mcf7_widefield", "fig10": "figure10_ablation",
 }
 # Full default build excludes fig4_new_pre (it depends on a separately-trained experiment).
@@ -779,16 +779,10 @@ def main() -> None:
     args = ap.parse_args()
 
     targets = args.only if args.only else DEFAULT_ORDER
-    if args.only:
-        for name in targets:
-            fig_dir = OUT / FIGDIR[name]
-            if fig_dir.exists():
-                shutil.rmtree(fig_dir)
-    else:
-        for p in OUT.iterdir():
-            if p.name == Path(__file__).name:
-                continue
-            shutil.rmtree(p) if p.is_dir() else p.unlink()
+    for name in targets:
+        fig_dir = OUT / FIGDIR[name]
+        if fig_dir.exists():
+            shutil.rmtree(fig_dir)
 
     for name in targets:
         BUILDERS[name]()

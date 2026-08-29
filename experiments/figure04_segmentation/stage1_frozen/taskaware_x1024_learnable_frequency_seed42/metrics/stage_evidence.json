@@ -1,0 +1,122 @@
+{
+  "stage1": {
+    "mode": "train",
+    "checkpoint": "./experiments/figure04_segmentation/stage1_frozen/taskaware_x1024_learnable_frequency_seed42/stage1_content_aware/checkpoints/best.pt",
+    "learnable": true
+  },
+  "stage2_seg_head": {
+    "steps": 1200,
+    "trainable_report": {
+      "illumination": {
+        "num_params": 1,
+        "total_elems": 262144,
+        "trainable_elems": 0,
+        "all_trainable": false,
+        "all_frozen": true
+      },
+      "inverse_model": {
+        "num_params": 23,
+        "total_elems": 334337,
+        "trainable_elems": 0,
+        "all_trainable": false,
+        "all_frozen": true
+      },
+      "segmentation_head": {
+        "num_params": 6,
+        "total_elems": 2625,
+        "trainable_elems": 2625,
+        "all_trainable": true,
+        "all_frozen": false
+      }
+    },
+    "grad_norms": {
+      "segmentation_head": {
+        "max": 0.9059499502182007,
+        "first": 0.4032486081123352,
+        "last": 0.10376393795013428
+      },
+      "inverse_model": {
+        "max": 0.0,
+        "first": 0.0,
+        "last": 0.0
+      },
+      "illumination": {
+        "max": 0.0,
+        "first": 0.0,
+        "last": 0.0
+      }
+    },
+    "val_dice": 0.589595689660027,
+    "val_threshold": 0.15
+  },
+  "stage3_finetune_all": {
+    "steps": 2500,
+    "phases": [
+      {
+        "sigmoid_m": 1.0,
+        "steps": 1500
+      },
+      {
+        "sigmoid_m": 2.0,
+        "steps": 333
+      },
+      {
+        "sigmoid_m": 4.0,
+        "steps": 333
+      },
+      {
+        "sigmoid_m": 8.0,
+        "steps": 334
+      }
+    ],
+    "trainable_report": {
+      "illumination": {
+        "num_params": 1,
+        "total_elems": 262144,
+        "trainable_elems": 262144,
+        "all_trainable": true,
+        "all_frozen": false
+      },
+      "inverse_model": {
+        "num_params": 23,
+        "total_elems": 334337,
+        "trainable_elems": 334337,
+        "all_trainable": true,
+        "all_frozen": false
+      },
+      "segmentation_head": {
+        "num_params": 6,
+        "total_elems": 2625,
+        "trainable_elems": 2625,
+        "all_trainable": true,
+        "all_frozen": false
+      }
+    },
+    "grad_norms": {
+      "segmentation_head": {
+        "max": 4.18265962600708,
+        "first": 1.398256540298462,
+        "last": 0.2029193788766861
+      },
+      "inverse_model": {
+        "max": 17.46732521057129,
+        "first": 1.3037300109863281,
+        "last": 1.9330337047576904
+      },
+      "illumination": {
+        "max": 2.9263592296047136e-05,
+        "first": 8.486763363180216e-06,
+        "last": 6.064052286092192e-06
+      }
+    },
+    "illumination_pattern_delta_l2": 143.14178466796875,
+    "illumination_pattern_delta_relative": 0.41455850759963897
+  },
+  "loss_weights": {
+    "seg_bce_weight": 1.0,
+    "seg_dice_weight": 0.5,
+    "reconstruction_l1_weight": 0.0
+  },
+  "eval_sigmoid_m": 10.0,
+  "finetune_soft_sigmoid_m": 1.0
+}

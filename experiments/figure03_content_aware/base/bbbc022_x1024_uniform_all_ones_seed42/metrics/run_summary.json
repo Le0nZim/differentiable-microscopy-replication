@@ -1,0 +1,18 @@
+{
+  "run_dir": "./experiments/figure03_content_aware/base/bbbc022_x1024_uniform_all_ones_seed42",
+  "test_mse": 0.04047488048672676,
+  "test_ssim": 0.6021324098110199,
+  "checkpoint_path": "./experiments/figure03_content_aware/base/bbbc022_x1024_uniform_all_ones_seed42/checkpoints/best.pt",
+  "best_val_mse": 0.03759695217013359,
+  "best_step": 1200,
+  "final_val_mse": 0.038805991411209106,
+  "final_loss": 0.09643225371837616,
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 0.0,
+  "max_grad_norm_W": 0.0,
+  "H_t_min": 1.0,
+  "H_t_max": 1.0,
+  "H_t_mean": 1.0,
+  "H_t_binary_fraction": 1.0
+}

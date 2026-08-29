@@ -1,0 +1,15 @@
+{
+  "variant": "C",
+  "label": "learnable Ht + locality + freq (paper best)",
+  "seed": 42,
+  "test_mse": 0.008973225019872189,
+  "test_ssim": 0.8134340047836304,
+  "best_val_mse": 0.0077987294644117355,
+  "best_train_mse": 0.00018574156274553388,
+  "min_train_mse": 0.00018242881924379617,
+  "final_train_mse": 0.00044049542339053005,
+  "overfit_gap": 0.007612987901666202,
+  "best_m": 8.0,
+  "elapsed_sec": 470.9093728065491,
+  "run_dir": "./experiments/table03_ablation/trainsize_sweep/trainsize_C_n42"
+}

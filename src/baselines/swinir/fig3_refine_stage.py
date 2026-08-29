@@ -5,7 +5,7 @@ Implements the paper §5.6 U2OS/Fig-3 procedure faithfully:
     frozen content-aware base model  ->  SwinIR (upscale=1)  ->  refined 256x256
 
 The base model (forward microscope + illumination Ht + locality-aware upsampling +
-reconstruction CNN) is loaded from the frozen ``bbbc022_content_aware_v2`` runs and
+reconstruction CNN) is loaded from the frozen ``experiments/figure03_content_aware/base`` runs and
 kept entirely frozen (``requires_grad=False`` *and* ``eval()`` so the recon-CNN's
 BatchNorm running stats never move). Only the SwinIR refines ``x_base -> x_gt``.
 

@@ -12,7 +12,7 @@ from utils.config import load_yaml_config
 
 @pytest.mark.slow
 def test_training_smoke(tmp_path: Path):
-    config = load_yaml_config("configs/base_patchmnist.yaml")
+    config = load_yaml_config("configs/_shared/base_patchmnist.yaml")
     config["experiment"]["output_dir"] = str(tmp_path / "run")
     config["experiment"]["results_csv"] = str(tmp_path / "results.csv")
     config["training"]["num_epochs"] = 1

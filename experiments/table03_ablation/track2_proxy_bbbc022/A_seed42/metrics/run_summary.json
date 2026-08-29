@@ -1,0 +1,14 @@
+{
+  "variant": "A",
+  "label": "fixed Ht + Tr.Conv.Up + freq",
+  "seed": 42,
+  "test_mse": 0.0038895891048014164,
+  "test_ssim": 0.874504566192627,
+  "best_val_mse": 0.0033444585278630257,
+  "best_train_mse": 0.003177542705088854,
+  "final_train_mse": 0.003314533115675052,
+  "overfit_gap": 0.00016691582277417183,
+  "best_m": 8.0,
+  "elapsed_sec": 745.1691031455994,
+  "run_dir": "./experiments/table03_ablation/track2_proxy_bbbc022/A_seed42"
+}

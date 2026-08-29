@@ -16,7 +16,7 @@ from utils.experiment_config import load_experiment_config
 
 @pytest.fixture
 def yaml_config():
-    return load_experiment_config("configs/base_patchmnist.yaml")
+    return load_experiment_config("configs/_shared/base_patchmnist.yaml")
 
 
 def test_locality_aware_output_shape():

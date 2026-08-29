@@ -1,7 +1,7 @@
 """AM-4 paper-faithful SwinIR Table-2 pipeline helpers.
 
 This module is the reusable, test-covered core for the AM-4 rerun
-(`scripts/run_am4_swinir_table2.py` and `scripts/audit_am4_swinir_fairness.py`).
+(`scripts/table02_swinir_sr/run.py` and `scripts/table02_swinir_sr/audit_fairness.py`).
 
 Design goals (vs. the frozen `swinir_table2_full` run):
 - SwinIR-M capacity (embed_dim 180) driven entirely by config.

@@ -1,0 +1,89 @@
+{
+  "runs": [
+    {
+      "variant": "B",
+      "label": "learnable Ht + Tr.Conv.Up + freq",
+      "seed": 42,
+      "test_mse": 0.007291078567504883,
+      "test_ssim": 0.8618881702423096,
+      "best_val_mse": 0.004604059271514416,
+      "best_train_mse": 0.0002272031852044165,
+      "min_train_mse": 0.0002114744856953621,
+      "final_train_mse": 0.00021722134260926396,
+      "overfit_gap": 0.004376856086309999,
+      "best_m": 1.0,
+      "elapsed_sec": 66.64319205284119,
+      "run_dir": "./experiments/table03_ablation/overfit_diagnostics/overfit_B_n1",
+      "n_images": 1
+    },
+    {
+      "variant": "C",
+      "label": "learnable Ht + locality + freq (paper best)",
+      "seed": 42,
+      "test_mse": 0.020686741918325424,
+      "test_ssim": 0.7401176691055298,
+      "best_val_mse": 0.012526566162705421,
+      "best_train_mse": 0.0004211569903418422,
+      "min_train_mse": 2.211515311500989e-05,
+      "final_train_mse": 0.0004212407802697271,
+      "overfit_gap": 0.01210540917236358,
+      "best_m": 1.0,
+      "elapsed_sec": 63.99566888809204,
+      "run_dir": "./experiments/table03_ablation/overfit_diagnostics/overfit_C_n1",
+      "n_images": 1
+    },
+    {
+      "variant": "B",
+      "label": "learnable Ht + Tr.Conv.Up + freq",
+      "seed": 42,
+      "test_mse": 0.0046141198836266994,
+      "test_ssim": 0.8763660192489624,
+      "best_val_mse": 0.004255317151546478,
+      "best_train_mse": 0.0019341908628121018,
+      "min_train_mse": 0.0007682722061872482,
+      "final_train_mse": 0.0016906785313040018,
+      "overfit_gap": 0.0023211262887343764,
+      "best_m": 1.0,
+      "elapsed_sec": 129.28249311447144,
+      "run_dir": "./experiments/table03_ablation/overfit_diagnostics/overfit_B_n8",
+      "n_images": 8
+    },
+    {
+      "variant": "C",
+      "label": "learnable Ht + locality + freq (paper best)",
+      "seed": 42,
+      "test_mse": 0.02352491393685341,
+      "test_ssim": 0.7345892190933228,
+      "best_val_mse": 0.019918961450457573,
+      "best_train_mse": 0.0006341383559629321,
+      "min_train_mse": 0.00014174275565892458,
+      "final_train_mse": 0.0006789299659430981,
+      "overfit_gap": 0.01928482309449464,
+      "best_m": 1.0,
+      "elapsed_sec": 126.2241039276123,
+      "run_dir": "./experiments/table03_ablation/overfit_diagnostics/overfit_C_n8",
+      "n_images": 8
+    }
+  ],
+  "note": "gate is on MIN train MSE (fitting capacity); val shown for the overfitting narrative",
+  "checks": [
+    {
+      "n_images": 1,
+      "B_min_train_mse": 0.0002114744856953621,
+      "C_min_train_mse": 2.211515311500989e-05,
+      "B_best_val_mse": 0.004604059271514416,
+      "C_best_val_mse": 0.012526566162705421,
+      "C_fits_at_least_as_well_as_B": true
+    },
+    {
+      "n_images": 8,
+      "B_min_train_mse": 0.0007682722061872482,
+      "C_min_train_mse": 0.00014174275565892458,
+      "B_best_val_mse": 0.004255317151546478,
+      "C_best_val_mse": 0.019918961450457573,
+      "C_fits_at_least_as_well_as_B": true
+    }
+  ],
+  "pass": true,
+  "interpretation": "PASS => locality block fits at least as well as transpose (no implementation/optimization bug); C's worse val MSE is therefore a generalization/overfitting effect, not broken code."
+}

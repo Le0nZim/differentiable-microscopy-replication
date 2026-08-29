@@ -1,0 +1,58 @@
+# Fig-3 SwinIR refinement stage — PAPER-FAITHFUL capacity, l1+ssim loss.
+#
+# Reuses the validated Table-2/Fig-7 SwinIR-M architecture (embed_dim 180,
+# depths/heads [6]*6, window 8, upscale 1) via the SAME build_swinir_from_config.
+# Only the wiring is Fig-3-specific: frozen content-aware base -> SwinIR(upscale=1)
+# -> refined 256x256 (paper §5.6 U2OS procedure).
+#
+# l1_ssim is the metric-driven mode (directly targets SSIM up AND MSE down, i.e.
+# the acceptance criteria). paper_pixel_perceptual_gan (separate config) is the
+# fully paper-faithful loss.
+
+name: paper_faithful_l1_ssim
+base_exp_root: experiments/figure03_content_aware/base
+seed: 42
+
+swinir:                       # == SwinIR-M (Table-2/Fig-7), the validated arch
+  profile: paper_faithful
+  upscale: 1                  # paper: "upscaling factor of the SwinIR to 1"
+  in_chans: 1
+  window_size: 8
+  embed_dim: 180
+  depths: [6, 6, 6, 6, 6, 6]
+  num_heads: [6, 6, 6, 6, 6, 6]
+  mlp_ratio: 2
+  resi_connection: "1conv"
+  img_range: 1.0
+  upsampler: ""              # image-to-image restoration (not spatial SR)
+
+train:
+  train_patch_size: 64        # paper trains Table-2 SwinIR "for 64x64 image patches"
+  cache_crops_per_train_image: 4
+  micro_batch_size: 16
+  grad_accum: 2
+  effective_batch_size: 32    # paper §4.4.3 / SwinIR batch 32 (via grad accum)
+  iterations: 50000           # first serious run; config supports 200k+
+  swinir_lr: 0.0002           # SwinIR convention
+  betas: [0.9, 0.99]
+  warmup: 500
+  min_lr_frac: 0.02
+  grad_clip: 1.0
+  amp_dtype: bfloat16
+  random_flips: true
+  base_batch: 8               # frozen-base forward batch while building the cache
+  log_every: 100
+  val_every: 1000
+  ckpt_every: 5000
+
+loss:
+  mode: l1_ssim               # l1_only | l1_ssim | paper_pixel_perceptual_gan
+  l1_weight: 1.0
+  ssim_weight: 1.0
+
+selection:
+  primary: ssim               # max val SSIM
+  mse_no_regression_gate: true  # among SSIM-improving ckpts, don't regress MSE vs base
+
+eval:
+  eval_batch: 16

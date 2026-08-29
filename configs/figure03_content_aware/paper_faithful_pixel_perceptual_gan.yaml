@@ -1,0 +1,66 @@
+# Fig-3 SwinIR refinement stage — PAPER-FAITHFUL capacity + FULLY paper-faithful
+# loss: pixel + perceptual + adversarial (paper §5.6: "we utilize pixel loss,
+# adversarial loss, and perceptual loss").
+#
+# Reuses the EXACT validated Table-2/Fig-7 loss stack (src/baselines/swinir/losses.py):
+#   pixel  = L1                              (weight 1.0)
+#   perceptual = VGG19 conv1_2..conv5_4 L1   (weight 1.0)   [grayscale -> 3-chan repeat + ImageNet norm]
+#   adversarial = spectral-norm VGG-style discriminator, vanilla BCE GAN (weight 0.1)
+# Fails LOUDLY if VGG weights are unavailable (no silent fallback to L1).
+#
+# NOTE: perceptual+GAN optimise perceptual/texture quality and may trade a little
+# pixel MSE for large SSIM/visual gains — this is the paper's "strong restoration"
+# behaviour. Compare against the l1_ssim run (which is tuned for MSE-down+SSIM-up).
+
+name: paper_faithful_pixel_perceptual_gan
+base_exp_root: experiments/figure03_content_aware/base
+seed: 42
+
+swinir:
+  profile: paper_faithful
+  upscale: 1
+  in_chans: 1
+  window_size: 8
+  embed_dim: 180
+  depths: [6, 6, 6, 6, 6, 6]
+  num_heads: [6, 6, 6, 6, 6, 6]
+  mlp_ratio: 2
+  resi_connection: "1conv"
+  img_range: 1.0
+  upsampler: ""
+
+train:
+  train_patch_size: 64
+  cache_crops_per_train_image: 4
+  micro_batch_size: 16
+  grad_accum: 2
+  effective_batch_size: 32
+  iterations: 50000
+  swinir_lr: 0.0002
+  betas: [0.9, 0.99]
+  warmup: 500
+  min_lr_frac: 0.02
+  grad_clip: 1.0
+  amp_dtype: bfloat16
+  random_flips: true
+  base_batch: 8
+  log_every: 100
+  val_every: 1000
+  ckpt_every: 5000
+
+loss:
+  mode: paper_pixel_perceptual_gan
+  pixel_weight: 1.0
+  pixel_kind: l1
+  perceptual_weight: 1.0
+  gan_weight: 0.1
+  gan_type: vanilla
+  disc_lr: 0.0002
+  vgg_weights_available: true   # must be true; trainer probes VGG at startup
+
+selection:
+  primary: ssim
+  mse_no_regression_gate: false  # GAN/perceptual may raise MSE slightly; pick best SSIM
+
+eval:
+  eval_batch: 16

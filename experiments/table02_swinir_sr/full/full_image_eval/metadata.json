@@ -1,0 +1,320 @@
+{
+  "generated_utc": "2026-08-25T23:19:11.213340+00:00",
+  "config": "replication/configs/table02_swinir_sr/full.yaml",
+  "run": "replication/experiments/table02_swinir_sr/full",
+  "device": "cuda:1",
+  "checkpoint": "best.pt (best-val) per condition",
+  "note": "OUR reconstruction pipeline at full resolution; NOT a verified reproduction of the paper's exact Figure-7 rendering procedure.",
+  "datasets": {
+    "Set5": {
+      "source_file": "baby.png",
+      "source_relpath": "data/sr/test/Set5/HR/baby.png",
+      "original_size_hw": [
+        504,
+        504
+      ],
+      "conditions": {
+        "swinir_wo_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            512,
+            512
+          ],
+          "n_tiles": {
+            "rows": 8,
+            "cols": 8,
+            "total": 64
+          },
+          "pad_mode": "reflect",
+          "pad_h": 8,
+          "pad_w": 8,
+          "metrics_vs_gt": {
+            "psnr": 26.1111,
+            "ssim": 0.7133
+          }
+        },
+        "swinir_with_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            512,
+            512
+          ],
+          "n_tiles": {
+            "rows": 8,
+            "cols": 8,
+            "total": 64
+          },
+          "pad_mode": "reflect",
+          "pad_h": 8,
+          "pad_w": 8,
+          "metrics_vs_gt": {
+            "psnr": 27.3891,
+            "ssim": 0.7476
+          }
+        }
+      }
+    },
+    "Set14": {
+      "source_file": "baboon.png",
+      "source_relpath": "data/sr/test/Set14/HR/baboon.png",
+      "original_size_hw": [
+        480,
+        492
+      ],
+      "conditions": {
+        "swinir_wo_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            512,
+            512
+          ],
+          "n_tiles": {
+            "rows": 8,
+            "cols": 8,
+            "total": 64
+          },
+          "pad_mode": "reflect",
+          "pad_h": 32,
+          "pad_w": 20,
+          "metrics_vs_gt": {
+            "psnr": 19.693,
+            "ssim": 0.3095
+          }
+        },
+        "swinir_with_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            512,
+            512
+          ],
+          "n_tiles": {
+            "rows": 8,
+            "cols": 8,
+            "total": 64
+          },
+          "pad_mode": "reflect",
+          "pad_h": 32,
+          "pad_w": 20,
+          "metrics_vs_gt": {
+            "psnr": 19.8702,
+            "ssim": 0.345
+          }
+        }
+      }
+    },
+    "BSD100": {
+      "source_file": "101085.png",
+      "source_relpath": "data/sr/test/BSD100/HR/101085.png",
+      "original_size_hw": [
+        481,
+        321
+      ],
+      "conditions": {
+        "swinir_wo_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            512,
+            384
+          ],
+          "n_tiles": {
+            "rows": 8,
+            "cols": 6,
+            "total": 48
+          },
+          "pad_mode": "reflect",
+          "pad_h": 31,
+          "pad_w": 63,
+          "metrics_vs_gt": {
+            "psnr": 19.7694,
+            "ssim": 0.333
+          }
+        },
+        "swinir_with_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            512,
+            384
+          ],
+          "n_tiles": {
+            "rows": 8,
+            "cols": 6,
+            "total": 48
+          },
+          "pad_mode": "reflect",
+          "pad_h": 31,
+          "pad_w": 63,
+          "metrics_vs_gt": {
+            "psnr": 20.5021,
+            "ssim": 0.3892
+          }
+        }
+      }
+    },
+    "Urban100": {
+      "source_file": "img_001.png",
+      "source_relpath": "data/sr/test/Urban100/HR/img_001.png",
+      "original_size_hw": [
+        644,
+        1024
+      ],
+      "conditions": {
+        "swinir_wo_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            704,
+            1024
+          ],
+          "n_tiles": {
+            "rows": 11,
+            "cols": 16,
+            "total": 176
+          },
+          "pad_mode": "reflect",
+          "pad_h": 60,
+          "pad_w": 0,
+          "metrics_vs_gt": {
+            "psnr": 21.6335,
+            "ssim": 0.506
+          }
+        },
+        "swinir_with_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            704,
+            1024
+          ],
+          "n_tiles": {
+            "rows": 11,
+            "cols": 16,
+            "total": 176
+          },
+          "pad_mode": "reflect",
+          "pad_h": 60,
+          "pad_w": 0,
+          "metrics_vs_gt": {
+            "psnr": 22.8837,
+            "ssim": 0.5826
+          }
+        }
+      }
+    },
+    "Manga109": {
+      "source_file": "ARMS.png",
+      "source_relpath": "data/sr/test/Manga109/HR/ARMS.png",
+      "original_size_hw": [
+        1170,
+        827
+      ],
+      "conditions": {
+        "swinir_wo_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            1216,
+            832
+          ],
+          "n_tiles": {
+            "rows": 19,
+            "cols": 13,
+            "total": 247
+          },
+          "pad_mode": "reflect",
+          "pad_h": 46,
+          "pad_w": 5,
+          "metrics_vs_gt": {
+            "psnr": 22.0469,
+            "ssim": 0.5583
+          }
+        },
+        "swinir_with_li": {
+          "direct_full_image": {
+            "attempted": true,
+            "succeeded": false,
+            "error": "ValueError: specimen and patterns must share spatial dimensions"
+          },
+          "method": "tiled_stitched_64x64",
+          "fallback_used": false,
+          "tile_size": 64,
+          "padded_size": [
+            1216,
+            832
+          ],
+          "n_tiles": {
+            "rows": 19,
+            "cols": 13,
+            "total": 247
+          },
+          "pad_mode": "reflect",
+          "pad_h": 46,
+          "pad_w": 5,
+          "metrics_vs_gt": {
+            "psnr": 23.0426,
+            "ssim": 0.5943
+          }
+        }
+      }
+    }
+  }
+}

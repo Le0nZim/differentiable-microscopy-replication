@@ -1,0 +1,46 @@
+{
+  "condition": "swinir_wo_li",
+  "learnable": false,
+  "iterations_target": 20000,
+  "iterations_reached": 20000,
+  "effective_batch_size": 32,
+  "micro_batch_size": 8,
+  "grad_accum": 4,
+  "best_val_l1": 0.05729676286379496,
+  "best_step": 20000,
+  "arch_summary": {
+    "embed_dim": 180,
+    "num_layers": 6,
+    "window_size": 8,
+    "upscale": 1,
+    "total_params": 11514070,
+    "swinir_params": 11497681,
+    "upsampling_params": 16384,
+    "fuse_params": 5,
+    "illumination_params": 0,
+    "illumination_learnable": false
+  },
+  "optimizer_groups": [
+    {
+      "name": "inverse",
+      "lr": 0.0002,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "num_params": 11514070
+    }
+  ],
+  "amp_dtype": "torch.bfloat16",
+  "device": "cuda:0",
+  "torch_version": "2.12.0+cu130",
+  "git_commit": "9aa9f0d9c8820756d46c7b884f8dca5ed6c42c89",
+  "seed": 42,
+  "timestamp_utc": "2026-08-25T23:08:48.290257+00:00",
+  "train_images": 3381,
+  "val_images": 69,
+  "checkpoints": {
+    "best": "./experiments/table02_swinir_sr/full/swinir_wo_li/checkpoints/best.pt",
+    "last": "./experiments/table02_swinir_sr/full/swinir_wo_li/checkpoints/last.pt"
+  }
+}

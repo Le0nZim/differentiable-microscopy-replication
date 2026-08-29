@@ -1,0 +1,118 @@
+# Reproduce paper Fig. 8 (HumanMCF7, x16): P=GT / Q=with SwinIR / R=w/O SwinIR.
+#
+# Channel: TUBULIN (w2). The paper (Sec 5.1) says "channel-2 of the dataset"; in BBBC021
+# the w2 token == Tubulin (CSV column order DAPI/Tubulin/Actin). This is the PAPER-FAITHFUL
+# channel for Fig. 8/9. (An actin variant is provided for visual comparison only.)
+
+experiment:
+  seed: 42
+  fixed_seed: true
+  deterministic_eval: true
+  tag: reproduce_fig8_humanmcf7_x16_swinir
+  label: "Fig.8 HumanMCF7 x16 SwinIR (Q) vs transpose-conv (R) [HumanMCF7 == BBBC021 channel-2 == tubulin]"
+
+# ---- explicit, machine-checkable summary of the paper constraints ----
+dataset_name: BBBC021
+cell_type: HumanMCF7
+compression: 16
+learned_Ht: true
+frequency_domain_optimization: true
+custom_sigmoid_schedule: true
+swinir_upscale: 1
+deterministic_eval: true
+fixed_seed: true
+
+dataset:
+  name: mcf7_channel2
+  dataset_name: BBBC021
+  cell_type: HumanMCF7
+  bbbc021_channel: tubulin            # w2 == channel-2 (paper). allowed: actin|tubulin|dapi
+  data_root: data/mcf7_bbbc021
+  images_dir: channel2_selected
+  manifest_csv: manifests/mcf7_channel2_manifest.csv
+  image_metadata_csv: raw_zips/BBBC021_v1_image.csv
+  patch_size: 256
+  image_size: 256
+  num_train: 3000
+  num_val: 100
+  num_test: 100
+  seed: 42
+  split_by_well: true
+  train_random_crops: true
+  random_flips: true
+
+pattern_generator:
+  mode: learnable_frequency           # learned H_t + frequency-domain optimization
+  num_patterns: 4                     # T = 4
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+  superpixel_factor: 1                # FULL-RES patterns; sp=8 forced hard 8px blocks (non-paper-faithful)
+
+forward_model:
+  downscale_factor: 8                 # s = 8  ->  s^2/T = 64/4 = x16
+  use_impulse_psfs: true              # exPSF / emPSF are impulse kernels
+
+detector_noise:
+  mode: noise_free
+  apply_noise: false
+
+inverse_model:
+  upsampling:
+    mode: locality_aware              # proposed locality-aware upsampling does the upsampling
+    downscale_factor: 8
+    num_patterns: 4
+
+swinir:                               # SwinIR-M as image-to-image refinement, upscale=1
+  upscale: 1
+  in_chans: 1
+  img_size: 256
+  window_size: 8
+  upsampler: ""
+  embed_dim: 180
+  depths: [6, 6, 6, 6, 6, 6]
+  num_heads: [6, 6, 6, 6, 6, 6]
+  mlp_ratio: 2
+  resi_connection: "1conv"
+  img_range: 1.0
+  use_checkpoint: true
+
+algorithm1:                           # paper Sec 5.6 stability schedule
+  epochs: 230
+  epoch_baseline: 150
+  epoch_cutoff: 150
+  epoch_step: 20
+  m_values: [2, 4, 8]
+
+training:
+  micro_batch_size: 2
+  grad_accum: 4
+  conv_batch_size: 8
+  illumination_lr: 0.1                # paper Sec 5.6
+  swinir_lr: 0.0002
+  disc_lr: 0.0002
+  betas: [0.9, 0.99]
+  inverse_lr: 0.001
+  amp_dtype: bfloat16
+  eval_sigmoid_m: 8.0
+  gan_warmup_epochs: null             # default min(baseline, epochs//4): stabilizes GAN
+  checkpoint_selection: max_val_ssim  # NOT min-MSE (min-MSE picks the blurry mean)
+  loss:
+    pixel_weight: 1.0
+    pixel_kind: l1
+    perceptual_weight: 1.0
+    gan_weight: 0.1
+    gan_type: vanilla
+    vgg_weights_available: true
+    in_chans: 1
+
+wcnn:
+  image_size: 64
+
+reproduce:
+  figure: 8
+  runs_dir: experiments/figure08_mcf7/runs
+  conditions: [wswinir, transpose256]     # Q, R
+  eval_sigmoid_m: 8.0
+  tile_overlap_frac: 0.25
+  consistent_display_norm: true           # same viridis lo/hi per column for GT & recon

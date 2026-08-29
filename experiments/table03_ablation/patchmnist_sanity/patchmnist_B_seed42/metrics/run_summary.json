@@ -1,0 +1,14 @@
+{
+  "variant": "B",
+  "label": "learnable Ht + Tr.Conv.Up + freq",
+  "seed": 42,
+  "test_mse": 0.011501484472925464,
+  "test_ssim": 0.8952933798233668,
+  "best_val_mse": 0.011492775675530234,
+  "best_train_mse": 0.011394180357456207,
+  "final_train_mse": 0.011490133581088578,
+  "overfit_gap": 9.859531807402712e-05,
+  "best_m": 8.0,
+  "elapsed_sec": 750.1980242729187,
+  "run_dir": "./experiments/table03_ablation/patchmnist_sanity/patchmnist_B_seed42"
+}

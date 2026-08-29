@@ -1,0 +1,15 @@
+{
+  "variant": "B",
+  "label": "learnable Ht + Tr.Conv.Up + freq",
+  "seed": 42,
+  "test_mse": 0.003624115139245987,
+  "test_ssim": 0.877616822719574,
+  "best_val_mse": 0.003107451368123293,
+  "best_train_mse": 0.0030618482269346714,
+  "min_train_mse": 0.0006514158449135721,
+  "final_train_mse": 0.002982525620609522,
+  "overfit_gap": 4.560314118862152e-05,
+  "best_m": 1.0,
+  "elapsed_sec": 470.3806343078613,
+  "run_dir": "./experiments/table03_ablation/trainsize_sweep/trainsize_B_n42"
+}

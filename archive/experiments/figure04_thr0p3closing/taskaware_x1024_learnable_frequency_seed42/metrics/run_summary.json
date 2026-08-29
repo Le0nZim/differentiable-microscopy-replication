@@ -1,0 +1,23 @@
+{
+  "run_dir": "./experiments/figure04_segmentation/task_aware/runs/taskaware_x1024_learnable_frequency_seed42",
+  "run_id": "taskaware_x1024_learnable_frequency",
+  "learnable": true,
+  "compression": 1024.0,
+  "content_aware_checkpoint": "./experiments/figure04_segmentation/stage1_frozen/taskaware_x1024_learnable_frequency_seed42/stage1_content_aware/checkpoints/best.pt",
+  "selected_threshold": 0.1,
+  "val_dice": 0.4936772267378512,
+  "val_iou": 0.3368540020393474,
+  "test_dice": 0.5244705010028112,
+  "test_iou": 0.3620513535681225,
+  "test_bce": 1.3386900424957275,
+  "test_dice_at_0p5": 0.5061921959831601,
+  "test_iou_at_0p5": 0.34426758260953993,
+  "stage2_val_dice": 0.5892599934623355,
+  "seg_head_steps": 1200,
+  "finetune_steps": 2500,
+  "illumination_grad_norm_stage3_max": 6.212657172000036e-05,
+  "inverse_grad_norm_stage3_max": 11.086058616638184,
+  "seg_head_grad_norm_stage2_max": 0.8886536955833435,
+  "illumination_pattern_delta_l2": 143.46542358398438,
+  "illumination_pattern_delta_relative": 0.41549581089186644
+}

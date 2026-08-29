@@ -25,7 +25,7 @@ from models.microscope import DifferentiableMicroscope
 from utils.experiment_config import expand_experiment_matrix
 
 ROOT = Path(__file__).resolve().parents[1]
-MATRIX = ROOT / "configs/matrices/bbbc022_x16_ablation_matrix.yaml"
+MATRIX = ROOT / "configs/table03_ablation/bbbc022_x16_matrix.yaml"
 
 
 def _variant_letter(run_id: str) -> str:

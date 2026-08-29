@@ -11,7 +11,7 @@ from utils.config import load_yaml_config
 
 @pytest.fixture
 def yaml_config():
-    return load_yaml_config("configs/base_patchmnist.yaml")
+    return load_yaml_config("configs/_shared/base_patchmnist.yaml")
 
 
 def test_noise_free_is_identity():
