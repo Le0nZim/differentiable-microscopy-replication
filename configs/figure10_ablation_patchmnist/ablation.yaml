@@ -1,0 +1,121 @@
+# Figure 10 / Table 3 ablation (paper §5.7) re-run on PatchMNIST instead of the
+# BBBC022 Hoechst substitute.
+#
+# Motivation: on the BBBC022 substitute (configs/figure10_ablation/ablation.yaml)
+# variant D (NO frequency-domain optimization) came out BEST, contradicting the
+# paper's claim that frequency-domain optimization matters. BBBC022 nuclei are
+# densely and near-uniformly tiled across the FOV, so the spatial-invariance
+# argument the paper makes for frequency-domain optimization is weak there. This
+# config repeats the IDENTICAL ablation protocol on PatchMNIST, which is the
+# synthetic dataset the repo's Figure-6 / Table-1 noise-robustness experiments
+# use, to test whether the D-wins result is a substitute-data effect.
+#
+# EVERYTHING except the dataset block is copied verbatim from
+# configs/figure10_ablation/ablation.yaml:
+#   x16 compression (d=8, T=4), impulse PSFs, noise-free, L1 loss,
+#   conventional reconstruction CNN, illum lr 1.0 / inverse lr 0.001,
+#   grad-clip 1.0, batch 32, scaled Algorithm-1 phases (8500 steps).
+#
+# The dataset block is copied verbatim from
+# configs/table01_noise_robustness/noise_table.yaml (the Fig-6 / Table-1 data):
+#   PatchMNIST 256px canvases, 32px digits on a 20x20 grid, 3000/375/375,
+#   disjoint val/test digit pools. PatchMNIST needs no preprocessing beyond the
+#   ToTensor [0,1] scaling done inside src/datasets/patchmnist.py, so there is no
+#   preproc_mode / percentile-clip stage here (unlike the BBBC022 pipeline).
+#
+# NOTE ON NOISE: Fig-10's ablation is noise-free, and Table-1's whole purpose is
+# the noise sweep. Only the *data* is swapped here, so the forward model stays
+# noise-free and the A/B/C/D comparison remains apples-to-apples with the
+# BBBC022 Fig-10 run.
+#
+# Paper Fig 10 / Table 3 conditions (x16 == d=8, T=4; L1; conventional ReconCNN):
+#   A: fixed H_t (random_fixed)      + transpose-conv upsampling + freq-domain opt
+#   B: learnable_frequency H_t       + transpose-conv upsampling + freq-domain opt
+#   C: learnable_frequency H_t       + locality-aware upsampling + freq-domain opt  (paper best)
+#   D: learnable_spatial   H_t       + locality-aware upsampling + NO freq-domain opt
+# The A/B/C/D knobs are applied by the SAME validated apply_variant() used for the
+# audited AM-3 ablation. Values below correspond to variant C defaults.
+
+experiment:
+  seed: 42
+  device: cuda:0
+  study_label: "Figure 10 ablation on PatchMNIST (Fig-6 / Table-1 data); NOT paper U2OS"
+  results_csv: experiments/figure10_ablation_patchmnist/results.csv
+  compression: 16.0
+
+dataset:                              # == the exact data Fig 6 / Table 1 use
+  name: patchmnist
+  data_root: data/mnist
+  image_size: 256
+  digit_size: 32
+  grid_size: 20
+  num_train: 3000
+  num_val: 375
+  num_test: 375
+  seed: 42
+  download: true
+  disjoint_val_test: true            # val/test draw from disjoint MNIST-test halves
+
+pattern_generator:
+  mode: learnable_frequency           # (variant knob) C default
+  num_patterns: 4                     # T = 4
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1
+  m_init: 1.0
+
+forward_model:
+  downscale_factor: 8                 # 8x8:1 -> x16 at T=4
+  use_impulse_psfs: true
+  ex_psf_kernel_size: 3
+  em_psf_kernel_size: 3
+
+detector_noise:
+  mode: noise_free
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 0.0
+  apply_noise: false
+
+inverse_model:
+  upsampling:
+    mode: locality_aware              # (variant knob) C default
+    downscale_factor: 8
+    num_patterns: 4
+    use_mixing_cnn: false
+    mixing_hidden_channels: 16
+  reconstruction:
+    in_channels: 4
+    hidden_channels: [64, 64, 32, 32, 16, 1]
+    kernel_size: 3
+    padding: 1
+
+training:
+  batch_size: 32                      # paper §4.4.3
+  log_every: 200
+  illumination_lr: 1.0                # paper illumination lr
+  inverse_lr: 0.001                   # paper inverse lr
+  gradient_clip_norm: 1.0
+  sharpen_eval_m: 10.0
+  loss: l1
+  learn_patterns: true                # (variant knob) C default
+  fixed_sigmoid_m: 1.0
+  # Uniform scaled Algorithm-1 phases are supplied by the runner (default_phases):
+  #   inverse_warmup 1500 (illum frozen, m=1) -> joint_soft 4000 (m=1)
+  #   -> harden m=2 (1000) -> m=4 (1000) -> m=8 (1000).  Identical for A/B/C/D.
+  staged_hardening:
+    inverse_warmup_steps: 1500
+    joint_soft_steps: 4000
+    harden_m_values: [2, 4, 8]
+    harden_steps_per_m: 1000
+
+deviations_from_paper:
+  - "DATA: PatchMNIST synthetic digit canvases (the repo's Fig-6 / Table-1 data), NOT paper U2OS (unavailable). 3000/375/375 with disjoint val/test digit pools."
+  - "PREPROC: none beyond PatchMNIST's native [0,1] scaling; PatchMNIST is synthetic, so the BBBC022 percentile-clip stage does not apply."
+  - "BUDGET: scaled Algorithm-1 (8500 steps, uniform across A/B/C/D) instead of the paper's full U2OS schedule; global best-val checkpoint selection."
+  - "NUMERIC: Table-3 SSIM/MSE magnitudes are NOT comparable to paper U2OS (different data). Only the A/B/C/D ordering is meaningful here."

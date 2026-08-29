@@ -1,0 +1,15 @@
+{
+  "variant": "D",
+  "label": "learnable Ht + locality + NO freq",
+  "seed": 44,
+  "test_mse": 0.0065418187296018004,
+  "test_ssim": 0.9399199982484182,
+  "best_val_mse": 0.006428871497822304,
+  "best_train_mse": 0.005982936825603247,
+  "min_train_mse": 0.005982936825603247,
+  "final_train_mse": 0.005960196519191278,
+  "overfit_gap": 0.0004459346722190576,
+  "best_m": 8.0,
+  "elapsed_sec": 750.4985971450806,
+  "run_dir": "experiments/figure10_ablation_patchmnist/runs/D_seed44"
+}

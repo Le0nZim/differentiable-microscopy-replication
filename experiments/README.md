@@ -15,5 +15,7 @@ Paper-facing numbers and SVGs are under `paper/<slug>/`.
 | [`figure05_upsampling/`](figure05_upsampling/) | Figure 5 locality vs transpose grid |
 | [`figure08_mcf7/`](figure08_mcf7/) | Figures 8 and 9 (MCF7) |
 | [`figure10_ablation/`](figure10_ablation/) | Figure 10 qualitative A/B/C/D |
+| [`figure10_ablation_patchmnist/`](figure10_ablation_patchmnist/) | Figure 10 A/B/C/D re-run on PatchMNIST (same protocol, dataset swapped) |
+| [`figure06_noise_robustness_no_freq/`](figure06_noise_robustness_no_freq/) | Figure 6 / Table 1 corners with `learnable_spatial` (no freq-domain opt) |
 
 Train/eval commands are in `paper/<slug>/README.md`. Drivers: `scripts/<slug>/`.

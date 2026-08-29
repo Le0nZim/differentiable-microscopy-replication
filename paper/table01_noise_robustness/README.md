@@ -3,7 +3,7 @@
 - **Paper section:** 5.5
 - **Status:** **close** (headline claims reproduced; paper's inverted photon-count ordering is not)
 - **Variant:** clean-split rerun (`disjoint_val_test: true`). Train digits from the MNIST train pool; val and test from **disjoint halves** of the MNIST test digit pool.
-- **Shared run:** also produces [Figure 6](../figure06_noise_robustness/).
+- **Shared run:** also produces [Figure 6](../figure06_noise_robustness/). The learnable arm is `learnable_frequency`. A no-frequency companion (`experiments/figure06_noise_robustness_no_freq/`) retrains a subset of the same cells with `learnable_spatial`.
 
 > Reconstruction MSE of learnable illumination vs fixed pseudo-random illumination, across photon counts {10, 10000} and read-noise std {0.0, 2.7, 2.0, 6.0} at x8 compression with T=8.
 

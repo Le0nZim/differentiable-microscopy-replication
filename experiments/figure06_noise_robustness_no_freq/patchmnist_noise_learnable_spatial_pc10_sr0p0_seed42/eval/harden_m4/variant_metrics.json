@@ -1,0 +1,64 @@
+{
+  "training_m": 4.0,
+  "sharpen_m": 10.0,
+  "variants": {
+    "soft": {
+      "splits": {
+        "val": {
+          "mse": 0.004952577408403158,
+          "ssim": 0.9477231701215109
+        },
+        "test": {
+          "mse": 0.004959947701233129,
+          "ssim": 0.9478976974884669
+        }
+      }
+    },
+    "sharpened": {
+      "splits": {
+        "val": {
+          "mse": 0.0049414236564189196,
+          "ssim": 0.9479021032651266
+        },
+        "test": {
+          "mse": 0.004964195579911272,
+          "ssim": 0.947853242357572
+        }
+      }
+    },
+    "thresholded": {
+      "splits": {
+        "val": {
+          "mse": 0.004949445991466443,
+          "ssim": 0.9478204647699991
+        },
+        "test": {
+          "mse": 0.004967661380457382,
+          "ssim": 0.947866087158521
+        }
+      }
+    }
+  },
+  "pattern_stats": {
+    "soft": {
+      "H_t_min": 0.0,
+      "H_t_max": 1.0,
+      "H_t_mean": 0.43488121032714844,
+      "H_t_binary_fraction": 1.0
+    },
+    "sharpened": {
+      "H_t_min": 0.0,
+      "H_t_max": 1.0,
+      "H_t_mean": 0.43488121032714844,
+      "H_t_binary_fraction": 1.0
+    },
+    "thresholded": {
+      "H_t_min": 0.0,
+      "H_t_max": 1.0,
+      "H_t_mean": 0.43488121032714844,
+      "H_t_binary_fraction": 1.0
+    }
+  },
+  "pattern_delta_soft": 0.44035786390304565,
+  "detector_delta": 1.5803009271621704
+}

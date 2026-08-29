@@ -1,0 +1,6 @@
+{
+  "seed": 43,
+  "git_commit": "96e376768de68f5664dcd6917abcd76f7f64e144",
+  "run_id": "patchmnist_noise_learnable_spatial_pc10_sr6p0_seed43",
+  "training_mode": "staged_hardening"
+}

@@ -34,6 +34,7 @@ if str(SRC) not in sys.path:
 import torch  # noqa: E402
 
 from evaluation.eval_reconstruction import evaluate_reconstruction  # noqa: E402
+from evaluation.variant_audit import pattern_is_learnable  # noqa: E402
 from models.microscope import DifferentiableMicroscope  # noqa: E402
 from training.dataloaders import build_dataloader  # noqa: E402
 from training.staged_hardening_train import train_staged_hardening  # noqa: E402
@@ -56,7 +57,13 @@ EVAL_NOISE_SEEDS = [101, 202, 303, 404, 505]  # eval-noise draws for robustness
 
 
 def _is_learnable(config: dict) -> bool:
-    return config["pattern_generator"]["mode"] == "learnable_frequency"
+    """True for any learnable illumination mode.
+
+    Table 1 itself only uses ``random_fixed`` and ``learnable_frequency``, but the
+    no-frequency companion study reuses this runner with ``learnable_spatial``,
+    which must take the same staged-hardening path.
+    """
+    return pattern_is_learnable(config["pattern_generator"]["mode"])
 
 
 def _configure_run_kind(config: dict) -> dict:
@@ -201,7 +208,7 @@ def _eval_noise_robustness(run_id: str, device: torch.device) -> dict | None:
     if model is None:
         return None
     test_loader = build_dataloader(config, "test")
-    learnable = config["pattern_generator"]["mode"] == "learnable_frequency"
+    learnable = pattern_is_learnable(config["pattern_generator"]["mode"])
     sigmoid_m = float(config["training"].get("sharpen_eval_m", 10.0)) if learnable else \
         config["training"].get("fixed_sigmoid_m")
     mses: list[float] = []
@@ -516,7 +523,7 @@ def _example_reconstructions(plots_dir: Path, eval_noise: dict) -> None:
         if model is None:
             continue
         batch = next(iter(build_dataloader(config, "test"))).to(device)
-        learnable = mode == "learnable_frequency"
+        learnable = pattern_is_learnable(mode)
         sigmoid_m = float(config["training"].get("sharpen_eval_m", 10.0)) if learnable else config["training"].get("fixed_sigmoid_m")
         set_seed(7)
         out = model(batch, sigmoid_m=sigmoid_m, apply_noise=True)

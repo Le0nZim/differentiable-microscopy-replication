@@ -1,0 +1,15 @@
+{
+  "variant": "A",
+  "label": "fixed Ht + Tr.Conv.Up + freq",
+  "seed": 42,
+  "test_mse": 0.036113859154284,
+  "test_ssim": 0.7024870564540228,
+  "best_val_mse": 0.035760545482238136,
+  "best_train_mse": 0.03584052994847298,
+  "min_train_mse": 0.0353250652551651,
+  "final_train_mse": 0.035728832350132314,
+  "overfit_gap": -7.998446623484062e-05,
+  "best_m": 8.0,
+  "elapsed_sec": 747.0670211315155,
+  "run_dir": "experiments/figure10_ablation_patchmnist/runs/A_seed42"
+}

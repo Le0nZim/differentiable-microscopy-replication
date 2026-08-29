@@ -89,6 +89,22 @@ BBBC022 nuclei substitute. This is consistent with, and refines, the pre-existin
 `am3_table3_resolution` conclusion that Table 3 is numerically **DATA_BLOCKED** without the paper's
 U2OS data.
 
+## Follow-up: the same ablation on PatchMNIST
+
+`experiments/figure10_ablation_patchmnist/` re-runs this ablation with the identical
+protocol on PatchMNIST (the Figure-6 / Table-1 data), to check how much of the result
+above is a property of the BBBC022 substitute. Two things it found:
+
+- The BBBC022 numbers above have very little dynamic range (A→C is only a 1.25× MSE
+  improvement, all four variants land at SSIM 0.90–0.93), because Hoechst nuclei are
+  smooth and low-frequency enough that ×16 compression barely hurts. On PatchMNIST the
+  same ablation spans 5.2×, and A→B→C reproduce the paper far more convincingly.
+- Variant B and C's illumination barely trained here (`illum_delta_final` 125 and 266,
+  vs 3791 for D; B's patterns never hardened past m=2, binary fraction 0.27). So D's
+  37% margin above is substantially an optimization failure in B/C rather than evidence
+  for the spatial parametrization. On PatchMNIST, where all three learnable variants
+  train comparably, D still wins but by only 5.7%.
+
 ## Reproduce
 
 ```bash

@@ -1,0 +1,376 @@
+{
+  "label": "Figure 6 / Table 1 noise robustness WITHOUT frequency-domain optimization (learnable_spatial), vs the frozen Table-1 random_fixed and learnable_frequency arms.",
+  "output_root": "experiments/figure06_noise_robustness_no_freq",
+  "baseline_root": "experiments/table01_noise_robustness",
+  "config": "configs/figure06_noise_robustness_no_freq/noise_table.yaml",
+  "cells_subset": "corners",
+  "noise_normalization": "paper_v3",
+  "main_seed": 42,
+  "extra_seeds": [
+    43,
+    44
+  ],
+  "extreme_cell": {
+    "photon_count": 10.0,
+    "sigma_read": 6.0
+  },
+  "table_seed42": [
+    {
+      "photon_count": 10.0,
+      "sigma_read": 0.0,
+      "random_mse": 0.020766644428173702,
+      "frequency_mse": 0.006431430811062455,
+      "spatial_mse": 0.004931038750025134,
+      "ratio_spatial_over_frequency": 0.7667094453606567,
+      "spatial_beats_frequency": true,
+      "spatial_beats_random": true
+    },
+    {
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "random_mse": 0.023030191659927368,
+      "frequency_mse": 0.007416502611401181,
+      "spatial_mse": 0.005717263479406635,
+      "ratio_spatial_over_frequency": 0.7708840377966897,
+      "spatial_beats_frequency": true,
+      "spatial_beats_random": true
+    },
+    {
+      "photon_count": 10000.0,
+      "sigma_read": 0.0,
+      "random_mse": 0.010884614894166589,
+      "frequency_mse": 0.0030056517377185323,
+      "spatial_mse": 0.0029411710565909743,
+      "ratio_spatial_over_frequency": 0.978546855472849,
+      "spatial_beats_frequency": true,
+      "spatial_beats_random": true
+    },
+    {
+      "photon_count": 10000.0,
+      "sigma_read": 6.0,
+      "random_mse": 0.010972827828178803,
+      "frequency_mse": 0.0031575608106019595,
+      "spatial_mse": 0.0029338431001330414,
+      "ratio_spatial_over_frequency": 0.9291485662864342,
+      "spatial_beats_frequency": true,
+      "spatial_beats_random": true
+    }
+  ],
+  "extreme_multiseed": {
+    "random_fixed": {
+      "mean": 0.02289728204616242,
+      "std": 0.0004077063145808464,
+      "n": 3,
+      "values": [
+        0.023030191659927368,
+        0.02243970613926649,
+        0.0232219483392934
+      ]
+    },
+    "learnable_frequency": {
+      "mean": 0.007411141465935443,
+      "std": 6.785397179547081e-06,
+      "n": 3,
+      "values": [
+        0.007416502611401181,
+        0.007403512640545766,
+        0.00741340914585938
+      ]
+    },
+    "learnable_spatial": {
+      "mean": 0.005707410642773741,
+      "std": 8.80536111700003e-06,
+      "n": 3,
+      "values": [
+        0.005717263479406635,
+        0.0057046580671643215,
+        0.005700310381750266
+      ]
+    }
+  },
+  "extreme_eval_noise": {
+    "random_fixed": {
+      "eval_seeds": [
+        101,
+        202,
+        303,
+        404,
+        505
+      ],
+      "mean": 0.022945283260196448,
+      "std": 3.812356940936562e-05,
+      "n": 5,
+      "values": [
+        0.022963452773789566,
+        0.02297416313861807,
+        0.02288879081606865,
+        0.022976589233924944,
+        0.022923420338581007
+      ]
+    },
+    "learnable_frequency": {
+      "eval_seeds": [
+        101,
+        202,
+        303,
+        404,
+        505
+      ],
+      "mean": 0.007379363484991093,
+      "std": 8.197186336705214e-06,
+      "n": 5,
+      "values": [
+        0.007388144886742036,
+        0.007374943777297934,
+        0.00738256339294215,
+        0.007383746638273199,
+        0.007367418729700148
+      ]
+    },
+    "learnable_spatial": {
+      "eval_seeds": [
+        101,
+        202,
+        303,
+        404,
+        505
+      ],
+      "mean": 0.005709472383993368,
+      "std": 1.0557339032344248e-05,
+      "n": 5,
+      "values": [
+        0.005712396698072553,
+        0.00571906609305491,
+        0.005715995910577476,
+        0.005707742374700804,
+        0.005692160843561093
+      ]
+    }
+  },
+  "gates": {
+    "cells_compared": 4,
+    "spatial_beats_frequency_all_cells": true,
+    "spatial_beats_random_all_cells": true,
+    "spatial_beats_frequency_at_extreme_cell_meanseed": true,
+    "median_ratio_spatial_over_frequency": 0.8500163020415619
+  },
+  "missing_runs": [],
+  "all_rows": [
+    {
+      "run_id": "patchmnist_noise_random_fixed_pc10_sr0p0_seed42",
+      "seed": 42,
+      "photon_count": 10.0,
+      "sigma_read": 0.0,
+      "pattern_mode": "random_fixed",
+      "test_mse": 0.020766644428173702,
+      "test_ssim": 0.8099348247051239,
+      "H_t_binary_fraction": 0.76873779296875,
+      "pattern_delta": 0.0,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_frequency_pc10_sr0p0_seed42",
+      "seed": 42,
+      "photon_count": 10.0,
+      "sigma_read": 0.0,
+      "pattern_mode": "learnable_frequency",
+      "test_mse": 0.006431430811062455,
+      "test_ssim": 0.9340930879116058,
+      "H_t_binary_fraction": 0.8329792022705078,
+      "pattern_delta": 0.33772557973861694,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_spatial_pc10_sr0p0_seed42",
+      "seed": 42,
+      "photon_count": 10.0,
+      "sigma_read": 0.0,
+      "pattern_mode": "learnable_spatial",
+      "test_mse": 0.004931038750025134,
+      "test_ssim": 0.9481597443421682,
+      "H_t_binary_fraction": 1.0,
+      "pattern_delta": 0.44035792350769043,
+      "source": "this study"
+    },
+    {
+      "run_id": "patchmnist_noise_random_fixed_pc10_sr6p0_seed42",
+      "seed": 42,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "random_fixed",
+      "test_mse": 0.023030191659927368,
+      "test_ssim": 0.7888973653316498,
+      "H_t_binary_fraction": 0.76873779296875,
+      "pattern_delta": 0.0,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_random_fixed_pc10_sr6p0_seed43",
+      "seed": 43,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "random_fixed",
+      "test_mse": 0.02243970613926649,
+      "test_ssim": 0.7959640870491663,
+      "H_t_binary_fraction": 0.7691383361816406,
+      "pattern_delta": 0.0,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_random_fixed_pc10_sr6p0_seed44",
+      "seed": 44,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "random_fixed",
+      "test_mse": 0.0232219483392934,
+      "test_ssim": 0.7870514442523321,
+      "H_t_binary_fraction": 0.7681179046630859,
+      "pattern_delta": 0.0,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_frequency_pc10_sr6p0_seed42",
+      "seed": 42,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "learnable_frequency",
+      "test_mse": 0.007416502611401181,
+      "test_ssim": 0.9217236191034317,
+      "H_t_binary_fraction": 0.8414058685302734,
+      "pattern_delta": 0.34159305691719055,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_frequency_pc10_sr6p0_seed43",
+      "seed": 43,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "learnable_frequency",
+      "test_mse": 0.007403512640545766,
+      "test_ssim": 0.9212977737188339,
+      "H_t_binary_fraction": 0.84124755859375,
+      "pattern_delta": 0.3426414728164673,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_frequency_pc10_sr6p0_seed44",
+      "seed": 44,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "learnable_frequency",
+      "test_mse": 0.00741340914585938,
+      "test_ssim": 0.9208884090185165,
+      "H_t_binary_fraction": 0.8392868041992188,
+      "pattern_delta": 0.3408437967300415,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_spatial_pc10_sr6p0_seed42",
+      "seed": 42,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "learnable_spatial",
+      "test_mse": 0.005717263479406635,
+      "test_ssim": 0.9376760522524515,
+      "H_t_binary_fraction": 1.0,
+      "pattern_delta": 0.44273990392684937,
+      "source": "this study"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_spatial_pc10_sr6p0_seed43",
+      "seed": 43,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "learnable_spatial",
+      "test_mse": 0.0057046580671643215,
+      "test_ssim": 0.9372402230898539,
+      "H_t_binary_fraction": 1.0,
+      "pattern_delta": 0.4443086087703705,
+      "source": "this study"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_spatial_pc10_sr6p0_seed44",
+      "seed": 44,
+      "photon_count": 10.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "learnable_spatial",
+      "test_mse": 0.005700310381750266,
+      "test_ssim": 0.9374190668265024,
+      "H_t_binary_fraction": 1.0,
+      "pattern_delta": 0.44256800413131714,
+      "source": "this study"
+    },
+    {
+      "run_id": "patchmnist_noise_random_fixed_pc10000_sr0p0_seed42",
+      "seed": 42,
+      "photon_count": 10000.0,
+      "sigma_read": 0.0,
+      "pattern_mode": "random_fixed",
+      "test_mse": 0.010884614894166589,
+      "test_ssim": 0.8936946739753088,
+      "H_t_binary_fraction": 0.76873779296875,
+      "pattern_delta": 0.0,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_frequency_pc10000_sr0p0_seed42",
+      "seed": 42,
+      "photon_count": 10000.0,
+      "sigma_read": 0.0,
+      "pattern_mode": "learnable_frequency",
+      "test_mse": 0.0030056517377185323,
+      "test_ssim": 0.9696217526992162,
+      "H_t_binary_fraction": 0.7172412872314453,
+      "pattern_delta": 0.2880561649799347,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_spatial_pc10000_sr0p0_seed42",
+      "seed": 42,
+      "photon_count": 10000.0,
+      "sigma_read": 0.0,
+      "pattern_mode": "learnable_spatial",
+      "test_mse": 0.0029411710565909743,
+      "test_ssim": 0.9705042243003845,
+      "H_t_binary_fraction": 1.0,
+      "pattern_delta": 0.43074285984039307,
+      "source": "this study"
+    },
+    {
+      "run_id": "patchmnist_noise_random_fixed_pc10000_sr6p0_seed42",
+      "seed": 42,
+      "photon_count": 10000.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "random_fixed",
+      "test_mse": 0.010972827828178803,
+      "test_ssim": 0.8938902616500854,
+      "H_t_binary_fraction": 0.76873779296875,
+      "pattern_delta": 0.0,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_frequency_pc10000_sr6p0_seed42",
+      "seed": 42,
+      "photon_count": 10000.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "learnable_frequency",
+      "test_mse": 0.0031575608106019595,
+      "test_ssim": 0.9682308981815974,
+      "H_t_binary_fraction": 0.7165393829345703,
+      "pattern_delta": 0.2864300012588501,
+      "source": "table01 (frozen)"
+    },
+    {
+      "run_id": "patchmnist_noise_learnable_spatial_pc10000_sr6p0_seed42",
+      "seed": 42,
+      "photon_count": 10000.0,
+      "sigma_read": 6.0,
+      "pattern_mode": "learnable_spatial",
+      "test_mse": 0.0029338431001330414,
+      "test_ssim": 0.9708756854136785,
+      "H_t_binary_fraction": 1.0,
+      "pattern_delta": 0.4307253956794739,
+      "source": "this study"
+    }
+  ]
+}

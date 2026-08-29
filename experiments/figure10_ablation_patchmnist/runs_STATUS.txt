@@ -1,0 +1,24 @@
+[2026-08-29 14:02:07] === Fig10-PatchMNIST ablation start: A/B/C/D on PatchMNIST (3000/375/375), x16 T=4, uniform Alg1 8500 steps ===
+[2026-08-29 14:02:07] GPU0 chain PID=260472 -> A then B  (logs: train_A.log, train_B.log)
+[2026-08-29 14:02:07] GPU1 chain PID=260477 -> C then D  (logs: train_C.log, train_D.log)
+C_exit=0
+A_exit=0
+D_exit=0
+B_exit=0
+[2026-08-29 14:27:29] training finished: gpu0-chain exit=0  gpu1-chain exit=0
+[2026-08-29 14:27:29] rebuilding aggregate + rendering paper-style Figure 10 (PatchMNIST) ...
+Fig10-PatchMNIST ablation: variants=['A', 'B', 'C', 'D'] device=cuda:0 scale=1.0 cuda=True
+  phases (per variant): inverse_warmup:1500, joint_soft:4000, harden_m2:1000, harden_m4:1000, harden_m8:1000
+
+=== Fig10 aggregate ===
+  A (fixed Ht + Tr.Conv.Up + freq              ): SSIM 0.7025  MSE 0.03611
+  B (learnable Ht + Tr.Conv.Up + freq          ): SSIM 0.8939  MSE 0.01161
+  C (learnable Ht + locality + freq (paper best)): SSIM 0.9359  MSE 0.00698
+  D (learnable Ht + locality + NO freq         ): SSIM 0.9399  MSE 0.00658
+  our best (min test MSE): D  |  paper best: C  |  ordering match: False
+using test recon samples i0=9, i1=25
+wrote experiments/figure10_ablation_patchmnist/figures/figure10_paper_style.png
+wrote experiments/figure10_ablation_patchmnist/figures/figure10_table3_comparison.png
+wrote results/reproduced_figures/fig10_patchmnist/figure10_paper_style.png
+wrote results/reproduced_figures/fig10_patchmnist/figure10_table3_comparison.png
+[2026-08-29 14:27:33] === Fig10-PatchMNIST DONE: figures in experiments/figure10_ablation_patchmnist/figures/ and results/reproduced_figures/fig10_patchmnist/ ===

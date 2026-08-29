@@ -46,6 +46,9 @@ PAPER_TABLE3 = {
     "C": {"ssim": 0.8426, "mse": 0.0029},
     "D": {"ssim": 0.7857, "mse": 0.0041},
 }
+DEFAULT_DATA_LABEL = "BBBC022 Hoechst SUBSTITUTE (same data as repo Fig 3)"
+DEFAULT_SHORT_LABEL = "substitute"
+DEFAULT_TABLE_LABEL = "BBBC022 substitute, Fig-3 data"
 
 
 def _load(runs: Path, letter: str, seed: int):
@@ -79,7 +82,8 @@ def _pick_two_samples(gt: torch.Tensor) -> tuple[int, int]:
     return i0, bj
 
 
-def render_qualitative(data: dict, out_path: Path, *, i0: int, i1: int, pat_idx: int) -> None:
+def render_qualitative(data: dict, out_path: Path, *, i0: int, i1: int, pat_idx: int,
+                       data_label: str = DEFAULT_DATA_LABEL) -> None:
     fig, axes = plt.subplots(3, 4, figsize=(11.0, 8.6))
     plt.subplots_adjust(left=0.055, right=0.995, top=0.90, bottom=0.11,
                         wspace=0.03, hspace=0.03)
@@ -127,7 +131,7 @@ def render_qualitative(data: dict, out_path: Path, *, i0: int, i1: int, pat_idx:
 
     fig.suptitle(
         "Figure 10 (reproduction) - Ablation A/B/C/D at x16 (T=4, 8x8:1) on the "
-        "BBBC022 Hoechst SUBSTITUTE (same data as repo Fig 3)\n"
+        f"{data_label}\n"
         "rows: a) test recon #1   b) learned $H_t$   c) test recon #2   |   "
         "SUBSTITUTE data, NOT paper U2OS - only A/B/C/D ordering is comparable",
         fontsize=10.5)
@@ -136,7 +140,8 @@ def render_qualitative(data: dict, out_path: Path, *, i0: int, i1: int, pat_idx:
     print(f"wrote {out_path}", flush=True)
 
 
-def render_table3(data: dict, out_path: Path) -> None:
+def render_table3(data: dict, out_path: Path, *, table_label: str = DEFAULT_TABLE_LABEL,
+                  short_label: str = DEFAULT_SHORT_LABEL) -> None:
     ours_ssim = [data[L]["test_ssim"] for L in LETTERS]
     ours_mse = [data[L]["test_mse"] for L in LETTERS]
     paper_ssim = [PAPER_TABLE3[L]["ssim"] for L in LETTERS]
@@ -163,10 +168,10 @@ def render_table3(data: dict, out_path: Path) -> None:
     # highlight C row
     for j in range(5):
         tbl[3, j].set_facecolor("#e2f4e2")
-    axt.set_title("Table 3 comparison\n(substitute vs paper-U2OS)", fontsize=10)
+    axt.set_title(f"Table 3 comparison\n({short_label} vs paper-U2OS)", fontsize=10)
 
     ax1.bar(x - w / 2, [s if s is not None else 0 for s in ours_ssim], w,
-            label="ours (substitute)", color="#4a90d9")
+            label=f"ours ({short_label})", color="#4a90d9")
     ax1.bar(x + w / 2, paper_ssim, w, label="paper (U2OS)", color="#bbbbbb")
     ax1.set_xticks(x)
     ax1.set_xticklabels(LETTERS)
@@ -175,7 +180,7 @@ def render_table3(data: dict, out_path: Path) -> None:
     ax1.grid(True, axis="y", alpha=0.3)
 
     ax2.bar(x - w / 2, [m if m is not None else 0 for m in ours_mse], w,
-            label="ours (substitute)", color="#4a90d9")
+            label=f"ours ({short_label})", color="#4a90d9")
     ax2.bar(x + w / 2, paper_mse, w, label="paper (U2OS)", color="#bbbbbb")
     ax2.set_xticks(x)
     ax2.set_xticklabels(LETTERS)
@@ -184,7 +189,7 @@ def render_table3(data: dict, out_path: Path) -> None:
     ax2.grid(True, axis="y", alpha=0.3)
 
     fig.suptitle(
-        "Figure 10 / Table 3 ablation - ours (BBBC022 substitute, Fig-3 data) vs paper (U2OS). "
+        f"Figure 10 / Table 3 ablation - ours ({table_label}) vs paper (U2OS). "
         "Magnitudes differ (different data); compare the A->B->C ORDERING.",
         fontsize=10)
     fig.tight_layout(rect=[0, 0, 1, 0.93])
@@ -201,6 +206,14 @@ def main() -> None:
     ap.add_argument("--i1", type=int, default=-1, help="test index for recon row c (-1=auto)")
     ap.add_argument("--pattern-index", type=int, default=0)
     ap.add_argument("--out-dir", default=str(EXP / "figures"))
+    ap.add_argument("--data-label", default=DEFAULT_DATA_LABEL,
+                    help="dataset description used in the qualitative-panel title")
+    ap.add_argument("--table-label", default=DEFAULT_TABLE_LABEL,
+                    help="dataset description used in the Table-3 comparison title")
+    ap.add_argument("--short-label", default=DEFAULT_SHORT_LABEL,
+                    help="short dataset tag used in the Table-3 legends")
+    ap.add_argument("--mirror-dir", default=str(ROOT / "results/reproduced_figures/fig10"),
+                    help="second directory the figures are rendered into ('' to skip)")
     args = ap.parse_args()
 
     runs = Path(args.runs)
@@ -224,15 +237,18 @@ def main() -> None:
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     render_qualitative(data, out_dir / "figure10_paper_style.png",
-                       i0=i0, i1=i1, pat_idx=args.pattern_index)
-    render_table3(data, out_dir / "figure10_table3_comparison.png")
+                       i0=i0, i1=i1, pat_idx=args.pattern_index, data_label=args.data_label)
+    render_table3(data, out_dir / "figure10_table3_comparison.png",
+                  table_label=args.table_label, short_label=args.short_label)
 
     # mirror into the shared reproduced-figures dir
-    shared = ROOT / "results/reproduced_figures/fig10"
-    shared.mkdir(parents=True, exist_ok=True)
-    render_qualitative(data, shared / "figure10_paper_style.png",
-                       i0=i0, i1=i1, pat_idx=args.pattern_index)
-    render_table3(data, shared / "figure10_table3_comparison.png")
+    if args.mirror_dir:
+        shared = Path(args.mirror_dir)
+        shared.mkdir(parents=True, exist_ok=True)
+        render_qualitative(data, shared / "figure10_paper_style.png",
+                           i0=i0, i1=i1, pat_idx=args.pattern_index, data_label=args.data_label)
+        render_table3(data, shared / "figure10_table3_comparison.png",
+                      table_label=args.table_label, short_label=args.short_label)
 
 
 if __name__ == "__main__":

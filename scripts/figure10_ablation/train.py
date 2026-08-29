@@ -59,6 +59,16 @@ PAPER_TABLE3 = {
     "D": {"ssim": 0.7857, "mse": 0.0041},
 }
 
+DEFAULT_AGG_LABEL = (
+    "Figure 10 / Table 3 ablation on BBBC022 Hoechst SUBSTITUTE (Fig-3 data) "
+    "- NOT paper U2OS reproduction; only A/B/C/D ORDERING is meaningful."
+)
+DEFAULT_AGG_DATA = {
+    "dataset": "bbbc022_preproc_ablation (minimal_percentile)",
+    "split": "split_fig03_large (well-disjoint 1980/40/60)",
+    "compression": "x16 (d=8, T=4)",
+}
+
 
 def _stats(values: list[float]) -> dict:
     vals = [v for v in values if v is not None]
@@ -71,7 +81,14 @@ def _stats(values: list[float]) -> dict:
     }
 
 
-def write_aggregate(out_root: Path, rows: list[dict], seeds: list[int]) -> None:
+def write_aggregate(
+    out_root: Path,
+    rows: list[dict],
+    seeds: list[int],
+    *,
+    label: str = DEFAULT_AGG_LABEL,
+    data: dict | None = None,
+) -> None:
     by_variant: dict[str, list[dict]] = {}
     for r in rows:
         by_variant.setdefault(r["variant"], []).append(r)
@@ -90,15 +107,8 @@ def write_aggregate(out_root: Path, rows: list[dict], seeds: list[int]) -> None:
     if present:
         best_letter = min(present, key=lambda L: present[L]["test_mse"]["mean"])
     out = {
-        "label": (
-            "Figure 10 / Table 3 ablation on BBBC022 Hoechst SUBSTITUTE (Fig-3 data) "
-            "- NOT paper U2OS reproduction; only A/B/C/D ORDERING is meaningful."
-        ),
-        "data": {
-            "dataset": "bbbc022_preproc_ablation (minimal_percentile)",
-            "split": "split_fig03_large (well-disjoint 1980/40/60)",
-            "compression": "x16 (d=8, T=4)",
-        },
+        "label": label,
+        "data": dict(DEFAULT_AGG_DATA if data is None else data),
         "seeds": seeds,
         "aggregate": agg,
         "our_best_variant_by_test_mse": best_letter,

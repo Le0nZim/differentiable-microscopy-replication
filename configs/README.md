@@ -9,11 +9,13 @@ YAML grouped by paper slug. Shared bases and splits live in `_shared/`.
 | `_shared/base_mcf7.yaml` | MCF7 helpers |
 | `_shared/splits/` | Figure 3 large split and related JSON |
 | `table01_noise_robustness/noise_table.yaml` | Table 1 / Figure 6 |
+| `figure06_noise_robustness_no_freq/noise_table.yaml` | Figure 6 / Table 1 corners without freq-domain opt |
 | `table02_swinir_sr/full.yaml` | Table 2 / Figure 7 |
 | `figure03_content_aware/` | Figure 3 SwinIR stage |
 | `figure04_segmentation/` | Figure 4 task-aware + stage-1 |
 | `figure05_upsampling/base.yaml` | Figure 5 grid |
 | `figure08_mcf7/` | Figures 8–9 |
 | `figure10_ablation/ablation.yaml` | Figure 10 |
+| `figure10_ablation_patchmnist/ablation.yaml` | Figure 10 A/B/C/D on PatchMNIST (Fig-6 / Table-1 data) |
 
 Superseded YAML: [`archive/configs/`](../archive/configs/).

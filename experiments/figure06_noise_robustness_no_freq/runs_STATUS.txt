@@ -1,0 +1,17 @@
+[2026-08-29 15:19:32] === Fig6/Table1 NO-FREQ sweep start: learnable_spatial, cells=corners ===
+[2026-08-29 15:19:32] GPU0 shard0 PID=279419 (log: shard0.log)
+[2026-08-29 15:19:32] GPU1 shard1 PID=279423 (log: shard1.log)
+[2026-08-29 16:28:47] training finished: shard0 exit=0  shard1 exit=0
+[2026-08-29 16:28:47] aggregating against frozen Table-1 baselines ...
+Device: cuda:0
+Config: /home/leonidas/workspace/differentiable_micoscopy_replication/github_repo/configs/figure06_noise_robustness_no_freq/noise_table.yaml
+Output: /home/leonidas/workspace/differentiable_micoscopy_replication/github_repo/experiments/figure06_noise_robustness_no_freq  (baselines read from /home/leonidas/workspace/differentiable_micoscopy_replication/github_repo/experiments/table01_noise_robustness)
+Wrote /home/leonidas/workspace/differentiable_micoscopy_replication/github_repo/experiments/figure06_noise_robustness_no_freq/results.json
+Gates: {
+  "cells_compared": 4,
+  "spatial_beats_frequency_all_cells": true,
+  "spatial_beats_random_all_cells": true,
+  "spatial_beats_frequency_at_extreme_cell_meanseed": true,
+  "median_ratio_spatial_over_frequency": 0.8500163020415619
+}
+[2026-08-29 16:28:56] === NO-FREQ sweep DONE: experiments/figure06_noise_robustness_no_freq/results.md, results.json, plots/ ===

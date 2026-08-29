@@ -1,0 +1,105 @@
+# Figure 6 / Table 1 noise robustness WITHOUT frequency-domain optimization.
+#
+# Byte-for-byte identical to configs/table01_noise_robustness/noise_table.yaml
+# except for one line:
+#
+#     pattern_generator.mode: learnable_frequency  ->  learnable_spatial
+#
+# Motivation: Table 1 / Figure 6 compare `random_fixed` against
+# `learnable_frequency`, so the learnable arm of the published noise-robustness
+# result carries the paper's frequency-domain parameterization (eq. 6,
+# tau = real(ifft(W))). The Figure-10 ablation found that dropping that
+# parameterization in favour of a direct spatial one (`learnable_spatial`, the
+# paper's variant D) *improves* reconstruction on both BBBC022 and PatchMNIST.
+# This config adds the missing third arm to the noise sweep so the same question
+# can be asked under detector noise: does removing frequency-domain optimization
+# also help in the low-photon / high-read-noise regime?
+#
+# `learnable_spatial` is the same knob variant D uses in
+# configs/figure10_ablation*/ablation.yaml, and it trains through the identical
+# staged-hardening path (inverse warmup -> joint soft -> m hardening 2/4/8),
+# because PatternGenerator.patterns_are_learnable() covers both learnable modes.
+#
+# Runs are written to experiments/figure06_noise_robustness_no_freq/; the frozen
+# Table-1 outputs are never touched and are read back only for comparison.
+
+experiment:
+  seed: 42
+  device: cuda:0
+  alignment_mode: paper
+  checkpoint_policy: best_val
+  checkpoint_policy_note: "best_val is an implementation choice"
+  results_csv: experiments/figure06_noise_robustness_no_freq/results.csv
+
+dataset:
+  name: patchmnist
+  data_root: data/mnist
+  image_size: 256
+  digit_size: 32
+  grid_size: 20
+  num_train: 3000
+  num_val: 375
+  num_test: 375
+  seed: 42
+  download: true
+  disjoint_val_test: true
+
+pattern_generator:
+  mode: learnable_spatial            # <-- the ONLY change vs Table 1 (was learnable_frequency)
+  num_patterns: 8
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1
+  m_init: 1.0
+
+forward_model:
+  downscale_factor: 8
+  use_impulse_psfs: true
+  ex_psf_kernel_size: 3
+  em_psf_kernel_size: 3
+
+detector_noise:
+  mode: differentiable_poisson_plus_read
+  noise_normalization: paper_v3
+  photon_count: 10000.0
+  gamma_background: 10.0
+  gamma: 10.0
+  sigma_read: 0.0
+  apply_noise: true
+
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 8
+    num_patterns: 8
+    use_mixing_cnn: false
+    mixing_hidden_channels: 16
+  reconstruction:
+    in_channels: 8
+    hidden_channels: [64, 64, 32, 32, 16, 1]
+    kernel_size: 3
+    padding: 1
+
+training:
+  batch_size: 32
+  log_every: 500
+  paper_illumination_lr: 1.0
+  stable_illumination_lr: 0.3
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  gradient_clip_norm: 1.0
+  sharpen_eval_m: 10.0
+  loss: l1
+  learn_patterns: true
+  max_steps: 7350
+  fixed_sigmoid_m: 1.0
+  staged_hardening:
+    inverse_warmup_steps: 3000
+    joint_soft_steps: 7350
+    harden_m_values: [2, 4, 8]
+    harden_steps_per_m: 1500

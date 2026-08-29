@@ -1,0 +1,128 @@
+{
+  "label": "Figure 10 / Table 3 ablation on PatchMNIST (the Fig-6 / Table-1 data) - NOT paper U2OS reproduction; only A/B/C/D ORDERING is meaningful.",
+  "data": {
+    "dataset": "patchmnist (256px canvas, 32px digits, 20x20 grid; no extra preprocessing)",
+    "split": "3000 train / 375 val / 375 test, disjoint_val_test digit pools",
+    "compression": "x16 (d=8, T=4)",
+    "source_of_data_block": "configs/table01_noise_robustness/noise_table.yaml",
+    "noise": "noise_free (Fig-10 ablation protocol; only the data was swapped)"
+  },
+  "seeds": [
+    42
+  ],
+  "aggregate": {
+    "A": {
+      "label": "fixed Ht + Tr.Conv.Up + freq",
+      "test_ssim": {
+        "mean": 0.7024870564540228,
+        "std": 0.0,
+        "n": 1
+      },
+      "test_mse": {
+        "mean": 0.036113859154284,
+        "std": 0.0,
+        "n": 1
+      },
+      "best_val_mse": {
+        "mean": 0.035760545482238136,
+        "std": 0.0,
+        "n": 1
+      },
+      "overfit_gap": {
+        "mean": -7.998446623484062e-05,
+        "std": 0.0,
+        "n": 1
+      }
+    },
+    "B": {
+      "label": "learnable Ht + Tr.Conv.Up + freq",
+      "test_ssim": {
+        "mean": 0.8939081380764643,
+        "std": 0.0,
+        "n": 1
+      },
+      "test_mse": {
+        "mean": 0.011611419652278224,
+        "std": 0.0,
+        "n": 1
+      },
+      "best_val_mse": {
+        "mean": 0.011477186111733317,
+        "std": 0.0,
+        "n": 1
+      },
+      "overfit_gap": {
+        "mean": 0.00026134750805795193,
+        "std": 0.0,
+        "n": 1
+      }
+    },
+    "C": {
+      "label": "learnable Ht + locality + freq (paper best)",
+      "test_ssim": {
+        "mean": 0.9358704636494318,
+        "std": 0.0,
+        "n": 1
+      },
+      "test_mse": {
+        "mean": 0.00697937091657271,
+        "std": 0.0,
+        "n": 1
+      },
+      "best_val_mse": {
+        "mean": 0.006929546012543142,
+        "std": 0.0,
+        "n": 1
+      },
+      "overfit_gap": {
+        "mean": 0.00036740757059305906,
+        "std": 0.0,
+        "n": 1
+      }
+    },
+    "D": {
+      "label": "learnable Ht + locality + NO freq",
+      "test_ssim": {
+        "mean": 0.9399226307868958,
+        "std": 0.0,
+        "n": 1
+      },
+      "test_mse": {
+        "mean": 0.006576893695940574,
+        "std": 0.0,
+        "n": 1
+      },
+      "best_val_mse": {
+        "mean": 0.006509147002361715,
+        "std": 0.0,
+        "n": 1
+      },
+      "overfit_gap": {
+        "mean": 0.0002509466139599681,
+        "std": 0.0,
+        "n": 1
+      }
+    }
+  },
+  "our_best_variant_by_test_mse": "D",
+  "paper_table3_u2os": {
+    "A": {
+      "ssim": 0.7872,
+      "mse": 0.0042
+    },
+    "B": {
+      "ssim": 0.795,
+      "mse": 0.0038
+    },
+    "C": {
+      "ssim": 0.8426,
+      "mse": 0.0029
+    },
+    "D": {
+      "ssim": 0.7857,
+      "mse": 0.0041
+    }
+  },
+  "paper_best_variant": "C",
+  "ordering_matches_paper_best": false
+}

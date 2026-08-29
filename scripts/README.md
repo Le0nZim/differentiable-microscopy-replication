@@ -12,6 +12,8 @@ Each subdirectory is a paper slug. Shared launchers live in `_shared/`.
 | [`figure05_upsampling/`](figure05_upsampling/) | `run.py`, `launch.sh` |
 | [`figure08_mcf7/`](figure08_mcf7/) | `train.py`, `reproduce_fig8.py`, `reproduce_fig9.py` |
 | [`figure10_ablation/`](figure10_ablation/) | `train.py`, `reproduce.py` |
+| [`figure10_ablation_patchmnist/`](figure10_ablation_patchmnist/) | `train.py` (renders via `figure10_ablation/reproduce.py`) |
+| [`figure06_noise_robustness_no_freq/`](figure06_noise_robustness_no_freq/) | `run.py`, `launch.sh` |
 | [`_shared/`](_shared/) | Table 1+2 two-GPU launcher, figure export |
 
 Commands and configs: `paper/<slug>/README.md`.
