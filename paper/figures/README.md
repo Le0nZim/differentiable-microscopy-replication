@@ -7,7 +7,7 @@ Every item is a single smallest part — never a composite. Assemble in PowerPoi
 - `plots/` — vector graphs (Arial)
 - `symbols/` / `labels/` / `scale_bars/` — legend glyphs, text, unlabeled bar templates
 
-Where a `*_fixed` folder exists, that is the published variant (clean split). Figure 4 ships both `paper_strict` and calibrated-preprocessing (`figure04_segmentation_new_pre`).
+Where a `*_fixed` folder exists, that is the published variant (clean split). Figure 4 is `figure04_segmentation` from `experiments/figure4_bbbc022_segmentation_fix_v1`.
 
 Rebuild:
 

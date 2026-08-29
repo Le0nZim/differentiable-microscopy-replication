@@ -10,8 +10,7 @@ cross-linked when two paper items share a run (Table 1 ↔ Fig. 6, Table 2 ↔ F
 Fig. 8 ↔ Fig. 9).
 
 Where a `*_fixed` variant existed, **only that folder is kept** (clean val/test
-splits). `figure04_segmentation_new_pre` is a calibrated-preprocessing retrain, not
-a `*_fixed` twin; both Fig. 4 folders are included.
+splits). Figure 4 is the `figure4_bbbc022_segmentation_fix_v1` iteration.
 
 ## Catalog
 
@@ -22,7 +21,6 @@ a `*_fixed` twin; both Fig. 4 folders are included.
 | Table 3 | data_blocked | [`paper/tables/table03_ablation`](paper/tables/table03_ablation) | `experiments/ablations/am3_table3_resolution` |
 | Figure 3 | data_blocked | [`paper/figures/figure03_content_aware`](paper/figures/figure03_content_aware) | `experiments/ablations/bbbc022_content_aware_v2` + `experiments/figure3_bbbc022_swinir_fix_v1` |
 | Figure 4 | data_blocked | [`paper/figures/figure04_segmentation`](paper/figures/figure04_segmentation) | `experiments/figure4_bbbc022_segmentation_fix_v1` + frozen `experiments/task_aware_segmentation/am2_task_aware_full` |
-| Figure 4 (calibrated) | data_blocked | [`paper/figures/figure04_segmentation_new_pre`](paper/figures/figure04_segmentation_new_pre) | `experiments/figure4_bbbc022_segmentation_calibrated_v1` |
 | Figure 5 | aligned | [`paper/figures/figure05_upsampling_fixed`](paper/figures/figure05_upsampling_fixed) | `experiments/upsampling_ablation/patchmnist_upsampling_analysis_fixed` |
 | Figure 6 | close | [`paper/figures/figure06_noise_robustness_fixed`](paper/figures/figure06_noise_robustness_fixed) | same as Table 1 |
 | Figure 7 | close | [`paper/figures/figure07_swinir_standard_sr_fixed`](paper/figures/figure07_swinir_standard_sr_fixed) | same as Table 2 |

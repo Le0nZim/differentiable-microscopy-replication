@@ -1,6 +1,0 @@
-{
-  "seed": 42,
-  "git_commit": "unknown",
-  "run_id": "taskaware_x64_learnable_frequency_stage1",
-  "training_mode": "staged_hardening"
-}

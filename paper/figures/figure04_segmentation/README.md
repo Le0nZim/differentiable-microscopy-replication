@@ -1,10 +1,8 @@
-# Figure 4 — Segmentation-aware sampling (`paper_strict` preprocessing)
+# Figure 4 — Segmentation-aware sampling
 
 - **Paper section:** 5.3
 - **Status:** **data_blocked** (U2OS unavailable; BBBC022 Hoechst substitute). Learnable Dice > fixed at x64 / x256 / x1024 on the substitute.
-- **Preferred visual assets for calibrated preprocessing:** sibling folder [`figure04_segmentation_new_pre`](../figure04_segmentation_new_pre/).
-
-This folder is the paper-strict preprocessing constituent set (includes the extra GT-as-model-input strip).
+- **Canonical experiment:** `experiments/figure4_bbbc022_segmentation_fix_v1/` (`paper_strict` preprocessing).
 
 ## Run trees
 
