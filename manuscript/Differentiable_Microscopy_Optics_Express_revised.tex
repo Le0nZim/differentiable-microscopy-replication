@@ -1,0 +1,548 @@
+\documentclass{optica-article}
+
+\journal{opticajournal} % for journals or Optica Open
+
+\articletype{Research Article}
+
+\usepackage{lineno}
+\usepackage[section]{placeins}
+\linenumbers % Turn off line numbering for Optica Open preprint submissions.
+
+% Search for REPORTING PLACEHOLDER before submission and replace every instance.
+\newcommand{\reportingplaceholder}[1]{\textbf{[REPORTING PLACEHOLDER: #1]}}
+
+\begin{document}
+
+\title{Differentiable microscopy for content- and task-aware compressive fluorescence imaging}
+
+\author{Leonidas Zimianitis,\authormark{1}
+Udith Haputhanthri,\authormark{2}
+Andrew Seeber,\authormark{3}
+and Dushan N. Wadduwage\authormark{1,4,5,*}}
+
+\address{\authormark{1}Department of Computer Science, Old Dominion University, Norfolk, VA 23529, USA\\
+\authormark{2}Department of Electrical and Computer Engineering, Princeton University, Princeton, NJ 08544, USA\\
+\authormark{3}Transition Bio, Inc., Cambridge, MA, USA\\
+\authormark{4}School of Data Science, Old Dominion University, Norfolk, VA 23529, USA\\
+\authormark{5}Department of Physics, Old Dominion University, Norfolk, VA 23529, USA}
+
+\email{\authormark{*}dwadduwa@odu.edu}
+
+\begin{abstract*}
+The trade-off between throughput and image quality is an inherent challenge in microscopy. To improve throughput, compressive imaging under-samples image signals; the images are then computationally reconstructed by solving a regularized inverse problem. Compared with traditional regularizers, deep-learning-based methods have achieved greater success in compression and image quality. However, information lost during acquisition sets the compression bounds, so further increasing compression without compromising reconstruction quality remains challenging. In this work, we propose differentiable compressive fluorescence microscopy ($\partial \mu$), which combines a differentiable, parameterized forward model with learnable physical parameters (e.g., illumination patterns) and a physics-inspired inverse model. The cascaded model is end-to-end differentiable and learns compressive sampling schemes from training data. Numerical experiments show that learned sampling encodes specimen-relevant information in the illumination patterns and supports reconstruction at compression factors up to $\times 1024$. We further use the framework for task-aware compression. The numerical results show improved performance on the cell-segmentation task.
+
+\end{abstract*}
+
+\section{Introduction}
+
+Modern biologists and clinicians rely on high-throughput microscopy to diagnose disease, discover drugs, and map neural circuits. These applications routinely produce gigabyte-scale image datasets, while advances in optical design, scanning stages, and multiplexed sensors continue to increase acquisition rates. Yet terabyte-scale microscopy still strains current systems. Tissue-clearing methods can render an entire mouse brain transparent, but acquiring diffraction-limited images throughout that volume can still take weeks. Researchers must therefore choose between imaging faster at lower resolution and resolving finer biological detail at lower throughput.
+
+Learned computational imaging offers a way to relax this trade-off. These systems combine a physical forward model with a computational inverse model and may optimize parameters of both jointly \cite{chakrabarti2016learning,cheng2019illumination,cooke2021physics, diamond2021dirty,hershko2019multicolor,kellman2019data}. The forward model describes how the microscope illuminates the specimen and converts emitted photons into measurements; the inverse model reconstructs specimen structure from those compressed measurements. By mapping the optical signal into a lower-dimensional measurement space, compressive acquisition can reduce data volume or the number of sequential exposures, depending on the instrument architecture. Compression, however, makes the inverse problem ill posed because distinct specimens may produce the same measurement \cite{pronina2020microscopy}. Classical compressive sensing constrains the solution with sparsity-based priors \cite{candes2008introduction, donoho2006compressed, duarte2008single, studer2012compressive}. In microscopy, inverse methods range from classical deconvolution algorithms \cite{schaefer2001generalized, van1997quantitative, verveer1999comparison} to content-aware neural restoration \cite{weigert2018content}; learned reconstruction pipelines often adapt general image-to-image translation or super-resolution architectures \cite{isola2017image, liang2021swinir}. Regardless of its architecture, however, an inverse model can recover only information preserved during optical encoding.
+
+Historically, compressive imagers sampled light randomly or used engineered orthogonal patterns, such as Hadamard bases. Recent work has instead coupled optical design with machine learning to jointly optimize how instruments encode scenes and how algorithms recover them. Researchers have optimized camera color multiplexing \cite{chakrabarti2016learning}, illumination for Fourier ptychography \cite{cheng2019illumination,kellman2019data,sun2023unsupervised}, and refractive and diffractive optical elements for computational imaging \cite{sitzmann2018end,peng2019learned,sun2020end,sun2020diff}. Related work has extended learned sensing to programmable microwave
+metasurface transceivers \cite{del2020learned}. In microscopy, learned optical encoding has enabled virtual fluorescence prediction \cite{cooke2021physics}, phase-contrast and quantitative-phase imaging \cite{diederich2018using,kellman2019physics}, task-specific cell classification \cite{chaware2020towards,horstmeyer2017convolutional,kim2020multi,muthumbi2019learned}, and spectral discrimination through learned point-spread-function engineering \cite{hershko2019multicolor}. More recent systems have jointly optimized spectral reflectance acquisition and reconstruction with hardware validation \cite{sha2025spectral}, co-designed binary pupil filters and deconvolution networks for extended-depth-of-field fluorescence microscopy \cite{seong2023e2e}, and used automatic differentiation to search over microscopy layouts \cite{rodriguez2024automated}. Together, these studies show that optical encoding need not be designed independently of the specimen distribution or downstream computational task.
+
+This shift toward learned optical encoding has also reached patterned excitation in compressive fluorescence microscopy, where spatial illumination patterns encode specimen information before detection. Studer et al. projected spatially structured illumination onto fluorescent specimens with a digital micromirror device (DMD) and used a single-point detector to acquire compressed measurements from which images were reconstructed \cite{studer2012compressive}. Wang et al. subsequently co-optimized a stochastic sensing policy and a U-Net reconstruction model subject to an average total measurement budget \cite{wang2021joint}. Their learned Bernoulli parameters determine how repeated measurements are allocated among coefficients of a fixed Hadamard basis. Each selected coefficient is still acquired as the difference between two complementary binary DMD exposures associated with that Hadamard row. In contrast to Wang et al., we optimize the spatial values of the excitation patterns themselves rather than only the allocation of measurements within a fixed sensing basis. Each trainable pattern weights the specimen spatially, and detector integration after demagnification produces a lower-resolution detector frame. A sequence of such frames therefore constitutes a physical encoder whose spatial structure determines which specimen information remains identifiable after compression. By differentiating through this image-formation model, we jointly train the optical encoder and the reconstruction or segmentation network to retain information useful for the target output. Because the preferred sensing strategy depends on the assumed measurement statistics, we include differentiable content-dependent Poisson noise and signal-independent Gaussian read noise during optimization \cite{wang2021joint}; probabilistic sensor selection within a noisy differentiable forward model provides a broader precedent for this noise-aware design principle \cite{sun2020learning}.
+
+We hypothesize that, within a fixed measurement budget, a microscope can improve reconstruction and task performance by learning its optical encoder through a physically constrained image-formation model. To test this hypothesis, we develop an end-to-end differentiable fluorescence-microscopy framework that jointly optimizes excitation patterns and the computational inverse model. To drive the excitation values toward binary patterns suitable for digital-micromirror-device implementation, the forward model applies a scheduled sigmoid to continuous spatial logits. We separately evaluate a full-spectrum Fourier reparameterization of those logits as a numerical optimization choice rather than as an optical mechanism. The model also incorporates differentiable stochastic descriptions of content-dependent Poisson noise and detector-dependent read noise. The inverse model uses a locality-aware, physics-motivated upsampling block to decode the spatial information combined within each detector pixel. Although we focus here on excitation-pattern optimization, the same framework can expose other optical parameters to backpropagation, including trainable point-spread functions that represent diffractive elements.
+
+Across numerical reconstruction experiments, learned content-aware patterns outperform uniform, pseudo-random, and Hadamard sampling on our custom PatchMNIST dataset at $\times 8$ compression and on BBBC022 Hoechst widefield fluorescence images from $\times 16$ to $\times 1024$, with the advantage increasing at higher compression on BBBC022. The locality-aware upsampling block also outperforms conventional transposed convolution for every evaluated image size and training-set size. Replacing the reconstruction network with SwinIR further shows that learned illumination improves grayscale reconstruction across five standard super-resolution benchmarks. Finally, optimizing the acquisition for segmentation produces task-aware patterns that outperform pseudo-random illumination at every evaluated compression ratio. A corrected PatchMNIST ablation confirms the gains from learned illumination and locality-aware upsampling and finds no benefit from the full-spectrum Fourier reparameterization under the evaluated protocol.
+
+\section{Methods}
+
+\subsection{Optical architecture and compression principle}
+
+Eq.~(\ref{eq:widefield-image}) describes the two-dimensional forward model of a widefield fluorescence microscope.
+
+\begin{equation}
+\alpha = \mathrm{emPSF} * X,
+\label{eq:widefield-image}
+\end{equation}
+
+where $*$ denotes convolution, $X$ is the specimen (the ground-truth image), $\mathrm{emPSF}$ is the emission point-spread function (PSF), and $\alpha$ is the resulting image \cite{marian2005measurement}.
+
+De-scattering with Excitation Patterning (DEEP) is a structured-illumination method proposed by Zheng et al. \cite{zheng2021scattering} for imaging through scattering tissue. DEEP uses multiple excitation patterns to encode high spatial frequencies into the passband of the scattering system. We adapt this encoding principle to a compressive setting: optical demagnification integrates the encoded image locally before detection and thereby reduces the measurement dimensionality.
+
+We propose \textit{end-to-end differentiable microscopy} ($\partial \mu$) to optimize parameters of a computational microscope for a specified objective. We study a coded-illumination architecture related to DEEP \cite{zheng2021scattering}; Fig.~\ref{fig:framework} shows the conceptual optical layout. A digital micromirror device (DMD), placed in a conjugate image plane of the illumination path, projects a structured excitation pattern onto the specimen. The fluorescence signal is imaged onto a multipixel photodetector. Depending on the magnification, each detector pixel integrates fluorescence associated with multiple DMD pixels and therefore compresses the spatial signal. Single-pixel and widefield detection arise as limiting cases of this parameterization.
+
+Let the specimen contain $N_xN_y$ spatial samples, let each detector frame contain $N_{d,x}N_{d,y}$ scalar values, and let $T$ denote the number of displayed excitation patterns. We define the compression factor as
+
+\begin{equation}
+    C = \frac{N_xN_y}{T N_{d,x}N_{d,y}}
+      = \frac{d_xd_y}{T},
+    \label{eq:compression}
+\end{equation}
+
+where $d_x=N_x/N_{d,x}$ and $d_y=N_y/N_{d,y}$ are the linear demagnification factors. For square demagnification by a factor $d$, $C=d^2/T$. Thus, $C$ is the ratio of specimen spatial samples to scalar measurements in the complete pattern sequence. The PatchMNIST $\times8$ experiments use $T=8$ and $d=8$. The BBBC022 sweep holds $T=4$ and uses $d=8$, $16$, $32$, and $64$ for $\times16$, $\times64$, $\times256$, and $\times1024$, respectively; the MCF7 and super-resolution experiments use $T=4$ and $d=8$ for $\times16$. This definition measures sample-count reduction. Acquisition time and photon dose also depend on the number and duration of exposures and on detector operation.
+
+Random or engineered DMD patterns traditionally encode the signal before detection. Our end-to-end framework instead learns these patterns together with the inverse model. The differentiable forward model contains an excitation-pattern network, an optical-demagnification model, and a photodetector model. The inverse model contains an upsampling network and a reconstruction network. Fig.~\ref{fig:framework} summarizes the framework and the downsampling and upsampling operations.
+
+In the following subsections, we discuss the forward image-formation model, the learnable excitation-pattern parameterization, optical demagnification and detector noise, locality-aware inverse reconstruction, and end-to-end training.
+
+\subsection{Forward image-formation model}
+
+Eqs.~(\ref{eq:forward-image}) and~(\ref{eq:demagnification}) show the mathematical model of the proposed microscope.
+
+\begin{equation}
+\alpha_t(x,y) = \mathrm{emPSF}(x,y) *
+\left\{
+\left(
+\mathrm{exPSF}(x,y) * H_t(x,y)
+\right)
+\circ X(x,y)
+\right\},
+\label{eq:forward-image}
+\end{equation}
+
+\begin{equation}
+\alpha_{\mathrm{down},t}(x,y) = \operatorname{demag}(\alpha_t(x,y)).
+\label{eq:demagnification}
+\end{equation}
+
+Here, $H_t$ is the $t$th excitation pattern, $X(x,y)$ is the specimen, and $\alpha_t(x,y)$ and $\alpha_{\mathrm{down},t}(x,y)$ are the pattern-encoded images before and after demagnification, respectively. The operators $\operatorname{demag}(\cdot)$ and $\circ$ denote optical demagnification and pixel-wise multiplication. Unless otherwise specified, the excitation and emission PSFs are discrete impulse kernels. During optimization, $H_t$ is the relaxed excitation pattern; its final binarized counterpart is the intended DMD pattern. The corresponding $\alpha_{\mathrm{down},t}$ forms the input to the photodetector model.
+
+We implement the image-formation model with differentiable operators so that backpropagation can update its learnable parameters.
+
+\begin{figure}[t]
+    \centering
+    % FIGURE TODO: In the source artwork, replace the W -> IFFT block with
+    % directly learned spatial logits tau_t -> scheduled sigmoid; reserve the
+    % Fourier-coordinate path for the ablation. Also standardize "photodetector,"
+    % change W_{i,j} to W_{t,i,j}, identify the mixing CNN as optional, and
+    % verify that the smallest labels and inset equation remain legible.
+    \includegraphics[width=\textwidth]{figures/Figure1.pdf}
+    \caption{End-to-end differentiable compressive fluorescence microscopy.
+    The excitation-pattern optimization network maps learnable spatial logits
+    $\tau_t$ through a scheduled sigmoid to produce relaxed excitation patterns
+    $H_t\in[0,1]$ that approach binary modulation.
+    In the forward model, the sample $X$
+    is encoded by the optical operator $A$, which incorporates the excitation
+    and emission point-spread functions, to form $\alpha_t$. Optical
+    demagnification locally integrates $\alpha_t$ to obtain
+    $\alpha_{\mathrm{down},t}$, and detector noise produces the measurement
+    $y_{\mathrm{down},t}$. In the inverse model, the locality-aware upsampler
+    projects each detector pixel $y_{\mathrm{down},t}(i,j)$ with a
+    pattern- and location-specific matrix $W_{t,i,j}$, reshapes the result into a
+    high-resolution patch, tiles the patches, and can apply a mixing CNN to form
+    the $T$-channel representation $y_t$. The restoration network $\psi$ then
+    reconstructs $X_{\mathrm{recon}}$. Insets show the conceptual optical layout, the
+    local-integration model of demagnification, and the upsampling block.}
+    \label{fig:framework}
+\end{figure}
+
+\subsection{Learnable spatial excitation-pattern parameterization}
+Because a DMD displays binary patterns, direct optimization of its binary states is not differentiable. We therefore optimize continuous spatial logits $\tau_t$ and use a scheduled sigmoid to drive the corresponding pattern values toward zero and one. This separates the physically meaningful relaxed pattern $H_t$ from the numerical coordinates used to update it.
+
+We use a \textit{scheduled sigmoid activation} to drive the excitation patterns toward binary values:
+
+\begin{equation}
+    \sigma'(m,x) = \frac{1}{1 + e^{-mx}}.
+    \label{eq:custom-sigmoid}
+\end{equation}
+
+Eq.~(\ref{eq:custom-sigmoid}) differs from a conventional sigmoid activation~\cite{nwankpa2018activation} through the slope parameter $m$. During end-to-end training, we increase $m$ according to a fixed schedule, which progressively concentrates the pattern values near zero and one.
+
+The schedule in Supplement~1 stabilizes training and specifies how $m$ changes during optimization.
+
+Eq.~(\ref{eq:pattern-custom-sigmoid}) gives the resulting excitation patterns:
+
+\begin{equation}
+    H_t = \sigma'(m,\tau_t).
+    \label{eq:pattern-custom-sigmoid}
+\end{equation}
+
+For direct spatial optimization, $\tau_t$ is itself the trainable parameter and is initialized as
+
+\begin{equation}
+    \tau_{0,t} \sim \mathcal{N}(0,1).
+    \label{eq:spatial-logit-initialization}
+\end{equation}
+
+For comparison, we also implement a full-spectrum Fourier-coordinate branch,
+
+\begin{equation}
+    \widehat{\tau}_{0,t}=\mathcal{F}(\tau_{0,t}),
+    \qquad
+    \tau_t=\Re\!\left\{\mathcal{F}^{-1}(\widehat{\tau}_t)\right\},
+    \label{eq:fourier-coordinate-parameterization}
+\end{equation}
+
+where $\mathcal{F}$ and $\mathcal{F}^{-1}$ denote the Fourier and inverse Fourier transforms and $\Re(\cdot)$ takes the real part. Both branches start from the same $\tau_{0,t}$ and therefore from the same initial physical pattern. No Fourier coefficients are truncated or masked, so Eq.~(\ref{eq:fourier-coordinate-parameterization}) does not impose restricted frequency support, a convolutional prior, or translation invariance; it is a change of optimization coordinates. Adam is not invariant to this coordinate change, however, so the two branches can follow different training trajectories even with the same nominal learning rate. Sec.~\ref{sec:ablation-study} compares them under one controlled protocol. Supplement~1 provides the implementation-provenance analysis and expanded diagnostics.
+
+\subsection{Optical demagnification and detector-noise model}
+We model optical demagnification as local integration, implemented by sum pooling as shown in Eq.~(\ref{eq:sum-pooling}).
+
+\begin{equation}
+    \operatorname{sumpool}_{n \times n}(X) = \operatorname{AveragePool}_{n \times n}(X) \times n^2,
+    \label{eq:sum-pooling}
+\end{equation}
+
+where $n$ is the kernel size and $X$ is the input image.
+
+The fluorophore photon budget limits the usable illumination intensity because increasing intensity can accelerate photobleaching. We therefore include two detector-noise components during training: content-dependent Poisson shot noise and signal-independent Gaussian read noise.
+
+Eq.~(\ref{eq:noise-model}) gives the combined detector model.
+
+\begin{equation}
+    y_{\mathrm{down},t} = y^{\mathrm{poiss}}_{\mathrm{down},t} + y^{\mathrm{read}}_{\mathrm{down},t},
+    \label{eq:noise-model}
+\end{equation}
+
+where
+
+\begin{equation}
+    y^{\mathrm{poiss}}_{\mathrm{down},t} \sim \mathrm{Poiss}(\alpha_{\mathrm{down},t})
+    \qquad
+    y^{\mathrm{read}}_{\mathrm{down},t} \sim \mathcal{N}(0, \sigma_{\mathrm{read}}^2),
+    \label{eq:poisson-read-noise}
+\end{equation}
+
+and $\sigma_{\mathrm{read}}$ is the detector read-noise standard deviation.
+
+To propagate gradients through the signal-dependent noise model, we use a normal approximation to the Poisson distribution~\cite{cheng1949normal}:
+
+\begin{equation}
+\begin{aligned}
+    y^{\mathrm{poiss}}_{\mathrm{down},t} &\sim \mathrm{Poiss}(\alpha_{\mathrm{down},t}) \\
+    \Rightarrow \quad y^{\mathrm{poiss}}_{\mathrm{down},t} &\sim \mathcal{N}\left(\alpha_{\mathrm{down},t}, \alpha_{\mathrm{down},t}\right) \\
+    \Rightarrow \quad y^{\mathrm{poiss}}_{\mathrm{down},t} &= \alpha_{\mathrm{down},t} + \sqrt{\alpha_{\mathrm{down},t}}\,z,
+\end{aligned}
+\label{eq:poisson-normal-approximation}
+\end{equation}
+
+where $z\sim\mathcal{N}(0,1)$. For the normalized noise experiments, the expected photon count $k$ scales the signal and an additive background with mean $\gamma=10$ photons precedes normalization. With independent $z_p,z_r\sim\mathcal{N}(0,1)$, the measurement supplied to the inverse model is
+
+\begin{equation}
+    y_{\mathrm{down},t}
+    = \alpha_{\mathrm{norm},t} + \frac{\gamma}{k}
+    + \sqrt{\frac{\alpha_{\mathrm{norm},t}}{k}+\frac{\gamma}{k^2}}\,z_p
+    + \frac{\sigma_{\mathrm{read}}}{k}z_r.
+    \label{eq:normalized-noise}
+\end{equation}
+
+The known background mean $\gamma/k$ can be removed during calibration, whereas the associated shot-noise variance remains. Separating the random variables from the learnable mean and variance provides a pathwise gradient, following the reparameterization principle of Kingma et al.~\cite{kingma2013auto}. The approximation becomes more accurate as the expected count increases.
+
+\subsection{Locality-aware inverse reconstruction}
+\label{sec:inverse-model}
+
+The inverse model reconstructs the specimen from the detector frames. We combine the \textit{locality-aware upsampling method} illustrated in Fig.~\ref{fig:framework} with a convolutional reconstruction network.
+
+For each pattern $t$ and detector location $(i,j)$ in $y_{\mathrm{down},t}$, the locality-aware network defines a learnable matrix $W_{t,i,j}\in\mathbb{R}^{d_x\times d_y}$. Multiplying $y_{\mathrm{down},t}(i,j)$ by $W_{t,i,j}$ and reshaping the result produces a high-resolution patch. Tiling all patches preserves the correspondence between each detector location and the specimen region that contributed to it. This construction mirrors the forward model, in which demagnification integrates each local patch into one detector value. It also differs from transposed convolution, which applies the same learned kernel at every detector location and therefore does not explicitly retain that location identity. The locality-aware block supplies a structured initialization for the inverse problem; the subsequent reconstruction network still learns how information from neighboring patches and patterns should be combined. Sec.~\ref{sec:upsampling-analysis} compares the two upsampling choices.
+
+The reported configurations pass the tiled $T$-channel tensor directly to a six-block reconstruction network; the optional mixing CNN illustrated in Fig.~\ref{fig:framework} is disabled. The first five blocks contain a $3\times3$ convolution, ReLU activation, and two-dimensional batch normalization, and the final $3\times3$ convolution is followed by a sigmoid output activation. Separating spatial upsampling from reconstruction also permits other image-to-image networks to replace the reconstruction network, as evaluated in Sec.~\ref{sec:swinir-reconstruction}.
+
+Supplement~1 provides the complete architecture.
+
+\subsection{Training objective and implementation details}
+
+Unless otherwise specified, we optimize the $L_1$ reconstruction objective
+
+\begin{equation}
+    \mathcal{L}_{L1} = \mathbb{E}_X \left[ \left\| X_{\mathrm{recon}} - X \right\|_1 \right],
+    \label{eq:l1-loss}
+\end{equation}
+
+where $X$ and $X_{\mathrm{recon}}$ are the specimen image and its reconstruction, respectively, and $\mathbb{E}_X[\cdot]$ denotes expectation over the training-image distribution.
+
+The image inputs and reconstruction targets lie in $[0,1]$, whereas the detector model retains an explicit photon-count scale. We therefore normalize the detector output after introducing the photon and read-noise terms, as in Eq.~(\ref{eq:normalized-noise}). Applying this normalization before noise injection would also rescale the intended signal-dependent and signal-independent variances and would no longer represent the stated photon-count condition. The post-noise normalization keeps the neural-network input scale bounded while preserving the measurement statistics used for training. Supplement~1 gives the complete normalization procedure.
+
+We implemented the models in Python and PyTorch and optimized the forward and inverse parameters with Adam~\cite{kingma2014adam}. Unless a specific experiment overrides them, the illumination and inverse-model learning rates are $1.0$ and $10^{-3}$, respectively. Each released configuration records whether the spatial logits are updated directly or through the alternative fast-Fourier-transform coordinates~\cite{rao2010fast}. Batch size and training duration vary by experiment and are recorded in the configuration files; the PatchMNIST and BBBC022 configurations use batches of $32$, the conventional MCF7 configuration uses $16$, and the SwinIR experiments use an effective batch of $32$ through gradient accumulation.
+
+We train the content-aware models in stages. An inverse-model warmup precedes joint optimization of the illumination and inverse parameters; successive hardening stages then increase the sigmoid slope. Supplement~1 and the released configuration files specify the step budget and slope schedule for each dataset. We select checkpoints using validation performance and evaluate the selected checkpoint once on the held-out test split.
+
+After training, we fix the patterns $H_t$ for the target data distribution and task. At test time, the forward simulation applies these fixed patterns and the inverse model reconstructs the image from the simulated detector frames.
+
+\subsection{Task-aware segmentation protocol}
+\label{sec:task-aware-protocol}
+
+For task-aware experiments, we generate pseudo-ground-truth masks from raw BBBC022 maximum-intensity projections with a TrackMate-style procedure. We threshold raw intensities above $506$, label four-connected components, resample each contour at $2$-pixel intervals, simplify it with a Douglas--Peucker tolerance of $0.5$ pixels, and fill the resulting polygon. Training has three stages: reconstruction pretraining; segmentation-head training with the microscope model frozen; and end-to-end fine-tuning of the illumination, inverse model, and segmentation head. This sequence first establishes an image-producing inverse model, then fits the downstream predictor to that representation, and finally allows the task gradient to modify both the reconstruction pathway and the illumination patterns. The segmentation head operates on $X_{\mathrm{recon}}$, so the final stage can favor encoded features that support connected-object and boundary decisions even when those features do not dominate a pixel-wise reconstruction loss. The task loss combines binary cross-entropy with logits and soft Dice loss with weights $1.0$ and $0.5$, respectively. We choose the probability threshold on the validation split from $0.10$ to $0.90$ in increments of $0.05$ and report Dice on the held-out test split.
+
+\subsection{Datasets and evaluation protocol}
+\label{sec:datasets-evaluation}
+
+
+\subsubsection{PatchMNIST digits}
+We construct PatchMNIST from the MNIST dataset~\cite{deng2012mnist}. We resize each digit to $32\times32$ pixels, tile sampled digits on a $20\times20$ grid, and draw $256\times256$ random crops. The dataset contains $3000$ training, $375$ validation, and $375$ test images. Training images use the MNIST training pool. Validation and test images use disjoint halves of the MNIST test pool, so neither split shares source-digit indices with the other or with training. We use PatchMNIST to evaluate content-aware sampling, locality-aware upsampling, noise robustness, and the corrected component ablation.
+
+\subsubsection{Human MCF7 cells}
+The open BBBC021 dataset contains images of MCF-7 breast-cancer cells~\cite{caie2010high}. We use the single-channel tubulin images (channel 2) and split wells before drawing $3000$, $100$, and $100$ image patches for training, validation, and testing, respectively. We subtract the first intensity percentile, normalize by the $99.9$th percentile, and apply random crops and flips only to the training split.
+
+\subsubsection{DIV2K, Flickr2K, Set5, Set14, BSD100, Urban100, and Manga109}
+We train the grayscale super-resolution models on DIV2K and the high-resolution originals from Flickr2K~\cite{agustsson2017ntire}. A scene-level split reserves $2\%$ of the training scenes for validation. We evaluate the selected checkpoints on Set5~\cite{bevilacqua2012low}, Set14~\cite{zeyde2010single}, BSD100~\cite{martin2001database}, Urban100~\cite{huang2015single}, and Manga109~\cite{matsui2017sketch}.
+
+\subsubsection{BBBC022 fluorescence images}
+For content-aware sampling and segmentation, we use the Hoechst channel from BBBC022v1 (accession BBBC022), a public U2OS Cell Painting collection~\cite{gustafsdottir2013multiplex,ljosa2012annotated} available from the Broad Bioimage Benchmark Collection at \url{https://bbbc.broadinstitute.org/BBBC022}. All splits are well-disjoint and use seed $42$. The content-aware matrix uses $220$ training wells with nine sites per well ($1980$ fields), $40$ validation wells with one site per well, and $60$ test wells with one site per well. The segmentation protocol uses one field from each of $168$, $21$, and $21$ training, validation, and test wells. We take the maximum-intensity projection, subtract an intensity bias of $134.28$, clip the result to $[0,500]$, normalize each field to $[0,1]$, and use $256\times256$ crops. An exploratory BBBC022 ablation is retained in Supplement~1; the corrected main-paper ablation uses PatchMNIST so that the factor comparison has greater quantitative and qualitative dynamic range.
+
+% REPORTING PLACEHOLDER: Ensure the final .bib defines
+% gustafsdottir2013multiplex and ljosa2012annotated.
+
+\subsection{Evaluation metrics and computational reproducibility}
+\label{sec:reproducibility}
+
+We compute MSE and PSNR on images scaled to $[0,1]$, with $\mathrm{PSNR}=10\log_{10}(1/\mathrm{MSE})$. SSIM uses an $11\times11$ Gaussian window with standard deviation $1.5$ and constants $(0.01)^2$ and $(0.03)^2$. Python, NumPy, and PyTorch pseudorandom generators use the run seed; unless stated otherwise, that seed is $42$. The public repository contains the training and evaluation scripts, exact YAML configurations, split manifests, run metadata, checkpoints, and machine-readable results used for the tables and figure components: \url{https://github.com/Le0nZim/differentiable-microscopy-replication}. This revision was checked against repository commit \href{https://github.com/Le0nZim/differentiable-microscopy-replication/tree/bd33e451bb8d01991bab47b1aff1f395d31d9860}{\texttt{bd33e45}}. The environment specification requires Python $\geq3.10$ and PyTorch $\geq2.0$; SwinIR experiments use upstream SwinIR commit \href{https://github.com/JingyunLiang/SwinIR/tree/6545850fbf8df298df73d81f3e8cba638787c8bd}{\texttt{6545850}}.
+
+\reportingplaceholder{Record the exact GPU model and count, CPU, RAM, operating system, Python, PyTorch, CUDA, cuDNN, and driver versions used for the reported runs, together with training time or GPU-hours for each experiment family.}
+
+\reportingplaceholder{For every table and figure, state the number of independent seeds and the aggregation/uncertainty convention; also specify whether reported pattern metrics use the soft, sharpened, or hard-thresholded patterns and give the deployment threshold.}
+
+\reportingplaceholder{Create a versioned archival release of the code, configurations, split manifests, and required checkpoints with a DOI and license; add the corresponding code citation to the bibliography.}
+
+\FloatBarrier
+
+\section{Results}
+
+Using the datasets and evaluation protocol described in Sec.~\ref{sec:datasets-evaluation}, we evaluate the proposed $\partial \mu$ framework across six questions: whether learned illumination improves content-aware compression, whether task-aware sampling preserves segmentation-relevant features, whether noise-aware training improves robustness, whether the locality-aware upsampling block improves reconstruction, whether the framework can be combined with SwinIR for higher-fidelity reconstruction, and which components account for the joint improvement. All quantitative values below are computed on held-out test splits.
+
+\subsection{Learned illumination improves content-aware compression}
+\label{sec:content-aware-sampling}
+
+We test whether content-aware sampling improves reconstruction relative to fixed sampling within the same modeled architecture. The fixed baselines use uniform (widefield), pseudo-random, or Hadamard-basis illumination.
+
+On PatchMNIST ($\times 8$ compression, $T=8$), learned illumination with the locality-aware inverse model achieves the highest test SSIM and lowest test MSE among the four illumination schemes. Its SSIM is $0.969$ and its MSE is $0.0031$; the fixed baselines perform less well.
+
+On BBBC022 Hoechst widefield images, we sweep the compression factor from $\times 16$ to $\times 1024$ (Fig.~\ref{fig:content-aware-results}). Learned illumination attains the best SSIM and MSE at every evaluated compression, and its advantage over the fixed baselines widens as compression increases. Reconstruction quality nonetheless declines in the most severe regime: at $\times 1024$, even the learned-illumination reconstruction retains mainly coarse structure. The patterns and reconstructions in Fig.~\ref{fig:content-aware-results} indicate that learned illumination preserves content-relevant information, while the $\times 1024$ case defines the most severe compression evaluated on this data distribution.
+
+The patterns are learned across the training distribution and then held fixed for validation and testing. Thus, \textit{content-aware} refers to adaptation to recurring statistics of the specimen class rather than per-specimen pattern selection. The widening performance gap at stronger compression is consistent with optical encoding becoming more consequential as fewer scalar measurements remain available to the inverse model. At the same time, the loss of fine structure at $\times1024$ shows that favorable relative performance does not remove the information limit imposed by the measurement budget.
+
+\begin{figure}[tbp]
+    \centering
+    % FIGURE TODO: Enlarge small panel/axis text in the source artwork and retain
+    % shape/fill cues so the quantitative panels remain interpretable in grayscale.
+    \includegraphics[width=\textwidth,keepaspectratio]{figures/fig2_diff.pdf}
+    \caption{Content-aware reconstruction on BBBC022 Hoechst widefield images.
+    (a) CNN reconstructions (upper four rows) and the corresponding
+    pre-reconstruction detector measurements, normalized by the maximum field
+    value (lower four rows), for Hadamard, all-ones, pseudo-random, and learned
+    illumination (columns). Within each block, compression increases from
+    $\times 16$ to $\times 1024$ from top to bottom.
+    (b) SwinIR reconstructions for pseudo-random and learned illumination at the
+    same compression factors.
+    (c) Representative learned illumination patterns at the four compression
+    factors.
+    (d) Reconstruction SSIM (top) and MSE (bottom) versus compression. Squares,
+    triangles, and circles distinguish the illumination schemes; marker size
+    identifies image size, and filled circles denote SwinIR reconstructions.
+    (e) Representative Hadamard, all-ones, and pseudo-random patterns and the
+    ground-truth image. The ground-truth photon count is $10{,}000$ in all
+    experiments.}
+    \label{fig:content-aware-results}
+\end{figure}
+
+\subsection{Task-aware compression preserves segmentation-relevant features}
+\label{sec:task-aware-sampling}
+
+Microscopy images often support downstream tasks such as computer-assisted diagnosis~\cite{fass2008imaging}. A reconstruction objective, however, need not preserve the features most useful for a particular task.
+
+We therefore optimize the acquisition and inverse model for segmentation using the protocol described in Sec.~\ref{sec:task-aware-protocol}. During end-to-end fine-tuning, the segmentation loss produces nonzero gradients in the illumination parameters, confirming that the task objective updates the sensing patterns.
+
+Fig.~\ref{fig:segmentation-results} compares pseudo-random and learned illumination at $\times 64$, $\times 256$, and $\times 1024$ compression on BBBC022 Hoechst images. Learned illumination yields higher test Dice at every evaluated compression. The advantage is largest at $\times 256$; at $\times 1024$, both methods degrade substantially and the margin narrows.
+
+The reconstruction and segmentation objectives assign importance differently. The $L_1$ loss penalizes deviations throughout the image, whereas the segmentation loss emphasizes whether pixels form the target objects. Task-aware optimization can therefore retain boundaries and object-level contrast at the expense of image variation that contributes little to the masks. Higher Dice in this experiment supports preservation of segmentation-relevant information for the evaluated data distribution; it does not imply that the same patterns would be optimal for an unrelated downstream task or for general-purpose image interpretation.
+
+\begin{figure}[tbp]
+    \centering
+    % FIGURE TODO: Retain the row labels and compression-factor labels if border
+    % colors are revised; the grouping must remain clear without color.
+    \includegraphics[width=\textwidth,keepaspectratio]{figures/fig3_diff.pdf}
+    \caption{Task-aware compression for BBBC022 Hoechst-cell segmentation.
+    (a) Ground-truth images and pseudo-ground-truth masks (top two rows),
+    followed by predicted masks obtained with pseudo-random and learned
+    illumination at $\times 64$, $\times 256$, and $\times 1024$ compression.
+    The first, middle, and final method-pair blocks correspond to these three
+    compression factors, respectively; borders provide a secondary visual cue.
+    (b) Representative pseudo-random and learned illumination patterns for the
+    same compression factors, ordered from $\times 64$ at the top to
+    $\times 1024$ at the bottom.}
+    \label{fig:segmentation-results}
+\end{figure}
+
+\subsection{Noise-aware training improves robustness under photon and read noise}
+\label{sec:noise-robustness}
+
+Fig.~\ref{fig:consolidated-results}(a) shows the qualitative comparison for the lowest photon count and largest read-noise standard deviation. Table~\ref{tab:noise-robustness} evaluates the normalized detector model across all tested photon-count and read-noise conditions. Learned illumination yields lower MSE than fixed pseudo-random illumination in every table cell. MSE varies modestly with read noise at each photon count and is lower at the higher photon count, consistent with the expected signal-to-noise ordering.
+
+\begin{figure}[tbp]
+    \centering
+    % FIGURE TODO: Use distinct line styles as well as color in panel (b), and
+    % verify that all panel labels and legend text remain legible at final size.
+    \includegraphics[width=\textwidth,keepaspectratio]{figures/fig4_diff.pdf}
+    \caption{Additional reconstruction experiments.
+    (a) PatchMNIST ground truth and reconstructions using learned and
+    pseudo-random illumination under an extreme noise condition
+    ($\sigma_{\mathrm{read}}=6.0$, photon count $=10$) at $\times 8$
+    compression.
+    (b) $\ln(\mathrm{MSE})$ versus the number of training images for the
+    locality-aware upsampler and transposed convolution across the image sizes
+    shown in the legend, evaluated on PatchMNIST at $\times 8$ compression.
+    (c) Representative standard super-resolution test images at $\times 16$
+    compression: ground truth, SwinIR without learnable illumination, and
+    SwinIR with learnable illumination (columns).
+    (d) Human MCF7-cell ground truth and reconstructions with and without
+    SwinIR at $\times 16$ compression.
+    (e) CNN- and SwinIR-based MCF7 reconstructions from tiled and blended image
+    patches at $\times 16$ compression; SwinIR reduces patch-boundary
+    artifacts, while the $L_1$-trained CNN attains higher pixel-wise PSNR/SSIM.}
+    \label{fig:consolidated-results}
+\end{figure}
+
+\begin{table}[t]
+    \centering
+    \caption{
+    Robustness to Poisson and read noise on PatchMNIST: test MSE for learned versus fixed pseudo-random illumination at $\times 8$ compression with $T=8$ (expected photon count $k$; seed $42$; normalized detector model; $\gamma=10$). Lower is better; the best value in each photon-count comparison is in bold.
+    }
+    \label{tab:noise-robustness}
+    \small
+    \begin{tabular}{ccccc}
+        \hline
+        $\sigma_{\mathrm{read}}$ & \multicolumn{2}{c}{Learned illumination} & \multicolumn{2}{c}{Fixed pseudo-random illumination} \\
+        & $k=10$ & $k=10{,}000$ & $k=10$ & $k=10{,}000$ \\
+        \hline
+        $0.0$ & \textbf{0.0064} & \textbf{0.0030} & $0.0208$ & $0.0109$ \\
+        $2.0$ & \textbf{0.0066} & \textbf{0.0032} & $0.0207$ & $0.0109$ \\
+        $2.7$ & \textbf{0.0066} & \textbf{0.0031} & $0.0211$ & $0.0109$ \\
+        $6.0$ & \textbf{0.0074} & \textbf{0.0032} & $0.0230$ & $0.0110$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+All conditions in Table~\ref{tab:noise-robustness} use the same $T$, demagnification, and inverse-model family, so the comparison changes the illumination strategy without adding measurements. In the normalized detector model, increasing $k$ reduces both the relative shot-noise term and the read-noise term, which explains the dominant improvement with photon count. The smaller variation across the tested $\sigma_{\mathrm{read}}$ values is specific to this scale and normalization; it does not imply that read noise will remain secondary for a detector with a different gain, offset, or operating range.
+
+\subsection{Locality-aware upsampling improves high-compression reconstruction}
+\label{sec:upsampling-analysis}
+
+Fig.~\ref{fig:consolidated-results}(b) compares the locality-aware and transposed-convolution upsamplers on PatchMNIST at $\times 8$ compression across image sizes and training-set sizes. The locality-aware network yields lower MSE in every evaluated configuration. Its advantage is smallest for the lowest-data, smallest-image regime and grows with both image size and the number of training images.
+
+This trend is consistent with the different inductive biases of the two operators. Transposed convolution shares a compact interpolation rule across the field, whereas the locality-aware tensor has enough capacity to model a different inverse mapping for each detector position and illumination pattern. The latter capacity becomes more useful when the field contains more distinct detector locations, but it also requires sufficient training data to estimate those mappings. The result therefore supports the proposed block for the tested local-integration geometry while leaving robustness to detector misregistration or a shifted specimen distribution as separate questions.
+
+\subsection{The framework integrates with SwinIR for higher-fidelity reconstruction}
+\label{sec:swinir-reconstruction}
+
+We replace the reconstruction model $\psi$ in Fig.~\ref{fig:framework} with the SwinIR super-resolution network~\cite{liang2021swinir}. Following its real-world image super-resolution objective, we use pixel, adversarial, and perceptual losses for end-to-end training. The initial learning rate for $H_t$ is $0.1$; Supplement~1 and the released configuration file specify the remaining settings.
+
+We train SwinIR on DIV2K and Flickr2K with either learned or fixed illumination, using $64\times64$ image patches at $\times16$ compression. The two conditions use the same trainable decoder, effective batch size, checkpoint-selection rule, and full-image tiled evaluation. Learned illumination improves PSNR and SSIM on all five test sets (Table~\ref{tab:swinir-results}). These runs use $20{,}000$ optimization steps, substantially fewer than the reference SwinIR schedule. Fig.~\ref{fig:consolidated-results}(c) shows representative ground-truth images and reconstructions without and with learned illumination.
+
+This substitution tests whether the optical encoder and physics-motivated upsampler remain useful when the final image prior changes. The locality-aware block performs the geometric expansion associated with the modeled detector integration, while SwinIR operates on the resulting full-resolution representation. Setting the SwinIR upscaling factor to $1$ keeps these roles separate and avoids assigning the known detector-to-specimen scale change to the transformer.
+
+\begin{table}[t]
+    \centering
+    \caption{
+    Evaluation of the proposed learnable illumination (LI) with SwinIR inverse model (for $\times 16$ compression).
+    SwinIR-M trained on Div2K$+$Flickr2K ($64\times64$ patches, effective batch $32$, full-image tiled evaluation, best-validation checkpoint at $20{,}000$ of the $\approx$500{,}000-iteration schedule).
+    Better value per metric in bold.
+    }
+    \label{tab:swinir-results}
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lcccccccccc}
+        \hline
+        Method & \multicolumn{2}{c}{Set5} & \multicolumn{2}{c}{Set14} & \multicolumn{2}{c}{BSD100} & \multicolumn{2}{c}{Urban100} & \multicolumn{2}{c}{Manga109} \\
+        & PSNR & SSIM & PSNR & SSIM & PSNR & SSIM & PSNR & SSIM & PSNR & SSIM \\
+        \hline
+        SwinIR w/o LI
+        & $25.55$ & $0.6895$
+        & $23.62$ & $0.6211$
+        & $23.91$ & $0.5675$
+        & $22.55$ & $0.5740$
+        & $24.21$ & $0.7142$ \\
+
+        SwinIR with LI
+        & \textbf{27.45} & \textbf{0.7781}
+        & \textbf{25.17} & \textbf{0.6852}
+        & \textbf{25.12} & \textbf{0.6174}
+        & \textbf{23.90} & \textbf{0.6512}
+        & \textbf{26.09} & \textbf{0.7830} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+We set the SwinIR upscaling factor to $1$, so SwinIR acts as an image-to-image refiner while the locality-aware block performs spatial upsampling. On BBBC022 Hoechst images, this refinement generally improves SSIM, whereas its effect on MSE varies by compression and illumination condition. Learned illumination with SwinIR performs at least as well as pseudo-random illumination with SwinIR at every evaluated compression (Fig.~\ref{fig:content-aware-results}(b)).
+
+We also combine the parameterized forward model and locality-aware upsampling block with SwinIR on MCF7 images. Fig.~\ref{fig:consolidated-results}(d) shows ground truth followed by reconstructions with and without the SwinIR refiner. Fig.~\ref{fig:consolidated-results}(e) compares tiled and blended outputs from the CNN- and SwinIR-based models. In these examples, SwinIR reduces visible patch-boundary artifacts. Because the SwinIR variant also uses perceptual and adversarial losses, its pixel-wise PSNR and SSIM are lower than those of the $L_1$-trained convolutional baseline; this comparison therefore supports a qualitative reduction in artifacts rather than a pixel-fidelity improvement.
+
+\subsection{Ablation study isolates learned illumination, locality-aware upsampling, and pattern coordinates}
+\label{sec:ablation-study}
+
+Table~\ref{tab:ablation-study} reports the corrected ablation on PatchMNIST at $\times16$ compression. All variants use the same noise-free forward model, $T=4$, $8\times8{:}1$ spatial downsampling, training budget, and checkpoint rule; within each seed they also use the same data split. Variant A combines fixed pseudo-random illumination with transposed-convolution upsampling. Variant B makes the illumination learnable through the full-spectrum Fourier coordinates, variant C replaces transposed convolution with the locality-aware block, and variant D changes only the pattern coordinates from Fourier to direct spatial logits. In particular, D removes the inverse Fourier transform itself; changing only the coefficient initialization while retaining that transform would not isolate this factor.
+
+The factor sequence is sharply discriminative on PatchMNIST. Learned illumination reduces MSE from $0.03611$ to $0.01161$ (A versus B), and the locality-aware block reduces it further to $0.006948$ (B versus C), corresponding to reductions of approximately $68\%$ and $40\%$, respectively. Direct spatial logits attain the best mean result, reducing MSE by a further $5.7\%$ relative to the Fourier-coordinate branch and outperforming it for each of seeds $42$--$44$ (D versus C).
+
+Because no Fourier coefficients are removed, C and D optimize the same attainable spatial-logit family through different coordinates. Their comparison therefore tests optimizer behavior under the stated recipe, not an intrinsic representational advantage or a translation-invariance mechanism. The result supports direct spatial logits for the evaluated protocol, but it does not establish that Fourier coordinates must underperform after parameterization-specific hyperparameter tuning.
+
+\begin{table}[t]
+    \centering
+    \caption{
+    Corrected ablation on PatchMNIST at $\times16$ compression with $T=4$ and $8\times8{:}1$ spatial downsampling.
+    A and B report seed $42$; C and D report mean $\pm$ sample standard deviation across seeds $42$--$44$.
+    Fourier denotes the full-spectrum coordinate reparameterization in Eq.~(\ref{eq:fourier-coordinate-parameterization}), not frequency truncation.
+    Best per metric in bold.
+    }
+    \label{tab:ablation-study}
+    \small
+    \setlength{\tabcolsep}{3.5pt}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{cllccc}
+        \hline
+        Variant & Illumination & Upsampling / coordinates & SSIM $\uparrow$ & MSE $\downarrow$ & Seeds \\
+        \hline
+        A & Fixed pseudo-random & Transposed convolution & 0.7025 & 0.03611 & 42 \\
+        B & Learnable & Transposed convolution / Fourier & 0.8939 & 0.01161 & 42 \\
+        C & Learnable & Locality-aware / Fourier & $0.9357\pm0.0012$ & $0.006948\pm0.000062$ & 42--44 \\
+        D & Learnable & Locality-aware / spatial & $\mathbf{0.9401\pm0.0002}$ & $\mathbf{0.006553\pm0.000021}$ & 42--44 \\
+        \hline
+    \end{tabular}
+    }
+\end{table}
+
+Supplement~1 provides the corresponding corrected PatchMNIST reconstructions and patterns, the per-seed C--D results, the exploratory BBBC022 ablation, and the implementation-provenance analysis.
+% SUPPLEMENTARY FIGURE PLACEHOLDER: use the corrected PatchMNIST A--D panel
+% experiments/figure10_ablation_patchmnist/figures/figure10_paper_style.png.
+% Do not reuse the preprint's original U2OS Figure 10: its D condition did not
+% remove the inverse Fourier transform and is not the corrected ablation.
+
+\FloatBarrier
+
+\section{Discussion}
+\label{sec:discussion}
+
+The results distinguish acquisition design from restoration applied after a fixed acquisition. Within each comparison, the illumination schemes use the same modeled optical geometry, scalar-measurement budget, detector model, and inverse-model family. The advantage of learned $H_t$ is therefore consistent with distribution-specific encoding preserving features that the evaluated fixed schemes discard. Its increasing advantage on BBBC022 as $C$ rises is consistent with the acquisition prior becoming more important when the inverse model receives fewer measurements. The learned patterns are fixed after training, however, so they encode population-level regularities rather than adapting to each specimen during acquisition. Their spatial structure should consequently be interpreted as a sensing strategy optimized for a training distribution, not as a direct map of biological importance.
+
+Wang et al.~\cite{wang2021joint} provide the closest comparison in compressive fluorescence microscopy because both studies optimize sensing and reconstruction jointly under a measurement constraint. Their stochastic policy learns how to allocate repeated acquisitions among coefficients of a fixed Hadamard basis, and a U-Net reconstructs the image after transformation back to image space. Each Hadamard coefficient is formed from two sequential complementary binary DMD exposures collected by a single detector. Our formulation instead learns the spatial values of the excitation patterns and records a demagnified multipixel detector frame for every pattern. This difference also affects measurement accounting: Eq.~(\ref{eq:compression}) counts all $T N_{d,x}N_{d,y}$ detector values, whereas Wang et al. count one Hadamard coefficient as one measurement even though its physical formation uses two exposures. The two compression conventions and sensing geometries therefore do not support a direct numerical comparison. Rather, the studies address complementary design questions: allocation within a prescribed sensing basis versus optimization of the pattern values and their local multipixel readout.
+
+The content-aware and task-aware experiments also show why a useful compression factor cannot be specified independently of the data distribution and objective. A reconstruction loss rewards broad photometric agreement, whereas the segmentation loss can prioritize object contrast and boundaries while disregarding other image variation. Task-aware sensing may therefore support stronger compression when a narrowly defined downstream output is sufficient, but it can reduce the value of the measurement for later tasks that were absent during training. Likewise, patterns trained on one morphology, intensity distribution, or labeling protocol may not retain the same advantage after a distribution shift. The substantial decline of both reconstruction and segmentation at $\times1024$ makes this dependence visible even though learned illumination remains the better of the evaluated schemes.
+
+The locality-aware block expresses a corresponding model-based prior in the inverse path. Local detector integration maps a specimen patch to one scalar, and the position-specific weights expand that scalar before a spatially shared reconstruction network combines information across patches and patterns. This expansion cannot recover components that the forward operator removes; instead, it organizes the learnable inverse around the known detector-to-specimen correspondence. Its advantage over transposed convolution across the PatchMNIST matrix, together with the larger gap at greater image and training-set sizes, suggests that the additional location-specific capacity is useful when the data support it. The SwinIR experiments further show that this geometric stage can be separated from the final image prior. In that setting, reduced patch-boundary artifacts and pixel-wise fidelity are distinct objectives: perceptual and adversarial losses can improve visual continuity without improving PSNR or SSIM relative to an $L_1$-trained CNN.
+
+The differentiable Poisson and read-noise terms make it possible to train the patterns for a stated photon-count regime instead of optimizing only a noiseless linear operator. The consistent improvement over pseudo-random illumination across the tested noise grid supports that use under the modeled conditions. The present forward model nevertheless isolates selected effects: most experiments use impulse excitation and emission PSFs, ideal pattern projection, and blockwise demagnification; where noise is enabled, the detector terms are independent. A calibrated application could replace these components with measured PSFs, DMD contrast and registration, spatial gain and offset maps, and detector saturation or other relevant nonidealities while retaining the same end-to-end structure. Such additions would determine how sensitive the learned encoder is to the optical and detector parameters of a particular instrument.
+
+The corrected PatchMNIST ablation qualifies the original motivation for frequency-domain pattern optimization. Direct spatial logits improve mean MSE by $5.7\%$ relative to full-spectrum Fourier coordinates and outperform them for all three paired seeds. Because the Fourier branch neither truncates coefficients nor multiplies a signal by a learned spectrum, it does not introduce the previously claimed convolutional or translation-invariance mechanism. The result is best interpreted as evidence about optimization under the evaluated hyperparameters: Adam follows different trajectories after a coordinate transform, and a shared nominal learning rate does not equalize the physical pattern updates. Frequency-domain optimization is therefore a tunable numerical parameterization rather than an essential optical component. The scheduled sigmoid still provides a differentiable route toward binary modulation, but performance should be checked after the same thresholding or hardening used for deployment because the relaxed and binary patterns need not produce identical measurements.
+
+Finally, the scalar compression factor $C$ characterizes dimensionality reduction but does not by itself specify acquisition time, light dose, or photobleaching risk. Those quantities also depend on $T$, exposure duration, pattern duty cycle, DMD transitions, detector readout, and illumination power. Several current comparisons use one seed, and the SwinIR study uses a shortened optimization schedule, so repeated runs with uncertainty estimates remain important. A prospective evaluation should calibrate the forward model, compare methods at matched scalar-measurement, exposure-time, and dose budgets, and test robustness to misregistration and specimen shift. Reporting those measurements together with a versioned release of the configurations and checkpoints would clarify which numerical gains transfer to a physical system.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Microscopy often trades throughput against image quality, and a fixed acquisition determines which information remains available to post-processing. We introduced an end-to-end differentiable framework for compressive fluorescence microscopy that couples a parameterized image-formation and detector-noise model with learned excitation patterns and a locality-aware inverse model.
+
+Across the numerical studies, learned content-aware illumination outperforms the evaluated fixed schemes, task-aware optimization improves segmentation over pseudo-random illumination, and the locality-aware block improves reconstruction over transposed convolution. The framework also accommodates a SwinIR image prior and explicit photon and read-noise conditions. The corrected PatchMNIST ablation shows that these gains do not require frequency-domain pattern optimization under the evaluated protocol; direct spatial logits give the strongest result. Together, the results establish a flexible route for optimizing what a compressive microscope records, while the attainable compression remains tied to the specimen distribution, target output, and calibrated measurement conditions.
+
+\begin{backmatter}
+
+\bmsection{Funding}
+This content will be filled in by the Prism submission system.
+
+\bmsection{Disclosures}
+\reportingplaceholder{Replace this placeholder with the applicable Optica disclosure statement after confirmation by every author.}
+
+\bmsection{Data Availability}
+Code, configuration files, split manifests, checkpoints, and instructions supporting the numerical results are available at \url{https://github.com/Le0nZim/differentiable-microscopy-replication}. \reportingplaceholder{Add the versioned archival DOI for the exact release used in this article, cite the record in the reference list, and identify the accessions and licenses for every public source dataset.}
+
+\bmsection{Supplemental document}
+See Supplement 1 for supporting content.
+
+\end{backmatter}
+
+% REPORTING PLACEHOLDER: Replace `sample` with the final bibliography basename
+% and add the dataset/code records noted above.
+\bibliography{sample}
+
+\end{document}
