@@ -1,0 +1,50 @@
+# MCF7 LI+SwinIR experiment matrix (×16, locality upsampling, seed 42)
+
+compression: 16
+downscale_factor: 8
+num_patterns: 4
+seed: 42
+
+variants:
+  - id: A
+    name: random_fixed_locality_cnn
+    pattern_mode: random_fixed
+    upsampling: locality_aware
+    use_swinir: false
+  - id: B
+    name: random_fixed_locality_cnn_swinir
+    pattern_mode: random_fixed
+    upsampling: locality_aware
+    use_swinir: true
+  - id: C
+    name: learnable_locality_cnn
+    pattern_mode: learnable_frequency
+    upsampling: locality_aware
+    use_swinir: false
+  - id: D
+    name: learnable_locality_cnn_swinir
+    pattern_mode: learnable_frequency
+    upsampling: locality_aware
+    use_swinir: true
+
+smoke:
+  num_train: 16
+  num_val: 8
+  num_test: 8
+  base_max_steps: 80
+  swinir_max_steps: 30
+
+small_validation:
+  num_train: 256
+  num_val: 32
+  num_test: 32
+  base_max_steps: 1200
+  swinir_max_steps: 200
+
+full:
+  num_train: 3000
+  num_val: 100
+  num_test: 100
+  base_max_steps: 8500
+  swinir_max_steps: 2000
+  algorithm1_epochs: 230

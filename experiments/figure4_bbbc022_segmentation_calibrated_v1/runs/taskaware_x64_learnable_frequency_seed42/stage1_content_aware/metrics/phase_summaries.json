@@ -1,0 +1,72 @@
+[
+  {
+    "phase": "inverse_warmup_m1",
+    "training_m": 1.0,
+    "steps": 1500,
+    "best_val_mse": 0.008460428565740585,
+    "best_step": 1000,
+    "pattern_delta": 0.0,
+    "detector_delta": 0.0,
+    "soft_test_mse": 0.007887648418545723,
+    "soft_test_ssim": 0.7441552877426147,
+    "sharpened_test_mse": 0.00779766496270895,
+    "thresholded_test_mse": 0.007792438846081495,
+    "H_t_binary_fraction": 0.00327301025390625
+  },
+  {
+    "phase": "joint_soft_m1",
+    "training_m": 1.0,
+    "steps": 3500,
+    "best_val_mse": 0.006686645559966564,
+    "best_step": 4700,
+    "pattern_delta": 0.022894633933901787,
+    "detector_delta": 0.2417645901441574,
+    "soft_test_mse": 0.00626269681379199,
+    "soft_test_ssim": 0.7724595069885254,
+    "sharpened_test_mse": 0.005883265286684036,
+    "thresholded_test_mse": 0.005955750122666359,
+    "H_t_binary_fraction": 0.00328826904296875
+  },
+  {
+    "phase": "harden_m2",
+    "training_m": 2.0,
+    "steps": 800,
+    "best_val_mse": 0.005951785948127508,
+    "best_step": 5800,
+    "pattern_delta": 0.11607825756072998,
+    "detector_delta": 0.5742684602737427,
+    "soft_test_mse": 0.005550171248614788,
+    "soft_test_ssim": 0.7886174917221069,
+    "sharpened_test_mse": 0.005500836297869682,
+    "thresholded_test_mse": 0.0056196232326328754,
+    "H_t_binary_fraction": 0.14838790893554688
+  },
+  {
+    "phase": "harden_m4",
+    "training_m": 4.0,
+    "steps": 800,
+    "best_val_mse": 0.004850259516388178,
+    "best_step": 6400,
+    "pattern_delta": 0.21015127003192902,
+    "detector_delta": 0.8901552557945251,
+    "soft_test_mse": 0.004622313193976879,
+    "soft_test_ssim": 0.8105041980743408,
+    "sharpened_test_mse": 0.0045060040429234505,
+    "thresholded_test_mse": 0.00455478485673666,
+    "H_t_binary_fraction": 0.47898101806640625
+  },
+  {
+    "phase": "harden_m8",
+    "training_m": 8.0,
+    "steps": 800,
+    "best_val_mse": 0.004134316463023424,
+    "best_step": 7400,
+    "pattern_delta": 0.2751218378543854,
+    "detector_delta": 1.172448992729187,
+    "soft_test_mse": 0.0038403954822570086,
+    "soft_test_ssim": 0.8254114985466003,
+    "sharpened_test_mse": 0.003799864323809743,
+    "thresholded_test_mse": 0.0037556602619588375,
+    "H_t_binary_fraction": 0.7324066162109375
+  }
+]

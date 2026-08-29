@@ -1,0 +1,5 @@
+variant,label,proxy_ssim_bbbc022,proxy_mse_bbbc022
+A,fixed Ht + Tr.Conv.Up + freq,0.8781,0.003625
+B,(+) learnable Ht,0.888,0.002706
+C,(+) proposed locality upsampling (paper best),0.8602,0.005321
+D,(-) frequency-domain optimization,0.8663,0.004583

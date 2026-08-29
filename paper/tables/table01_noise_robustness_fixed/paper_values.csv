@@ -1,0 +1,17 @@
+method,photon_count,sigma_read,paper_mse
+learnable (Our),10,0.0,0.0025
+fixed_random,10,0.0,0.0108
+learnable (Our),10,2.7,0.0024
+fixed_random,10,2.7,0.0107
+learnable (Our),10,2.0,0.0024
+fixed_random,10,2.0,0.0107
+learnable (Our),10,6.0,0.0024
+fixed_random,10,6.0,0.0107
+learnable (Our),10000,0.0,0.0059
+fixed_random,10000,0.0,0.0214
+learnable (Our),10000,2.7,0.0058
+fixed_random,10000,2.7,0.021
+learnable (Our),10000,2.0,0.0061
+fixed_random,10000,2.0,0.0213
+learnable (Our),10000,6.0,0.0069
+fixed_random,10000,6.0,0.0235

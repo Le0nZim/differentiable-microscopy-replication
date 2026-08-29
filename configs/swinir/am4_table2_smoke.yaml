@@ -1,0 +1,83 @@
+# AM-4 — SwinIR Table-2 SMOKE TEST (wiring only, NON-FINAL).
+#
+# *** Validates wiring/shapes/metrics/checkpointing/output-saving ONLY. ***
+# Uses the real SwinIR-M architecture (embed_dim 180) to exercise the true model
+# build, but tiny data / iterations / capped eval so it finishes in ~1 minute.
+# Its numbers are meaningless and must never be reported as results.
+#
+# Run: scripts/run_am4_swinir_table2.py --config configs/swinir/am4_table2_smoke.yaml
+
+experiment:
+  seed: 42
+  device: auto
+  tag: smoke
+
+data:
+  train_roots:
+    - data/sr/train/DIV2K/HR
+    - data/sr/train/Flickr2K/HR
+  test_roots:
+    Set5: data/sr/test/Set5/HR
+    Set14: data/sr/test/Set14/HR
+  patch_size: 64
+  grayscale: true
+  val_fraction: 0.25
+  max_train_images: 16       # tiny
+  max_test_images: 2         # tiny
+
+model:
+  image_size: 64
+  compression: 16
+  downscale_factor: 8
+  num_patterns: 4
+  swinir:
+    upscale: 1
+    in_chans: 1
+    img_size: 64
+    window_size: 8
+    upsampler: ""
+    embed_dim: 180           # real arch (wiring must match the full run)
+    depths: [6, 6, 6, 6, 6, 6]
+    num_heads: [6, 6, 6, 6, 6, 6]
+    mlp_ratio: 2
+    resi_connection: "1conv"
+    img_range: 1.0
+
+training:
+  iterations: 16             # wiring only
+  effective_batch_size: 8
+  micro_batch_size: 4
+  grad_accum: 2
+  illumination_lr: 0.1
+  swinir_lr: 0.0002
+  disc_lr: 0.0002
+  betas: [0.9, 0.99]
+  amp_dtype: bfloat16
+  random_fixed_m: 10.0
+  train_sigmoid_m: 8.0
+  eval_sigmoid_m: 8.0
+  num_workers: 2
+  log_every: 2
+  val_every: 8
+  ckpt_every: 8
+  loss:
+    pixel_weight: 1.0
+    pixel_kind: l1
+    perceptual_weight: 1.0
+    gan_weight: 0.1
+    gan_type: vanilla
+  conditions:
+    - name: swinir_wo_li
+      learnable: false
+    - name: swinir_with_li
+      learnable: true
+
+eval:
+  tile_selection: center_biased   # SMOKE ONLY: capped to keep it fast
+  max_tiles_per_image: 2
+  eval_batch: 16
+  stitched: true
+
+deviations_from_paper:
+  - "SMOKE TEST ONLY: iterations=16, 16 train images, 2 test images, capped center-biased eval. Numbers are meaningless; validates wiring/shapes/metrics/ckpt/output only."
+  - "effective_batch_size reduced to 8 (4x2) for speed"

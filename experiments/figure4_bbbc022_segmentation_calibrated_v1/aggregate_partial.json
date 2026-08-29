@@ -1,0 +1,18 @@
+{
+  "results": [
+    {
+      "run_id": "taskaware_x64_learnable_frequency",
+      "compression": "x64",
+      "pattern": "learnable_frequency",
+      "learnable": true,
+      "test_dice": 0.8931570592380705,
+      "test_iou": 0.8085121200198219,
+      "test_dice_at_0p5": 0.8931570592380705,
+      "selected_threshold": 0.5,
+      "stage2_val_dice": 0.908808049701509,
+      "illumination_pattern_delta_l2": 71.85872650146484,
+      "seed": 42
+    }
+  ],
+  "seed": 42
+}

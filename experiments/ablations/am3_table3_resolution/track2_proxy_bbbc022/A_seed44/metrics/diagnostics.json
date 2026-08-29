@@ -1,0 +1,53 @@
+{
+  "elapsed_sec": 640.0994408130646,
+  "best_val_mse": 0.0030422250274568796,
+  "best_step": 8200,
+  "best_m": 8.0,
+  "best_train_mse_at_log": 0.003448344301432371,
+  "final_train_mse_full": 0.0033959157299250364,
+  "test_mse": 0.003708413802087307,
+  "test_ssim": 0.8766406774520874,
+  "overfit_gap_val_minus_train": -0.0004061192739754915,
+  "max_grad_norms": {
+    "illum": 0.0,
+    "upsampler": 0.2924023261788826,
+    "recon": 1.624652520400673
+  },
+  "illum_l2_init": 0.0,
+  "illum_l2_final": 0.0,
+  "illum_delta_final": 0.0,
+  "final_pattern_stats": {
+    "min": 3.0866855577518976e-23,
+    "max": 1.0,
+    "mean": 0.49946892261505127,
+    "std": 0.4589921236038208,
+    "binary_fraction": 0.8253860473632812
+  },
+  "m_schedule": [
+    {
+      "phase": "inverse_warmup",
+      "m": 1.0,
+      "steps": 1500
+    },
+    {
+      "phase": "joint_soft",
+      "m": 1.0,
+      "steps": 4000
+    },
+    {
+      "phase": "harden_m2",
+      "m": 2.0,
+      "steps": 1000
+    },
+    {
+      "phase": "harden_m4",
+      "m": 4.0,
+      "steps": 1000
+    },
+    {
+      "phase": "harden_m8",
+      "m": 8.0,
+      "steps": 1000
+    }
+  ]
+}

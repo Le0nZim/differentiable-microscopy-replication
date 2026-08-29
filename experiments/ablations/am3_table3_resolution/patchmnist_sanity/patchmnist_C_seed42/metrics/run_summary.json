@@ -1,0 +1,14 @@
+{
+  "variant": "C",
+  "label": "learnable Ht + locality + freq (paper best)",
+  "seed": 42,
+  "test_mse": 0.006950633289913337,
+  "test_ssim": 0.9357160727183024,
+  "best_val_mse": 0.00693701390021791,
+  "best_train_mse": 0.006654506083577871,
+  "final_train_mse": 0.006458860613960535,
+  "overfit_gap": 0.000282507816640039,
+  "best_m": 8.0,
+  "elapsed_sec": 746.5189533233643,
+  "run_dir": "./experiments/ablations/am3_table3_resolution/patchmnist_sanity/patchmnist_C_seed42"
+}

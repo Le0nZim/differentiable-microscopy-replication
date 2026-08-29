@@ -1,0 +1,117 @@
+{
+  "description": "GT patches as used in Figure 4 row A \u2014 identical tensors to those passed into make_pseudo_mask (threshold 0.3 + closing) in the experiment. paper_strict: MIP \u2192 subtract bias 134.28 \u2192 clip [0, 500] \u2192 min-max \u2192 [0,1]; center crop 256\u00d7256 from test split (seed 42). Values are float32 in [0,1].",
+  "seed": 42,
+  "k": 5,
+  "mask_threshold_in_experiment": 0.3,
+  "mask_closing_kernel": 10,
+  "preprocessing_mode": "paper_strict",
+  "patch_size": 256,
+  "images": [
+    {
+      "column": 0,
+      "source_path": "./data/substitute_data/BBBC022_v1_images_20585w1/IXMtest_H19_s1_w1610AA73E-D410-4A33-88D5-360D4365A5F9.tif",
+      "source_name": "IXMtest_H19_s1_w1610AA73E-D410-4A33-88D5-360D4365A5F9.tif",
+      "prethreshold_float32": "fig4_col00_prethreshold_float32.tif",
+      "prethreshold_u16": "fig4_col00_prethreshold_u16.tif",
+      "experiment_pseudoGT_mask": "fig4_col00_pseudoGT_mask_thr0p3_closing10.tif",
+      "min": 0.035440001636743546,
+      "max": 1.0,
+      "mean": 0.3533942699432373,
+      "frac_ge_0p3": 0.313385009765625,
+      "original_full": "fig4_col00_original_full_IXMtest_H19_s1_w1610AA73E-D410-4A33-88D5-360D4365A5F9.tif",
+      "original_center256": "fig4_col00_original_center256.tif",
+      "original_center256_min": 152,
+      "original_center256_max": 1652,
+      "original_center256_mean": 360.32261657714844,
+      "original_full_shape": [
+        520,
+        696
+      ]
+    },
+    {
+      "column": 1,
+      "source_path": "./data/substitute_data/BBBC022_v1_images_20585w1/IXMtest_I05_s1_w18C8D5BB2-7264-41D4-AE70-0D47BA6B02D3.tif",
+      "source_name": "IXMtest_I05_s1_w18C8D5BB2-7264-41D4-AE70-0D47BA6B02D3.tif",
+      "prethreshold_float32": "fig4_col01_prethreshold_float32.tif",
+      "prethreshold_u16": "fig4_col01_prethreshold_u16.tif",
+      "experiment_pseudoGT_mask": "fig4_col01_pseudoGT_mask_thr0p3_closing10.tif",
+      "min": 0.03144000098109245,
+      "max": 1.0,
+      "mean": 0.35540974140167236,
+      "frac_ge_0p3": 0.329315185546875,
+      "original_full": "fig4_col01_original_full_IXMtest_I05_s1_w18C8D5BB2-7264-41D4-AE70-0D47BA6B02D3.tif",
+      "original_center256": "fig4_col01_original_center256.tif",
+      "original_center256_min": 150,
+      "original_center256_max": 2441,
+      "original_center256_mean": 343.67724609375,
+      "original_full_shape": [
+        520,
+        696
+      ]
+    },
+    {
+      "column": 2,
+      "source_path": "./data/substitute_data/BBBC022_v1_images_20585w1/IXMtest_H14_s1_w1F8D76462-5E2B-4E16-9794-3154E90490BA.tif",
+      "source_name": "IXMtest_H14_s1_w1F8D76462-5E2B-4E16-9794-3154E90490BA.tif",
+      "prethreshold_float32": "fig4_col02_prethreshold_float32.tif",
+      "prethreshold_u16": "fig4_col02_prethreshold_u16.tif",
+      "experiment_pseudoGT_mask": "fig4_col02_pseudoGT_mask_thr0p3_closing10.tif",
+      "min": 0.03744000196456909,
+      "max": 1.0,
+      "mean": 0.35495758056640625,
+      "frac_ge_0p3": 0.3211517333984375,
+      "original_full": "fig4_col02_original_full_IXMtest_H14_s1_w1F8D76462-5E2B-4E16-9794-3154E90490BA.tif",
+      "original_center256": "fig4_col02_original_center256.tif",
+      "original_center256_min": 153,
+      "original_center256_max": 3266,
+      "original_center256_mean": 352.5396728515625,
+      "original_full_shape": [
+        520,
+        696
+      ]
+    },
+    {
+      "column": 3,
+      "source_path": "./data/substitute_data/BBBC022_v1_images_20585w1/IXMtest_H17_s1_w1A8F4F25D-841B-4EA1-ABE5-178DCFC9B8EB.tif",
+      "source_name": "IXMtest_H17_s1_w1A8F4F25D-841B-4EA1-ABE5-178DCFC9B8EB.tif",
+      "prethreshold_float32": "fig4_col03_prethreshold_float32.tif",
+      "prethreshold_u16": "fig4_col03_prethreshold_u16.tif",
+      "experiment_pseudoGT_mask": "fig4_col03_pseudoGT_mask_thr0p3_closing10.tif",
+      "min": 0.03144000098109245,
+      "max": 1.0,
+      "mean": 0.287003755569458,
+      "frac_ge_0p3": 0.249053955078125,
+      "original_full": "fig4_col03_original_full_IXMtest_H17_s1_w1A8F4F25D-841B-4EA1-ABE5-178DCFC9B8EB.tif",
+      "original_center256": "fig4_col03_original_center256.tif",
+      "original_center256_min": 150,
+      "original_center256_max": 1253,
+      "original_center256_mean": 301.96412658691406,
+      "original_full_shape": [
+        520,
+        696
+      ]
+    },
+    {
+      "column": 4,
+      "source_path": "./data/substitute_data/BBBC022_v1_images_20585w1/IXMtest_L19_s1_w102418410-A70E-4F02-966C-63E485F2A9CD.tif",
+      "source_name": "IXMtest_L19_s1_w102418410-A70E-4F02-966C-63E485F2A9CD.tif",
+      "prethreshold_float32": "fig4_col04_prethreshold_float32.tif",
+      "prethreshold_u16": "fig4_col04_prethreshold_u16.tif",
+      "experiment_pseudoGT_mask": "fig4_col04_pseudoGT_mask_thr0p3_closing10.tif",
+      "min": 0.02744000218808651,
+      "max": 1.0,
+      "mean": 0.24493151903152466,
+      "frac_ge_0p3": 0.202545166015625,
+      "original_full": "fig4_col04_original_full_IXMtest_L19_s1_w102418410-A70E-4F02-966C-63E485F2A9CD.tif",
+      "original_center256": "fig4_col04_original_center256.tif",
+      "original_center256_min": 148,
+      "original_center256_max": 1213,
+      "original_center256_mean": 277.2861785888672,
+      "original_full_shape": [
+        520,
+        696
+      ]
+    }
+  ],
+  "raw_raw_note": "original_full = untouched BBBC022 TIFF from disk. original_center256 = same 256x256 FOV as the plot patch, after MIP only (no bias subtract / clip500 / min-max). Native intensity scale for ImageJ."
+}

@@ -1,0 +1,126 @@
+{
+  "label": "Figure 10 / Table 3 ablation on BBBC022 Hoechst SUBSTITUTE (Fig-3 data) - NOT paper U2OS reproduction; only A/B/C/D ORDERING is meaningful.",
+  "data": {
+    "dataset": "bbbc022_preproc_ablation (minimal_percentile)",
+    "split": "split_fig03_large (well-disjoint 1980/40/60)",
+    "compression": "x16 (d=8, T=4)"
+  },
+  "seeds": [
+    42
+  ],
+  "aggregate": {
+    "A": {
+      "label": "fixed Ht + Tr.Conv.Up + freq",
+      "test_ssim": {
+        "mean": 0.9047659039497375,
+        "std": 0.0,
+        "n": 1
+      },
+      "test_mse": {
+        "mean": 0.0012483738828450441,
+        "std": 0.0,
+        "n": 1
+      },
+      "best_val_mse": {
+        "mean": 0.0010735762771219015,
+        "std": 0.0,
+        "n": 1
+      },
+      "overfit_gap": {
+        "mean": -6.58007338643074e-05,
+        "std": 0.0,
+        "n": 1
+      }
+    },
+    "B": {
+      "label": "learnable Ht + Tr.Conv.Up + freq",
+      "test_ssim": {
+        "mean": 0.9103437662124634,
+        "std": 0.0,
+        "n": 1
+      },
+      "test_mse": {
+        "mean": 0.0010821845498867333,
+        "std": 0.0,
+        "n": 1
+      },
+      "best_val_mse": {
+        "mean": 0.0009286576823797077,
+        "std": 0.0,
+        "n": 1
+      },
+      "overfit_gap": {
+        "mean": -0.00014314279542304575,
+        "std": 0.0,
+        "n": 1
+      }
+    },
+    "C": {
+      "label": "learnable Ht + locality + freq (paper best)",
+      "test_ssim": {
+        "mean": 0.9103240668773651,
+        "std": 0.0,
+        "n": 1
+      },
+      "test_mse": {
+        "mean": 0.001001944299787283,
+        "std": 0.0,
+        "n": 1
+      },
+      "best_val_mse": {
+        "mean": 0.0008617237908765674,
+        "std": 0.0,
+        "n": 1
+      },
+      "overfit_gap": {
+        "mean": -0.00022000365424901247,
+        "std": 0.0,
+        "n": 1
+      }
+    },
+    "D": {
+      "label": "learnable Ht + locality + NO freq",
+      "test_ssim": {
+        "mean": 0.9269064962863922,
+        "std": 0.0,
+        "n": 1
+      },
+      "test_mse": {
+        "mean": 0.0006299106171354651,
+        "std": 0.0,
+        "n": 1
+      },
+      "best_val_mse": {
+        "mean": 0.0005699851608369499,
+        "std": 0.0,
+        "n": 1
+      },
+      "overfit_gap": {
+        "mean": -7.177176303230226e-05,
+        "std": 0.0,
+        "n": 1
+      }
+    }
+  },
+  "our_best_variant_by_test_mse": "D",
+  "paper_table3_u2os": {
+    "A": {
+      "ssim": 0.7872,
+      "mse": 0.0042
+    },
+    "B": {
+      "ssim": 0.795,
+      "mse": 0.0038
+    },
+    "C": {
+      "ssim": 0.8426,
+      "mse": 0.0029
+    },
+    "D": {
+      "ssim": 0.7857,
+      "mse": 0.0041
+    }
+  },
+  "paper_best_variant": "C",
+  "ordering_matches_paper_best": false
+}

@@ -1,0 +1,60 @@
+# Table 2 full paper-faithful attempt (Sec 5.6, Table 2, Fig 7).
+# SwinIR replaces psi; LI forward model + locality upsampling; x16 compression.
+# Losses: pixel + perceptual (VGG19) + adversarial (paper: "pixel, adversarial, perceptual").
+# Discriminator arch / VGG layers / loss weights / iteration count: PAPER_UNSPECIFIED ->
+# ESRGAN/Real-ESRGAN/SwinIR-real-SR defaults (logged PAPER_UNSPECIFIED_FALLBACK).
+# Source of truth: paper_sources/paper.md Sec 5.6.
+
+experiment:
+  seed: 42
+  device: cuda:0
+
+data:
+  train_roots:
+    - data/sr/train/DIV2K/HR
+    - data/sr/train/Flickr2K/HR
+  test_roots:
+    Set5: data/sr/test/Set5/HR
+    Set14: data/sr/test/Set14/HR
+    BSD100: data/sr/test/BSD100/HR
+    Urban100: data/sr/test/Urban100/HR
+    Manga109: data/sr/test/Manga109/HR
+  patch_size: 64
+  grayscale: true
+
+model:
+  image_size: 64
+  compression: 16
+  downscale_factor: 8     # d=8, T=4 -> x16
+  num_patterns: 4
+  swinir:
+    upscale: 1
+    in_chans: 1
+    img_size: 64
+    window_size: 8
+    upsampler: ""
+    embed_dim: 96         # PAPER_UNSPECIFIED_ARCH_FALLBACK (vendor default 180)
+    depths: [6, 6, 6, 6, 6, 6]
+    num_heads: [6, 6, 6, 6, 6, 6]
+    mlp_ratio: 2
+
+training:
+  iterations: 8000        # PAPER_UNSPECIFIED -> bounded full attempt (SwinIR real-SR uses ~5e5)
+  batch_size: 16          # paper batch=32; reduced for memory + GAN/VGG (logged)
+  illumination_lr: 0.1    # Sec 5.6 explicit
+  swinir_lr: 0.0002       # SwinIR/ESRGAN default (PAPER_UNSPECIFIED)
+  disc_lr: 0.0002
+  eval_sigmoid_m: 8.0
+  eval_every: 5000
+  log_every: 200
+  loss:
+    pixel_weight: 1.0           # paper: pixel loss
+    pixel_kind: l1
+    perceptual_weight: 1.0      # paper: perceptual loss (ESRGAN default weight)
+    gan_weight: 0.1             # paper: adversarial loss (ESRGAN/Real-ESRGAN default)
+    gan_type: vanilla
+  conditions:
+    - name: swinir_wo_li
+      learnable: false
+    - name: swinir_with_li
+      learnable: true

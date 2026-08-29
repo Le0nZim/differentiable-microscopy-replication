@@ -1,0 +1,15 @@
+{
+  "variant": "C",
+  "label": "learnable Ht + locality + freq (paper best)",
+  "seed": 42,
+  "test_mse": 0.020686741918325424,
+  "test_ssim": 0.7401176691055298,
+  "best_val_mse": 0.012526566162705421,
+  "best_train_mse": 0.0004211569903418422,
+  "min_train_mse": 2.211515311500989e-05,
+  "final_train_mse": 0.0004212407802697271,
+  "overfit_gap": 0.01210540917236358,
+  "best_m": 1.0,
+  "elapsed_sec": 63.99566888809204,
+  "run_dir": "./experiments/ablations/am3_table3_resolution/overfit_diagnostics/overfit_C_n1"
+}

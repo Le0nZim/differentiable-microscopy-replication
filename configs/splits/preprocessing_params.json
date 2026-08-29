@@ -1,0 +1,26 @@
+{
+  "modes": {
+    "aggressive_current": "MIP(if stack) -> subtract bias 134.28 -> clip [0, 500.0] -> per-image min-max -> downscale x3.15 (area)",
+    "minimal_percentile": "float32 -> per-image clip [q0.001, q0.999] -> normalize to [0,1] (no bias, no fixed clip, no downscaling)",
+    "per_image_minmax_no_clip": "float32 -> per-image min-max to [0,1] (no bias, no clip, no downscaling)",
+    "trainset_global_percentile": "train-fit global percentiles [q0.001->133.00, q0.999->1461.00] applied to all splits (no bias, no clip, no downscaling, no val/test leakage)"
+  },
+  "params": {
+    "bias": 134.28,
+    "clip_max": 500.0,
+    "downscale_factor_aggressive": 3.15,
+    "q_low": 0.001,
+    "q_high": 0.999,
+    "global_low": 133.0,
+    "global_high": 1461.0
+  },
+  "mask": {
+    "threshold": 0.3,
+    "closing_kernel": 10
+  },
+  "constants": {
+    "paper_bias": 134.28,
+    "paper_clip_max": 500.0,
+    "paper_downscale": 3.15
+  }
+}

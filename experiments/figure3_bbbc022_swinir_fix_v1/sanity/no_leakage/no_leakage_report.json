@@ -1,0 +1,14 @@
+{
+  "counts": {
+    "train": 1980,
+    "val": 40,
+    "test": 60
+  },
+  "train_val_overlap": 0,
+  "train_test_overlap": 0,
+  "val_test_overlap": 0,
+  "splits_disjoint": true,
+  "normalization_mode": "minimal_percentile",
+  "normalization_note": "minimal_percentile is PER-IMAGE (each image clipped to its own q0.001/q0.999 then scaled to [0,1]); it fits NO statistic on val/test and shares nothing across images, so there is no train<-val/test leakage. The frozen base was trained with this exact normalisation; SwinIR reuses it.",
+  "leakage_free": true
+}

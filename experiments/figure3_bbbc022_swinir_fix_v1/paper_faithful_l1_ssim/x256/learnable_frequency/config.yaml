@@ -1,0 +1,56 @@
+name: paper_faithful_l1_ssim
+base_exp_root: experiments/ablations/bbbc022_content_aware_v2
+seed: 42
+swinir:
+  profile: paper_faithful
+  upscale: 1
+  in_chans: 1
+  window_size: 8
+  embed_dim: 180
+  depths:
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  num_heads:
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  mlp_ratio: 2
+  resi_connection: 1conv
+  img_range: 1.0
+  upsampler: ''
+train:
+  train_patch_size: 64
+  cache_crops_per_train_image: 4
+  micro_batch_size: 16
+  grad_accum: 2
+  effective_batch_size: 32
+  iterations: 50000
+  swinir_lr: 0.0002
+  betas:
+  - 0.9
+  - 0.99
+  warmup: 500
+  min_lr_frac: 0.02
+  grad_clip: 1.0
+  amp_dtype: bfloat16
+  random_flips: true
+  base_batch: 8
+  log_every: 100
+  val_every: 1000
+  ckpt_every: 5000
+loss:
+  mode: l1_ssim
+  l1_weight: 1.0
+  ssim_weight: 1.0
+selection:
+  primary: ssim
+  mse_no_regression_gate: true
+eval:
+  eval_batch: 16

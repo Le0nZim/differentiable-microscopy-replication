@@ -1,0 +1,6 @@
+{
+  "seed": 42,
+  "git_commit": "unknown",
+  "run_id": "taskaware_x1024_learnable_frequency",
+  "training_mode": "task_aware_segmentation_staged"
+}

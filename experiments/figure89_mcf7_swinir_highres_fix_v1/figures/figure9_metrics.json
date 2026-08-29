@@ -1,0 +1,37 @@
+{
+  "source": "G07_s1_w25BBEC1B9-2BE1-420C-80D4-BF05B83BC648.tif",
+  "top": 384,
+  "left": 0,
+  "height": 256,
+  "width": 1280,
+  "eval_sigmoid_m": 8.0,
+  "overlap_px": {
+    "wswinir": 64,
+    "wcnn": 16
+  },
+  "display_norm": "identical viridis lo/hi from GT p1/p99.5 for GT/wSwinIR/wCNN",
+  "overlap_add": {
+    "wSwinIR_vs_gt": {
+      "psnr": 28.896846771240234,
+      "ssim": 0.7677518725395203,
+      "mse": 0.0012891850201413035
+    },
+    "wCNN_vs_gt": {
+      "psnr": 32.407081604003906,
+      "ssim": 0.8487056493759155,
+      "mse": 0.000574502453673631
+    }
+  },
+  "naive_tiling": {
+    "wSwinIR_vs_gt": {
+      "psnr": 28.843734741210938,
+      "ssim": 0.764735996723175,
+      "mse": 0.0013050485868006945
+    },
+    "wCNN_vs_gt": {
+      "psnr": 32.28399658203125,
+      "ssim": 0.8473197221755981,
+      "mse": 0.0005910174804739654
+    }
+  }
+}

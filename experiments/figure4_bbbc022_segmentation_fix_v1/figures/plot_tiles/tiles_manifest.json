@@ -1,0 +1,100 @@
+{
+  "seed": 42,
+  "k": 5,
+  "colormaps": {
+    "A_and_masks": "viridis",
+    "F_patterns": "gray"
+  },
+  "note": "Individual panels of the paper-style Figure 4 (latest TrackMate-mask re-run). A_col*.png are percentile-stretched for display; A_col*_raw.png are unstretched (vmin/vmax=0/1). Masks are binary {0,1} shown with viridis (0=purple, 1=yellow). F_*.png are illumination patterns (grayscale). Grid layout: rows [A, B, C1, C2, D1, D2, E1, E2] x k columns; row F = one pattern per C1..E2 cell.",
+  "row_order": [
+    "A",
+    "B",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "E1",
+    "E2"
+  ],
+  "thresholds": {
+    "C1": 0.1,
+    "C2": 0.2,
+    "D1": 0.1,
+    "D2": 0.1,
+    "E1": 0.1,
+    "E2": 0.2
+  },
+  "tiles": {
+    "A": [
+      "A_col0.png",
+      "A_col1.png",
+      "A_col2.png",
+      "A_col3.png",
+      "A_col4.png"
+    ],
+    "A_raw": [
+      "A_col0_raw.png",
+      "A_col1_raw.png",
+      "A_col2_raw.png",
+      "A_col3_raw.png",
+      "A_col4_raw.png"
+    ],
+    "B": [
+      "B_col0.png",
+      "B_col1.png",
+      "B_col2.png",
+      "B_col3.png",
+      "B_col4.png"
+    ],
+    "C1": [
+      "C1_col0.png",
+      "C1_col1.png",
+      "C1_col2.png",
+      "C1_col3.png",
+      "C1_col4.png"
+    ],
+    "C2": [
+      "C2_col0.png",
+      "C2_col1.png",
+      "C2_col2.png",
+      "C2_col3.png",
+      "C2_col4.png"
+    ],
+    "D1": [
+      "D1_col0.png",
+      "D1_col1.png",
+      "D1_col2.png",
+      "D1_col3.png",
+      "D1_col4.png"
+    ],
+    "D2": [
+      "D2_col0.png",
+      "D2_col1.png",
+      "D2_col2.png",
+      "D2_col3.png",
+      "D2_col4.png"
+    ],
+    "E1": [
+      "E1_col0.png",
+      "E1_col1.png",
+      "E1_col2.png",
+      "E1_col3.png",
+      "E1_col4.png"
+    ],
+    "E2": [
+      "E2_col0.png",
+      "E2_col1.png",
+      "E2_col2.png",
+      "E2_col3.png",
+      "E2_col4.png"
+    ],
+    "F": {
+      "C1": "F_C1.png",
+      "C2": "F_C2.png",
+      "D1": "F_D1.png",
+      "D2": "F_D2.png",
+      "E1": "F_E1.png",
+      "E2": "F_E2.png"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "comp": "x256",
+  "pattern": "random_fixed",
+  "loss_mode": "l1_only",
+  "config_name": "smoke_debug_l1_only",
+  "iterations": 600,
+  "iterations_reached": 600,
+  "effective_batch": 16,
+  "train_patch_size": 64,
+  "swinir_params_M": 0.218,
+  "swinir_embed_dim": 60,
+  "swinir_depths": [
+    2,
+    2
+  ],
+  "selection": "max_val_ssim+mse_gate",
+  "best_step": 600,
+  "best_val_ssim": 0.7159440368413925,
+  "best_val_mse": 0.013208087487146258,
+  "base_val_ssim": 0.693816140294075,
+  "base_val_mse": 0.014114679058548064,
+  "test": {
+    "n": 60,
+    "base_mse": 0.015194888294596845,
+    "base_ssim": 0.6754572222630183,
+    "base_psnr": 18.66204177538554,
+    "ref_mse": 0.014229811836654942,
+    "ref_ssim": 0.69827947417895,
+    "ref_psnr": 18.959030199050904
+  },
+  "delta_test_ssim": 0.02282225191593168,
+  "delta_test_mse": -0.0009650764579419036,
+  "checkpoint_path": "./experiments/figure3_bbbc022_swinir_fix_v1/smoke_debug_l1_only/x256/random_fixed/checkpoints/best.pt",
+  "minutes": 0.17566829522450764
+}

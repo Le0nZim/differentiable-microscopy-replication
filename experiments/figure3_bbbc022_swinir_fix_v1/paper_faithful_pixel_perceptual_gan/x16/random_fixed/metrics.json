@@ -1,0 +1,39 @@
+{
+  "comp": "x16",
+  "pattern": "random_fixed",
+  "loss_mode": "paper_pixel_perceptual_gan",
+  "config_name": "paper_faithful_pixel_perceptual_gan",
+  "iterations": 50000,
+  "iterations_reached": 50000,
+  "effective_batch": 32,
+  "train_patch_size": 64,
+  "swinir_params_M": 11.498,
+  "swinir_embed_dim": 180,
+  "swinir_depths": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+  ],
+  "selection": "max_val_ssim",
+  "best_step": 34000,
+  "best_val_ssim": 0.9130774334073066,
+  "best_val_mse": 0.0007646933940122835,
+  "base_val_ssim": 0.9003519371151925,
+  "base_val_mse": 0.001048348380936659,
+  "test": {
+    "n": 60,
+    "base_mse": 0.0011409225405562514,
+    "base_ssim": 0.8973666727542877,
+    "base_psnr": 29.93964573542277,
+    "ref_mse": 0.0008038319089488747,
+    "ref_ssim": 0.9107480208079021,
+    "ref_psnr": 31.348550605773926
+  },
+  "delta_test_ssim": 0.01338134805361435,
+  "delta_test_mse": -0.0003370906316073767,
+  "checkpoint_path": "./experiments/figure3_bbbc022_swinir_fix_v1/paper_faithful_pixel_perceptual_gan/x16/random_fixed/checkpoints/best.pt",
+  "minutes": 521.5071892301241
+}

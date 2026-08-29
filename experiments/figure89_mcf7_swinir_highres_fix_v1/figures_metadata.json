@@ -1,0 +1,69 @@
+{
+  "generated_utc": "2026-07-11T15:20:00+00:00",
+  "provenance": {
+    "source": "runs_paper (PAPER-FAITHFUL full budget) -> promoted to runs/ (sp1 archived to runs/*_sp1)",
+    "recipe": "paper Fig 8/9 (paper.md line 317): Algorithm 1 epochs=230, baseline=150, cutoff=150, step=20; batch 32 (SwinIR micro4xaccum8, conv 32); FULL data loader (no step cap); H_t lr 0.1; SwinIR lr 2e-4; pixel+perceptual+adversarial (SwinIR), L1 (baselines); superpixel_factor=1 full-res patterns",
+    "test_metrics": {
+      "wswinir": {
+        "test_psnr": 31.7591,
+        "test_ssim": 0.8145,
+        "test_mse": 0.0010080,
+        "checkpoint": "best.pt @ epoch 51 (max val SSIM 0.8222)"
+      },
+      "transpose256": {
+        "test_psnr": 32.2698,
+        "test_ssim": 0.8348,
+        "test_mse": 0.0008970
+      },
+      "wcnn64": {
+        "test_psnr": 36.7993,
+        "test_ssim": 0.8967,
+        "test_mse": 0.0004290
+      }
+    },
+    "note": "wSwinIR training was OS-killed (SIGKILL, exit 137) at epoch 171/230 (transient host/GPU contention, not a code bug). Its best checkpoint is epoch 51: SwinIR converged early and the pattern-learning phase (ep150-171) never beat the frozen-pattern peak. Full paper budget did NOT improve SwinIR over the compute-scaled sp1 run (0.8145 vs 0.816) => SwinIR is at its data/capacity ceiling here; baselines improved (transpose 0.828->0.835, wcnn 0.882->0.897).",
+    "superseded": "sp1 runs -> runs/*_sp1 ; sp1 figures -> figures/*_sp1_backup.png ; sp1 metadata -> figures_metadata_sp1_backup.json (earlier sp8 -> *_sp8)"
+  },
+  "fig8": {
+    "indices": [12, 8, 21],
+    "eval_sigmoid_m": 8.0,
+    "q_epoch": 51,
+    "r_epoch": 223,
+    "display_norm": "identical per-column viridis from GT p1/p99.5 (GT, Q, R share lo/hi)",
+    "columns": [
+      {
+        "idx": 12,
+        "Q_vs_gt": {"psnr": 29.545490264892578, "ssim": 0.8901883363723755, "mse": 0.0011103269644081593},
+        "R_vs_gt": {"psnr": 27.874202728271484, "ssim": 0.8875584006309509, "mse": 0.0016314727254211903}
+      },
+      {
+        "idx": 8,
+        "Q_vs_gt": {"psnr": 25.233783721923828, "ssim": 0.567914605140686, "mse": 0.0029965504072606564},
+        "R_vs_gt": {"psnr": 26.076784133911133, "ssim": 0.595980167388916, "mse": 0.0024678660556674004}
+      },
+      {
+        "idx": 21,
+        "Q_vs_gt": {"psnr": 42.392303466796875, "ssim": 0.9392637014389038, "mse": 5.764609886682592e-05},
+        "R_vs_gt": {"psnr": 43.734588623046875, "ssim": 0.95423424243927, "mse": 4.231955244904384e-05}
+      }
+    ]
+  },
+  "fig9": {
+    "source": "G07_s1_w25BBEC1B9-2BE1-420C-80D4-BF05B83BC648.tif",
+    "top": 384,
+    "left": 0,
+    "height": 256,
+    "width": 1280,
+    "eval_sigmoid_m": 8.0,
+    "overlap_px": {"wswinir": 64, "wcnn": 16},
+    "display_norm": "identical viridis lo/hi from GT p1/p99.5 for GT/wSwinIR/wCNN",
+    "overlap_add": {
+      "wSwinIR_vs_gt": {"psnr": 28.896846771240234, "ssim": 0.7677518725395203, "mse": 0.0012891850201413035},
+      "wCNN_vs_gt": {"psnr": 32.407081604003906, "ssim": 0.8487056493759155, "mse": 0.000574502453673631}
+    },
+    "naive_tiling": {
+      "wSwinIR_vs_gt": {"psnr": 28.843734741210938, "ssim": 0.764735996723175, "mse": 0.0013050485868006945},
+      "wCNN_vs_gt": {"psnr": 32.28399658203125, "ssim": 0.8473197221755981, "mse": 0.0005910174804739654}
+    }
+  }
+}

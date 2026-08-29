@@ -1,0 +1,95 @@
+# AM-4 — SwinIR Table-2 BUDGET DIAGNOSTIC (NON-FINAL).
+#
+# *** This is a diagnostic, NOT a Table-2 reproduction. ***
+# Same paper-faithful architecture as am4_table2_full.yaml (SwinIR-M embed_dim
+# 180, effective batch 32, illum LR 0.1, fair full eval) but a REDUCED iteration
+# budget so it completes in ~hours on a shared GPU. Its purpose is to verify that
+# (a) the full-capacity model trains, (b) losses decrease, (c) LI vs w/o-LI are
+# compared fairly, and (d) whether the LI gain trend appears/disappears.
+# Do NOT present its numbers as the paper Table-2 result.
+#
+# Run (parallel across 2 GPUs, one condition each):
+#   scripts/run_am4_swinir_table2.py --config configs/swinir/am4_table2_budget.yaml \
+#       --only-condition swinir_wo_li   --device cuda:0
+#   scripts/run_am4_swinir_table2.py --config configs/swinir/am4_table2_budget.yaml \
+#       --only-condition swinir_with_li --device cuda:1
+
+experiment:
+  seed: 42
+  device: auto
+  tag: budget
+
+data:
+  train_roots:
+    - data/sr/train/DIV2K/HR
+    - data/sr/train/Flickr2K/HR
+  test_roots:
+    Set5: data/sr/test/Set5/HR
+    Set14: data/sr/test/Set14/HR
+    BSD100: data/sr/test/BSD100/HR
+    Urban100: data/sr/test/Urban100/HR
+    Manga109: data/sr/test/Manga109/HR
+  patch_size: 64
+  grayscale: true
+  val_fraction: 0.02
+  max_train_images: null
+  max_test_images: null
+
+model:
+  image_size: 64
+  compression: 16
+  downscale_factor: 8
+  num_patterns: 4
+  swinir:
+    upscale: 1
+    in_chans: 1
+    img_size: 64
+    window_size: 8
+    upsampler: ""
+    embed_dim: 180           # FULL capacity (same as paper-faithful)
+    depths: [6, 6, 6, 6, 6, 6]
+    num_heads: [6, 6, 6, 6, 6, 6]
+    mlp_ratio: 2
+    resi_connection: "1conv"
+    img_range: 1.0
+
+training:
+  iterations: 6000           # DIAGNOSTIC budget (full schedule is ~5e5)
+  effective_batch_size: 32
+  micro_batch_size: 8
+  grad_accum: 4
+  illumination_lr: 0.1
+  swinir_lr: 0.0002
+  disc_lr: 0.0002
+  betas: [0.9, 0.99]
+  amp_dtype: bfloat16
+  random_fixed_m: 10.0
+  train_sigmoid_m: 8.0
+  eval_sigmoid_m: 8.0
+  num_workers: 8
+  log_every: 50
+  val_every: 1000
+  ckpt_every: 2000
+  loss:
+    pixel_weight: 1.0
+    pixel_kind: l1
+    perceptual_weight: 1.0
+    gan_weight: 0.1
+    gan_type: vanilla
+  conditions:
+    - name: swinir_wo_li
+      learnable: false
+    - name: swinir_with_li
+      learnable: true
+
+eval:
+  tile_selection: all        # fair full eval even for the budget run
+  max_tiles_per_image: null
+  eval_batch: 64
+  stitched: true
+
+deviations_from_paper:
+  - "NON-FINAL DIAGNOSTIC: iterations=6000 << SwinIR ~5e5 schedule (intentionally reduced; not a Table-2 reproduction)"
+  - "ASSUMPTION swinir_lr=2e-4; discriminator/perceptual/loss-weights = ESRGAN defaults (paper 'similar to SwinIR')"
+  - "ASSUMPTION d=8,T=4 -> x16; train sigmoid m=8 fixed"
+  - "ARCH-UNAVOIDABLE tiled 64x64 eval (cap + center-bias REMOVED -> fair full tiling)"

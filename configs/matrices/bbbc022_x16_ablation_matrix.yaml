@@ -1,0 +1,53 @@
+# BBBC022 substitute ×16 ablation A–D (paper-inspired, not exact U2OS reproduction).
+
+base_config: base_bbbc022_substitute.yaml
+results_csv: experiments/ablations/bbbc022_ablation_x16/results.csv
+
+experiments:
+  - run_id: bbbc022_x16_A_random_transpose
+    notes: A_fixed_random_transpose
+    overrides:
+      pattern_generator:
+        mode: random_fixed
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+      training:
+        learn_patterns: false
+        use_staged_hardening: false
+
+  - run_id: bbbc022_x16_B_learnable_transpose
+    notes: B_learnable_frequency_transpose
+    overrides:
+      pattern_generator:
+        mode: learnable_frequency
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+      training:
+        learn_patterns: true
+        use_staged_hardening: true
+
+  - run_id: bbbc022_x16_C_learnable_locality_freq
+    notes: C_learnable_frequency_locality
+    overrides:
+      pattern_generator:
+        mode: learnable_frequency
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+      training:
+        learn_patterns: true
+        use_staged_hardening: true
+
+  - run_id: bbbc022_x16_D_learnable_locality_spatial
+    notes: D_learnable_spatial_locality_no_freq
+    overrides:
+      pattern_generator:
+        mode: learnable_spatial
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+      training:
+        learn_patterns: true
+        use_staged_hardening: true

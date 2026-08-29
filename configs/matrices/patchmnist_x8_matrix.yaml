@@ -1,0 +1,41 @@
+# Experiment 1: PatchMNIST x8 reconstruction ablations (paper-scale counts, debug schedule).
+
+base_config: base_patchmnist.yaml
+results_csv: experiments/content_aware/results.csv
+
+experiments:
+  - run_id: patchmnist_x8_random_transpose
+    notes: experiment_1_random_fixed_transpose_conv
+    overrides:
+      pattern_generator:
+        mode: random_fixed
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+
+  - run_id: patchmnist_x8_learnable_transpose
+    notes: experiment_1_learnable_frequency_transpose_conv
+    overrides:
+      pattern_generator:
+        mode: learnable_frequency
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+
+  - run_id: patchmnist_x8_learnable_locality
+    notes: experiment_1_learnable_frequency_locality_aware
+    overrides:
+      pattern_generator:
+        mode: learnable_frequency
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+
+  - run_id: patchmnist_x8_random_locality
+    notes: experiment_1_random_fixed_locality_aware
+    overrides:
+      pattern_generator:
+        mode: random_fixed
+      inverse_model:
+        upsampling:
+          mode: locality_aware

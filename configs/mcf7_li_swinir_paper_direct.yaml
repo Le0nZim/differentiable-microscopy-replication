@@ -1,0 +1,79 @@
+# MCF7 paper-direct LI+SwinIR (Fig 8-9, Sec 5.6).
+# Paper-faithful: SwinIR as the reconstruction model (replaces CNN), upscale=1,
+# end-to-end with Algorithm 1 (epochs=230, baseline=150, cutoff=150, step=20), L1 loss.
+# Source of truth: paper_sources/paper.md Sec 5.6.
+
+experiment:
+  seed: 42
+  device: cuda:1
+  run_id: mcf7_li_swinir_paper_direct
+  label: paper-direct MCF7 LI+SwinIR (SwinIR replaces CNN, end-to-end, Algorithm 1)
+
+dataset:
+  name: mcf7_channel2
+  data_root: data/mcf7_bbbc021
+  images_dir: channel2_selected
+  manifest_csv: manifests/mcf7_channel2_manifest.csv
+  patch_size: 256
+  image_size: 256
+  num_train: 3000
+  num_val: 100
+  num_test: 100
+  seed: 42
+  train_random_crops: true
+  random_flips: true
+  split_by_well: true
+
+pattern_generator:
+  mode: learnable_frequency        # or random_fixed for no-LI baseline
+  num_patterns: 4                  # T=4
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+
+# Algorithm 1 schedule (paper MCF7 Fig 8-9). Epoch-based.
+algorithm1:
+  epochs: 230
+  epoch_baseline: 150
+  epoch_cutoff: 150
+  epoch_step: 20
+  m_values: [2, 4, 8]              # hardening targets after cutoff
+  note: "paper epochs=230 baseline=150 cutoff=150 step=20; ratio-preserving compute scale allowed via --scale"
+
+forward_model:
+  downscale_factor: 8              # d=8, x16 with T=4
+  use_impulse_psfs: true
+  ex_psf_kernel_size: 3
+  em_psf_kernel_size: 3
+
+detector_noise:
+  mode: noise_free
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 0.0
+  apply_noise: false
+
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 8
+    num_patterns: 4
+
+swinir:
+  upscale: 1
+  in_chans: 1
+  img_size: 256
+  window_size: 8
+  upsampler: ""
+  embed_dim: 96                    # PAPER_UNSPECIFIED_ARCH_FALLBACK (vendor default 180 infeasible at 256)
+  depths: [2, 2, 2, 2, 2, 2]
+  num_heads: [3, 3, 3, 3, 3, 3]
+
+training:
+  batch_size: 8                    # PAPER batch=32 infeasible at 256x256 SwinIR end-to-end; logged
+  illumination_lr: 0.1            # Sec 5.6 SwinIR context (MCF7-specific PAPER_UNSPECIFIED)
+  inverse_lr: 0.001
+  swinir_lr: 0.0002               # PAPER_UNSPECIFIED -> SwinIR/Real-ESRGAN default 2e-4
+  loss: l1                         # MCF7 loss PAPER_UNSPECIFIED -> eq.12 default
+  compression: 16
+  eval_sigmoid_m: 8.0

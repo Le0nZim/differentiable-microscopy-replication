@@ -1,0 +1,11 @@
+url: https://github.com/JingyunLiang/SwinIR.git
+commit: 6545850fbf8df298df73d81f3e8cba638787c8bd
+branch: main
+tracked_remote_branch: origin/main
+shallow: false
+commit_date: 2022-12-04 10:58:12 +0100
+commit_subject: Update README.md
+local_status_on_2026-08-19: clean except untracked models/__pycache__/
+note: Do not vendor the upstream clone. Clone separately at SwinIR/ when needed to re-run SwinIR experiments:
+  git clone https://github.com/JingyunLiang/SwinIR.git SwinIR
+  git -C SwinIR checkout 6545850fbf8df298df73d81f3e8cba638787c8bd

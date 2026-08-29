@@ -1,0 +1,18 @@
+{
+  "run_dir": "experiments/upsampling_ablation/patchmnist_upsampling_analysis_fixed/fig5_is512_n600_transpose_seed42",
+  "test_mse": 0.035414716539283596,
+  "test_ssim": 0.7049353420734406,
+  "checkpoint_path": "experiments/upsampling_ablation/patchmnist_upsampling_analysis_fixed/fig5_is512_n600_transpose_seed42/checkpoints/best.pt",
+  "best_val_mse": 0.03503180295228958,
+  "best_step": 3400,
+  "final_val_mse": 0.03614757830897967,
+  "final_loss": 0.07468552887439728,
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 0.0,
+  "max_grad_norm_W": 0.0,
+  "H_t_min": 7.355450656767149e-22,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.5000897645950317,
+  "H_t_binary_fraction": 0.7680392265319824
+}

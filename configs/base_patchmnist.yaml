@@ -1,0 +1,64 @@
+# Shared base config for PatchMNIST reconstruction experiments.
+
+experiment:
+  seed: 42
+  device: cuda:1
+  results_csv: experiments/content_aware/results.csv
+
+dataset:
+  name: patchmnist
+  data_root: data/mnist
+  image_size: 256
+  digit_size: 32
+  grid_size: 20
+  num_train: 3000
+  num_val: 375
+  num_test: 375
+  seed: 42
+  download: true
+
+pattern_generator:
+  mode: learnable_frequency
+  num_patterns: 8
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+
+sigmoid_schedule:
+  epoch_baseline: 20
+  epoch_cutoff: 35
+  epoch_step: 5
+  m_init: 1.0
+
+forward_model:
+  downscale_factor: 8
+  use_impulse_psfs: true
+  ex_psf_kernel_size: 3
+  em_psf_kernel_size: 3
+
+detector_noise:
+  mode: noise_free
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 0.0
+  apply_noise: false
+
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 8
+    num_patterns: 8
+    use_mixing_cnn: false
+    mixing_hidden_channels: 16
+  reconstruction:
+    in_channels: 8
+    hidden_channels: [64, 64, 32, 32, 16, 1]
+    kernel_size: 3
+    padding: 1
+
+training:
+  batch_size: 32
+  num_epochs: 40
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  loss: l1

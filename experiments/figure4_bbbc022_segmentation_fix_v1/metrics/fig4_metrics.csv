@@ -1,0 +1,7 @@
+compression,downscale,compression_ratio,illumination,test_dice,test_iou,test_dice_at_0p5,selected_threshold,stage2_content_aware_val_dice,task_aware_gain_vs_stage2,illum_pattern_delta_l2,illum_pattern_delta_relative
+x64,16,64,pseudo_random,0.848,0.7375,0.8425,0.1,0.8672,-0.0158,0,0
+x64,16,64,learnable,0.9039,0.8256,0.905,0.2,0.9133,-0.0053,76.4764,0.2219
+x256,32,256,pseudo_random,0.6283,0.4598,0.6024,0.1,0.6837,-0.0461,0,0
+x256,32,256,learnable,0.815,0.689,0.8112,0.1,0.8453,-0.0167,100.8114,0.2912
+x1024,64,1024,pseudo_random,0.3959,0.2476,0.3637,0.1,0.358,0.0099,0,0
+x1024,64,1024,learnable,0.4583,0.2984,0.4456,0.2,0.5128,-0.0528,141.5459,0.4099

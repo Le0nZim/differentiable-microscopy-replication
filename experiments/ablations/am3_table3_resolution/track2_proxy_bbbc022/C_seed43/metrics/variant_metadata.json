@@ -1,0 +1,66 @@
+{
+  "variant": "C",
+  "label": "learnable Ht + locality + freq (paper best)",
+  "seed": 43,
+  "device": "cuda:0",
+  "git_commit": "unknown",
+  "audit": {
+    "pattern_mode": "learnable_frequency",
+    "learnable_patterns": true,
+    "frequency_domain_optimization": true,
+    "upsampling_mode": "locality_aware",
+    "downscale_factor": 8,
+    "num_patterns": 4,
+    "compression": 16.0,
+    "actual_upsampling_module": "locality_aware",
+    "pattern_generator_class": "PatternGenerator",
+    "pattern_has_frequency_W": true,
+    "pattern_has_spatial_tau": false,
+    "num_illumination_params": 262144,
+    "num_illumination_trainable_params": 262144,
+    "num_upsampler_params": 262144,
+    "num_reconstruction_params": 72193,
+    "num_total_params": 596481
+  },
+  "trainable_param_report": {
+    "illumination_total": 262144,
+    "illumination_trainable": 262144,
+    "upsampler_total": 262144,
+    "upsampler_trainable": 262144,
+    "reconstruction_total": 72193,
+    "reconstruction_trainable": 72193
+  },
+  "phases": [
+    {
+      "name": "inverse_warmup",
+      "m": 1.0,
+      "steps": 1500,
+      "freeze_illum": true
+    },
+    {
+      "name": "joint_soft",
+      "m": 1.0,
+      "steps": 4000,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m2",
+      "m": 2.0,
+      "steps": 1000,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m4",
+      "m": 4.0,
+      "steps": 1000,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m8",
+      "m": 8.0,
+      "steps": 1000,
+      "freeze_illum": false
+    }
+  ],
+  "wiring_problems": []
+}

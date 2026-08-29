@@ -1,0 +1,15 @@
+{
+  "variant": "B",
+  "label": "learnable Ht + Tr.Conv.Up + freq",
+  "seed": 42,
+  "test_mse": 0.0046141198836266994,
+  "test_ssim": 0.8763660192489624,
+  "best_val_mse": 0.004255317151546478,
+  "best_train_mse": 0.0019341908628121018,
+  "min_train_mse": 0.0007682722061872482,
+  "final_train_mse": 0.0016906785313040018,
+  "overfit_gap": 0.0023211262887343764,
+  "best_m": 1.0,
+  "elapsed_sec": 129.28249311447144,
+  "run_dir": "./experiments/ablations/am3_table3_resolution/overfit_diagnostics/overfit_B_n8"
+}

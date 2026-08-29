@@ -1,0 +1,474 @@
+{
+  "label": "AM-4 SwinIR Table-2 (full) \u2014 checkpoint=best-val",
+  "tag": "full",
+  "paper_table2": {
+    "Set5": {
+      "wo_li": [
+        14.03,
+        0.3079
+      ],
+      "with_li": [
+        26.74,
+        0.8113
+      ]
+    },
+    "Set14": {
+      "wo_li": [
+        13.64,
+        0.2258
+      ],
+      "with_li": [
+        23.6,
+        0.693
+      ]
+    },
+    "BSD100": {
+      "wo_li": [
+        14.28,
+        0.2094
+      ],
+      "with_li": [
+        22.9,
+        0.6317
+      ]
+    },
+    "Urban100": {
+      "wo_li": [
+        13.51,
+        0.2146
+      ],
+      "with_li": [
+        21.51,
+        0.6402
+      ]
+    },
+    "Manga109": {
+      "wo_li": [
+        12.09,
+        0.1952
+      ],
+      "with_li": [
+        20.18,
+        0.6652
+      ]
+    }
+  },
+  "comparison": {
+    "Set5": {
+      "wo_li_psnr": 25.553148832775296,
+      "with_li_psnr": 27.452248473394484,
+      "wo_li_ssim": 0.7200855737640744,
+      "with_li_ssim": 0.7768114955652328,
+      "li_gain_psnr": 1.8990996406191876,
+      "li_gain_ssim": 0.05672592180115832,
+      "li_improves_psnr": true,
+      "paper_wo_li": [
+        14.03,
+        0.3079
+      ],
+      "paper_with_li": [
+        26.74,
+        0.8113
+      ],
+      "paper_li_gain_psnr": 12.709999999999999
+    },
+    "Set14": {
+      "wo_li_psnr": 23.620855261465746,
+      "with_li_psnr": 25.171464874358946,
+      "wo_li_ssim": 0.6378738713077086,
+      "with_li_ssim": 0.6882151152693226,
+      "li_gain_psnr": 1.5506096128932008,
+      "li_gain_ssim": 0.05034124396161399,
+      "li_improves_psnr": true,
+      "paper_wo_li": [
+        13.64,
+        0.2258
+      ],
+      "paper_with_li": [
+        23.6,
+        0.693
+      ],
+      "paper_li_gain_psnr": 9.96
+    },
+    "BSD100": {
+      "wo_li_psnr": 23.908358997617448,
+      "with_li_psnr": 25.11894780131749,
+      "wo_li_ssim": 0.590219550030572,
+      "with_li_ssim": 0.6279044621246201,
+      "li_gain_psnr": 1.2105888037000412,
+      "li_gain_ssim": 0.03768491209404812,
+      "li_improves_psnr": true,
+      "paper_wo_li": [
+        14.28,
+        0.2094
+      ],
+      "paper_with_li": [
+        22.9,
+        0.6317
+      ],
+      "paper_li_gain_psnr": 8.62
+    },
+    "Urban100": {
+      "wo_li_psnr": 22.55321171652583,
+      "with_li_psnr": 23.896525681826816,
+      "wo_li_ssim": 0.5832754488549663,
+      "with_li_ssim": 0.6433870043634905,
+      "li_gain_psnr": 1.343313965300986,
+      "li_gain_ssim": 0.060111555508524206,
+      "li_improves_psnr": true,
+      "paper_wo_li": [
+        13.51,
+        0.2146
+      ],
+      "paper_with_li": [
+        21.51,
+        0.6402
+      ],
+      "paper_li_gain_psnr": 8.000000000000002
+    },
+    "Manga109": {
+      "wo_li_psnr": 24.21281648716852,
+      "with_li_psnr": 26.089906635010138,
+      "wo_li_ssim": 0.7223822200040658,
+      "with_li_ssim": 0.7799370392796903,
+      "li_gain_psnr": 1.877090147841617,
+      "li_gain_ssim": 0.05755481927562445,
+      "li_improves_psnr": true,
+      "paper_wo_li": [
+        12.09,
+        0.1952
+      ],
+      "paper_with_li": [
+        20.18,
+        0.6652
+      ],
+      "paper_li_gain_psnr": 8.09
+    }
+  },
+  "conditions": {
+    "swinir_wo_li": {
+      "iterations_reached": 20000,
+      "iterations_target": 20000,
+      "best_val_l1": 0.05729676286379496,
+      "best_step": 20000,
+      "loss_finite": true,
+      "arch_summary": {
+        "embed_dim": 180,
+        "num_layers": 6,
+        "window_size": 8,
+        "upscale": 1,
+        "total_params": 11514070,
+        "swinir_params": 11497681,
+        "upsampling_params": 16384,
+        "fuse_params": 5,
+        "illumination_params": 0,
+        "illumination_learnable": false
+      },
+      "optimizer_groups": [
+        {
+          "name": "inverse",
+          "lr": 0.0002,
+          "betas": [
+            0.9,
+            0.99
+          ],
+          "num_params": 11514070
+        }
+      ],
+      "illumination": {
+        "mean": 0.5042858123779297,
+        "std": 0.45958951115608215,
+        "min": 2.267389574716657e-17,
+        "max": 1.0,
+        "binarization_frac_near_0_or_1": 0.77166748046875,
+        "shape": [
+          4,
+          1,
+          64,
+          64
+        ]
+      },
+      "per_dataset_best": {
+        "Set5": {
+          "psnr": 25.553148832775296,
+          "ssim": 0.7200855737640744,
+          "tiles": 105,
+          "images": 5,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 22.961566925048828,
+          "stitched_ssim": 0.6483720302581787
+        },
+        "Set14": {
+          "psnr": 23.620855261465746,
+          "ssim": 0.6378738713077086,
+          "tiles": 668,
+          "images": 14,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 21.74063914162772,
+          "stitched_ssim": 0.5533363989421299
+        },
+        "BSD100": {
+          "psnr": 23.908358997617448,
+          "ssim": 0.590219550030572,
+          "tiles": 3500,
+          "images": 100,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 22.08372829437256,
+          "stitched_ssim": 0.5253013168275357
+        },
+        "Urban100": {
+          "psnr": 22.55321171652583,
+          "ssim": 0.5832754488549663,
+          "tiles": 18221,
+          "images": 100,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 19.707439947128297,
+          "stitched_ssim": 0.5180743363499641
+        },
+        "Manga109": {
+          "psnr": 24.21281648716852,
+          "ssim": 0.7223822200040658,
+          "tiles": 23504,
+          "images": 109,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 21.039568612334925,
+          "stitched_ssim": 0.6664386654118879
+        }
+      },
+      "per_dataset_final": {
+        "Set5": {
+          "psnr": 25.553148832775296,
+          "ssim": 0.7200855737640744,
+          "tiles": 105,
+          "images": 5,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 22.961566925048828,
+          "stitched_ssim": 0.6483720302581787
+        },
+        "Set14": {
+          "psnr": 23.620855261465746,
+          "ssim": 0.6378738713077086,
+          "tiles": 668,
+          "images": 14,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 21.74063914162772,
+          "stitched_ssim": 0.5533363989421299
+        },
+        "BSD100": {
+          "psnr": 23.908358997617448,
+          "ssim": 0.590219550030572,
+          "tiles": 3500,
+          "images": 100,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 22.08372829437256,
+          "stitched_ssim": 0.5253013168275357
+        },
+        "Urban100": {
+          "psnr": 22.55321171652583,
+          "ssim": 0.5832754488549663,
+          "tiles": 18221,
+          "images": 100,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 19.707439947128297,
+          "stitched_ssim": 0.5180743363499641
+        },
+        "Manga109": {
+          "psnr": 24.21281648716852,
+          "ssim": 0.7223822200040658,
+          "tiles": 23504,
+          "images": 109,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 21.039568612334925,
+          "stitched_ssim": 0.6664386654118879
+        }
+      }
+    },
+    "swinir_with_li": {
+      "iterations_reached": 20000,
+      "iterations_target": 20000,
+      "best_val_l1": 0.04813862510997316,
+      "best_step": 15000,
+      "loss_finite": true,
+      "arch_summary": {
+        "embed_dim": 180,
+        "num_layers": 6,
+        "window_size": 8,
+        "upscale": 1,
+        "total_params": 11530454,
+        "swinir_params": 11497681,
+        "upsampling_params": 16384,
+        "fuse_params": 5,
+        "illumination_params": 16384,
+        "illumination_learnable": true
+      },
+      "optimizer_groups": [
+        {
+          "name": "inverse",
+          "lr": 0.0002,
+          "betas": [
+            0.9,
+            0.99
+          ],
+          "num_params": 11514070
+        },
+        {
+          "name": "illumination",
+          "lr": 0.1,
+          "betas": [
+            0.9,
+            0.99
+          ],
+          "num_params": 16384
+        }
+      ],
+      "illumination": {
+        "mean": 0.45387208461761475,
+        "std": 0.4907299280166626,
+        "min": 7.484263182073667e-14,
+        "max": 1.0,
+        "binarization_frac_near_0_or_1": 0.9659423828125,
+        "shape": [
+          4,
+          1,
+          64,
+          64
+        ]
+      },
+      "per_dataset_best": {
+        "Set5": {
+          "psnr": 27.452248473394484,
+          "ssim": 0.7768114955652328,
+          "tiles": 105,
+          "images": 5,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 24.792755126953125,
+          "stitched_ssim": 0.7272065997123718
+        },
+        "Set14": {
+          "psnr": 25.171464874358946,
+          "ssim": 0.6882151152693226,
+          "tiles": 668,
+          "images": 14,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 23.11153929574149,
+          "stitched_ssim": 0.6121576683861869
+        },
+        "BSD100": {
+          "psnr": 25.11894780131749,
+          "ssim": 0.6279044621246201,
+          "tiles": 3500,
+          "images": 100,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 23.073359069824217,
+          "stitched_ssim": 0.5680951867997647
+        },
+        "Urban100": {
+          "psnr": 23.896525681826816,
+          "ssim": 0.6433870043634905,
+          "tiles": 18221,
+          "images": 100,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 20.788758707046508,
+          "stitched_ssim": 0.5844538232684136
+        },
+        "Manga109": {
+          "psnr": 26.089906635010138,
+          "ssim": 0.7799370392796903,
+          "tiles": 23504,
+          "images": 109,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 22.828675873782657,
+          "stitched_ssim": 0.7328731054012928
+        }
+      },
+      "per_dataset_final": {
+        "Set5": {
+          "psnr": 27.12497762044271,
+          "ssim": 0.776933897676922,
+          "tiles": 105,
+          "images": 5,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 24.572708511352538,
+          "stitched_ssim": 0.7282410502433777
+        },
+        "Set14": {
+          "psnr": 25.049094611299253,
+          "ssim": 0.6876398995964826,
+          "tiles": 668,
+          "images": 14,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 22.928662708827428,
+          "stitched_ssim": 0.6096350316490445
+        },
+        "BSD100": {
+          "psnr": 24.89258814076015,
+          "ssim": 0.6245802692472935,
+          "tiles": 3500,
+          "images": 100,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 22.89988758087158,
+          "stitched_ssim": 0.5636220549046993
+        },
+        "Urban100": {
+          "psnr": 24.01776551768518,
+          "ssim": 0.6483842633212465,
+          "tiles": 18221,
+          "images": 100,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 20.766343069076537,
+          "stitched_ssim": 0.5887086413800716
+        },
+        "Manga109": {
+          "psnr": 26.103655383528455,
+          "ssim": 0.7834141600878315,
+          "tiles": 23504,
+          "images": 109,
+          "selection": "all",
+          "max_tiles_per_image": null,
+          "stitched_psnr": 22.689294517587083,
+          "stitched_ssim": 0.7359677227812076
+        }
+      }
+    }
+  },
+  "all_finite": true,
+  "deviations_from_paper": [
+    "CLEAN SPLIT: Flickr2K HR-only (drop x2/x3/x4) and scene-level 2% val holdout",
+    "ASSUMPTION swinir_lr=2e-4 (paper \u00a75.6 'similar to SwinIR' overrides \u00a74.4.3 CNN default 1e-3)",
+    "ASSUMPTION discriminator = compact spectral-norm VGG-style (paper 'similar to SwinIR'; arch unspecified)",
+    "ASSUMPTION VGG19 perceptual layers conv1_2..conv5_4 + ESRGAN weights (unspecified)",
+    "ASSUMPTION loss weights pixel 1.0 / perceptual 1.0 / gan 0.1 (ESRGAN default; unspecified)",
+    "ASSUMPTION betas (0.9,0.99), no LR schedule/warmup (SwinIR/ESRGAN convention; unspecified)",
+    "ASSUMPTION d=8,T=4 factorisation of x16 (paper states x16, not the d/T split)",
+    "ASSUMPTION train sigmoid sharpness m=8 fixed (Algorithm-1 m schedule only given for MCF7/U2OS)",
+    "ARCH-UNAVOIDABLE tiled 64x64 eval (locality-aware upsampling is built for fixed 64x64 input)",
+    "COMPUTE: 20k iters to match the published compute-limited full run"
+  ],
+  "eval": {
+    "tile_selection": "all",
+    "max_tiles_per_image": null,
+    "eval_batch": 64,
+    "stitched": true
+  },
+  "effective_batch_size": 32,
+  "timestamp_utc": "2026-08-25T23:19:05.142227+00:00"
+}

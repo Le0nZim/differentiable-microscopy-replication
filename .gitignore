@@ -1,0 +1,50 @@
+# Environments
+.venv/
+venv/
+.env
+.env.*
+
+# Python / test / build caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Datasets (see data/README.md — do not vendor)
+data/mnist/
+data/sr/
+data/mcf7_bbbc021/
+data/substitute_data/
+data/**/*.tif
+data/**/*.tiff
+data/**/*.TIF
+data/**/*.TIFF
+
+# Nested upstream SwinIR clone (pin in SwinIR.COMMIT; clone locally to re-run)
+SwinIR/
+
+# Logs
+*.log
+*.out
+
+# Credentials
+credentials.json
+secrets.yaml

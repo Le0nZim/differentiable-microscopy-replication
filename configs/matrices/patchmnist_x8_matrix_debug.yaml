@@ -1,0 +1,61 @@
+# Fast PatchMNIST x8 matrix for CI / smoke testing (tiny data, 1 epoch).
+
+base_config: base_patchmnist.yaml
+results_csv: experiments/content_aware/results_smoke.csv
+
+experiments:
+  - run_id: smoke_patchmnist_random_transpose
+    overrides:
+      dataset:
+        image_size: 64
+        num_train: 8
+        num_val: 4
+        num_test: 4
+      pattern_generator:
+        mode: random_fixed
+        num_patterns: 4
+      forward_model:
+        downscale_factor: 8
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+          num_patterns: 4
+        reconstruction:
+          in_channels: 4
+          hidden_channels: [16, 16, 16, 16, 16, 1]
+      training:
+        batch_size: 4
+        num_epochs: 1
+        illumination_lr: 0.1
+      sigmoid_schedule:
+        epoch_baseline: 1
+        epoch_cutoff: 1
+        epoch_step: 1
+
+  - run_id: smoke_patchmnist_learnable_locality
+    overrides:
+      dataset:
+        image_size: 64
+        num_train: 8
+        num_val: 4
+        num_test: 4
+      pattern_generator:
+        mode: learnable_frequency
+        num_patterns: 4
+      forward_model:
+        downscale_factor: 8
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+          num_patterns: 4
+        reconstruction:
+          in_channels: 4
+          hidden_channels: [16, 16, 16, 16, 16, 1]
+      training:
+        batch_size: 4
+        num_epochs: 1
+        illumination_lr: 0.1
+      sigmoid_schedule:
+        epoch_baseline: 1
+        epoch_cutoff: 1
+        epoch_step: 1

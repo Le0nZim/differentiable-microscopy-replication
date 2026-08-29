@@ -1,0 +1,41 @@
+# OBSOLETE: legacy Phase 3 validation matrix (superseded by paper-aligned runs).
+# Base config `validation/base_small_patchmnist.yaml` was removed during cleanup.
+# Kept for historical reference only — do not use for new runs.
+
+# Phase 3: small PatchMNIST ablation before full Experiment 1.
+
+base_config: validation/base_small_patchmnist.yaml
+results_csv: outputs/metrics/validation_results.csv
+
+experiments:
+  - run_id: small_random_transpose
+    notes: phase3_random_fixed_transpose_conv
+    overrides:
+      pattern_mode: random_fixed
+      upsampling: transpose_conv
+      training:
+        learn_patterns: false
+
+  - run_id: small_random_locality
+    notes: phase3_random_fixed_locality_aware
+    overrides:
+      pattern_mode: random_fixed
+      upsampling: locality_aware
+      training:
+        learn_patterns: false
+
+  - run_id: small_learnable_transpose
+    notes: phase3_learnable_frequency_transpose_conv
+    overrides:
+      pattern_mode: learnable_frequency
+      upsampling: transpose_conv
+      training:
+        learn_patterns: true
+
+  - run_id: small_learnable_locality
+    notes: phase3_learnable_frequency_locality_aware
+    overrides:
+      pattern_mode: learnable_frequency
+      upsampling: locality_aware
+      training:
+        learn_patterns: true

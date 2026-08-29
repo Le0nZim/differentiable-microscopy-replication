@@ -1,0 +1,117 @@
+experiment:
+  seed: 42
+  device: cuda:1
+  study_label: BBBC022 task-aware segmentation (paper B.0.1 proxy; not U2OS)
+  results_csv: experiments/task_aware_segmentation/am2_task_aware_full/stage1_results.csv
+  run_id: taskaware_x1024_random_fixed
+  output_dir: experiments/task_aware_segmentation/am2_task_aware_full/taskaware_x64_learnable_frequency_seed42
+  compression: 1024.0
+dataset:
+  name: bbbc022_hoechst
+  data_root: data/substitute_data
+  stack_glob: '**/*.tif'
+  preprocessing_mode: paper_strict
+  bias: 134.28
+  clip_max: 500.0
+  downscale_factor: 1.0
+  background_percentile: 1.0
+  clip_percentile: 99.9
+  patch_size: 256
+  image_size: 256
+  num_train_images: 168
+  num_val_images: 21
+  num_test_images: 21
+  seed: 42
+  train_random_crops: true
+  random_flips: true
+  split_by_well: true
+  return_mask: true
+  mask_threshold: 0.3
+  mask_closing_kernel: 10
+pattern_generator:
+  mode: random_fixed
+  num_patterns: 4
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+  height: 256
+  width: 256
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1
+  m_init: 1.0
+forward_model:
+  downscale_factor: 64
+  use_impulse_psfs: true
+  ex_psf_kernel_size: 3
+  em_psf_kernel_size: 3
+detector_noise:
+  mode: noise_free
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 0.0
+  apply_noise: false
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 64
+    num_patterns: 4
+    use_mixing_cnn: false
+    mixing_hidden_channels: 16
+  reconstruction:
+    in_channels: 4
+    hidden_channels:
+    - 64
+    - 64
+    - 32
+    - 32
+    - 16
+    - 1
+    kernel_size: 3
+    padding: 1
+segmentation_head:
+  in_channels: 1
+  hidden_channels:
+  - 16
+  - 16
+  - 1
+  kernel_size: 3
+  padding: 1
+training:
+  batch_size: 32
+  log_every: 200
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  gradient_clip_norm: 1.0
+  sharpen_eval_m: 10.0
+  loss: l1
+  learn_patterns: false
+  fixed_sigmoid_m: 1.0
+  seg_bce_weight: 1.0
+  seg_dice_weight: 0.5
+  reconstruction_l1_weight: 0.0
+  task_aware:
+    stage1_mode: train
+    content_aware_checkpoint: null
+    eval_sigmoid_m: 10.0
+    finetune_sigmoid_m: 1.0
+    finetune_harden_m_values:
+    - 2.0
+    - 4.0
+    - 8.0
+    finetune_soft_fraction: 0.6
+    seg_head_lr: 0.001
+    num_qualitative_samples: 6
+    stage1:
+      learnable:
+        inverse_warmup_steps: 1500
+        joint_soft_steps: 3500
+        harden_m_values:
+        - 2
+        - 4
+        - 8
+        harden_steps_per_m: 800
+      fixed_steps: 4000
+    seg_head_steps: 1200
+    finetune_steps: 2500

@@ -1,0 +1,26 @@
+{
+  "label": "BBBC022 B(transpose) vs C(locality) test MSE vs train size",
+  "sweep": [
+    {
+      "n_images": 42,
+      "B_transpose_test_mse": 0.003624115139245987,
+      "C_locality_test_mse": 0.008973225019872189,
+      "C_minus_B": 0.005349109880626202,
+      "C_beats_B": false
+    },
+    {
+      "n_images": 84,
+      "B_transpose_test_mse": 0.0029605545569211245,
+      "C_locality_test_mse": 0.006817440502345562,
+      "C_minus_B": 0.0038568859454244375,
+      "C_beats_B": false
+    },
+    {
+      "n_images": 168,
+      "B_transpose_test_mse": 0.0027520281728357077,
+      "C_locality_test_mse": 0.005793123971670866,
+      "C_minus_B": 0.0030410957988351583,
+      "C_beats_B": false
+    }
+  ]
+}

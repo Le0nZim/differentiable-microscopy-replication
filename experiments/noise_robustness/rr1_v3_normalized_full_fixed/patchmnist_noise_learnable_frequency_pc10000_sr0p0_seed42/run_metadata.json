@@ -1,0 +1,6 @@
+{
+  "seed": 42,
+  "git_commit": "9aa9f0d9c8820756d46c7b884f8dca5ed6c42c89",
+  "run_id": "patchmnist_noise_learnable_frequency_pc10000_sr0p0_seed42",
+  "training_mode": "staged_hardening"
+}

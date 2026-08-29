@@ -1,0 +1,33 @@
+# Table 2 full run plan config (NOT auto-launched)
+experiment:
+  requires_flag: --launch-table2-full-approved
+  label: planned full Table 2; partial deviations expected
+
+paper_target:
+  train: [DIV2K, Flickr2K]
+  test: [Set5, Set14, BSD100, Urban100, Manga109]
+  patch_size: 64
+  compression: 16
+  conditions: [SwinIR w/o LI, SwinIR with LI]
+
+data:
+  train_roots:
+    - data/sr/train/DIV2K/HR
+    - data/sr/train/Flickr2K/HR
+  test_roots:
+    - data/sr/test/Set5/HR
+    - data/sr/test/Set14/HR
+    - data/sr/test/BSD100/HR
+    - data/sr/test/Urban100/HR
+    - data/sr/test/Manga109/HR
+
+missing_for_exact:
+  - adversarial_loss
+  - perceptual_loss
+  - paper_iteration_budget
+  - vendor_vs_paper_architecture_lock
+
+estimate:
+  runtime_hours: unknown_multi_day
+  disk_gb: 5-15
+  gpu_memory_gb: 16+

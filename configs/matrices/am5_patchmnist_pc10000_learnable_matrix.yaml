@@ -1,0 +1,32 @@
+# AM-5 learnable PatchMNIST x8 with photon_count=10000 (paper-aligned noise).
+# Mirrors configs/matrices/paper_aligned_lr1_learnable_matrix.yaml EXACTLY (same
+# run_ids, same overrides) but on the pc=10000 base config. Only the detector
+# noise differs from the frozen lr1_full runs.
+
+base_config: paper_aligned_patchmnist_contentaware_pc10000.yaml
+results_csv: experiments/content_aware/am5_patchmnist_pc10000_resolution/results.csv
+
+experiments:
+  - run_id: patchmnist_x8_learnable_transpose
+    notes: am5_pc10000_learnable_transpose_staged_hardening
+    overrides:
+      pattern_generator:
+        mode: learnable_frequency
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+      training:
+        learn_patterns: true
+        use_staged_hardening: true
+
+  - run_id: patchmnist_x8_learnable_locality
+    notes: am5_pc10000_learnable_locality_staged_hardening
+    overrides:
+      pattern_generator:
+        mode: learnable_frequency
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+      training:
+        learn_patterns: true
+        use_staged_hardening: true

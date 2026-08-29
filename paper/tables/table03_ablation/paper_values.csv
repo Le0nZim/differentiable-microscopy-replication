@@ -1,0 +1,5 @@
+variant,label,paper_ssim,paper_mse
+A,fixed Ht + Tr.Conv.Up + freq,0.7872,0.0042
+B,(+) learnable Ht,0.795,0.0038
+C,(+) proposed locality upsampling (paper best),0.8426,0.0029
+D,(-) frequency-domain optimization,0.7857,0.0041

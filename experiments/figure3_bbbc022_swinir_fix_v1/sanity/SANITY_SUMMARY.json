@@ -1,0 +1,36 @@
+{
+  "all_passed": true,
+  "tests": {
+    "pairing": {
+      "passed": true,
+      "evidence": "SwinIR input == frozen-base reconstruction cropped at the SAME (top,left) as GT (swinir_input_equals_base_recon_crop=true). No spatial shift; no independent per-image/per-patch normalisation between input and target.",
+      "artifact": "sanity/pairing/pairing_grid.png"
+    },
+    "distribution": {
+      "passed": true,
+      "evidence": "GT and SwinIR-target are bit-identical (mean 0.1228, std 0.183). base_recon(==SwinIR input) shares the same [0,1] range (mean 0.108, std 0.152, p99 0.61 vs GT p99 0.77). Input and target are in compatible ranges; no independent min-max renormalisation.",
+      "artifact": "sanity/distribution/histograms.png"
+    },
+    "tiny_overfit": {
+      "passed": true,
+      "evidence": "SwinIR-M (identity init) on 8 fixed paired patches reaches best train SSIM 0.978 and best train MSE 1.57e-4 (118x below base MSE 0.0186). Model can overfit -> training loop + loss + gradients are correct.",
+      "artifact": "sanity/tiny_overfit/overfit_ssim.png"
+    },
+    "identity": {
+      "passed": true,
+      "evidence": "With input==target==GT and RANDOM init (no identity init), SwinIR learns identity: SSIM 0.995, MSE 9.7e-6 in 1200 steps.",
+      "artifact": "sanity/identity/identity_report.json"
+    },
+    "no_leakage": {
+      "passed": true,
+      "evidence": "train/val/test splits fully disjoint (1980/40/60, all overlaps=0). Normalisation is per-image minimal_percentile (q0.001/q0.999), fits no statistic on val/test and shares nothing across images -> no train<-val/test leakage.",
+      "artifact": "sanity/no_leakage/no_leakage_report.json"
+    },
+    "baseline": {
+      "passed": true,
+      "evidence": "Frozen-base 'before SwinIR' test SSIM/MSE recorded for all 8 cells; matches the frozen bbbc022_content_aware_v2 reference metrics.",
+      "artifact": "sanity/baseline_comparison/baseline_test_metrics.json"
+    }
+  },
+  "note": "All gates green -> long paper-faithful training authorised (per task Step 5)."
+}

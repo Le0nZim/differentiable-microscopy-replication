@@ -1,0 +1,90 @@
+experiment:
+  seed: 43
+  device: cuda:0
+  alignment_mode: paper
+  checkpoint_policy: best_val
+  checkpoint_policy_note: best_val is an implementation choice
+  results_csv: experiments/noise_robustness/rr1_v3_normalized_full_fixed/results.csv
+  compression: 8.0
+  run_id: patchmnist_noise_random_fixed_pc10_sr6p0_seed43
+  output_dir: experiments/patchmnist_noise_random_fixed_pc10_sr6p0
+  notes: noise_robustness
+dataset:
+  name: patchmnist
+  data_root: data/mnist
+  image_size: 256
+  digit_size: 32
+  grid_size: 20
+  num_train: 3000
+  num_val: 375
+  num_test: 375
+  seed: 43
+  download: true
+  disjoint_val_test: true
+pattern_generator:
+  mode: random_fixed
+  num_patterns: 8
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 43
+  height: 256
+  width: 256
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1
+  m_init: 1.0
+forward_model:
+  downscale_factor: 8
+  use_impulse_psfs: true
+  ex_psf_kernel_size: 3
+  em_psf_kernel_size: 3
+detector_noise:
+  mode: differentiable_poisson_plus_read
+  noise_normalization: paper_v3
+  photon_count: 10.0
+  gamma_background: 10.0
+  gamma: 10.0
+  sigma_read: 6.0
+  apply_noise: true
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 8
+    num_patterns: 8
+    use_mixing_cnn: false
+    mixing_hidden_channels: 16
+  reconstruction:
+    in_channels: 8
+    hidden_channels:
+    - 64
+    - 64
+    - 32
+    - 32
+    - 16
+    - 1
+    kernel_size: 3
+    padding: 1
+training:
+  batch_size: 32
+  log_every: 500
+  paper_illumination_lr: 1.0
+  stable_illumination_lr: 0.3
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  gradient_clip_norm: 1.0
+  sharpen_eval_m: 10.0
+  loss: l1
+  learn_patterns: false
+  max_steps: 7350
+  fixed_sigmoid_m: 1.0
+  staged_hardening:
+    inverse_warmup_steps: 3000
+    joint_soft_steps: 7350
+    harden_m_values:
+    - 2
+    - 4
+    - 8
+    harden_steps_per_m: 1500
+  num_epochs: 1
+  use_staged_hardening: false

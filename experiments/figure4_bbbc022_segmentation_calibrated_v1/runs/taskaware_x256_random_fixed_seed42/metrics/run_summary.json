@@ -1,0 +1,23 @@
+{
+  "run_dir": "./experiments/figure4_bbbc022_segmentation_calibrated_v1/runs/taskaware_x256_random_fixed_seed42",
+  "run_id": "taskaware_x256_random_fixed",
+  "learnable": false,
+  "compression": 256.0,
+  "content_aware_checkpoint": "./experiments/figure4_bbbc022_segmentation_calibrated_v1/runs/taskaware_x256_random_fixed_seed42/stage1_content_aware/checkpoints/best.pt",
+  "selected_threshold": 0.1,
+  "val_dice": 0.5756786479836419,
+  "val_iou": 0.4067239406562987,
+  "test_dice": 0.5434109753086453,
+  "test_iou": 0.37819268093222663,
+  "test_bce": 0.7305505275726318,
+  "test_dice_at_0p5": 0.4204566301334472,
+  "test_iou_at_0p5": 0.2738597903932844,
+  "stage2_val_dice": 0.7004951039950053,
+  "seg_head_steps": 1200,
+  "finetune_steps": 2500,
+  "illumination_grad_norm_stage3_max": 0.0,
+  "inverse_grad_norm_stage3_max": 39.42104721069336,
+  "seg_head_grad_norm_stage2_max": 1.150702953338623,
+  "illumination_pattern_delta_l2": 0.0,
+  "illumination_pattern_delta_relative": 0.0
+}

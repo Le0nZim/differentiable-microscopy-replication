@@ -1,0 +1,118 @@
+# MCF7 Figure 8 & 9 — paper-faithful SwinIR high-resolution reconstruction fix (paper §5.6).
+#
+# Fixes the "SwinIR resolution deviates" defect of the frozen mcf7_fig8_qr run by porting the
+# VALIDATED Table-2/Fig-7 SwinIR recipe (run_am4_swinir_table2.py + am4_table2_full.yaml) onto
+# the MCF7 end-to-end pipeline:
+#   L1-only            -> pixel + perceptual + adversarial (paper §5.6 explicit)
+#   embed_dim 96       -> 180 (SwinIR-M) + gradient checkpointing (fits at 256x256)
+#   38 epochs          -> Algorithm-1 230/150/150/20 (paper-faithful, FULL budget)
+#   batch 8            -> 32 (paper §4.4.3 explicit; micro 4 x accum 8 fits shared GPU)
+# SwinIR still REPLACES psi with upscale=1; locality-aware upsampling unchanged.
+#
+# Source of truth order: (1) paper §5.6, (2) validated Table-2 recipe, (3) repo conventions,
+# (4) labelled PAPER_UNSPECIFIED assumptions (see deviations_from_paper below).
+
+experiment:
+  seed: 42
+  tag: fig89_mcf7_swinir_fix
+  label: "MCF7 Fig 8/9 SwinIR high-res reconstruction fix (pixel+perceptual+GAN, SwinIR-M, upscale=1)"
+
+dataset:
+  name: mcf7_channel2
+  data_root: data/mcf7_bbbc021
+  images_dir: channel2_selected
+  manifest_csv: manifests/mcf7_channel2_manifest.csv
+  patch_size: 256
+  image_size: 256
+  num_train: 3000
+  num_val: 100
+  num_test: 100
+  seed: 42
+  train_random_crops: true
+  random_flips: true
+  split_by_well: true
+
+pattern_generator:
+  mode: learnable_frequency          # random_fixed for a no-LI ablation
+  num_patterns: 4                    # T=4
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+  superpixel_factor: 1               # FULL-RES patterns (paper Fig 9 shows fine speckle, NOT 8px blocks).
+                                     # sp=8 forced hard 8px cells (wCNN=8x8, wSwinIR=32x32) and capped
+                                     # the illumination's high-freq DOF -> coarse patterns + weaker recon.
+
+forward_model:
+  downscale_factor: 8                # d=8 -> x16 with T=4
+  use_impulse_psfs: true
+
+detector_noise:
+  mode: noise_free
+  apply_noise: false
+
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 8
+    num_patterns: 4
+
+# SwinIR-M ("similar to SwinIR configurations [26]"), image-to-image, upscale=1.
+swinir:
+  upscale: 1
+  in_chans: 1
+  img_size: 256
+  window_size: 8
+  upsampler: ""
+  embed_dim: 180                     # SwinIR-M (was 96); vendor default
+  depths: [6, 6, 6, 6, 6, 6]
+  num_heads: [6, 6, 6, 6, 6, 6]
+  mlp_ratio: 2
+  resi_connection: "1conv"
+  img_range: 1.0
+  use_checkpoint: true               # gradient checkpointing -> SwinIR-M fits at 256x256
+
+# Algorithm 1 (paper §5.6 MCF7 Fig 8/9). Epoch-based. Ratio-preserving --scale allowed.
+algorithm1:
+  epochs: 230
+  epoch_baseline: 150
+  epoch_cutoff: 150
+  epoch_step: 20
+  m_values: [2, 4, 8]
+
+training:
+  # SwinIR (Q / wSwinIR): full loss stack, effective batch via grad accumulation.
+  # Gradient checkpointing keeps SwinIR-M @256 low (~11GB peak at micro=4); the other
+  # user on this GPU holds ~21GB idle, leaving ~27GB free -> micro=4 x accum=8 = the
+  # paper's batch 32 with comfortable OOM headroom for the multi-day run.
+  micro_batch_size: 4
+  grad_accum: 8                      # effective 32 == paper §4.4.3 batch size
+  conv_batch_size: 32                # conventional baselines (R, wCNN) — paper batch 32
+  illumination_lr: 0.1               # paper §5.6 explicit
+  swinir_lr: 0.0002                  # "similar to SwinIR" -> SwinIR/ESRGAN default
+  disc_lr: 0.0002
+  betas: [0.9, 0.99]
+  inverse_lr: 0.001                  # conventional baselines (R, wCNN) — §4.3 default
+  amp_dtype: bfloat16                # bf16 (no GradScaler; illumination W is complex)
+  eval_sigmoid_m: 8.0
+  max_steps_per_epoch: null          # cap optimizer steps/epoch when compute-scaling
+  loss:                              # SwinIR conditions ONLY (paper §5.6)
+    pixel_weight: 1.0
+    pixel_kind: l1
+    perceptual_weight: 1.0
+    gan_weight: 0.1
+    gan_type: vanilla
+    vgg_weights_available: true
+    in_chans: 1
+
+# Fig 9 wCNN baseline: classical §4.3 ReconCNN trained at 64x64, L1.
+wcnn:
+  image_size: 64
+
+deviations_from_paper:
+  - "FAITHFUL: batch 32 (micro 4 x accum 8 for SwinIR; conv_batch_size 32 for baselines). Matches §4.4.3."
+  - "FAITHFUL: Algorithm-1 FULL budget 230/150/150/20, full data loader (no step cap). Matches line 317."
+  - "ASSUMPTION swinir_lr=2e-4, disc_lr=2e-4, betas (0.9,0.99) (paper 'similar to SwinIR'; unspecified)"
+  - "ASSUMPTION discriminator = compact spectral-norm VGG-style (paper 'similar to SwinIR'; arch unspecified)"
+  - "ASSUMPTION VGG19 perceptual conv1_2..conv5_4 + ESRGAN weights; loss weights pixel 1.0 / perceptual 1.0 / gan 0.1"
+  - "ASSUMPTION d=8, T=4 factorisation of the stated x16"
+  - "FAITHFUL: conventional baselines (R, wCNN) use L1 (GAN/perceptual is SwinIR-specific in §5.6)"

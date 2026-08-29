@@ -1,0 +1,8 @@
+# SwinIR smoke test config
+extends: base_swinir_paper.yaml
+smoke:
+  train_images: 8
+  val_images: 4
+  steps: 30
+  dataset: data/sr/test/Set5/HR
+  device: cuda:1

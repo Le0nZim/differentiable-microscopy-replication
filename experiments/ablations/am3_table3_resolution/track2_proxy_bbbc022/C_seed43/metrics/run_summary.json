@@ -1,0 +1,14 @@
+{
+  "variant": "C",
+  "label": "learnable Ht + locality + freq (paper best)",
+  "seed": 43,
+  "test_mse": 0.0048081111162900925,
+  "test_ssim": 0.8661349415779114,
+  "best_val_mse": 0.004786903969943523,
+  "best_train_mse": 0.0004879891639575362,
+  "final_train_mse": 0.001360112432545672,
+  "overfit_gap": 0.004298914805985987,
+  "best_m": 8.0,
+  "elapsed_sec": 635.5219759941101,
+  "run_dir": "./experiments/ablations/am3_table3_resolution/track2_proxy_bbbc022/C_seed43"
+}

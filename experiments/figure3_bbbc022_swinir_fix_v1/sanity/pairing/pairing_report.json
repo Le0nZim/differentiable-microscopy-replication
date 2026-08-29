@@ -1,0 +1,26 @@
+{
+  "cell": "x256/random_fixed",
+  "swinir_input_equals_base_recon_crop": true,
+  "input_shape": [
+    16,
+    1,
+    64,
+    64
+  ],
+  "target_shape": [
+    16,
+    1,
+    64,
+    64
+  ],
+  "input_range": [
+    0.01148223876953125,
+    0.830078125
+  ],
+  "target_range": [
+    0.004383087158203125,
+    1.0
+  ],
+  "mean_abs_input_minus_target": 0.05536642670631409,
+  "note": "input col == base recon col by construction (cache.x_base cropped at the SAME (top,left) as cache.gt). No independent per-image/per-patch normalisation is applied between input and target."
+}

@@ -1,0 +1,18 @@
+{
+  "label": "PatchMNIST sanity at ablation config (x16, T=4, 256px). B=transpose, C=locality.",
+  "seeds": [
+    42,
+    43
+  ],
+  "transpose_B": {
+    "mean": 0.009473398172607023,
+    "std": 0.002868147151573411,
+    "n": 2
+  },
+  "locality_C": {
+    "mean": 0.00696625739025573,
+    "std": 2.2095814604090187e-05,
+    "n": 2
+  },
+  "locality_beats_transpose": true
+}

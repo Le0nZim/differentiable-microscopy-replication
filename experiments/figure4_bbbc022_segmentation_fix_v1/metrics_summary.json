@@ -1,0 +1,89 @@
+{
+  "label": "Fig4 task-aware segmentation fix (BBBC022 proxy; Stage-1 reused frozen)",
+  "procedure": "Stage1 content-aware (REUSED frozen) -> Stage2 frozen seg-head -> Stage3 end-to-end task-aware finetune",
+  "seed": 42,
+  "compressions": {
+    "x64": {
+      "fixed": {
+        "test_dice": 0.847954531510671,
+        "test_iou": 0.7374852611905053,
+        "test_dice_at_0p5": 0.842462576570965,
+        "selected_threshold": 0.1,
+        "stage2_val_dice": 0.8671892966542926
+      },
+      "learnable": {
+        "test_dice": 0.903949621177855,
+        "test_iou": 0.8256198025885082,
+        "test_dice_at_0p5": 0.904965150923956,
+        "selected_threshold": 0.2,
+        "stage2_val_dice": 0.9132918460028512
+      }
+    },
+    "x256": {
+      "fixed": {
+        "test_dice": 0.6282905425344195,
+        "test_iou": 0.4597772501763843,
+        "test_dice_at_0p5": 0.6024485202062697,
+        "selected_threshold": 0.1,
+        "stage2_val_dice": 0.6836648526645842
+      },
+      "learnable": {
+        "test_dice": 0.8149991858573187,
+        "test_iou": 0.6889703926585969,
+        "test_dice_at_0p5": 0.8112156164078486,
+        "selected_threshold": 0.1,
+        "stage2_val_dice": 0.8453381913048881
+      }
+    },
+    "x1024": {
+      "fixed": {
+        "test_dice": 0.3958755433559418,
+        "test_iou": 0.24762770817393348,
+        "test_dice_at_0p5": 0.3636767793269384,
+        "selected_threshold": 0.1,
+        "stage2_val_dice": 0.3580117566244943
+      },
+      "learnable": {
+        "test_dice": 0.4583303474244617,
+        "test_iou": 0.29841191640922,
+        "test_dice_at_0p5": 0.4455891095456623,
+        "selected_threshold": 0.2,
+        "stage2_val_dice": 0.5128076445488703
+      }
+    }
+  },
+  "learnable_beats_fixed": {
+    "x64": true,
+    "x256": true,
+    "x1024": true
+  },
+  "stage3_illumination_evidence": {
+    "taskaware_x64_learnable_frequency": {
+      "illumination_grad_norm_stage3_max": 1.95988395716995e-05,
+      "illumination_pattern_delta_l2": 76.47643280029297,
+      "illumination_pattern_delta_relative": 0.22189430466628984,
+      "inverse_grad_norm_stage3_max": 2.7842049598693848,
+      "seg_head_grad_norm_stage2_max": 1.3989226818084717
+    },
+    "taskaware_x256_learnable_frequency": {
+      "illumination_grad_norm_stage3_max": 2.1579147869488224e-05,
+      "illumination_pattern_delta_l2": 100.8114013671875,
+      "illumination_pattern_delta_relative": 0.2912204396960249,
+      "inverse_grad_norm_stage3_max": 4.204684734344482,
+      "seg_head_grad_norm_stage2_max": 1.3912899494171143
+    },
+    "taskaware_x1024_learnable_frequency": {
+      "illumination_grad_norm_stage3_max": 2.5650064344517887e-05,
+      "illumination_pattern_delta_l2": 141.5458526611328,
+      "illumination_pattern_delta_relative": 0.40993646664549643,
+      "inverse_grad_norm_stage3_max": 5.539955139160156,
+      "seg_head_grad_norm_stage2_max": 1.0538277626037598
+    }
+  },
+  "acceptance_criteria": {
+    "learnable_beats_fixed_all_compressions": true,
+    "learnable_illumination_updated_by_seg_loss_in_stage3": true,
+    "outputs_for_x64_x256_x1024": true
+  },
+  "status": "FIG4_FIX_PASS / RESULTS_PROXY_BBBC022"
+}

@@ -1,0 +1,102 @@
+# AM-5: Paper-aligned PatchMNIST x8 content-aware base WITH photon_count=10000 noise.
+#
+# Source of truth: paper.md Fig. 3 caption ("We consider 10000 photon count for
+# all the experiments here", claim C4) and Fig. S3 caption ("photon count=10000",
+# claim D7).
+#
+# This is a byte-for-byte copy of configs/paper_aligned_patchmnist_x8.yaml EXCEPT
+# the detector_noise block, which is switched from noise-free to the AM-1 (RR-1 v3)
+# paper-aligned normalized differentiable Poisson model:
+#   - mode: differentiable_poisson        (Poisson only; sigma_read = 0)
+#   - noise_normalization: paper_v3        (AM-1 v3 normalized path, eqs. S7/S9/S10;
+#                                           NOT legacy, NOT the superseded "paper" v2)
+#   - photon_count: 10000.0                (paper C4/D7)
+#   - apply_noise: true
+# Read noise is intentionally 0: AM-5 is the 10000-photon content-aware setting,
+# not a Table-1 read-noise experiment.
+#
+# Everything else (dataset, splits, seeds, architecture, optimizer, illumination_lr=1.0,
+# staged hardening schedule, upsampling, max_steps, metrics) is identical to the frozen
+# noise-free ×8 runs, so any change in results is attributable solely to the photon-count
+# noise setting.
+
+experiment:
+  seed: 42
+  device: cuda:1
+  alignment_mode: paper
+  checkpoint_policy: best_val
+  checkpoint_policy_note: "best_val is an implementation choice; paper does not specify test checkpoint selection"
+  results_csv: experiments/content_aware/am5_patchmnist_pc10000_resolution/results.csv
+
+dataset:
+  name: patchmnist
+  data_root: data/mnist
+  image_size: 256
+  digit_size: 32
+  grid_size: 20
+  num_train: 3000
+  num_val: 375
+  num_test: 375
+  seed: 42
+  download: true
+
+pattern_generator:
+  mode: learnable_frequency
+  num_patterns: 8
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1
+  m_init: 1.0
+  schedule_note: "PatchMNIST Algorithm 1 epoch values UNKNOWN; using staged step-based hardening proxy"
+
+forward_model:
+  downscale_factor: 8
+  use_impulse_psfs: true
+  ex_psf_kernel_size: 3
+  em_psf_kernel_size: 3
+
+detector_noise:
+  mode: differentiable_poisson
+  noise_normalization: paper_v3
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 0.0
+  apply_noise: true
+
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 8
+    num_patterns: 8
+    use_mixing_cnn: false
+    mixing_hidden_channels: 16
+  reconstruction:
+    in_channels: 8
+    hidden_channels: [64, 64, 32, 32, 16, 1]
+    kernel_size: 3
+    padding: 1
+
+training:
+  batch_size: 32
+  log_every: 500
+  paper_illumination_lr: 1.0
+  stable_illumination_lr: 0.3
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  gradient_clip_norm: 1.0
+  gradient_clip_note: "grad_clip 1.0 not specified in paper; logged deviation"
+  sharpen_eval_m: 10.0
+  loss: l1
+  learn_patterns: true
+  max_steps: 7350
+  fixed_sigmoid_m: 1.0
+  staged_hardening:
+    inverse_warmup_steps: 3000
+    joint_soft_steps: 7350
+    harden_m_values: [2, 4, 8]
+    harden_steps_per_m: 1500

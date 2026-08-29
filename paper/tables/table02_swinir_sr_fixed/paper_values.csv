@@ -1,0 +1,11 @@
+dataset,condition,psnr,ssim
+Set5,SwinIR w/o LI,14.03,0.3079
+Set5,SwinIR with LI,26.74,0.8113
+Set14,SwinIR w/o LI,13.64,0.2258
+Set14,SwinIR with LI,23.6,0.693
+BSD100,SwinIR w/o LI,14.28,0.2094
+BSD100,SwinIR with LI,22.9,0.6317
+Urban100,SwinIR w/o LI,13.51,0.2146
+Urban100,SwinIR with LI,21.51,0.6402
+Manga109,SwinIR w/o LI,12.09,0.1952
+Manga109,SwinIR with LI,20.18,0.6652

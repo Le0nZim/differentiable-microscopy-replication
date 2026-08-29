@@ -1,0 +1,93 @@
+# AM-4 Table-2 / Fig-7 with a clean train/val split.
+# Same recipe as am4_table2_full.yaml except:
+#   hr_only: drop Flickr2K bicubic x2/x3/x4 copies from the HR folder
+#   split_by_scene: hold out entire DIV2K/Flickr IDs for val (2%)
+# Iterations match the published compute-limited full run (20k).
+
+experiment:
+  seed: 42
+  device: auto
+  tag: full
+
+data:
+  train_roots:
+    - data/sr/train/DIV2K/HR
+    - data/sr/train/Flickr2K/HR
+  test_roots:
+    Set5: data/sr/test/Set5/HR
+    Set14: data/sr/test/Set14/HR
+    BSD100: data/sr/test/BSD100/HR
+    Urban100: data/sr/test/Urban100/HR
+    Manga109: data/sr/test/Manga109/HR
+  patch_size: 64
+  grayscale: true
+  val_fraction: 0.02
+  max_train_images: null
+  max_test_images: null
+  hr_only: true
+  split_by_scene: true
+
+model:
+  image_size: 64
+  compression: 16
+  downscale_factor: 8
+  num_patterns: 4
+  swinir:
+    upscale: 1
+    in_chans: 1
+    img_size: 64
+    window_size: 8
+    upsampler: ""
+    embed_dim: 180
+    depths: [6, 6, 6, 6, 6, 6]
+    num_heads: [6, 6, 6, 6, 6, 6]
+    mlp_ratio: 2
+    resi_connection: "1conv"
+    img_range: 1.0
+
+training:
+  iterations: 20000
+  effective_batch_size: 32
+  micro_batch_size: 8
+  grad_accum: 4
+  illumination_lr: 0.1
+  swinir_lr: 0.0002
+  disc_lr: 0.0002
+  betas: [0.9, 0.99]
+  amp_dtype: bfloat16
+  random_fixed_m: 10.0
+  train_sigmoid_m: 8.0
+  eval_sigmoid_m: 8.0
+  num_workers: 8
+  log_every: 100
+  val_every: 5000
+  ckpt_every: 10000
+  loss:
+    pixel_weight: 1.0
+    pixel_kind: l1
+    perceptual_weight: 1.0
+    gan_weight: 0.1
+    gan_type: vanilla
+  conditions:
+    - name: swinir_wo_li
+      learnable: false
+    - name: swinir_with_li
+      learnable: true
+
+eval:
+  tile_selection: all
+  max_tiles_per_image: null
+  eval_batch: 64
+  stitched: true
+
+deviations_from_paper:
+  - "CLEAN SPLIT: Flickr2K HR-only (drop x2/x3/x4) and scene-level 2% val holdout"
+  - "ASSUMPTION swinir_lr=2e-4 (paper §5.6 'similar to SwinIR' overrides §4.4.3 CNN default 1e-3)"
+  - "ASSUMPTION discriminator = compact spectral-norm VGG-style (paper 'similar to SwinIR'; arch unspecified)"
+  - "ASSUMPTION VGG19 perceptual layers conv1_2..conv5_4 + ESRGAN weights (unspecified)"
+  - "ASSUMPTION loss weights pixel 1.0 / perceptual 1.0 / gan 0.1 (ESRGAN default; unspecified)"
+  - "ASSUMPTION betas (0.9,0.99), no LR schedule/warmup (SwinIR/ESRGAN convention; unspecified)"
+  - "ASSUMPTION d=8,T=4 factorisation of x16 (paper states x16, not the d/T split)"
+  - "ASSUMPTION train sigmoid sharpness m=8 fixed (Algorithm-1 m schedule only given for MCF7/U2OS)"
+  - "ARCH-UNAVOIDABLE tiled 64x64 eval (locality-aware upsampling is built for fixed 64x64 input)"
+  - "COMPUTE: 20k iters to match the published compute-limited full run"

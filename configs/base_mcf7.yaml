@@ -1,0 +1,66 @@
+# MCF7 channel-2 base config (BBBC021 Tubulin / paper channel 2)
+# Preprocessing: PAPER_UNSPECIFIED — safe percentile normalize in loader
+
+experiment:
+  seed: 42
+  device: cuda:1
+  run_id: mcf7_channel2
+  study_label: Human MCF7 channel-2 generalization (BBBC021 substitute)
+
+dataset:
+  name: mcf7_channel2
+  data_root: data/mcf7_bbbc021
+  images_dir: channel2_selected
+  manifest_csv: manifests/mcf7_channel2_manifest.csv
+  patch_size: 256
+  image_size: 256
+  num_train: 3000
+  num_val: 100
+  num_test: 100
+  seed: 42
+  train_random_crops: true
+  random_flips: true
+  split_by_well: true
+
+pattern_generator:
+  mode: learnable_frequency
+  num_patterns: 8
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1
+  m_init: 1.0
+
+forward_model:
+  downscale_factor: 8
+  use_impulse_psfs: true
+
+detector_noise:
+  mode: noise_free
+  apply_noise: false
+
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 8
+    num_patterns: 8
+  reconstruction:
+    in_channels: 8
+    hidden_channels: [64, 64, 32, 32, 16, 1]
+    kernel_size: 3
+    padding: 1
+
+training:
+  batch_size: 16
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  max_steps: 4000
+  log_every: 200
+  loss: l1
+  learn_patterns: true
+  use_staged_hardening: true
+  fixed_sigmoid_m: 1.0

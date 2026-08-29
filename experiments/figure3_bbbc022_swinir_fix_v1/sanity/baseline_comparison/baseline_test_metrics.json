@@ -1,0 +1,66 @@
+[
+  {
+    "comp": "x16",
+    "pattern": "random_fixed",
+    "n_test": 60,
+    "base_ssim": 0.8974,
+    "base_mse": 0.001141,
+    "base_psnr": 29.94
+  },
+  {
+    "comp": "x16",
+    "pattern": "learnable_frequency",
+    "n_test": 60,
+    "base_ssim": 0.915,
+    "base_mse": 0.000937,
+    "base_psnr": 30.785
+  },
+  {
+    "comp": "x64",
+    "pattern": "random_fixed",
+    "n_test": 60,
+    "base_ssim": 0.8359,
+    "base_mse": 0.003616,
+    "base_psnr": 24.847
+  },
+  {
+    "comp": "x64",
+    "pattern": "learnable_frequency",
+    "n_test": 60,
+    "base_ssim": 0.9034,
+    "base_mse": 0.001232,
+    "base_psnr": 29.618
+  },
+  {
+    "comp": "x256",
+    "pattern": "random_fixed",
+    "n_test": 60,
+    "base_ssim": 0.6755,
+    "base_mse": 0.015195,
+    "base_psnr": 18.662
+  },
+  {
+    "comp": "x256",
+    "pattern": "learnable_frequency",
+    "n_test": 60,
+    "base_ssim": 0.8135,
+    "base_mse": 0.004945,
+    "base_psnr": 23.611
+  },
+  {
+    "comp": "x1024",
+    "pattern": "random_fixed",
+    "n_test": 60,
+    "base_ssim": 0.5618,
+    "base_mse": 0.04017,
+    "base_psnr": 14.283
+  },
+  {
+    "comp": "x1024",
+    "pattern": "learnable_frequency",
+    "n_test": 60,
+    "base_ssim": 0.6481,
+    "base_mse": 0.023334,
+    "base_psnr": 16.779
+  }
+]

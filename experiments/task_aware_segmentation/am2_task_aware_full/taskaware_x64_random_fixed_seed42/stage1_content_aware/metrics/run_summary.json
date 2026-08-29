@@ -1,0 +1,18 @@
+{
+  "run_dir": "./experiments/task_aware_segmentation/am2_task_aware_full/taskaware_x64_random_fixed_seed42/stage1_content_aware",
+  "test_mse": 0.02285991795361042,
+  "test_ssim": 0.7429436445236206,
+  "checkpoint_path": "./experiments/task_aware_segmentation/am2_task_aware_full/taskaware_x64_random_fixed_seed42/stage1_content_aware/checkpoints/best.pt",
+  "best_val_mse": 0.019567234441637993,
+  "best_step": 3400,
+  "final_val_mse": 0.02049330063164234,
+  "final_loss": 0.03067658841609955,
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 0.0,
+  "max_grad_norm_W": 0.0,
+  "H_t_min": 1.1581602133392859e-20,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.500187873840332,
+  "H_t_binary_fraction": 0.7693672180175781
+}

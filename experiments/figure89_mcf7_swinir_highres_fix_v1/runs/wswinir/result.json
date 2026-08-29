@@ -1,0 +1,27 @@
+{
+  "condition": "wswinir",
+  "backbone": "swinir",
+  "image_size": 256,
+  "full_loss": true,
+  "epochs": 230,
+  "baseline": 150,
+  "step": 20,
+  "micro_batch": 4,
+  "grad_accum": 8,
+  "effective_batch": 32,
+  "max_steps_per_epoch": null,
+  "test_mse": 0.0010080224740886478,
+  "test_ssim": 0.8144967192411423,
+  "test_psnr": 31.75912998199463,
+  "best_val_mse": 0.0009252025390787821,
+  "checkpoint_selection": {
+    "epoch": 51,
+    "val_mse": 0.0009252025390787821,
+    "val_ssim": 0.8221941655874252,
+    "selection": "max_val_ssim"
+  },
+  "note": "SIGKILL(exit137) at ep171/230; best.pt=ep51 (val SSIM peak). test computed from best.pt post-hoc.",
+  "swinir_embed_dim": 180,
+  "pattern_superpixel": 1,
+  "timestamp_utc": "2026-07-11T15:18:30.771199+00:00"
+}

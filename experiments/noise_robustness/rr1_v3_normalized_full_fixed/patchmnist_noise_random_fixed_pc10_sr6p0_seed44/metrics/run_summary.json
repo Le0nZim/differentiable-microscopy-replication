@@ -1,0 +1,18 @@
+{
+  "run_dir": "./experiments/noise_robustness/rr1_v3_normalized_full_fixed/patchmnist_noise_random_fixed_pc10_sr6p0_seed44",
+  "test_mse": 0.0232219483392934,
+  "test_ssim": 0.7870514442523321,
+  "checkpoint_path": "./experiments/noise_robustness/rr1_v3_normalized_full_fixed/patchmnist_noise_random_fixed_pc10_sr6p0_seed44/checkpoints/best.pt",
+  "best_val_mse": 0.02290592451269428,
+  "best_step": 7000,
+  "final_val_mse": 0.02307151909917593,
+  "final_loss": 0.054469138383865356,
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 1.0145277976989746,
+  "max_grad_norm_W": 0.0,
+  "H_t_min": 3.0866855577518976e-23,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.49965739250183105,
+  "H_t_binary_fraction": 0.7681179046630859
+}

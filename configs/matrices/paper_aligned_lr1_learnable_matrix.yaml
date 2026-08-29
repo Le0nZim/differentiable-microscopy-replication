@@ -1,0 +1,29 @@
+# Paper-aligned learnable PatchMNIST x8 (noise-free, illumination_lr from base).
+
+base_config: paper_aligned_patchmnist_x8.yaml
+results_csv: experiments/content_aware/lr1_full/results.csv
+
+experiments:
+  - run_id: patchmnist_x8_learnable_transpose
+    notes: paper_aligned_learnable_transpose_staged_hardening
+    overrides:
+      pattern_generator:
+        mode: learnable_frequency
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+      training:
+        learn_patterns: true
+        use_staged_hardening: true
+
+  - run_id: patchmnist_x8_learnable_locality
+    notes: paper_aligned_learnable_locality_staged_hardening
+    overrides:
+      pattern_generator:
+        mode: learnable_frequency
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+      training:
+        learn_patterns: true
+        use_staged_hardening: true

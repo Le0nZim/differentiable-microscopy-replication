@@ -1,0 +1,81 @@
+# AM-5 fixed-pattern PatchMNIST x8 baselines with photon_count=10000 (paper-aligned noise).
+# Mirrors configs/paper_aligned_patchmnist_fixed_baselines.yaml EXACTLY (same
+# run_ids, same overrides) but on the pc=10000 base config. Only the detector
+# noise differs from the frozen fixed_baselines runs.
+# Includes pseudo-random, uniform (wide-field), and Hadamard baselines.
+
+base_config: paper_aligned_patchmnist_contentaware_pc10000.yaml
+results_csv: experiments/content_aware/am5_patchmnist_pc10000_resolution/results.csv
+
+experiments:
+  - run_id: patchmnist_x8_random_locality
+    notes: am5_pc10000_random_fixed_locality
+    overrides:
+      pattern_generator:
+        mode: random_fixed
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+      training:
+        learn_patterns: false
+        use_staged_hardening: false
+
+  - run_id: patchmnist_x8_uniform_locality
+    notes: am5_pc10000_uniform_all_ones_locality
+    overrides:
+      pattern_generator:
+        mode: uniform_all_ones
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+      training:
+        learn_patterns: false
+        use_staged_hardening: false
+
+  - run_id: patchmnist_x8_hadamard_locality
+    notes: am5_pc10000_hadamard_fixed_locality
+    overrides:
+      pattern_generator:
+        mode: hadamard_fixed
+      inverse_model:
+        upsampling:
+          mode: locality_aware
+      training:
+        learn_patterns: false
+        use_staged_hardening: false
+
+  - run_id: patchmnist_x8_random_transpose
+    notes: am5_pc10000_random_fixed_transpose_mechanism
+    overrides:
+      pattern_generator:
+        mode: random_fixed
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+      training:
+        learn_patterns: false
+        use_staged_hardening: false
+
+  - run_id: patchmnist_x8_uniform_transpose
+    notes: am5_pc10000_uniform_transpose_mechanism
+    overrides:
+      pattern_generator:
+        mode: uniform_all_ones
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+      training:
+        learn_patterns: false
+        use_staged_hardening: false
+
+  - run_id: patchmnist_x8_hadamard_transpose
+    notes: am5_pc10000_hadamard_transpose_mechanism
+    overrides:
+      pattern_generator:
+        mode: hadamard_fixed
+      inverse_model:
+        upsampling:
+          mode: transpose_conv
+      training:
+        learn_patterns: false
+        use_staged_hardening: false

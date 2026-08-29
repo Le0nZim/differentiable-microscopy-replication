@@ -1,0 +1,4 @@
+condition,label,image_size,full_loss,embed_dim,epochs,test_psnr,test_ssim,test_mse
+wswinir,"Q/wSwinIR (locality+SwinIR, full loss)",256,True,180,54,28.284,0.6754,0.001875
+transpose256,"R (transpose-conv+ReconCNN, L1)",256,False,,54,31.621,0.7959,0.000971
+wcnn64,"wCNN (locality+ReconCNN@64, L1)",64,False,,72,32.668,0.7983,0.001422

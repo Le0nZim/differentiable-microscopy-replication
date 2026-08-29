@@ -1,0 +1,36 @@
+# experiment: Table 2 partial validation (bounded, L1-only)
+experiment:
+  seed: 42
+  device: cuda:1
+  run_id: swinir_table2_partial
+  label: paper-inspired partial Table 2; L1 only; subset data; not exact reproduction
+
+data:
+  train_roots:
+    - data/sr/train/DIV2K/HR
+    - data/sr/train/Flickr2K/HR
+  test_roots:
+    - data/sr/test/Set5/HR
+  train_per_dataset: 32
+  test_max_images: 5
+  patch_size: 64
+
+model:
+  compression: 16
+  downscale_factor: 8
+  num_patterns: 4
+  illumination_lr: 0.1  # paper Sec 5.6
+
+training:
+  steps: 200
+  batch_size: 4
+  swinir_lr: 2.0e-4
+  loss: l1  # FALLBACK — paper requires pixel+adv+perceptual
+  conditions:
+    - name: swinir_wo_li
+      learnable: false
+    - name: swinir_with_li
+      learnable: true
+
+evaluation:
+  metrics: [psnr, ssim, mse]

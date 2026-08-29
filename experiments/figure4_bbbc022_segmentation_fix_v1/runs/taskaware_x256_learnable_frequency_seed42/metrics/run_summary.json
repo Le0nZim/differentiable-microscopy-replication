@@ -1,0 +1,23 @@
+{
+  "run_dir": "./experiments/figure4_bbbc022_segmentation_fix_v1/runs/taskaware_x256_learnable_frequency_seed42",
+  "run_id": "taskaware_x256_learnable_frequency",
+  "learnable": true,
+  "compression": 256.0,
+  "content_aware_checkpoint": "./experiments/task_aware_segmentation/am2_task_aware_full/taskaware_x256_learnable_frequency_seed42/stage1_content_aware/checkpoints/best.pt",
+  "selected_threshold": 0.1,
+  "val_dice": 0.8286658128102621,
+  "val_iou": 0.7082658126240685,
+  "test_dice": 0.8149991858573187,
+  "test_iou": 0.6889703926585969,
+  "test_bce": 0.4206311106681824,
+  "test_dice_at_0p5": 0.8112156164078486,
+  "test_iou_at_0p5": 0.6837907433509827,
+  "stage2_val_dice": 0.8453381913048881,
+  "seg_head_steps": 1200,
+  "finetune_steps": 2500,
+  "illumination_grad_norm_stage3_max": 2.1579147869488224e-05,
+  "inverse_grad_norm_stage3_max": 4.204684734344482,
+  "seg_head_grad_norm_stage2_max": 1.3912899494171143,
+  "illumination_pattern_delta_l2": 100.8114013671875,
+  "illumination_pattern_delta_relative": 0.2912204396960249
+}

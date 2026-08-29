@@ -1,0 +1,105 @@
+{
+  "timestamp_utc": "2026-07-06T05:54:59.822802+00:00",
+  "device": "cuda:0",
+  "all_pass": true,
+  "gates": {
+    "data_pairing_norm": {
+      "pass": true,
+      "shape": [
+        1,
+        256,
+        256
+      ],
+      "min": 0.0,
+      "max": 0.8481091260910034,
+      "std": 0.14856620132923126,
+      "deterministic": true
+    },
+    "no_leakage_split": {
+      "pass": true,
+      "n_train_wells": 54,
+      "n_val_wells": 3,
+      "n_test_wells": 3,
+      "wells_disjoint": true,
+      "paths_disjoint": true
+    },
+    "compression_x16": {
+      "pass": true,
+      "y_down_shape": [
+        1,
+        4,
+        32,
+        32
+      ],
+      "compression_ratio": 16.0,
+      "downscale": 8,
+      "num_patterns": 4
+    },
+    "loss_stack_finite": {
+      "pass": true,
+      "pixel": 0.3826519250869751,
+      "perceptual": 1.545132040977478,
+      "adv": 0.0658726617693901,
+      "d": 1.387765645980835,
+      "has_perceptual": true,
+      "has_gan": true,
+      "gan_weight": 0.1,
+      "perceptual_weight": 1.0
+    },
+    "shapes_upscale1": {
+      "pass": true,
+      "recon_shape": [
+        1,
+        1,
+        256,
+        256
+      ],
+      "swinir_upscale": 1
+    },
+    "baselines_build": {
+      "pass": true,
+      "transpose256": {
+        "out_shape": [
+          1,
+          1,
+          256,
+          256
+        ],
+        "ok": true
+      },
+      "wcnn64": {
+        "out_shape": [
+          1,
+          1,
+          64,
+          64
+        ],
+        "ok": true
+      }
+    },
+    "swinir_psi_overfit": {
+      "pass": true,
+      "loss": "pure_l1",
+      "ssim_before": 0.16070181131362915,
+      "ssim_after_endpoint": 0.7945046424865723,
+      "best_ssim": 0.8027135133743286,
+      "l1_before": 0.15542158484458923,
+      "l1_after_endpoint": 0.019498206675052643,
+      "best_l1": 0.019114620983600616,
+      "steps": 500,
+      "probe_lr": 0.001,
+      "ssim_trajectory_per50": [
+        0.3644,
+        0.7176,
+        0.6079,
+        0.533,
+        0.7513,
+        0.7664,
+        0.7357,
+        0.6579,
+        0.6401,
+        0.8027
+      ]
+    }
+  }
+}
