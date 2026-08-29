@@ -60,7 +60,7 @@ Extreme cell (pc=10, σ=6), three training seeds:
 - At pc=10000 the same swap is nearly a wash (2–7%): both learnable arms already sit at MSE ≈ 0.003, so there is little left to gain.
 - Both learnable arms still crush fixed random (~3–4× at pc=10, ~3.7× at pc=10000). The Table-1 headline ("learnable beats fixed") is not an artifact of the Fourier parametrization.
 
-This is a *larger* frequency-domain penalty than the noise-free Figure-10 PatchMNIST ablation, where dropping freq-domain opt only bought 5.7%. Two differences matter: Figure 10 is ×16 / T=4 / noise-free; this sweep is ×8 / T=8 / with the paper's detector. The extra per-pixel degrees of freedom in `learnable_spatial` appear to help more when the measurements are actually noisy.
+This is a *larger* frequency-domain penalty than the noise-free Figure-10 PatchMNIST ablation, where dropping freq-domain opt only bought 5.7%. Two protocol differences matter: Figure 10 is ×16 / T=4 / noise-free; this sweep is ×8 / T=8 / with the paper's detector. Because the Fourier branch is full-spectrum and untruncated, the two modes span the same attainable spatial-logit family; the larger gap therefore indicates that coordinate-dependent Adam updates and shared hyperparameters interact with the noisy protocol, not that `learnable_spatial` has extra per-pixel degrees of freedom.
 
 Qualitatively, at the extreme cell both learnable reconstructions recover readable digits and the no-freq panel is not visually worse (if anything slightly crisper). The fixed-random panel is still the smear the paper reports.
 
