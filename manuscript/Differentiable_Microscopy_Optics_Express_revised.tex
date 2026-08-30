@@ -6,7 +6,8 @@
 
 \usepackage{lineno}
 \usepackage[section]{placeins}
-\linenumbers % Turn off line numbering for Optica Open preprint submissions.
+\usepackage{amsmath,amssymb}
+\linenumbers % Comment out this command to disable line numbering when required.
 
 % Search for REPORTING PLACEHOLDER before submission and replace every instance.
 \newcommand{\reportingplaceholder}[1]{\textbf{[REPORTING PLACEHOLDER: #1]}}
@@ -271,7 +272,7 @@ The open BBBC021 dataset contains images of MCF-7 breast-cancer cells~\cite{caie
 We train the grayscale super-resolution models on DIV2K and the high-resolution originals from Flickr2K~\cite{agustsson2017ntire}. A scene-level split reserves $2\%$ of the training scenes for validation. We evaluate the selected checkpoints on Set5~\cite{bevilacqua2012low}, Set14~\cite{zeyde2010single}, BSD100~\cite{martin2001database}, Urban100~\cite{huang2015single}, and Manga109~\cite{matsui2017sketch}.
 
 \subsubsection{BBBC022 fluorescence images}
-For content-aware sampling and segmentation, we use the Hoechst channel from BBBC022v1 (accession BBBC022), a public U2OS Cell Painting collection~\cite{gustafsdottir2013multiplex,ljosa2012annotated} available from the Broad Bioimage Benchmark Collection at \url{https://bbbc.broadinstitute.org/BBBC022}. All splits are well-disjoint and use seed $42$. The content-aware matrix uses $220$ training wells with nine sites per well ($1980$ fields), $40$ validation wells with one site per well, and $60$ test wells with one site per well. The segmentation protocol uses one field from each of $168$, $21$, and $21$ training, validation, and test wells. We take the maximum-intensity projection, subtract an intensity bias of $134.28$, clip the result to $[0,500]$, normalize each field to $[0,1]$, and use $256\times256$ crops. An exploratory BBBC022 ablation is retained in Supplement~1; the corrected main-paper ablation uses PatchMNIST so that the factor comparison has greater quantitative and qualitative dynamic range.
+For content-aware sampling and segmentation, we use the Hoechst channel from BBBC022v1 (accession BBBC022), a public U2OS Cell Painting collection~\cite{gustafsdottir2013multiplex,ljosa2012annotated} available from the Broad Bioimage Benchmark Collection at \url{https://bbbc.broadinstitute.org/BBBC022}. The splits are disjoint at the well level and use seed $42$. The content-aware matrix uses $220$ training wells with nine sites per well ($1980$ fields), $40$ validation wells with one site per well, and $60$ test wells with one site per well. The segmentation protocol uses one field from each of $168$, $21$, and $21$ training, validation, and test wells. We take the maximum-intensity projection, subtract an intensity bias of $134.28$, clip the result to $[0,500]$, normalize each field to $[0,1]$, and use $256\times256$ crops. An exploratory BBBC022 ablation is retained in Supplement~1; the corrected main-paper ablation uses PatchMNIST so that the factor comparison has greater quantitative and qualitative dynamic range.
 
 % REPORTING PLACEHOLDER: Ensure the final .bib defines
 % gustafsdottir2013multiplex and ljosa2012annotated.
@@ -279,7 +280,7 @@ For content-aware sampling and segmentation, we use the Hoechst channel from BBB
 \subsection{Evaluation metrics and computational reproducibility}
 \label{sec:reproducibility}
 
-We compute MSE and PSNR on images scaled to $[0,1]$, with $\mathrm{PSNR}=10\log_{10}(1/\mathrm{MSE})$. SSIM uses an $11\times11$ Gaussian window with standard deviation $1.5$ and constants $(0.01)^2$ and $(0.03)^2$. Python, NumPy, and PyTorch pseudorandom generators use the run seed; unless stated otherwise, that seed is $42$. The public repository contains the training and evaluation scripts, exact YAML configurations, split manifests, run metadata, checkpoints, and machine-readable results used for the tables and figure components: \url{https://github.com/Le0nZim/differentiable-microscopy-replication}. This revision was checked against repository commit \href{https://github.com/Le0nZim/differentiable-microscopy-replication/tree/bd33e451bb8d01991bab47b1aff1f395d31d9860}{\texttt{bd33e45}}. The environment specification requires Python $\geq3.10$ and PyTorch $\geq2.0$; SwinIR experiments use upstream SwinIR commit \href{https://github.com/JingyunLiang/SwinIR/tree/6545850fbf8df298df73d81f3e8cba638787c8bd}{\texttt{6545850}}.
+We compute MSE and PSNR on images scaled to $[0,1]$, with $\mathrm{PSNR}=10\log_{10}(1/\mathrm{MSE})$. SSIM uses an $11\times11$ Gaussian window with standard deviation $1.5$ and constants $(0.01)^2$ and $(0.03)^2$. Python, NumPy, and PyTorch pseudorandom generators use the run seed; unless stated otherwise, that seed is $42$. The public repository contains the training and evaluation scripts, exact YAML configurations, split manifests, run metadata, checkpoints, and machine-readable results used for the tables and figure components: \url{https://github.com/Le0nZim/differentiable-microscopy-replication}. The reported artifacts were audited at repository commit \href{https://github.com/Le0nZim/differentiable-microscopy-replication/tree/6494aad7b0cfbc4373ff4d4a7db06475acc383e7}{\texttt{6494aad}}. The environment specification requires Python $\geq3.10$ and PyTorch $\geq2.0$; SwinIR experiments use upstream SwinIR commit \href{https://github.com/JingyunLiang/SwinIR/tree/6545850fbf8df298df73d81f3e8cba638787c8bd}{\texttt{6545850}}.
 
 \reportingplaceholder{Record the exact GPU model and count, CPU, RAM, operating system, Python, PyTorch, CUDA, cuDNN, and driver versions used for the reported runs, together with training time or GPU-hours for each experiment family.}
 
@@ -493,7 +494,7 @@ Because no Fourier coefficients are removed, C and D optimize the same attainabl
     }
 \end{table}
 
-Supplement~1 provides the corresponding corrected PatchMNIST reconstructions and patterns, the per-seed C--D results, the exploratory BBBC022 ablation, and the implementation-provenance analysis.
+Supplement~1 provides the corresponding corrected PatchMNIST reconstructions and patterns, the per-seed C--D results, the exploratory frequency-versus-spatial noise-grid comparison and its provenance limitations, the exploratory BBBC022 ablation, and the implementation-provenance analysis.
 % SUPPLEMENTARY FIGURE PLACEHOLDER: use the corrected PatchMNIST A--D panel
 % experiments/figure10_ablation_patchmnist/figures/figure10_paper_style.png.
 % Do not reuse the preprint's original U2OS Figure 10: its D condition did not
