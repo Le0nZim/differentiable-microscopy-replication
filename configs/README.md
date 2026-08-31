@@ -17,5 +17,6 @@ YAML grouped by paper slug. Shared bases and splits live in `_shared/`.
 | `figure08_mcf7/` | Figures 8–9 |
 | `figure10_ablation/ablation.yaml` | Figure 10 |
 | `figure10_ablation_patchmnist/ablation.yaml` | Figure 10 A/B/C/D on PatchMNIST (Fig-6 / Table-1 data) |
+| `figure10_ablation_patchmnist_udith_schedule/ablation.yaml` | Figure 10 C vs D on PatchMNIST, Udith 121500-step schedule |
 
 Superseded YAML: [`archive/configs/`](../archive/configs/).

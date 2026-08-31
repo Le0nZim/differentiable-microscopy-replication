@@ -1,0 +1,4 @@
+[2026-08-30 12:27:03] original GPU1 driver PID=462543 (leave it running through seed 42)
+[2026-08-30 12:27:03] launching seed 43 C then D on cuda:0
+[2026-08-30 12:27:03] seed43 GPU0 PID=464367
+[2026-08-30 12:27:03] watching for seed-42 completion (D summary + gates) before starting seed 44 on GPU 1

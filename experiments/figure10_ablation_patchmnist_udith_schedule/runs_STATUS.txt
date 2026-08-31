@@ -1,0 +1,3 @@
+[2026-08-30 12:21:09] === Udith-schedule C/D start on cuda:1 (seed 42 gates, then 43/44) ===
+exit=143
+[2026-08-30 18:16:20] === driver finished; see experiments/figure10_ablation_patchmnist_udith_schedule/UDITH_SCHEDULE_REPORT.md ===

@@ -1,0 +1,23 @@
+{
+  "pass": true,
+  "problems": [],
+  "atol": 1e-05,
+  "max_abs_tau_difference": 1.9073486328125e-06,
+  "max_abs_Ht_difference": 2.980232238769531e-07,
+  "inverse_state_hash": "29a36bd9df404eda22a1962974acd55f0e73b96030b6cf991111961695de54c2",
+  "inverse_state_hash_C": "29a36bd9df404eda22a1962974acd55f0e73b96030b6cf991111961695de54c2",
+  "inverse_state_hash_D": "29a36bd9df404eda22a1962974acd55f0e73b96030b6cf991111961695de54c2",
+  "upsampler_state_hash": "84aca57e2c82bb2d91c73a0b26bd42bf2691b9c17e14666dc481262ae3a70252",
+  "upsampler_state_hash_C": "84aca57e2c82bb2d91c73a0b26bd42bf2691b9c17e14666dc481262ae3a70252",
+  "upsampler_state_hash_D": "84aca57e2c82bb2d91c73a0b26bd42bf2691b9c17e14666dc481262ae3a70252",
+  "first_batch_hash": "630e9e43edb2d1b3041d69136232bd58137f84725a5bf5f83997c8319e757f59",
+  "first_batch_hash_C": "630e9e43edb2d1b3041d69136232bd58137f84725a5bf5f83997c8319e757f59",
+  "first_batch_hash_D": "630e9e43edb2d1b3041d69136232bd58137f84725a5bf5f83997c8319e757f59",
+  "C_has_W": true,
+  "D_has_tau": true,
+  "C_has_tau_param": false,
+  "D_has_W": false,
+  "seed": 42,
+  "tau0_sha256": "7e2a9e0cb43b0b10fc0bd397afe0c89548aed90b54fd28ce4c00718e0a43eb51",
+  "device": "cuda:0"
+}

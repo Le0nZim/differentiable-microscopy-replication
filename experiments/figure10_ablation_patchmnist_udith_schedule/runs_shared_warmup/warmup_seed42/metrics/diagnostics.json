@@ -1,0 +1,56 @@
+{
+  "elapsed_sec": 5344.551454305649,
+  "best_val_mse": 0.021287825269003708,
+  "best_step": 59000,
+  "best_m": 1.0,
+  "best_train_mse_at_log": 0.01887671649456024,
+  "min_train_mse": 0.017678657546639442,
+  "final_train_mse_full": 0.01857023287881562,
+  "test_mse": 0.021514947370936472,
+  "test_ssim": 0.8087138086557388,
+  "overfit_gap_val_minus_train": 0.0024111087744434663,
+  "max_grad_norms": {
+    "illum": 0.0,
+    "upsampler": 16.293739318847656,
+    "recon": 27.56896951426625
+  },
+  "illum_l2_init": 513.144960025917,
+  "illum_l2_final": 513.144960025917,
+  "illum_delta_final": 0.0,
+  "final_pattern_stats": {
+    "min": 0.010045968927443027,
+    "max": 0.990330696105957,
+    "mean": 0.4999280869960785,
+    "std": 0.20856866240501404,
+    "binary_fraction": 0.028331756591796875
+  },
+  "m_schedule": [
+    {
+      "phase": "inverse_warmup_m1",
+      "m": 1.0,
+      "steps": 60750
+    }
+  ],
+  "saw_nonfinite": false,
+  "warmup_tau_displacement_max_logged": 0.0,
+  "post_warmup_tau_displacement_max_logged": 0.0,
+  "H_t0_binary_fraction": 0.028331756591796875,
+  "final_tau_displacement": 0.0,
+  "final_Ht_displacement_vs_m1_init": 0.0,
+  "log_phase_boundaries": true,
+  "extra_physical_metrics": true,
+  "shared_tau0_applied": true,
+  "phase_boundary_evals_eligible_for_global_best": true,
+  "branched_from_shared_warmup": false,
+  "warmup_checkpoint_out": "/home/leonidas/workspace/differentiable_micoscopy_replication/github_repo/experiments/figure10_ablation_patchmnist_udith_schedule/runs_shared_warmup/warmup_seed42/warmup_checkpoint.pt",
+  "resume_from_warmup": null,
+  "train_iterator": "itertools.cycle(train_loader)",
+  "m_schedule_with_freeze": [
+    {
+      "phase": "inverse_warmup_m1",
+      "m": 1.0,
+      "steps": 60750,
+      "freeze_illum": true
+    }
+  ]
+}

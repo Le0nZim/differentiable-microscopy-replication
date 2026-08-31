@@ -1,0 +1,144 @@
+{
+  "elapsed_sec": 5398.891988992691,
+  "best_val_mse": 0.005280198412947357,
+  "best_step": 118800,
+  "best_m": 7.0,
+  "best_train_mse_at_log": 0.004683095030486584,
+  "min_train_mse": 0.004452882334589958,
+  "final_train_mse_full": 0.004554518196295867,
+  "test_mse": 0.005333937820978463,
+  "test_ssim": 0.9524994641542435,
+  "overfit_gap_val_minus_train": 0.000597103382460773,
+  "max_grad_norms": {
+    "illum": 0.0011955624213442206,
+    "upsampler": 16.293739318847656,
+    "recon": 119.91511451881993
+  },
+  "illum_l2_init": 131365.09417649728,
+  "illum_l2_final": 131217.9499916075,
+  "illum_delta_final": 147.14418488979572,
+  "final_pattern_stats": {
+    "min": 8.716505199102362e-15,
+    "max": 1.0,
+    "mean": 0.5185565948486328,
+    "std": 0.4115072786808014,
+    "binary_fraction": 0.6329269409179688
+  },
+  "m_schedule": [
+    {
+      "phase": "inverse_warmup_m1",
+      "m": 1.0,
+      "steps": 60750
+    },
+    {
+      "phase": "joint_m1",
+      "m": 1.0,
+      "steps": 36445
+    },
+    {
+      "phase": "harden_m2",
+      "m": 2.0,
+      "steps": 4050
+    },
+    {
+      "phase": "harden_m3",
+      "m": 3.0,
+      "steps": 4050
+    },
+    {
+      "phase": "harden_m4",
+      "m": 4.0,
+      "steps": 4050
+    },
+    {
+      "phase": "harden_m5",
+      "m": 5.0,
+      "steps": 4050
+    },
+    {
+      "phase": "harden_m6",
+      "m": 6.0,
+      "steps": 4050
+    },
+    {
+      "phase": "harden_m7",
+      "m": 7.0,
+      "steps": 4050
+    },
+    {
+      "phase": "harden_m8",
+      "m": 8.0,
+      "steps": 5
+    }
+  ],
+  "saw_nonfinite": false,
+  "warmup_tau_displacement_max_logged": 0.0,
+  "post_warmup_tau_displacement_max_logged": 430.4007873535156,
+  "H_t0_binary_fraction": 0.028331756591796875,
+  "final_tau_displacement": 428.8790283203125,
+  "final_Ht_displacement_vs_m1_init": 180.96768188476562,
+  "log_phase_boundaries": true,
+  "extra_physical_metrics": true,
+  "shared_tau0_applied": true,
+  "phase_boundary_evals_eligible_for_global_best": true,
+  "branched_from_shared_warmup": true,
+  "warmup_checkpoint_out": null,
+  "resume_from_warmup": "/home/leonidas/workspace/differentiable_micoscopy_replication/github_repo/experiments/figure10_ablation_patchmnist_udith_schedule/runs_shared_warmup/warmup_seed42/warmup_checkpoint.pt",
+  "train_iterator": "itertools.cycle(train_loader)",
+  "m_schedule_with_freeze": [
+    {
+      "phase": "inverse_warmup_m1",
+      "m": 1.0,
+      "steps": 60750,
+      "freeze_illum": true
+    },
+    {
+      "phase": "joint_m1",
+      "m": 1.0,
+      "steps": 36445,
+      "freeze_illum": false
+    },
+    {
+      "phase": "harden_m2",
+      "m": 2.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "phase": "harden_m3",
+      "m": 3.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "phase": "harden_m4",
+      "m": 4.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "phase": "harden_m5",
+      "m": 5.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "phase": "harden_m6",
+      "m": 6.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "phase": "harden_m7",
+      "m": 7.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "phase": "harden_m8",
+      "m": 8.0,
+      "steps": 5,
+      "freeze_illum": false
+    }
+  ]
+}

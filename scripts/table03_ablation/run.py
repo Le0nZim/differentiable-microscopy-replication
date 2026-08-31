@@ -51,7 +51,17 @@ from evaluation.variant_audit import audit_microscope, check_variant  # noqa: E4
 from models.microscope import DifferentiableMicroscope  # noqa: E402
 from training.dataloaders import build_dataloader  # noqa: E402
 from training.losses import reconstruction_loss_l1  # noqa: E402
+from training.paired_pattern_init import apply_shared_tau0  # noqa: E402
+from training.shared_warmup_checkpoint import (  # noqa: E402
+    load_adam_inverse,
+    load_warmup_checkpoint,
+    restore_best_full_state,
+    restore_rng,
+    save_warmup_checkpoint,
+    skip_cycle_steps,
+)
 from utils.experiment_config import load_experiment_config, sync_derived_config_fields  # noqa: E402
+from utils.logging import save_run_config  # noqa: E402
 from utils.reproducibility import get_git_commit_hash, set_seed  # noqa: E402
 
 OUT = ROOT / "experiments/table03_ablation"
@@ -121,6 +131,27 @@ def default_phases(scale: float = 1.0) -> list[dict]:
     ]
 
 
+def should_log_step(
+    global_step: int,
+    log_every: int,
+    *,
+    is_phase_last_step: bool,
+    is_last_phase: bool,
+    log_phase_boundaries: bool = False,
+) -> bool:
+    """Match the historical AM-3 cadence; phase-end logs are opt-in.
+
+    Default (``log_phase_boundaries=False``): log every ``log_every`` steps and
+    on the last step of the *last* phase only. That is the original 8,500-step
+    Fig-10 / Table-3 behaviour.
+    """
+    if log_every > 0 and global_step % log_every == 0:
+        return True
+    if is_phase_last_step and (log_phase_boundaries or is_last_phase):
+        return True
+    return False
+
+
 def _grad_norm(params) -> float:
     sq = 0.0
     for p in params:
@@ -175,6 +206,13 @@ def run_one(
     phases: list[dict],
     seed: int,
     log_every: int = 200,
+    log_phase_boundaries: bool = False,
+    extra_physical_metrics: bool = False,
+    shared_tau0: torch.Tensor | None = None,
+    save_config_yaml: bool = False,
+    schedule_provenance: dict | None = None,
+    warmup_checkpoint_out: Path | None = None,
+    resume_from_warmup: Path | None = None,
 ) -> dict:
     import itertools
 
@@ -188,6 +226,14 @@ def run_one(
     apply_noise = config["detector_noise"].get("apply_noise", False)
 
     model = DifferentiableMicroscope.from_run_config(config).to(device)
+    if shared_tau0 is not None:
+        apply_shared_tau0(model, shared_tau0)
+    if save_config_yaml:
+        save_run_config(config, output_dir)
+    if schedule_provenance is not None:
+        (output_dir / "schedule_provenance.json").write_text(
+            json.dumps(schedule_provenance, indent=2)
+        )
 
     # ----- machine-checkable wiring metadata -----
     audit = audit_microscope(model, config)
@@ -234,6 +280,17 @@ def run_one(
     grad_clip = config["training"].get("gradient_clip_norm")
 
     init_illum_l2 = _illum_l2(model)
+    tau0_snap = None
+    H0_snap = None
+    if extra_physical_metrics or shared_tau0 is not None:
+        with torch.no_grad():
+            H0_snap = model.pattern_generator(sigmoid_m=1.0).detach().clone()
+            if model.pattern_generator.patterns_are_learnable():
+                tau0_snap = model.pattern_generator._spatial_tau().detach().clone()
+        if extra_physical_metrics:
+            torch.save(H0_snap.detach().cpu(), output_dir / "learned_patterns" / "H_t0.pt")
+            if tau0_snap is not None:
+                torch.save(tau0_snap.detach().cpu(), output_dir / "learned_patterns" / "tau_0.pt")
 
     fieldnames = [
         "step", "phase", "m", "loss", "train_mse", "val_mse", "val_ssim",
@@ -241,6 +298,8 @@ def run_one(
         "H_t_min", "H_t_max", "H_t_mean", "H_t_std", "H_t_binary_fraction",
         "illum_l2", "illum_delta",
     ]
+    if extra_physical_metrics:
+        fieldnames.extend(["H_t_displacement", "tau_displacement", "illum_frozen"])
     step_log = (output_dir / "metrics" / "step_log.csv").open("w", newline="")
     writer = csv.DictWriter(step_log, fieldnames=fieldnames)
     writer.writeheader()
@@ -253,21 +312,75 @@ def run_one(
     train_iter = itertools.cycle(train_loader)
     global_step = 0
     t0 = time.time()
+    n_phases = len(phases)
+    saw_nonfinite = False
+    warmup_tau_disp_max = 0.0
+    post_warmup_tau_disp_max = 0.0
+    resume_ckpt = None
+    branched_from_shared_warmup = False
 
-    for phase in phases:
+    if resume_from_warmup is not None:
+        resume_ckpt = load_warmup_checkpoint(resume_from_warmup, map_location="cpu")
+        branched_from_shared_warmup = True
+        model.inverse_model.load_state_dict(resume_ckpt["inverse_state_dict"])
+        if shared_tau0 is None:
+            apply_shared_tau0(model, resume_ckpt["tau0"])
+        load_adam_inverse(
+            optimizer, model.inverse_model, resume_ckpt["adam_inverse_by_name"], device
+        )
+        tau0_snap = resume_ckpt["tau0"].to(device=device)
+        H0_snap = resume_ckpt["H_t0"].to(device=device)
+        if extra_physical_metrics:
+            torch.save(H0_snap.detach().cpu(), output_dir / "learned_patterns" / "H_t0.pt")
+            torch.save(tau0_snap.detach().cpu(), output_dir / "learned_patterns" / "tau_0.pt")
+        skip_cycle_steps(train_iter, int(resume_ckpt["global_step"]))
+        restore_rng(resume_ckpt["rng"], device)
+        global_step = int(resume_ckpt["global_step"])
+        history = list(resume_ckpt.get("history") or [])
+        for row in history:
+            writer.writerow({k: row[k] for k in fieldnames if k in row})
+        step_log.flush()
+        min_train_mse = float(resume_ckpt.get("min_train_mse", float("inf")))
+        max_grad = dict(resume_ckpt.get("max_grad") or max_grad)
+        best_blob = resume_ckpt.get("best") or {}
+        best_inv = best_blob.get("inverse_state_dict")
+        best = {
+            "val_mse": best_blob.get("val_mse", float("inf")),
+            "m": best_blob.get("m", 1.0),
+            "step": best_blob.get("step", 0),
+            "train_mse": best_blob.get("train_mse"),
+            "state": restore_best_full_state(model, best_inv),
+        }
+        print(
+            f"[{letter}] resumed shared warmup at step={global_step} "
+            f"from {resume_from_warmup} (arm={resume_ckpt.get('warmup_arm')})",
+            flush=True,
+        )
+
+    for phase_idx, phase in enumerate(phases):
+        if resume_ckpt is not None and bool(phase["freeze_illum"]):
+            continue
         m = float(phase["m"])
-        if phase["freeze_illum"]:
+        freeze_illum = bool(phase["freeze_illum"])
+        if freeze_illum:
             model.set_illumination_trainable(False)
         elif model.pattern_generator.patterns_are_learnable():
             model.set_illumination_trainable(True)
 
-        for _ in range(int(phase["steps"])):
+        phase_steps = int(phase["steps"])
+        is_last_phase = phase_idx == n_phases - 1
+        for step_in_phase in range(phase_steps):
             global_step += 1
             x = next(train_iter).to(device)
             model.train()
             optimizer.zero_grad(set_to_none=True)
             out = model(x, sigmoid_m=m, apply_noise=apply_noise)
             loss = reconstruction_loss_l1(out["x_recon"], x)
+            if not torch.isfinite(loss):
+                saw_nonfinite = True
+                raise RuntimeError(
+                    f"Non-finite loss at step {global_step} phase={phase['name']} m={m}: {loss.item()}"
+                )
             loss.backward()
 
             gI = _grad_norm(illum_params) if illum_params else 0.0
@@ -281,36 +394,88 @@ def run_one(
                 torch.nn.utils.clip_grad_norm_(model.parameters(), float(grad_clip))
             optimizer.step()
 
-            if global_step % log_every != 0 and not (phase is phases[-1] and _ == int(phase["steps"]) - 1):
-                continue
+            is_phase_last_step = step_in_phase == phase_steps - 1
+            if should_log_step(
+                global_step,
+                log_every,
+                is_phase_last_step=is_phase_last_step,
+                is_last_phase=is_last_phase,
+                log_phase_boundaries=log_phase_boundaries,
+            ):
+                with torch.no_grad():
+                    patterns = out["patterns"].detach()
+                    H = patterns
+                    hb = float(((H < 0.1) | (H > 0.9)).float().mean().item())
+                    tau_disp = 0.0
+                    ht_disp = 0.0
+                    if extra_physical_metrics:
+                        ht_disp = float((H - H0_snap).norm().item())
+                        if tau0_snap is not None:
+                            tau_now = model.pattern_generator._spatial_tau()
+                            tau_disp = float((tau_now - tau0_snap).norm().item())
+                if freeze_illum:
+                    warmup_tau_disp_max = max(warmup_tau_disp_max, tau_disp)
+                else:
+                    post_warmup_tau_disp_max = max(post_warmup_tau_disp_max, tau_disp)
+                train_mse = float(mse_metric(out["x_recon"].detach(), x).item())
+                val_mse, val_ssim = _evaluate(model, val_loader, device, m, apply_noise)
+                illum_l2 = _illum_l2(model)
+                row = {
+                    "step": global_step, "phase": phase["name"], "m": m,
+                    "loss": float(loss.item()), "train_mse": train_mse,
+                    "val_mse": val_mse, "val_ssim": val_ssim,
+                    "grad_norm_illum": gI, "grad_norm_upsampler": gU, "grad_norm_recon": gR,
+                    "H_t_min": float(H.min().item()), "H_t_max": float(H.max().item()),
+                    "H_t_mean": float(H.mean().item()), "H_t_std": float(H.std().item()),
+                    "H_t_binary_fraction": hb,
+                    "illum_l2": illum_l2, "illum_delta": abs(illum_l2 - init_illum_l2),
+                }
+                if extra_physical_metrics:
+                    row["H_t_displacement"] = ht_disp
+                    row["tau_displacement"] = tau_disp
+                    row["illum_frozen"] = int(freeze_illum)
+                writer.writerow(row)
+                step_log.flush()
+                history.append(row)
+                min_train_mse = min(min_train_mse, train_mse)
+                # Phase-boundary evaluations use this same path, so they ARE
+                # eligible for global-best checkpoint selection (not diagnostic-only).
+                if val_mse < best["val_mse"]:
+                    best.update(val_mse=val_mse, m=m, step=global_step,
+                                state=deepcopy(model.state_dict()), train_mse=train_mse)
+                print(f"[{letter}] {phase['name']} step={global_step} m={m} "
+                      f"loss={loss.item():.5f} train_mse={train_mse:.5f} val_mse={val_mse:.5f} "
+                      f"gI={gI:.2e} gU={gU:.2e}", flush=True)
 
-            with torch.no_grad():
-                patterns = out["patterns"].detach()
-                H = patterns
-                hb = float(((H < 0.1) | (H > 0.9)).float().mean().item())
-            train_mse = float(mse_metric(out["x_recon"].detach(), x).item())
-            val_mse, val_ssim = _evaluate(model, val_loader, device, m, apply_noise)
-            illum_l2 = _illum_l2(model)
-            row = {
-                "step": global_step, "phase": phase["name"], "m": m,
-                "loss": float(loss.item()), "train_mse": train_mse,
-                "val_mse": val_mse, "val_ssim": val_ssim,
-                "grad_norm_illum": gI, "grad_norm_upsampler": gU, "grad_norm_recon": gR,
-                "H_t_min": float(H.min().item()), "H_t_max": float(H.max().item()),
-                "H_t_mean": float(H.mean().item()), "H_t_std": float(H.std().item()),
-                "H_t_binary_fraction": hb,
-                "illum_l2": illum_l2, "illum_delta": abs(illum_l2 - init_illum_l2),
-            }
-            writer.writerow(row)
-            step_log.flush()
-            history.append(row)
-            min_train_mse = min(min_train_mse, train_mse)
-            if val_mse < best["val_mse"]:
-                best.update(val_mse=val_mse, m=m, step=global_step,
-                            state=deepcopy(model.state_dict()), train_mse=train_mse)
-            print(f"[{letter}] {phase['name']} step={global_step} m={m} "
-                  f"loss={loss.item():.5f} train_mse={train_mse:.5f} val_mse={val_mse:.5f} "
-                  f"gI={gI:.2e} gU={gU:.2e}", flush=True)
+            last_freeze_phase = not any(
+                bool(phases[j]["freeze_illum"]) for j in range(phase_idx + 1, n_phases)
+            )
+            if (
+                warmup_checkpoint_out is not None
+                and freeze_illum
+                and is_phase_last_step
+                and last_freeze_phase
+            ):
+                if tau0_snap is None or H0_snap is None:
+                    raise RuntimeError(
+                        "warmup_checkpoint_out requires snapshots of τ₀ and H_t0 "
+                        "(pass shared_tau0 or extra_physical_metrics=True)"
+                    )
+                save_warmup_checkpoint(
+                    Path(warmup_checkpoint_out),
+                    global_step=global_step,
+                    seed=seed,
+                    warmup_arm=str(letter),
+                    inverse=model.inverse_model,
+                    optimizer=optimizer,
+                    tau0=tau0_snap,
+                    H_t0=H0_snap,
+                    best=best,
+                    min_train_mse=min_train_mse,
+                    max_grad=max_grad,
+                    history=history,
+                    device=device,
+                )
 
     step_log.close()
     elapsed = time.time() - t0
@@ -370,6 +535,34 @@ def run_one(
         },
         "m_schedule": [{"phase": p["name"], "m": p["m"], "steps": p["steps"]} for p in phases],
     }
+    if extra_physical_metrics:
+        diagnostics.update({
+            "saw_nonfinite": saw_nonfinite,
+            "warmup_tau_displacement_max_logged": warmup_tau_disp_max,
+            "post_warmup_tau_displacement_max_logged": post_warmup_tau_disp_max,
+            "H_t0_binary_fraction": float(
+                ((H0_snap < 0.1) | (H0_snap > 0.9)).float().mean().item()
+            ),
+            "final_tau_displacement": float(
+                (model.pattern_generator._spatial_tau().detach() - tau0_snap).norm().item()
+            ),
+            "final_Ht_displacement_vs_m1_init": float(
+                (patterns.cpu() - H0_snap.detach().cpu()).norm().item()
+            ),
+            "log_phase_boundaries": log_phase_boundaries,
+            "extra_physical_metrics": extra_physical_metrics,
+            "shared_tau0_applied": shared_tau0 is not None,
+            "phase_boundary_evals_eligible_for_global_best": True,
+            "branched_from_shared_warmup": branched_from_shared_warmup,
+            "warmup_checkpoint_out": None if warmup_checkpoint_out is None else str(warmup_checkpoint_out),
+            "resume_from_warmup": None if resume_from_warmup is None else str(resume_from_warmup),
+            "train_iterator": "itertools.cycle(train_loader)",
+            "m_schedule_with_freeze": [
+                {"phase": p["name"], "m": p["m"], "steps": p["steps"],
+                 "freeze_illum": p["freeze_illum"]}
+                for p in phases
+            ],
+        })
     (output_dir / "metrics" / "diagnostics.json").write_text(json.dumps(diagnostics, indent=2))
 
     summary = {
@@ -381,6 +574,17 @@ def run_one(
         "best_m": best_m, "elapsed_sec": elapsed,
         "run_dir": str(output_dir),
     }
+    if extra_physical_metrics:
+        summary["best_step"] = best["step"]
+        summary["H_t_binary_fraction"] = float(
+            ((patterns < 0.1) | (patterns > 0.9)).float().mean().item()
+        )
+        summary["tau_displacement"] = float(
+            (model.pattern_generator._spatial_tau().detach() - tau0_snap).norm().item()
+        )
+        summary["Ht_displacement"] = float(
+            (patterns.cpu() - H0_snap.detach().cpu()).norm().item()
+        )
     (output_dir / "metrics" / "run_summary.json").write_text(json.dumps(summary, indent=2))
     return summary
 

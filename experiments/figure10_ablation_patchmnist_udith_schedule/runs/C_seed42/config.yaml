@@ -1,0 +1,95 @@
+experiment:
+  seed: 42
+  device: cuda:1
+  study_label: Fig10 C vs D on PatchMNIST, Udith legacy schedule (schedule-only; NOT
+    U2OS)
+  results_csv: experiments/figure10_ablation_patchmnist_udith_schedule/results.csv
+  compression: 16.0
+  run_id: fig10pm_udith_C_seed42
+dataset:
+  name: patchmnist
+  data_root: data/mnist
+  image_size: 256
+  digit_size: 32
+  grid_size: 20
+  num_train: 3000
+  num_val: 375
+  num_test: 375
+  seed: 42
+  download: true
+  disjoint_val_test: true
+pattern_generator:
+  mode: learnable_frequency
+  num_patterns: 4
+  sigmoid_m: 1.0
+  random_fixed_m: 10.0
+  seed: 42
+  height: 256
+  width: 256
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1
+  m_init: 1.0
+  note: UNUSED. This experiment uses explicit udith_legacy_phases(), not SigmoidSchedule.step().
+forward_model:
+  downscale_factor: 8
+  use_impulse_psfs: true
+  ex_psf_kernel_size: 3
+  em_psf_kernel_size: 3
+detector_noise:
+  mode: noise_free
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 0.0
+  apply_noise: false
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    downscale_factor: 8
+    num_patterns: 4
+    use_mixing_cnn: false
+    mixing_hidden_channels: 16
+  reconstruction:
+    in_channels: 4
+    hidden_channels:
+    - 64
+    - 64
+    - 32
+    - 32
+    - 16
+    - 1
+    kernel_size: 3
+    padding: 1
+training:
+  batch_size: 32
+  log_every: 200
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  gradient_clip_norm: 1.0
+  sharpen_eval_m: 10.0
+  loss: l1
+  learn_patterns: true
+  fixed_sigmoid_m: 1.0
+  staged_hardening:
+    note: UNUSED as a driver. Phases are training.udith_legacy_schedule.udith_legacy_phases().
+    inverse_warmup_steps: 60750
+    joint_soft_steps: 36445
+    harden_m_values:
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    harden_steps_per_m: 4050
+    harden_m8_steps: 5
+deviations_from_paper:
+- 'SCHEDULE-ONLY causal experiment: Udith legacy 121500-step accumulating-m schedule.
+  Everything else matches the completed PatchMNIST Fig-10 C/D protocol.'
+- 'DATA: PatchMNIST 3000/375/375 disjoint val/test (same as figure10_ablation_patchmnist).
+  NOT paper U2OS.'
+- "D is the corrected learnable_spatial parameterization (direct \u03C4, no IFFT).\
+  \ This does not validate the historical Table-3 D condition."
+- Does not reproduce the historical sequential optimizer loop.

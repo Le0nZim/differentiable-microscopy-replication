@@ -1,0 +1,198 @@
+{
+  "experiment_label": "Udith legacy schedule under the current controlled PatchMNIST optimizer/data recipe",
+  "not_a_full_reproduction_of_udith_legacy_training_loop": true,
+  "phase_boundary_evals_eligible_for_global_best": true,
+  "phase_boundary_note": "Phase-boundary rows share the same if val_mse < best['val_mse']: best.update(...) path as regular log_every rows. They are eligible for global-best selection, not diagnostic-only. Unchanged between C and D.",
+  "step_121500": {
+    "always_evaluated": true,
+    "reason": "last step of last phase (harden_m8, 5 steps). 121500 % 200 == 100, so not on the log_every grid.",
+    "C_seed42_logged": true,
+    "C_seed43_logged": true
+  },
+  "train_iterator": "itertools.cycle(train_loader) caches and repeats the first loader traversal. Fair across schedules and C/D arms; differs from Udith's original per-epoch loader recreation.",
+  "do_not_compare_fourier_vs_spatial_param_norms": true,
+  "construction_audits": {
+    "42": {
+      "pass": true,
+      "inverse_hash_C": "29a36bd9df404eda22a1962974acd55f0e73b96030b6cf991111961695de54c2",
+      "inverse_hash_D": "29a36bd9df404eda22a1962974acd55f0e73b96030b6cf991111961695de54c2",
+      "inverse_hashes_equal": true,
+      "upsampler_hash_C": "84aca57e2c82bb2d91c73a0b26bd42bf2691b9c17e14666dc481262ae3a70252",
+      "upsampler_hash_D": "84aca57e2c82bb2d91c73a0b26bd42bf2691b9c17e14666dc481262ae3a70252",
+      "upsampler_hashes_equal": true,
+      "first_batch_hash_C": "630e9e43edb2d1b3041d69136232bd58137f84725a5bf5f83997c8319e757f59",
+      "first_batch_hash_D": "630e9e43edb2d1b3041d69136232bd58137f84725a5bf5f83997c8319e757f59",
+      "first_batch_hashes_equal": true,
+      "max_abs_tau_difference": 1.9073486328125e-06,
+      "max_abs_Ht_difference": 2.980232238769531e-07,
+      "note": "These hashes are from audit_seed() construction (set_seed -> model -> tau0 -> next(iter(train_loader))), not a hash of every batch consumed during run_one's itertools.cycle. CPU reconstruction matches C vs D. GPU warmup losses still diverged (see frozen_interval)."
+    },
+    "43": {
+      "pass": true,
+      "inverse_hash_C": "a3f21194f279f0e27d61c787f979aaccd361af2633454fe35760560e21e3392a",
+      "inverse_hash_D": "a3f21194f279f0e27d61c787f979aaccd361af2633454fe35760560e21e3392a",
+      "inverse_hashes_equal": true,
+      "upsampler_hash_C": "989a922766a580e5f3d0018fd568568a5ccc60e176d31514bceb71f441215e1d",
+      "upsampler_hash_D": "989a922766a580e5f3d0018fd568568a5ccc60e176d31514bceb71f441215e1d",
+      "upsampler_hashes_equal": true,
+      "first_batch_hash_C": "bfb59d819132b243aaf4151df395fd2d833f4aa276425fe3bea1785bfb2acb91",
+      "first_batch_hash_D": "bfb59d819132b243aaf4151df395fd2d833f4aa276425fe3bea1785bfb2acb91",
+      "first_batch_hashes_equal": true,
+      "max_abs_tau_difference": 2.1457672119140625e-06,
+      "max_abs_Ht_difference": 2.682209014892578e-07,
+      "note": "These hashes are from audit_seed() construction (set_seed -> model -> tau0 -> next(iter(train_loader))), not a hash of every batch consumed during run_one's itertools.cycle. CPU reconstruction matches C vs D. GPU warmup losses still diverged (see frozen_interval)."
+    }
+  },
+  "initial_physical_patterns": {
+    "42": {
+      "H_t0.pt": {
+        "max_abs_C_minus_D": 2.980232238769531e-07,
+        "mean_abs_C_minus_D": 3.732100495312807e-08
+      },
+      "tau_0.pt": {
+        "max_abs_C_minus_D": 1.9073486328125e-06,
+        "mean_abs_C_minus_D": 1.963149429684563e-07
+      }
+    },
+    "43": {
+      "H_t0.pt": {
+        "max_abs_C_minus_D": 2.682209014892578e-07,
+        "mean_abs_C_minus_D": 3.7517828843647294e-08
+      },
+      "tau_0.pt": {
+        "max_abs_C_minus_D": 2.1457672119140625e-06,
+        "mean_abs_C_minus_D": 1.9722358501894632e-07
+      }
+    }
+  },
+  "frozen_interval": {
+    "42": {
+      "n_overlap": 210,
+      "c_warmup_steps_logged": 304,
+      "d_warmup_steps_logged": 210,
+      "last_overlap_step": 42000,
+      "warmup_end": 60750,
+      "max_abs": {
+        "loss": 0.0018138885498046875,
+        "train_mse": 0.001653764396905899,
+        "val_mse": 0.0021558223913113253,
+        "val_ssim": 0.02988535165786743,
+        "grad_norm_upsampler": 0.003332424908876419,
+        "grad_norm_recon": 0.3255189678322925,
+        "H_t_min": 1.955777406692505e-08,
+        "H_t_max": 0.0,
+        "H_t_mean": 2.9802322387695312e-08,
+        "H_t_std": 2.9802322387695312e-08,
+        "H_t_binary_fraction": 0.0,
+        "tau_displacement": 0.0,
+        "H_t_displacement": 0.0,
+        "illum_delta": 0.0
+      },
+      "max_abs_at_step": {
+        "loss": 28800,
+        "train_mse": 28800,
+        "val_mse": 200,
+        "val_ssim": 4000,
+        "grad_norm_upsampler": 1400,
+        "grad_norm_recon": 200,
+        "H_t_min": 42000,
+        "H_t_max": 42000,
+        "H_t_mean": 42000,
+        "H_t_std": 42000,
+        "H_t_binary_fraction": 42000,
+        "tau_displacement": 42000,
+        "H_t_displacement": 42000,
+        "illum_delta": 42000
+      },
+      "first_loss_split": {
+        "step": 200,
+        "C_loss": 0.10314010083675385,
+        "D_loss": 0.10453261435031891,
+        "abs_delta": 0.0013925135135650635
+      },
+      "thresholds": {
+        "loss": 0.0001,
+        "val_mse": 0.0001
+      },
+      "materially_diverged": true,
+      "pass": false
+    },
+    "43": {
+      "n_overlap": 146,
+      "c_warmup_steps_logged": 304,
+      "d_warmup_steps_logged": 146,
+      "last_overlap_step": 29200,
+      "warmup_end": 60750,
+      "max_abs": {
+        "loss": 0.005612965673208237,
+        "train_mse": 0.0036946535110473633,
+        "val_mse": 0.005305712576955557,
+        "val_ssim": 0.037315815687179565,
+        "grad_norm_upsampler": 0.0073419976979494095,
+        "grad_norm_recon": 0.704446939053223,
+        "H_t_min": 0.0,
+        "H_t_max": 0.0,
+        "H_t_mean": 0.0,
+        "H_t_std": 2.9802322387695312e-08,
+        "H_t_binary_fraction": 0.0,
+        "tau_displacement": 0.0,
+        "H_t_displacement": 0.0,
+        "illum_delta": 0.0
+      },
+      "max_abs_at_step": {
+        "loss": 12600,
+        "train_mse": 12600,
+        "val_mse": 12600,
+        "val_ssim": 12600,
+        "grad_norm_upsampler": 25200,
+        "grad_norm_recon": 7200,
+        "H_t_min": 29200,
+        "H_t_max": 29200,
+        "H_t_mean": 29200,
+        "H_t_std": 29200,
+        "H_t_binary_fraction": 29200,
+        "tau_displacement": 29200,
+        "H_t_displacement": 29200,
+        "illum_delta": 29200
+      },
+      "first_loss_split": {
+        "step": 200,
+        "C_loss": 0.0981026142835617,
+        "D_loss": 0.09840235114097595,
+        "abs_delta": 0.0002997368574142456
+      },
+      "thresholds": {
+        "loss": 0.0001,
+        "val_mse": 0.0001
+      },
+      "materially_diverged": true,
+      "pass": false
+    }
+  },
+  "actions": {
+    "stopped_seed43_D": true,
+    "blocked_seed44": true,
+    "left_independent_D42_running_as_diagnostic": true,
+    "scientific_continuation": "shared warmup checkpoint including inverse Adam, then fork C and D",
+    "warmup_arm": "D (learnable_spatial) so inverse trains against exact tau0"
+  },
+  "independent_warmup_C_complete": {
+    "42": {
+      "test_mse": 0.00538775868092974,
+      "test_ssim": 0.9524016578992208,
+      "best_m": 7.0,
+      "best_step": 121000,
+      "H_t_binary_fraction": 0.6262397766113281,
+      "tau_displacement": 425.9012145996094
+    },
+    "43": {
+      "test_mse": 0.00529629325804611,
+      "test_ssim": 0.9526363611221313,
+      "best_m": 7.0,
+      "best_step": 121495,
+      "H_t_binary_fraction": 0.6042900085449219,
+      "tau_displacement": 415.8672180175781
+    }
+  },
+  "paired_D_minus_C": "not available: independent D not finished; seeds 43/44 stopped; scientific comparison is the shared-warmup fork"
+}

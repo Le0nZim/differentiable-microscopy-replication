@@ -1,0 +1,149 @@
+{
+  "label": "Udith legacy schedule under the current controlled PatchMNIST optimizer/data recipe",
+  "seeds_present": {
+    "C": [
+      42
+    ],
+    "D": [
+      42
+    ]
+  },
+  "per_seed": {
+    "C": [
+      {
+        "seed": 42,
+        "test_mse": 0.005333937820978463,
+        "test_ssim": 0.9524994641542435,
+        "best_m": 7.0,
+        "best_step": 118800,
+        "H_t_binary_fraction": 0.6329269409179688,
+        "tau_displacement": 428.8790283203125,
+        "Ht_displacement": 180.96768188476562
+      }
+    ],
+    "D": [
+      {
+        "seed": 42,
+        "test_mse": 0.006744771070467929,
+        "test_ssim": 0.9371819694836935,
+        "best_m": 7.0,
+        "best_step": 120400,
+        "H_t_binary_fraction": 1.0,
+        "tau_displacement": 6347.16650390625,
+        "Ht_displacement": 247.82362365722656
+      }
+    ]
+  },
+  "aggregate": {
+    "C": {
+      "test_mse": {
+        "mean": 0.005333937820978463,
+        "std": 0.0,
+        "n": 1,
+        "values": [
+          0.005333937820978463
+        ]
+      },
+      "test_ssim": {
+        "mean": 0.9524994641542435,
+        "std": 0.0,
+        "n": 1,
+        "values": [
+          0.9524994641542435
+        ]
+      }
+    },
+    "D": {
+      "test_mse": {
+        "mean": 0.006744771070467929,
+        "std": 0.0,
+        "n": 1,
+        "values": [
+          0.006744771070467929
+        ]
+      },
+      "test_ssim": {
+        "mean": 0.9371819694836935,
+        "std": 0.0,
+        "n": 1,
+        "values": [
+          0.9371819694836935
+        ]
+      }
+    }
+  },
+  "paired_D_minus_C": [
+    {
+      "seed": 42,
+      "C_mse": 0.005333937820978463,
+      "D_mse": 0.006744771070467929,
+      "C_ssim": 0.9524994641542435,
+      "D_ssim": 0.9371819694836935,
+      "D_minus_C_mse": 0.0014108332494894666,
+      "D_minus_C_ssim": -0.015317494670549991,
+      "C_minus_D_mse": -0.0014108332494894666,
+      "relative_D_minus_C_over_C": 0.2645012553278437,
+      "C_beats_D": true
+    }
+  ],
+  "paired_C_minus_D": [
+    {
+      "seed": 42,
+      "C_mse": 0.005333937820978463,
+      "D_mse": 0.006744771070467929,
+      "C_ssim": 0.9524994641542435,
+      "D_ssim": 0.9371819694836935,
+      "D_minus_C_mse": 0.0014108332494894666,
+      "D_minus_C_ssim": -0.015317494670549991,
+      "C_minus_D_mse": -0.0014108332494894666,
+      "relative_D_minus_C_over_C": 0.2645012553278437,
+      "C_beats_D": true
+    }
+  ],
+  "paired_D_minus_C_aggregate": {
+    "test_mse": {
+      "mean": 0.0014108332494894666,
+      "std": 0.0,
+      "n": 1,
+      "values": [
+        0.0014108332494894666
+      ]
+    },
+    "test_ssim": {
+      "mean": -0.015317494670549991,
+      "std": 0.0,
+      "n": 1,
+      "values": [
+        -0.015317494670549991
+      ]
+    }
+  },
+  "verdict": "C_beats_D_all_seeds",
+  "current_schedule_frozen": {
+    "C": {
+      "mse_mean": 0.006948,
+      "mse_std": 6.2e-05,
+      "ssim_mean": 0.9357,
+      "ssim_std": 0.0012
+    },
+    "D": {
+      "mse_mean": 0.006553,
+      "mse_std": 2.1e-05,
+      "ssim_mean": 0.9401,
+      "ssim_std": 0.0002
+    }
+  },
+  "interpretation_boundaries": [
+    "This tests whether the legacy schedule changes the corrected C/D ordering on PatchMNIST.",
+    "It is not a U2OS reproduction.",
+    "It does not validate the historical Table-3 D condition.",
+    "It does not test the full historical optimizer loop."
+  ],
+  "experiment_label": "Udith legacy schedule under the current controlled PatchMNIST optimizer/data recipe",
+  "not_a_full_reproduction_of_udith_legacy_training_loop": true,
+  "phase_boundary_evals_eligible_for_global_best": true,
+  "step_121500_always_evaluated": true,
+  "train_iterator_note": "The inherited runner uses itertools.cycle(train_loader), if still present. It caches and repeats the first loader traversal. This remains fair because both schedules and both C/D arms use it, but differs from Udith\u2019s original per-epoch loader recreation.",
+  "do_not_compare_fourier_param_norms_to_spatial_param_norms": true,
+  "physical_illumination_displacement": "tau_displacement = ||\u03c4 \u2212 \u03c40||_2; Ht_displacement = ||H_t \u2212 H_t0||_2"
+}

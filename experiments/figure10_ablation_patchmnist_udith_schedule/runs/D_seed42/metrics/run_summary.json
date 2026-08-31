@@ -1,0 +1,19 @@
+{
+  "variant": "D",
+  "label": "learnable Ht + locality + NO freq",
+  "seed": 42,
+  "test_mse": 0.00666357297450304,
+  "test_ssim": 0.9388062904278437,
+  "best_val_mse": 0.006601359035509328,
+  "best_train_mse": 0.005855832248926163,
+  "min_train_mse": 0.005488723516464233,
+  "final_train_mse": 0.005652179495689083,
+  "overfit_gap": 0.0007455267865831656,
+  "best_m": 6.0,
+  "elapsed_sec": 10655.030843734741,
+  "run_dir": "/home/leonidas/workspace/differentiable_micoscopy_replication/github_repo/experiments/figure10_ablation_patchmnist_udith_schedule/runs/D_seed42",
+  "best_step": 117200,
+  "H_t_binary_fraction": 1.0,
+  "tau_displacement": 6308.6767578125,
+  "Ht_displacement": 247.54241943359375
+}

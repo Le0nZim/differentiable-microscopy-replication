@@ -1,0 +1,18 @@
+[2026-08-30 16:10:17] === freeze-interval divergence: stopping 43/44 ===
+[2026-08-30 16:10:17] SIGTERM seed43 PID 464367
+[2026-08-30 16:10:17] SIGTERM split watcher PID 464356
+[2026-08-30 16:10:21] remaining train.py / split processes:
+[2026-08-30 16:10:22] GPU compute apps:
+[2026-08-30 16:10:22] D42 (462543) left running. C43 complete is diagnostic-only (independent warmup).
+[2026-08-30 16:17:59] watching D42 summary; will SIGTERM PID=462543 and any seed 43/44 launchers
+[2026-08-30 16:17:59] watching D42 summary; will SIGTERM PID=462543 and any seed 43/44 launchers
+[2026-08-30 18:16:19] D42 summary present
+[2026-08-30 18:16:19] D42 summary present
+[2026-08-30 18:16:19] SIGTERM 462543 (block 43/44)
+[2026-08-30 18:16:19] SIGTERM 462543 (block 43/44)
+[2026-08-30 18:16:19] SIGTERM 462543 (block 43/44)
+[2026-08-30 18:16:19] SIGTERM 462543 (block 43/44)
+[2026-08-30 18:16:21] seeds 43/44 will not be started. independent D42 kept as a divergent-warmup diagnostic.
+[2026-08-30 18:16:21] seeds 43/44 will not be started. independent D42 kept as a divergent-warmup diagnostic.
+[2026-08-30 18:16:21] === prevent_seed44 done ===
+[2026-08-30 18:16:21] === prevent_seed44 done ===

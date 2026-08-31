@@ -1,0 +1,177 @@
+{
+  "source_repository": "udithhaputhanthri/CompressiveDabbaMu",
+  "source_commit": "d4308c0",
+  "source_notebook": "4_20230102_ablation-2.ipynb",
+  "source_scheduler": "modules/m_inc_procs.py :: inc_m_class",
+  "scheduler_semantics": "inc_m_class accumulates m (m += 1) after epoch_threshold on epoch_steps cadence; it does NOT reset m to 1. Contrast with SigmoidSchedule.step().",
+  "legacy_epoch_constants": {
+    "epochs": 24300,
+    "train_H_after_epoch": 12150,
+    "epoch_threshold": 18630,
+    "epoch_steps": 810,
+    "notebook_excerpt": {
+      "epochs": "300 * 81",
+      "train_H_iter": "int(epoch > 150 * 81)",
+      "m_inc_proc": "inc_m_class(epoch_threshold=230 * 81, epoch_steps=10 * 81)"
+    }
+  },
+  "five_batches_per_epoch_derivation": {
+    "train_images": 168,
+    "batch_size": 32,
+    "drop_last": true,
+    "updates_per_legacy_epoch": 5,
+    "formula": "floor(168 / 32) = 5"
+  },
+  "converted_step_counts": {
+    "total_steps": 121500,
+    "warmup_frozen_m1": 60750,
+    "trainable_steps": 60750,
+    "joint_m1_steps": 36445,
+    "harden_steps_per_m_2_through_7": 4050,
+    "harden_m8_steps": 5,
+    "first_m_increment_legacy_epoch": 19440,
+    "derivation_note": "inc_m_class uses epoch > epoch_threshold (18,630) and a cadence of 810 epochs, so m ticks at 19440, 20250, ..., 24300 (seven increments: m=1\u21928). Each of m=2..7 lasts 810 epochs = 4,050 steps; m=8 is only the final legacy epoch (5 steps)."
+  },
+  "phases": [
+    {
+      "name": "inverse_warmup_m1",
+      "m": 1.0,
+      "steps": 60750,
+      "freeze_illum": true
+    },
+    {
+      "name": "joint_m1",
+      "m": 1.0,
+      "steps": 36445,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m2",
+      "m": 2.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m3",
+      "m": 3.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m4",
+      "m": 4.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m5",
+      "m": 5.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m6",
+      "m": 6.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m7",
+      "m": 7.0,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m8",
+      "m": 8.0,
+      "steps": 5,
+      "freeze_illum": false
+    }
+  ],
+  "global_step_bounds": [
+    {
+      "name": "inverse_warmup_m1",
+      "m": 1.0,
+      "start": 1,
+      "end": 60750,
+      "steps": 60750,
+      "freeze_illum": true
+    },
+    {
+      "name": "joint_m1",
+      "m": 1.0,
+      "start": 60751,
+      "end": 97195,
+      "steps": 36445,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m2",
+      "m": 2.0,
+      "start": 97196,
+      "end": 101245,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m3",
+      "m": 3.0,
+      "start": 101246,
+      "end": 105295,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m4",
+      "m": 4.0,
+      "start": 105296,
+      "end": 109345,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m5",
+      "m": 5.0,
+      "start": 109346,
+      "end": 113395,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m6",
+      "m": 6.0,
+      "start": 113396,
+      "end": 117445,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m7",
+      "m": 7.0,
+      "start": 117446,
+      "end": 121495,
+      "steps": 4050,
+      "freeze_illum": false
+    },
+    {
+      "name": "harden_m8",
+      "m": 8.0,
+      "start": 121496,
+      "end": 121500,
+      "steps": 5,
+      "freeze_illum": false
+    }
+  ],
+  "m_sequence": [
+    1.0,
+    2.0,
+    3.0,
+    4.0,
+    5.0,
+    6.0,
+    7.0,
+    8.0
+  ],
+  "not_a_literal_patchmnist_epoch_run": true,
+  "uses_sigmoid_schedule_step": false
+}
