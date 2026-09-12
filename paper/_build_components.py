@@ -644,7 +644,6 @@ def build_fig9() -> None:
     rep = cfg["reproduce"]
     runs = REPL / "experiments/figure08_mcf7/runs"
     eval_m = float(rep.get("eval_sigmoid_m", 8.0))
-    overlap = float(rep.get("tile_overlap_frac", 0.25))
     swin, _ = F9._load_model("wswinir", cfg, runs, DEVICE)
     cnn, _ = F9._load_model("wcnn64", cfg, runs, DEVICE)
     ds_cfg = dict(cfg["dataset"]); ds_cfg.update(seed=42, patch_size=256, image_size=256)
@@ -657,19 +656,18 @@ def build_fig9() -> None:
     field = full[:, top:top + height, left:left + width].unsqueeze(0)
     gt = field[0, 0].numpy()
     print(f"[fig9] field {height}x{width} device={DEVICE}", flush=True)
-    rec_swin = F9.overlap_tiled_recon(swin, field, DEVICE, eval_m, 256, max(16, int(256 * overlap)))
-    rec_cnn = F9.overlap_tiled_recon(cnn, field, DEVICE, eval_m, 64, max(16, int(64 * overlap)))
+    rec_swin = F9.naive_tiled_recon(swin, field, DEVICE, eval_m, 256)
+    rec_cnn = F9.naive_tiled_recon(cnn, field, DEVICE, eval_m, 64)
     lo, hi = float(np.percentile(gt, 1.0)), float(np.percentile(gt, 99.5))
     image_svg(to_rgb(gt, "viridis", lo, hi), d / "images/ground_truth.svg", source="MCF7 tubulin wide field (GT)")
-    image_svg(to_rgb(rec_swin, "viridis", lo, hi), d / "images/with_swinir.svg", source="wSwinIR overlap-add reconstruction")
-    image_svg(to_rgb(rec_cnn, "viridis", lo, hi), d / "images/wcnn.svg", source="wCNN overlap-add reconstruction")
-    for cond, name in (("wswinir", "with_swinir"), ("wcnn64", "wcnn")):
-        pats = torch.load(runs / cond / "illumination/patterns.pt", map_location="cpu")
+    image_svg(to_rgb(rec_swin, "viridis", lo, hi), d / "images/with_swinir.svg", source="wSwinIR non-overlapping acquisition")
+    image_svg(to_rgb(rec_cnn, "viridis", lo, hi), d / "images/wcnn.svg", source="wCNN non-overlapping acquisition")
+    for cond, name, model in (("wswinir", "with_swinir", swin), ("wcnn64", "wcnn", cnn)):
+        pats = model.pattern_generator(sigmoid_m=eval_m).detach().cpu()
         soft = pats.squeeze(1).clamp(0, 1).numpy()
         for t in range(soft.shape[0]):
-            binar = (soft[t] > 0.5).astype(np.float32)
-            image_svg(to_rgb(binar, "gray", 0, 1), d / f"patterns/{name}/pattern_{t+1}.svg",
-                      source=f"learned H_t {cond} (binarized)")
+            image_svg(to_rgb(soft[t], "gray", 0, 1), d / f"patterns/{name}/pattern_{t+1}.svg",
+                      source=f"evaluated H_t {cond} at m={eval_m}; no display-only threshold")
     del swin, cnn
     if DEVICE.type == "cuda":
         torch.cuda.empty_cache()

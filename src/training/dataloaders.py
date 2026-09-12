@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+import torch
 from torch.utils.data import DataLoader, Subset
 
 from datasets.patchmnist import PatchMNISTDataset
@@ -43,4 +44,8 @@ def build_dataloader(config: dict[str, Any], split: str) -> DataLoader:
     dataset = build_dataset(config, split)
     batch_size = config["training"]["batch_size"]
     shuffle = split == "train"
-    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
+    # Opt in with a separate loader seed for paired model comparisons. Historical
+    # Udith replay intentionally retains its original global-RNG sequence.
+    seed = config["training"].get("loader_seed")
+    generator = None if seed is None else torch.Generator().manual_seed(int(seed))
+    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, generator=generator)

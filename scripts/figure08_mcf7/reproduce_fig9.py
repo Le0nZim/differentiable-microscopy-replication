@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Regenerate paper Fig. 9 (HumanMCF7 x16): Ground Truth / wSwinIR / wCNN (+ learned H_t).
 
-Key fix vs the legacy report: the wide reconstruction is stitched with OVERLAP-ADD tiling
-(Hann window + reflect padding) instead of naive non-overlapping tiles, which removes the
-64-px (wCNN) / 256-px (wSwinIR) seam grid that dominated the previous Fig. 9. Also saves a
-naive-vs-overlap comparison so the artifact source is explicit.
+The primary image uses nonoverlapping acquisitions. A separate overlap-add
+diagnostic uses additional simulated acquisitions; its actual measurement count
+and lower effective compression are recorded in the metrics JSON.
 
 Consistent display normalization: GT / wSwinIR / wCNN share one viridis lo/hi (from GT).
 
@@ -41,11 +40,11 @@ from datasets.mcf7_channel2 import MCF7Channel2Config, MCF7Channel2Dataset, _loa
 from evaluation.metrics import mse as mse_metric
 from evaluation.metrics import psnr as psnr_metric
 from evaluation.metrics import ssim as ssim_metric
-from evaluation.tiled_inference import naive_tiled_recon, overlap_tiled_recon
+from evaluation.tiled_inference import naive_tiled_recon, overlap_tiled_recon, tiled_acquisition_budget
 from utils.device import resolve_device
 
 _spec = importlib.util.spec_from_file_location(
-    "fig89_train", ROOT / "scripts" / "fig89_mcf7_swinir_fix_train.py")
+    "fig89_train", ROOT / "scripts" / "figure08_mcf7" / "train.py")
 TR = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(TR)
 
@@ -88,9 +87,7 @@ def _load_model(condition, cfg, runs_dir, device):
         raise FileNotFoundError(f"missing checkpoint for {condition}: {ckpt}")
     ck = torch.load(ckpt, map_location=device)
     state = ck["model"] if isinstance(ck, dict) and "model" in ck else ck
-    if not any(k.startswith("pattern_generator") for k in state):
-        print(f"WARNING: {ckpt} has NO pattern_generator state (H_t not restored!)")
-    model.load_state_dict(state, strict=False)
+    model.load_state_dict(state, strict=True)
     model.eval()
     return model, isz
 
@@ -112,10 +109,10 @@ def _pattern_grid(patterns, tile_px, gap, color):
     canvas = np.full((H, W, 3), color, dtype=np.uint8)
     for t in range(Tn):
         r, c = divmod(t, cols)
-        small = np.array(Image.fromarray((soft[t] * 255).astype(np.uint8)).resize((tile_px, tile_px), Image.BILINEAR))
-        binar = np.where(small > 127, 255, 0).astype(np.uint8)
+        # Display the evaluated mask, including any intermediate gray values.
+        small = np.array(Image.fromarray((soft[t] * 255).astype(np.uint8)).resize((tile_px, tile_px), Image.Resampling.NEAREST))
         canvas[r * (tile_px + gap):r * (tile_px + gap) + tile_px,
-               c * (tile_px + gap):c * (tile_px + gap) + tile_px] = np.array(Image.fromarray(binar).convert("RGB"))
+               c * (tile_px + gap):c * (tile_px + gap) + tile_px] = np.array(Image.fromarray(small).convert("RGB"))
     return Image.fromarray(canvas)
 
 
@@ -181,13 +178,13 @@ def main() -> None:
 
     lo, hi = float(np.percentile(gt, 1.0)), float(np.percentile(gt, 99.5))
 
-    # ---- paper-style figure (overlap-add), GT / wSwinIR / wCNN + patterns ----
+    # Primary figure uses nonoverlapping acquisitions and evaluated patterns.
     row_w = 1000
     left_canvas, row_h = _compose_rows(
-        [("Ground Truth", gt, None), ("wSwinIR", rec_swin, GREEN), ("wCNN", rec_cnn, RED)], row_w, lo, hi)
+        [("Ground Truth", gt, None), ("wSwinIR", naive_swin, GREEN), ("wCNN", naive_cnn, RED)], row_w, lo, hi)
     left_h = left_canvas.shape[0]
-    pat_swin = torch.load(runs_dir / conds[0] / "illumination" / "patterns.pt", map_location="cpu")
-    pat_cnn = torch.load(runs_dir / conds[1] / "illumination" / "patterns.pt", map_location="cpu")
+    pat_swin = swin.pattern_generator(sigmoid_m=eval_m).detach().cpu()
+    pat_cnn = cnn.pattern_generator(sigmoid_m=eval_m).detach().cpu()
     pgap = 4
     tile_px = ((left_h - pgap) // 2 - pgap) // 2
     swin_grid = _pattern_grid(pat_swin, tile_px, pgap, GREEN)
@@ -208,14 +205,21 @@ def main() -> None:
     # ---- naive-vs-overlap comparison (documents the tiling artifact) ----
     cmp_canvas, _ = _compose_rows([
         ("wCNN naive (non-overlap seams)", naive_cnn, RED),
-        ("wCNN overlap-add (fixed)", rec_cnn, GREEN),
+        ("wCNN overlap (extra acquisitions)", rec_cnn, GREEN),
         ("wSwinIR naive (non-overlap seams)", naive_swin, RED),
-        ("wSwinIR overlap-add (fixed)", rec_swin, GREEN),
+        ("wSwinIR overlap (extra acquisitions)", rec_swin, GREEN),
     ], row_w, lo, hi)
     Image.fromarray(cmp_canvas).save(out_dir / "figure9_overlap_vs_naive.png")
     print(f"Saved {out_dir / 'figure9_overlap_vs_naive.png'}")
 
     metrics = {
+        "primary_acquisition": "nonoverlapping",
+        "acquisition_budgets": {
+            "swinir_primary": tiled_acquisition_budget(*field.shape[-2:], 256, swin.forward_model.downscale_factor, swin.pattern_generator.num_patterns),
+            "cnn_primary": tiled_acquisition_budget(*field.shape[-2:], 64, cnn.forward_model.downscale_factor, cnn.pattern_generator.num_patterns),
+            "swinir_overlap": tiled_acquisition_budget(*field.shape[-2:], 256, swin.forward_model.downscale_factor, swin.pattern_generator.num_patterns, ov_swin),
+            "cnn_overlap": tiled_acquisition_budget(*field.shape[-2:], 64, cnn.forward_model.downscale_factor, cnn.pattern_generator.num_patterns, ov_cnn),
+        },
         "source": src_path.name, "top": top, "left": left, "height": height, "width": width,
         "eval_sigmoid_m": eval_m, "overlap_px": {"wswinir": ov_swin, "wcnn": ov_cnn},
         "display_norm": "identical viridis lo/hi from GT p1/p99.5 for GT/wSwinIR/wCNN",

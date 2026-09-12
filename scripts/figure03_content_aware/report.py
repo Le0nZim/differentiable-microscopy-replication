@@ -269,7 +269,7 @@ def render_full_panel(out_root: Path, name: str, device, fixed_index: int, out_d
 
 
 def update_report_table(rows: list[dict], name: str, report_path: Path):
-    """Fill the LIVE RESULTS block of REPORT.md from the CSV rows + acceptance verdicts."""
+    """Fill the LIVE RESULTS block from observed metrics, without a required ranking."""
     if not report_path.exists() or not rows:
         # never clobber the in-progress placeholder when no cells have finished yet
         if not rows:
@@ -284,12 +284,12 @@ def update_report_table(rows: list[dict], name: str, report_path: Path):
         lines.append(f"| {r['compression']} | {r['illumination']} | {r['base_ssim']:.4f} | "
                      f"{r['swinir_ssim']:.4f} | {r['delta_ssim']:+.4f} | {r['base_mse']:.6f} | "
                      f"{r['swinir_mse']:.6f} | {r['delta_mse']:+.6f} | {r.get('iterations_reached','?')} |")
-    # acceptance verdicts (only over cells present so far)
+    # Empirical outcomes, never implementation acceptance criteria.
     by = {(r["compression"], r["illumination"]): r for r in rows}
     n = len(rows)
     ssim_up = sum(1 for r in rows if r["delta_ssim"] > 0)
     mse_dn = sum(1 for r in rows if r["delta_mse"] < 0)
-    lines += ["", f"**Acceptance (over {n}/8 cells trained so far):**",
+    lines += ["", f"**Observed outcomes (over {n}/8 cells trained so far; no required winner):**",
               f"1. SwinIR improves SSIM over base: **{ssim_up}/{n}** cells.",
               f"2. SwinIR reduces MSE over base: **{mse_dn}/{n}** cells."]
     # #3 learnable+SwinIR >= pseudo+SwinIR per compression

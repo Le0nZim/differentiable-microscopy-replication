@@ -1,0 +1,59 @@
+# Architecture sensitivity: upstream custom_v2 and default decoder widths.
+experiment:
+  seed: 42
+  device: cuda:1
+dataset:
+  name: patchmnist
+  data_root: data/mnist
+  image_size: 256
+  num_train: 3000
+  num_val: 375
+  num_test: 375
+  seed: 42
+  disjoint_val_test: true
+  download: false
+pattern_generator:
+  mode: learnable_spatial
+  num_patterns: 4
+  sigmoid_m: 1.0
+  random_fixed_m: 1.0
+  seed: 42
+  binarization: ste
+  superpixel_factor: 1
+  hadamard_tile_size: 8
+forward_model:
+  downscale_factor: 8
+  use_impulse_psfs: true
+  dose_mode: equal_mean
+  sequence_dose: 2.0
+detector_noise:
+  mode: differentiable_poisson_plus_read
+  noise_normalization: paper_v3
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 2.0
+  apply_noise: true
+inverse_model:
+  upsampling:
+    mode: original_locality
+    use_mixing_cnn: false
+  reconstruction:
+    hidden_channels:
+    - 24
+    - 12
+    - 8
+    - 4
+    - 2
+    - 1
+training:
+  batch_size: 32
+  max_steps: 10100
+  warmup_steps: 1500
+  log_every: 200
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  loss: l1
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1

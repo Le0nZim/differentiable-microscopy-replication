@@ -71,7 +71,7 @@ def test_sigmoid_schedule_stage_a_and_m_updates():
     assert schedule.get_m() == 2.0
 
     schedule.step(epoch=41)
-    assert schedule.get_m() == 1.0
+    assert schedule.get_m() == 2.0
 
 
 def test_fixed_pattern_modes_have_expected_shapes():

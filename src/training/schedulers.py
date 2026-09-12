@@ -18,4 +18,6 @@ def configure_training_stage(
         model.set_illumination_trainable(False)
     else:
         model.set_illumination_trainable(True)
-    return schedule.step(epoch)
+    value = schedule.step(epoch)
+    model.pattern_generator.sigmoid_m = value
+    return value

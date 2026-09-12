@@ -82,4 +82,12 @@ def save_split(split: dict[str, list[str]], spec: SplitSpec, out_path: Path) -> 
 
 def load_split(path: Path, repo_root: Path) -> dict[str, list[Path]]:
     payload = json.loads(Path(path).read_text())
-    return {split: [repo_root / rel for rel in items] for split, items in payload["splits"].items()}
+    splits = {split: [repo_root / rel for rel in items] for split, items in payload["splits"].items()}
+    if set(splits) != {"train", "val", "test"} or any(not items for items in splits.values()):
+        raise ValueError("Split manifest must contain nonempty train, val and test splits")
+    wells = split_well_sets(splits)
+    for a, b in (("train", "val"), ("train", "test"), ("val", "test")):
+        overlap = set(wells[a]) & set(wells[b])
+        if overlap:
+            raise ValueError(f"Well leakage between {a} and {b}: {sorted(overlap)[:5]}")
+    return splits

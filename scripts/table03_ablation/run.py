@@ -684,11 +684,8 @@ def cmd_overfit(args) -> None:
             s = run_one(cfg, run_dir, letter=letter, phases=phases, seed=args.seed, log_every=100)
             s["n_images"] = n_images
             results.append(s)
-    # gate: locality (C) has more per-location capacity than transpose (B), so it
-    # must be able to FIT a tiny fixed train set at least as well as B. We measure
-    # the MINIMUM train MSE reached (pure fitting capacity), not train MSE at the
-    # best-val step. If C cannot fit >= B, that would indicate an implementation
-    # bug. We also report val MSE to show the generalization story.
+    # Historical fitting comparison. Architecture ranking at a finite training
+    # budget is not a proof of correctness or a diagnosis of generalization.
     gate = {"runs": results,
             "note": "gate is on MIN train MSE (fitting capacity); val shown for the overfitting narrative"}
     by = {(r["variant"], r["n_images"]): r for r in results}
@@ -702,13 +699,13 @@ def cmd_overfit(args) -> None:
                        "C_best_val_mse": by[("C", n)]["best_val_mse"],
                        "C_fits_at_least_as_well_as_B": (c is not None and b is not None and c <= b * 1.25)})
     gate["checks"] = checks
-    gate["pass"] = all(ch["C_fits_at_least_as_well_as_B"] for ch in checks)
+    gate["locality_fit_comparison"] = all(ch["C_fits_at_least_as_well_as_B"] for ch in checks)
     gate["interpretation"] = (
-        "PASS => locality block fits at least as well as transpose (no implementation/optimization bug); "
-        "C's worse val MSE is therefore a generalization/overfitting effect, not broken code."
+        "Descriptive fitting comparison only. Neither outcome proves absence of "
+        "implementation bugs, and it does not identify the cause of validation differences."
     )
     (out_root / "overfit_gate.json").write_text(json.dumps(gate, indent=2))
-    print("OVERFIT GATE:", "PASS" if gate["pass"] else "FAIL", flush=True)
+    print("LOCALITY FIT COMPARISON:", gate["locality_fit_comparison"], flush=True)
 
 
 def cmd_ablation(args) -> None:

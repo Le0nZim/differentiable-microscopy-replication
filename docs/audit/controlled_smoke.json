@@ -1,0 +1,176 @@
+{
+  "scope": "Synthetic software smoke only; random tensors, not microscopy performance.",
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.14.0+cu130",
+    "torchvision": "0.29.0+cu130",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "timm": "1.0.29",
+    "cuda_available": false
+  },
+  "paired_initial_inverse": true,
+  "paired_spatial_fourier_initial_binary_masks": true,
+  "identical_val_test_tensors": true,
+  "all_binary": true,
+  "equal_mean_incident_sequence_dose": true,
+  "implementation_sha256": "6e54f81ed0f00a403966672e25640a8104f4fcc26cc5e563a45d3faf2ef00423",
+  "source_note": "Audit working tree before commit; recorded git HEAD is the pre-audit baseline. Source hash includes uncommitted implementation.",
+  "runs": [
+    {
+      "mode": "uniform_all_ones",
+      "seed": 42,
+      "steps_executed": 8,
+      "selected_step": 4,
+      "sigmoid_m": 3.3333333333333335,
+      "test": {
+        "mse": 0.08311296999454498,
+        "ssim": 0.011389148288539477,
+        "psnr_mean_per_image": 10.807397297450473
+      },
+      "acquisition": {
+        "num_patterns": 4,
+        "physical_exposures": 4,
+        "detector_shape": [
+          4,
+          4
+        ],
+        "scalar_measurements": 64,
+        "compression": 4.0,
+        "binary": true,
+        "mean_fill_factor": 1.0,
+        "dose_mode": "equal_mean",
+        "exposure_power_multiplier": 0.5,
+        "incident_sequence_mean_photon_scale": 20000.0,
+        "incident_sequence_max_photon_scale": 20000.0,
+        "peak_on_pixel_photon_scale": 5000.0,
+        "note": "Incident dose is in model photon-scale units; detected signal depends on the specimen. No calibrated acquisition time or peak-power cap is assumed."
+      },
+      "checkpoint_sha256": "3ce3ace5652d588e52ffe2c34694e07c90cdd3f6ce74c0048a079cea663c5eaa"
+    },
+    {
+      "mode": "random_fixed",
+      "seed": 42,
+      "steps_executed": 8,
+      "selected_step": 4,
+      "sigmoid_m": 3.3333333333333335,
+      "test": {
+        "mse": 0.08310984287943159,
+        "ssim": 0.011385452667517322,
+        "psnr_mean_per_image": 10.807554108755928
+      },
+      "acquisition": {
+        "num_patterns": 4,
+        "physical_exposures": 4,
+        "detector_shape": [
+          4,
+          4
+        ],
+        "scalar_measurements": 64,
+        "compression": 4.0,
+        "binary": true,
+        "mean_fill_factor": 0.509765625,
+        "dose_mode": "equal_mean",
+        "exposure_power_multiplier": 0.9808428883552551,
+        "incident_sequence_mean_photon_scale": 19999.998046875,
+        "incident_sequence_max_photon_scale": 39233.71484375,
+        "peak_on_pixel_photon_scale": 9808.428883552551,
+        "note": "Incident dose is in model photon-scale units; detected signal depends on the specimen. No calibrated acquisition time or peak-power cap is assumed."
+      },
+      "checkpoint_sha256": "75364d0099d40a7cd91c9806951e90a239b4e870659c8d8d0c546d87e5b7bb96"
+    },
+    {
+      "mode": "hadamard_fixed",
+      "seed": 42,
+      "steps_executed": 8,
+      "selected_step": 4,
+      "sigmoid_m": 3.3333333333333335,
+      "test": {
+        "mse": 0.08312219168458666,
+        "ssim": 0.011392628108816487,
+        "psnr_mean_per_image": 10.806924274989536
+      },
+      "acquisition": {
+        "num_patterns": 4,
+        "physical_exposures": 4,
+        "detector_shape": [
+          4,
+          4
+        ],
+        "scalar_measurements": 64,
+        "compression": 4.0,
+        "binary": true,
+        "mean_fill_factor": 0.625,
+        "dose_mode": "equal_mean",
+        "exposure_power_multiplier": 0.800000011920929,
+        "incident_sequence_mean_photon_scale": 20000.0,
+        "incident_sequence_max_photon_scale": 32000.0,
+        "peak_on_pixel_photon_scale": 8000.00011920929,
+        "note": "Incident dose is in model photon-scale units; detected signal depends on the specimen. No calibrated acquisition time or peak-power cap is assumed."
+      },
+      "checkpoint_sha256": "6c64ab43fe4c891a1bd0d05959302bed0392a9d5a41949dcf24ccc6709a69e4f"
+    },
+    {
+      "mode": "learnable_spatial",
+      "seed": 42,
+      "steps_executed": 8,
+      "selected_step": 4,
+      "sigmoid_m": 3.3333333333333335,
+      "test": {
+        "mse": 0.08310884237289429,
+        "ssim": 0.011387181202215808,
+        "psnr_mean_per_image": 10.807605743408203
+      },
+      "acquisition": {
+        "num_patterns": 4,
+        "physical_exposures": 4,
+        "detector_shape": [
+          4,
+          4
+        ],
+        "scalar_measurements": 64,
+        "compression": 4.0,
+        "binary": true,
+        "mean_fill_factor": 0.5029296875,
+        "dose_mode": "equal_mean",
+        "exposure_power_multiplier": 0.9941747784614563,
+        "incident_sequence_mean_photon_scale": 20000.001953125,
+        "incident_sequence_max_photon_scale": 39766.9921875,
+        "peak_on_pixel_photon_scale": 9941.747784614563,
+        "note": "Incident dose is in model photon-scale units; detected signal depends on the specimen. No calibrated acquisition time or peak-power cap is assumed."
+      },
+      "checkpoint_sha256": "a3863528649a447e8ee07dfd6449b56f8f48de0f232194d276e183a4884ad402"
+    },
+    {
+      "mode": "learnable_frequency",
+      "seed": 42,
+      "steps_executed": 8,
+      "selected_step": 4,
+      "sigmoid_m": 3.3333333333333335,
+      "test": {
+        "mse": 0.08310987906796592,
+        "ssim": 0.011384006589651108,
+        "psnr_mean_per_image": 10.807552337646484
+      },
+      "acquisition": {
+        "num_patterns": 4,
+        "physical_exposures": 4,
+        "detector_shape": [
+          4,
+          4
+        ],
+        "scalar_measurements": 64,
+        "compression": 4.0,
+        "binary": true,
+        "mean_fill_factor": 0.5078125,
+        "dose_mode": "equal_mean",
+        "exposure_power_multiplier": 0.9846153855323792,
+        "incident_sequence_mean_photon_scale": 20000.001953125,
+        "incident_sequence_max_photon_scale": 39384.6171875,
+        "peak_on_pixel_photon_scale": 9846.153855323792,
+        "note": "Incident dose is in model photon-scale units; detected signal depends on the specimen. No calibrated acquisition time or peak-power cap is assumed."
+      },
+      "checkpoint_sha256": "c9bca1fed2495448f2cb6d13ff777ee99f3b8be9a343e29b652d4c8474d79f2e"
+    }
+  ]
+}

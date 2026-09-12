@@ -74,10 +74,12 @@ def evaluate_pattern_variant(
             sharpen_m=sharpen_m,
             apply_noise=apply_noise,
         )
-        total_mse += float(mse(outputs["x_recon"], specimen).item())
-        total_ssim += float(ssim(outputs["x_recon"], specimen).item())
-        count += 1
-    return total_mse / max(count, 1), total_ssim / max(count, 1)
+        total_mse += float(mse(outputs["x_recon"], specimen).item()) * specimen.shape[0]
+        total_ssim += float(ssim(outputs["x_recon"], specimen).item()) * specimen.shape[0]
+        count += specimen.shape[0]
+    if not count:
+        raise ValueError("Cannot evaluate an empty dataloader")
+    return total_mse / count, total_ssim / count
 
 
 def pattern_stats_from_tensor(patterns: torch.Tensor) -> dict[str, float]:

@@ -232,7 +232,8 @@ def eval_dataset_fair(
             for ti, tj in coords
         ]
         batch = torch.stack(tiles).to(device)
-        canvas = torch.zeros_like(img, device=device) if compute_stitched else None
+        canvas = (torch.zeros_like(img, device=device)
+                  if compute_stitched and len(coords) == n_h * n_w else None)
         for i in range(0, batch.shape[0], eval_batch):
             chunk = batch[i : i + eval_batch]
             with autocast_ctx:
@@ -254,15 +255,17 @@ def eval_dataset_fair(
             stitched_psnr_sum += float(psnr_metric(rec_full, gt_full).item())
             stitched_ssim_sum += float(ssim_metric(rec_full, gt_full).item())
         n_images += 1
+    if n_tiles == 0:
+        raise ValueError(f"No evaluable test tiles in {root}")
     out = {
-        "psnr": psnr_sum / max(1, n_tiles),
+        "psnr": psnr_sum / n_tiles,
         "ssim": ssim_sum / max(1, n_tiles),
         "tiles": n_tiles,
         "images": n_images,
         "selection": selection,
         "max_tiles_per_image": max_tiles_per_image,
     }
-    if compute_stitched and n_images > 0:
+    if compute_stitched and max_tiles_per_image is None and n_images > 0:
         out["stitched_psnr"] = stitched_psnr_sum / n_images
         out["stitched_ssim"] = stitched_ssim_sum / n_images
     return out
@@ -436,7 +439,7 @@ def _split_train_val_by_scene(paths: list[Path], cfg: dict[str, Any]) -> tuple[l
     train_paths = sorted(train_paths)
     val_paths = sorted(val_paths)
     if not val_paths:
-        val_paths = train_paths[:1]
+        raise ValueError("No validation scenes; increase data or val_fraction instead of reusing training scenes")
     return train_paths, val_paths
 
 
@@ -459,6 +462,6 @@ def split_train_val(cfg: dict[str, Any]) -> tuple[list[Path], list[Path]]:
     val_idx = set(perm[:n_val])
     train_paths = [paths[i] for i in range(len(paths)) if i not in val_idx]
     val_paths = [paths[i] for i in range(len(paths)) if i in val_idx]
-    if not val_paths:  # tiny configs: reuse one train image so val never crashes
-        val_paths = train_paths[:1]
+    if not val_paths:
+        raise ValueError("No validation images; increase data or val_fraction instead of reusing training images")
     return train_paths, val_paths

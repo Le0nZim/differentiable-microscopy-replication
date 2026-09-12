@@ -1,12 +1,9 @@
-"""Tiled inference for wide-field reconstruction (overlap-add vs naive stitching).
+"""Simulated tiled acquisition and reconstruction.
 
-The paper's Fig. 9 shows *wide* reconstructions produced by running a model that was
-trained on fixed-size patches (256x256 for wSwinIR, 64x64 for wCNN) over a large field.
-Stitching the per-tile outputs back together **without overlap** injects a hard seam at
-every tile boundary (a 64-px / 256-px grid), which is a *visualization artifact*, not a
-property of the model.  This module provides overlap-add blending with a smooth (Hann)
-window and reflect padding so the wide reconstruction is seamless, plus the naive
-non-overlapping variant for side-by-side comparison.
+Every model call reacquires a specimen tile through its optical encoder. Overlap
+therefore adds measurements and changes the acquisition, not just the stitching.
+Use non-overlapping tiles for the nominal compression; report the complete count
+from tiled_acquisition_budget for overlap diagnostics.
 """
 
 from __future__ import annotations
@@ -14,6 +11,24 @@ from __future__ import annotations
 import numpy as np
 import torch
 import torch.nn.functional as F
+import math
+
+
+def tiled_acquisition_budget(height: int, width: int, tile: int, downscale: int,
+                             num_patterns: int, overlap: int = 0) -> dict:
+    if min(height, width, tile, downscale, num_patterns) < 1 or not 0 <= overlap < tile:
+        raise ValueError("Invalid tiled acquisition geometry")
+    if tile % downscale:
+        raise ValueError("Tile must contain complete detector bins")
+    stride = tile - overlap
+    nh = max(1, math.ceil((height - tile) / stride) + 1)
+    nw = max(1, math.ceil((width - tile) / stride) + 1)
+    values = nh * nw * num_patterns * (tile // downscale)**2
+    return {"acquired_tiles": nh * nw, "scalar_measurements": values,
+            "nominal_compression_per_tile": downscale**2 / num_patterns,
+            "effective_field_compression": height * width / values,
+            "overlap_pixels": overlap,
+            "note": "Counts repeated acquisitions and padded detector values; not decoder-only overlap."}
 
 
 def _hann_2d(tile: int, device, dtype) -> torch.Tensor:
@@ -27,6 +42,7 @@ def _hann_2d(tile: int, device, dtype) -> torch.Tensor:
 @torch.no_grad()
 def naive_tiled_recon(model, field: torch.Tensor, device, eval_m: float, tile: int) -> np.ndarray:
     """Non-overlapping tiling (produces visible seams). field: [1,1,H,W]."""
+    model.eval()
     H, W = field.shape[-2:]
     padH, padW = (tile - H % tile) % tile, (tile - W % tile) % tile
     f = F.pad(field, (0, padW, 0, padH), mode="reflect")
@@ -58,7 +74,7 @@ def overlap_tiled_recon(
     tile: int,
     overlap: int | None = None,
 ) -> np.ndarray:
-    """Overlap-add tiling with a Hann window + reflect padding (seamless).
+    """Reacquire overlapping tiles and blend; this increases measurements.
 
     Args:
         field: [1, 1, H, W] normalized target field.
@@ -66,6 +82,7 @@ def overlap_tiled_recon(
         overlap: pixels of overlap between adjacent tiles. Defaults to tile//4
             (>= 16 px for a 64-px tile, as recommended).
     """
+    model.eval()
     if overlap is None:
         overlap = max(16, tile // 4)
     overlap = min(overlap, tile - 1)

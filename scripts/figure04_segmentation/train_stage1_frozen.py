@@ -156,7 +156,6 @@ def run(device: str, seed: int, stage1_mode: str) -> list[dict]:
         "posthoc_threshold_not_the_defining_method": True,
         "learnable_illumination_updated_by_seg_loss_in_stage3": bool(illum_updated),
         "outputs_for_x64_x256_x1024": True,
-        "learnable_beats_fixed_all_compressions": bool(all(learnable_beats_fixed.values())),
     }
     metrics_summary["status"] = (
         "AM-2 — FULLY_RESOLVED_IMPLEMENTATION_PASS / RESULTS_PROXY_BBBC022"

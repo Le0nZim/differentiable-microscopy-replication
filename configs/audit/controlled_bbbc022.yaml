@@ -1,0 +1,63 @@
+# BBBC022 widefield substitute; fixed split and preprocessing, not original U2OS.
+experiment:
+  seed: 42
+  device: cuda:1
+dataset:
+  name: bbbc022_preproc_ablation
+  split_path: configs/_shared/splits/split_fig03_large.json
+  repo_root: .
+  preproc_mode: minimal_percentile
+  q_low: 0.001
+  q_high: 0.999
+  patch_size: 256
+  image_size: 256
+  train_random_crops: true
+  random_flips: true
+  epoch_varying_train_crops: true
+  seed: 42
+  return_mask: false
+pattern_generator:
+  mode: learnable_spatial
+  num_patterns: 4
+  sigmoid_m: 1.0
+  random_fixed_m: 1.0
+  seed: 42
+  binarization: ste
+  superpixel_factor: 1
+  hadamard_tile_size: 8
+forward_model:
+  downscale_factor: 8
+  use_impulse_psfs: true
+  dose_mode: equal_mean
+  sequence_dose: 2.0
+detector_noise:
+  mode: differentiable_poisson_plus_read
+  noise_normalization: paper_v3
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 2.0
+  apply_noise: true
+inverse_model:
+  upsampling:
+    mode: locality_aware
+    use_mixing_cnn: false
+  reconstruction:
+    hidden_channels:
+    - 64
+    - 64
+    - 32
+    - 32
+    - 16
+    - 1
+training:
+  batch_size: 32
+  max_steps: 10100
+  warmup_steps: 1500
+  log_every: 200
+  illumination_lr: 1.0
+  inverse_lr: 0.001
+  loss: l1
+sigmoid_schedule:
+  epoch_baseline: 0
+  epoch_cutoff: 0
+  epoch_step: 1

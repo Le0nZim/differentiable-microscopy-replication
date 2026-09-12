@@ -42,7 +42,7 @@ from evaluation.metrics import ssim as ssim_metric
 from utils.device import resolve_device
 
 _spec = importlib.util.spec_from_file_location(
-    "fig89_train", ROOT / "scripts" / "fig89_mcf7_swinir_fix_train.py")
+    "fig89_train", ROOT / "scripts" / "figure08_mcf7" / "train.py")
 TR = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(TR)
 
@@ -81,7 +81,7 @@ def _load_model(condition: str, cfg: dict, runs_dir: Path, device):
     state = ck["model"] if isinstance(ck, dict) and "model" in ck else ck
     if not any(k.startswith("pattern_generator") for k in state):
         print(f"WARNING: checkpoint {ckpt} has NO pattern_generator state (H_t not restored!)")
-    model.load_state_dict(state, strict=False)
+    model.load_state_dict(state, strict=True)
     model.eval()
     return model, isz, (ck.get("epoch") if isinstance(ck, dict) else None)
 

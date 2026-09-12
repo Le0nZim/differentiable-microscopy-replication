@@ -60,8 +60,12 @@ def train_one_epoch(
     config: dict[str, Any],
 ) -> float:
     model.train()
-    force_freeze = not model.pattern_generator.patterns_are_learnable()
+    force_freeze = (not model.pattern_generator.patterns_are_learnable()
+                    or not config["training"].get("learn_patterns", True))
     sigmoid_m = configure_training_stage(model, schedule, epoch, force_freeze_patterns=force_freeze)
+    if config["training"].get("fixed_sigmoid_m") is not None:
+        sigmoid_m = float(config["training"]["fixed_sigmoid_m"])
+        model.pattern_generator.sigmoid_m = sigmoid_m
 
     total_loss = 0.0
     count = 0
@@ -74,8 +78,8 @@ def train_one_epoch(
         loss = reconstruction_loss_l1(outputs["x_recon"], specimen)
         loss.backward()
         optimizer.step()
-        total_loss += float(loss.item())
-        count += 1
+        total_loss += float(loss.item()) * specimen.shape[0]
+        count += specimen.shape[0]
 
     return total_loss / max(count, 1)
 
@@ -86,10 +90,15 @@ def save_checkpoint(
     optimizer: torch.optim.Optimizer,
     epoch: int,
     config: dict[str, Any],
+    *,
+    step: int | None = None,
 ) -> None:
     torch.save(
         {
             "epoch": epoch,
+            "step": step,
+            "sigmoid_m": float(model.pattern_generator.sigmoid_m),
+            "checkpoint_schema": 2,
             "model_state_dict": model.state_dict(),
             "optimizer_state_dict": optimizer.state_dict(),
             "config": config,
@@ -148,15 +157,14 @@ def train(config: dict[str, Any], output_dir: str | Path) -> dict[str, Any]:
             schedule,
         )
         checkpoint_path = run_dir / "checkpoints" / "best.pt"
-        save_checkpoint(checkpoint_path, model, optimizer, schedule._m, config)
-        save_checkpoint(run_dir / "checkpoints" / "last.pt", model, optimizer, schedule._m, config)
+        # train_steps writes distinct best/last model AND optimizer snapshots.
 
         test_mse, test_ssim = evaluate_reconstruction(
             model,
             test_loader,
             device,
             apply_noise=config["detector_noise"].get("apply_noise", True),
-            sigmoid_m=training_cfg.get("fixed_sigmoid_m"),
+            sigmoid_m=model.pattern_generator.sigmoid_m,
         )
         results_csv = Path(experiment_cfg.get("results_csv", "experiments/content_aware/results.csv"))
         figure_path = run_dir / "figures" / "reconstruction.png"
@@ -233,6 +241,7 @@ def train(config: dict[str, Any], output_dir: str | Path) -> dict[str, Any]:
     if best_path.exists():
         checkpoint = torch.load(best_path, map_location=device, weights_only=False)
         model.load_state_dict(checkpoint["model_state_dict"])
+        model.pattern_generator.sigmoid_m = float(checkpoint["sigmoid_m"])
         checkpoint_path = best_path
     else:
         checkpoint_path = run_dir / "checkpoints" / "last.pt"
@@ -249,7 +258,7 @@ def train(config: dict[str, Any], output_dir: str | Path) -> dict[str, Any]:
         test_loader,
         device,
         apply_noise=config["detector_noise"].get("apply_noise", True),
-        sigmoid_m=training_cfg.get("fixed_sigmoid_m"),
+        sigmoid_m=model.pattern_generator.sigmoid_m,
     )
 
     results_csv = Path(experiment_cfg.get("results_csv", "experiments/content_aware/results.csv"))

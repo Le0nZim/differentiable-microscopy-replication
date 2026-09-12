@@ -7,6 +7,7 @@ from dataclasses import dataclass
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from .acquisition import dose_multiplier
 
 
 @dataclass
@@ -17,6 +18,17 @@ class ForwardModelConfig:
     use_impulse_psfs: bool = True
     ex_psf_kernel_size: int = 3
     em_psf_kernel_size: int = 3
+    dose_mode: str = "fixed_peak"
+    sequence_dose: float = 1.0
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.downscale_factor, int) or self.downscale_factor < 1:
+            raise ValueError("downscale_factor must be a positive integer")
+        for size in (self.ex_psf_kernel_size, self.em_psf_kernel_size):
+            if not isinstance(size, int) or size < 1 or size % 2 == 0:
+                raise ValueError("PSF kernel sizes must be positive odd integers")
+        if self.dose_mode not in {"fixed_peak", "equal_mean"} or self.sequence_dose <= 0:
+            raise ValueError("Invalid acquisition dose configuration")
 
     @classmethod
     def from_dict(cls, data: dict) -> "ForwardModelConfig":
@@ -35,6 +47,10 @@ def sum_pool_nxn(x: torch.Tensor, kernel_size: int) -> torch.Tensor:
     Returns:
         Tensor of shape [B, C, H/n, W/n].
     """
+    if not isinstance(kernel_size, int) or kernel_size < 1:
+        raise ValueError("kernel_size must be a positive integer")
+    if x.ndim != 4 or any(s % kernel_size for s in x.shape[-2:]):
+        raise ValueError("sum pooling requires a 4D tensor and complete detector bins")
     if kernel_size == 1:
         return x
     pooled = F.avg_pool2d(x, kernel_size=kernel_size, stride=kernel_size)
@@ -51,7 +67,8 @@ def _make_impulse_kernel(kernel_size: int, device: torch.device, dtype: torch.dt
 def _conv2d_same(x: torch.Tensor, kernel: torch.Tensor) -> torch.Tensor:
     """Depthwise same-sized 2D convolution. x: [B, C, H, W], kernel: [1, 1, k, k]."""
     channels = x.shape[1]
-    weight = kernel.expand(channels, 1, -1, -1)
+    # conv2d implements correlation; flip the PSF for mathematical convolution.
+    weight = kernel.to(x).flip(-2, -1).expand(channels, 1, -1, -1)
     padding = kernel.shape[-1] // 2
     return F.conv2d(x, weight, padding=padding, groups=channels)
 
@@ -64,38 +81,32 @@ class ForwardModel(nn.Module):
         self.config = config
         self.downscale_factor = config.downscale_factor
 
-        self.register_buffer("ex_psf", torch.zeros(1))
-        self.register_buffer("em_psf", torch.zeros(1))
-        self._psf_initialized = False
+        # Buffer shapes must be stable before the first forward and checkpoint load.
+        for name, size in (("ex_psf", config.ex_psf_kernel_size),
+                           ("em_psf", config.em_psf_kernel_size)):
+            kernel = (_make_impulse_kernel(size, torch.device("cpu"), torch.float32)
+                      if config.use_impulse_psfs else torch.full((1, 1, size, size), 1.0 / size**2))
+            self.register_buffer(name, kernel)
+        self._psf_initialized = True
 
     @classmethod
     def from_dict(cls, data: dict) -> "ForwardModel":
         return cls(ForwardModelConfig.from_dict(data))
 
     def _ensure_psfs(self, sample: torch.Tensor) -> None:
-        if self._psf_initialized:
-            return
+        """Compatibility hook: PSFs are now initialized in __init__."""
 
-        device = sample.device
-        dtype = sample.dtype
-        if self.config.use_impulse_psfs:
-            ex_kernel = _make_impulse_kernel(3, device, dtype)
-            em_kernel = _make_impulse_kernel(3, device, dtype)
-        else:
-            ex_kernel = torch.ones(
-                1, 1, self.config.ex_psf_kernel_size, self.config.ex_psf_kernel_size,
-                device=device, dtype=dtype,
-            )
-            ex_kernel = ex_kernel / ex_kernel.sum()
-            em_kernel = torch.ones(
-                1, 1, self.config.em_psf_kernel_size, self.config.em_psf_kernel_size,
-                device=device, dtype=dtype,
-            )
-            em_kernel = em_kernel / em_kernel.sum()
-
-        self.ex_psf = ex_kernel
-        self.em_psf = em_kernel
-        self._psf_initialized = True
+    def _load_from_state_dict(self, state_dict, prefix, local_metadata, strict,
+                              missing_keys, unexpected_keys, error_msgs):
+        # Old *unexecuted* models saved a zero scalar placeholder. Only that
+        # precise legacy representation can be replaced by the configured PSF.
+        for name in ("ex_psf", "em_psf"):
+            key = prefix + name
+            value = state_dict.get(key)
+            if value is not None and value.shape == (1,) and value.item() == 0:
+                state_dict[key] = getattr(self, name).detach().clone()
+        super()._load_from_state_dict(state_dict, prefix, local_metadata, strict,
+                                     missing_keys, unexpected_keys, error_msgs)
 
     def _apply_ex_psf(self, patterns: torch.Tensor) -> torch.Tensor:
         """Convolve excitation PSF with patterns. patterns: [T, 1, H, W]."""
@@ -164,6 +175,7 @@ class ForwardModel(nn.Module):
 
         # [B, T, H, W]
         alpha = torch.cat(alpha_list, dim=1)
+        alpha = alpha * dose_multiplier(patterns, self.config.dose_mode, self.config.sequence_dose)
 
         # Reshape to [B*T, 1, H, W] for pooling, then back to [B, T, H/n, W/n]
         alpha_flat = alpha.reshape(batch_size * num_patterns, 1, height, width)

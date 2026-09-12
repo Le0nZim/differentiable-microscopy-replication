@@ -1,5 +1,10 @@
 # Paper-facing tables and figure parts
 
+**Historical outputs pending scientific reruns.** Read the
+[audit](../docs/SCIENTIFIC_AUDIT.md) and [rerun protocol](../docs/RERUN_PROTOCOL.md)
+before using these figures/tables as evidence. Code corrections do not update
+the existing numerical results or make old checkpoints a controlled experiment.
+
 Each folder is one paper item. The folder name is the **slug** used in
 `scripts/`, `configs/`, and `experiments/` as well.
 
