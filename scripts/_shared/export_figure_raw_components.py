@@ -321,8 +321,8 @@ def export_fig09(device) -> None:
 
         rows = {
             "row_GT": gt,
-            "row_wSwinIR": rec_swin,
-            "row_wCNN": rec_cnn,
+            "row_wSwinIR": naive_swin,
+            "row_wCNN": naive_cnn,
             "row_wCNN_naive": naive_cnn,
             "row_wCNN_overlap": rec_cnn,
             "row_wSwinIR_naive": naive_swin,
@@ -337,8 +337,8 @@ def export_fig09(device) -> None:
             tiles["rows"][name] = vis.name
             tiles["rows_gray"][name] = gray.name
 
-        pat_swin = torch.load(runs_dir / "wswinir" / "illumination" / "patterns.pt", map_location="cpu")
-        pat_cnn = torch.load(runs_dir / "wcnn64" / "illumination" / "patterns.pt", map_location="cpu")
+        pat_swin = swin.pattern_generator(sigmoid_m=eval_m).detach().cpu()
+        pat_cnn = cnn.pattern_generator(sigmoid_m=eval_m).detach().cpu()
         for tag, pat in (("wSwinIR", pat_swin), ("wCNN", pat_cnn)):
             soft = pat.squeeze(1).clamp(0, 1).numpy()
             for t in range(soft.shape[0]):
@@ -358,6 +358,8 @@ def export_fig09(device) -> None:
                 "crop": {"top": top, "left": left, "height": height, "width": width},
                 "eval_sigmoid_m": eval_m,
                 "overlap_px": {"wswinir": ov_swin, "wcnn": ov_cnn},
+                "primary_acquisition": "nonoverlapping",
+                "overlap_note": "Overlap rows reacquire the specimen and consume additional measurements; see Figure 9 acquisition accounting.",
                 "display_norm": "identical viridis lo/hi from GT p1/p99.5",
                 "lo": lo,
                 "hi": hi,

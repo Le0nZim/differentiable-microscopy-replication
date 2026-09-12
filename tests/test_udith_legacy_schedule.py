@@ -58,7 +58,8 @@ FROZEN_HASHES = {
     "experiments/figure10_ablation_patchmnist/figures/figure10_table3_comparison.png":
         "1da4b4ce4ef54ac2c409a1e1bc75a625",
     "experiments/figure10_ablation_patchmnist/FIG10_REPORT.md":
-        "a97d521ee531ea0f77391164812555bd",
+        # Correct baseline hash at b71d844; the report itself is unchanged.
+        "1acb165a86bc5853492ed20b7d8f2286",
     "configs/figure10_ablation_patchmnist/ablation.yaml":
         "524d9714798e91d22019fe2f8cb6a095",
 }
@@ -337,4 +338,3 @@ def test_adam_inverse_snapshot_roundtrip():
                 assert torch.equal(v1.cpu(), v2.cpu()), (name, key)
             else:
                 assert v1 == v2
-

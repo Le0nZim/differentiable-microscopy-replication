@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import csv
-import itertools
 import json
 from pathlib import Path
 from typing import Any
@@ -26,6 +25,7 @@ from training.pattern_tracking import (
     finalize_pattern_snapshot,
 )
 from training.schedulers import configure_training_stage
+from training.iteration import repeat_dataloader
 from utils.logging import save_measurement_grid, save_patterns
 
 
@@ -110,10 +110,12 @@ def train_steps(
     )
     if not _should_learn_patterns(config, model):
         model.set_illumination_trainable(False)
-    train_iter = itertools.cycle(train_loader)
+    train_iter = repeat_dataloader(train_loader)
     best_val_mse = float("inf")
     best_state_dict: dict[str, torch.Tensor] | None = None
     best_step = 0
+    best_optimizer_state = None
+    best_m = sigmoid_m
 
     with step_log_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
@@ -128,6 +130,7 @@ def train_steps(
                     sigmoid_m = _apply_pattern_freeze(model, config, epoch, schedule)
 
             specimen = next(train_iter).to(device)
+            model.pattern_generator.sigmoid_m = sigmoid_m
             model.train()
             optimizer.zero_grad(set_to_none=True)
             outputs = model(specimen, sigmoid_m=sigmoid_m, apply_noise=apply_noise)
@@ -158,6 +161,8 @@ def train_steps(
                 best_val_mse = val_mse
                 best_state_dict = deepcopy(model.state_dict())
                 best_step = step
+                best_m = sigmoid_m
+                best_optimizer_state = deepcopy(optimizer.state_dict())
 
             row = {
                 "step": step,
@@ -189,8 +194,16 @@ def train_steps(
                 flush=True,
             )
 
+    from training.train_reconstruction import save_checkpoint
+    (run_dir / "checkpoints").mkdir(parents=True, exist_ok=True)
+    save_checkpoint(run_dir / "checkpoints" / "last.pt", model, optimizer, epoch, config, step=step)
     if best_state_dict is not None:
         model.load_state_dict(best_state_dict)
+        optimizer.load_state_dict(best_optimizer_state)
+        sigmoid_m = best_m
+        model.pattern_generator.sigmoid_m = best_m
+    save_checkpoint(run_dir / "checkpoints" / "best.pt", model, optimizer,
+                    (best_step - 1) // steps_per_epoch + 1, config, step=best_step)
 
     finalize_pattern_snapshot(
         pattern_snapshot,
@@ -244,11 +257,13 @@ def _evaluate_loader(
     for batch in dataloader:
         specimen = batch.to(device)
         outputs = model(specimen, sigmoid_m=sigmoid_m, apply_noise=apply_noise)
-        total_mse += float(mse(outputs["x_recon"], specimen).item())
-        total_ssim += float(ssim(outputs["x_recon"], specimen).item())
-        count += 1
+        total_mse += float(mse(outputs["x_recon"], specimen).item()) * specimen.shape[0]
+        total_ssim += float(ssim(outputs["x_recon"], specimen).item()) * specimen.shape[0]
+        count += specimen.shape[0]
     model.train()
-    return total_mse / max(count, 1), total_ssim / max(count, 1)
+    if not count:
+        raise ValueError("Cannot evaluate an empty dataloader")
+    return total_mse / count, total_ssim / count
 
 
 @torch.no_grad()

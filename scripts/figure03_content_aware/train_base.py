@@ -1,27 +1,12 @@
 #!/usr/bin/env python3
-"""Train the Fig.3 content-aware 4x4 matrix (paper-quality BBBC022 substitute).
+"""Rerun the historical soft-pattern Figure 3 matrix with equal update budgets.
 
-Same architecture / optimizer / LR / batch / staged-hardening as the original
-content-aware pipeline and the ``minimal_percentile`` preprocessing (float32 ->
-robust [0.1%, 99.9%] percentile clip -> min-max). Two changes recover the paper's
-Fig.3 D/E behaviour (learnable best at *every* compression, gap widening with
-compression) on the BBBC022 substitute:
-
-1. **Larger well-disjoint split** (`split_fig03_large.json`, 1980 train / 40 val /
-   60 test, multi-site train, strictly well-disjoint) instead of 168/21/21.
-2. **Per-epoch random crops/flips** (`epoch_varying_train_crops=True`) instead of
-   one fixed patch per image.
-
-Together these remove the overfitting wall (train MSE ~0.0005 vs val ~0.0018 on
-the old 168-image split) that previously capped every illumination method at the
-same val ceiling, hiding the learnable advantage — exactly the regime where
-PatchMNIST (3000 imgs) already shows learnable beating fixed ~3x.
-
-Matrix: 4 compressions {x16,x64,x256,x1024} x 4 illuminations
-{uniform_all_ones, random_fixed, hadamard_fixed, learnable_frequency}.
-
-Output root: experiments/figure03_content_aware/base/
-(results.csv is written in the same schema the Fig.3 renderer expects).
+Uses the well-disjoint BBBC022 substitute and fresh crops on each loader pass.
+No method ranking is an implementation acceptance criterion. The old results
+used unequal budgets and cached augmentation; they remain historical artifacts.
+For binary masks, explicit dose accounting, and held-out exact-noise evaluation,
+use scripts/audit/run_controlled.py instead (see docs/SCIENTIFIC_AUDIT.md).
+New runs go to experiments/audited_v1/figure03_content_aware/base/.
 """
 
 from __future__ import annotations
@@ -45,18 +30,15 @@ from utils.device import resolve_device  # noqa: E402
 from utils.experiment_config import load_experiment_config, sync_derived_config_fields  # noqa: E402
 
 SPLIT_PATH = ROOT / "configs/_shared/splits/split_fig03_large.json"
-CONTENT_ROOT = ROOT / "experiments/figure03_content_aware/base"
+CONTENT_ROOT = ROOT / "experiments/audited_v1/figure03_content_aware/base"
 
 COMPRESSIONS = [("x16", 8, 4), ("x64", 16, 4), ("x256", 32, 4), ("x1024", 64, 4)]
 PATTERNS = ["uniform_all_ones", "random_fixed", "hadamard_fixed", "learnable_frequency"]
 
-# Budget. Larger than the legacy paper_strict/minimal matrices because the new
-# split (1980 well-disjoint train images) + per-epoch random crops removed the
-# overfitting wall, so longer training now improves *validation* (it no longer
-# just memorises 168 fixed patches).
+# Equal inverse-update budgets. This alone does not equalize dose or deployment.
 FULL_STAGED = {"inverse_warmup_steps": 1500, "joint_soft_steps": 5000,
                "harden_m_values": [2, 4, 8], "harden_steps_per_m": 1200}
-FULL_FIXED_STEPS = 4000
+FULL_FIXED_STEPS = 10100
 BATCH = 32
 
 
@@ -83,9 +65,7 @@ def _apply_minimal_dataset(config: dict) -> None:
     ds["return_mask"] = False
     ds["train_random_crops"] = True
     ds["random_flips"] = True
-    # Draw fresh crops/flips every epoch (true augmentation). Without this the
-    # train split returns one identical patch per image every epoch, which (with
-    # the small legacy split) caused the overfitting that hid the learnable gain.
+    # Fresh crops/flips require a new DataLoader iterator, not itertools.cycle.
     ds["epoch_varying_train_crops"] = True
 
 
@@ -99,7 +79,8 @@ def build_config(comp_name: str, d: int, t: int, pattern: str, seed: int, device
     config["inverse_model"]["upsampling"]["mode"] = "locality_aware"
     config["inverse_model"]["reconstruction"]["in_channels"] = t
     config["experiment"]["seed"] = seed
-    config["dataset"]["seed"] = seed
+    config["dataset"]["seed"] = 42
+    config["training"]["loader_seed"] = seed + 1000
     config["pattern_generator"]["seed"] = seed
     config["experiment"]["device"] = device
     config["experiment"]["run_id"] = f"bbbc022_{comp_name}_{pattern}"

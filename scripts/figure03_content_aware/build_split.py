@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """Build a larger well-disjoint BBBC022 Hoechst split for the Fig.3 matrix.
 
-The legacy split (`results/preprocessing_ablation_bbbc022_hoechst/configs/split.json`)
-uses only 168 train / 21 val / 21 test images (one site per well). Combined with
-the per-index deterministic crop bug this caused severe overfitting (train MSE
-~0.0005 vs val ~0.0018) that capped *every* illumination method at the same wall,
-so the learnable advantage could not emerge — unlike PatchMNIST (3000 imgs), where
-learnable beats fixed ~3x.
+The larger split increases training diversity. It does not guarantee a ranking
+between learned and fixed illumination. Freeze split construction before test
+evaluation; a previously inspected test set remains exploratory.
 
 This builder keeps the split strictly **well-disjoint** (no well appears in two
-splits, so no field/treatment leakage) but uses far more of the available
+splits, preventing shared-well field leakage) but uses far more of the available
 384 wells x 9 sites = 3456 images:
+
+Well separation does not by itself establish treatment, plate, or batch
+separation; those generalization claims require their own metadata and splits.
 
 * train: ``num_train_wells`` wells x *all* their sites (content + field diversity)
 * val:   ``num_val_wells``  wells x 1 site (deterministic center-crop eval)

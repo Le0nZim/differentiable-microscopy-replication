@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Literal
 
 import torch
@@ -31,11 +32,13 @@ class PatternGeneratorConfig:
     seed: int = 42
     # Optical super-pixel size: the learnable pattern is generated on a coarse
     # (height // superpixel_factor, width // superpixel_factor) grid and block-
-    # upsampled (nearest) to full resolution. This reproduces the paper's coarse
-    # binary illumination patterns: detail finer than one demagnification super-
-    # pixel is washed out by sum-pooling, so the effective DOF is the super-pixel
-    # grid. superpixel_factor=1 (default) keeps full per-pixel patterns.
+    # upsampled (nearest) to full resolution. This imposes coarse illumination.
+    # It is a different sensing constraint, not a consequence
+    # of demagnification: sub-bin pattern variation encodes sub-bin structure.
+    # A mask constant within each detector bin gives only a scaled bin sum.
     superpixel_factor: int = 1
+    hadamard_tile_size: int | None = None
+    binarization: Literal["soft", "ste"] = "soft"
 
     @classmethod
     def from_dict(cls, data: dict) -> "PatternGeneratorConfig":
@@ -43,7 +46,11 @@ class PatternGeneratorConfig:
 
 
 class SigmoidSchedule:
-    """Custom sigmoid sharpness schedule (paper Algorithm 1)."""
+    """Monotone sharpness, as in the original code and hardening description.
+
+    Computed from the epoch rather than call count, so repeated calls and resume
+    do not change the schedule. The separate Udith step protocol is untouched.
+    """
 
     def __init__(
         self,
@@ -56,6 +63,8 @@ class SigmoidSchedule:
         self.epoch_cutoff = epoch_cutoff
         self.epoch_step = epoch_step
         self.m_init = m_init
+        if epoch_step < 1 or epoch_baseline < 0 or epoch_cutoff < 0 or m_init <= 0:
+            raise ValueError("Invalid sigmoid schedule")
         self._m = m_init
 
     @classmethod
@@ -77,13 +86,9 @@ class SigmoidSchedule:
 
     def step(self, epoch: int) -> float:
         """Update and return sigmoid sharpness m for the given epoch."""
-        if epoch <= self.epoch_baseline:
-            return self._m
-
-        if epoch > self.epoch_cutoff and epoch % self.epoch_step == 0:
-            self._m += 1.0
-        else:
-            self._m = self.m_init
+        threshold = max(self.epoch_baseline, self.epoch_cutoff)
+        increments = max(0, epoch // self.epoch_step - threshold // self.epoch_step)
+        self._m = self.m_init + increments
         return self._m
 
     def get_m(self) -> float:
@@ -108,17 +113,31 @@ def _generate_hadamard_matrix(size: int) -> torch.Tensor:
     return matrix
 
 
-def _hadamard_patterns(num_patterns: int, height: int, width: int) -> torch.Tensor:
-    """Build fixed Hadamard patterns mapped to [0, 1]. Shape: [T, 1, H, W]."""
-    num_pixels = height * width
+def _hadamard_patterns(num_patterns: int, height: int, width: int,
+                       tile_size: int | None = None) -> torch.Tensor:
+    """Generate only requested Sylvester rows, using H[r,c]=(-1)^popcount(r&c).
+
+    tile_size=d reproduces the original detector-bin tiling. None preserves
+    historical image-wide ordering, without allocating an (H*W)^2 matrix.
+    Binary rows are single exposures; no complementary subtraction is implied.
+    """
+    ph, pw = (height, width) if tile_size is None else (tile_size, tile_size)
+    if min(ph, pw) < 1 or height % ph or width % pw:
+        raise ValueError("Hadamard tiles must evenly divide the pattern")
+    num_pixels = ph * pw
     hadamard_size = 1 << (num_pixels - 1).bit_length()
-    hadamard = _generate_hadamard_matrix(hadamard_size)
+    if num_patterns > hadamard_size:
+        raise ValueError("Requested more distinct Hadamard rows than the basis contains")
+    columns = torch.arange(num_pixels, dtype=torch.int64)
 
     patterns = []
     for pattern_idx in range(num_patterns):
-        row_idx = pattern_idx % hadamard_size
-        row = hadamard[row_idx, :num_pixels]
-        pattern = (row.reshape(height, width) + 1.0) * 0.5
+        bits = columns & pattern_idx
+        parity = torch.zeros_like(columns)
+        while torch.any(bits):
+            parity ^= bits & 1
+            bits >>= 1
+        pattern = (1 - parity).float().reshape(ph, pw).repeat(height // ph, width // pw)
         patterns.append(pattern)
 
     # [T, 1, H, W]
@@ -166,6 +185,11 @@ class PatternGenerator(nn.Module):
         self.height = config.height
         self.width = config.width
         self.sigmoid_m = config.sigmoid_m
+
+        if min(config.num_patterns, config.height, config.width, config.superpixel_factor) < 1:
+            raise ValueError("Pattern dimensions, count and superpixel_factor must be positive")
+        if config.binarization not in {"soft", "ste"}:
+            raise ValueError("binarization must be soft or ste")
 
         self.superpixel_factor = max(1, int(config.superpixel_factor))
         if config.height % self.superpixel_factor != 0 or config.width % self.superpixel_factor != 0:
@@ -216,7 +240,8 @@ class PatternGenerator(nn.Module):
         if self.mode == "uniform_all_ones":
             return _uniform_patterns(self.num_patterns, self.gen_height, self.gen_width)
         if self.mode == "hadamard_fixed":
-            return _hadamard_patterns(self.num_patterns, self.gen_height, self.gen_width)
+            return _hadamard_patterns(self.num_patterns, self.gen_height, self.gen_width,
+                                      self.config.hadamard_tile_size)
         raise ValueError(f"Unsupported fixed pattern mode: {self.mode}")
 
     def _upsample(self, patterns: torch.Tensor) -> torch.Tensor:
@@ -242,6 +267,8 @@ class PatternGenerator(nn.Module):
         then block-upsampled to (height, width).
         """
         m = self.sigmoid_m if sigmoid_m is None else sigmoid_m
+        if m <= 0:
+            raise ValueError("sigmoid_m must be positive")
 
         if self.mode in {"learnable_frequency", "learnable_spatial"}:
             tau = self._spatial_tau()
@@ -251,6 +278,9 @@ class PatternGenerator(nn.Module):
             assert self.fixed_patterns is not None
             coarse = self.fixed_patterns
 
+        if self.config.binarization == "ste":
+            binary = (coarse > 0.5).to(coarse.dtype)
+            coarse = coarse + (binary - coarse).detach() if self.training else binary
         return self._upsample(coarse)
 
     def patterns_are_learnable(self) -> bool:

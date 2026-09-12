@@ -52,9 +52,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 
 ALL_COMPS = ["x16", "x64", "x256", "x1024"]
 PATTERNS = ["random_fixed", "learnable_frequency"]
-# Eval/forward sigmoid sharpness per pattern (matches how the base results.csv was
-# computed: learnable uses sharpen_eval_m=10; fixed patterns ignore m).
-EVAL_M = {"random_fixed": None, "learnable_frequency": 10.0}
+# Evaluate the selected checkpoint's acquisition state, recovered below.
 
 VALID_LOSS_MODES = ("l1_only", "l1_ssim", "paper_pixel_perceptual_gan")
 
@@ -111,8 +109,8 @@ def apply_identity_init(swinir: nn.Module) -> None:
 
     For ``upsampler=''`` SwinIR computes ``out = x + conv_last(res)`` (a global
     residual on the input). Zeroing ``conv_last`` makes the untrained refiner an
-    exact identity, i.e. it starts at the *base reconstruction's* quality and can
-    only improve it. This is the standard init for a residual refinement stage; it
+    exact identity, i.e. it starts at the base reconstruction's quality.
+    Subsequent optimization can improve or degrade it. This initialization
     does not restrict the reachable solution (full capacity is retained), it only
     fixes the starting point — which massively improves sample-efficiency for a
     frozen-base-then-refine setup. Documented as a Fig-3-refinement design choice.
@@ -149,12 +147,12 @@ def load_frozen_base(base_exp_root: Path, comp: str, pattern: str, device: torch
     rd = base_run_dir(base_exp_root, comp, pattern)
     run_cfg = load_experiment_config(rd / "config.yaml")
     run_cfg["experiment"]["device"] = str(device)
-    image_size = int(run_cfg["dataset"]["image_size"])
-    eval_m = EVAL_M[pattern]
-    model = DifferentiableMicroscope.from_run_config(run_cfg).to(device)
-    # Warmup forward to lazily build PSF buffers so the state layout is final.
-    model(torch.zeros(1, 1, image_size, image_size, device=device), sigmoid_m=eval_m or 10.0, apply_noise=False)
     payload = torch.load(rd / "checkpoints" / "best.pt", map_location=device, weights_only=False)
+    summary = json.loads((rd / "metrics" / "run_summary.json").read_text())
+    eval_m = payload.get("sigmoid_m", summary.get("final_training_m"))
+    if pattern.startswith("learnable") and eval_m is None:
+        raise ValueError(f"Missing checkpoint sharpness for {rd}")
+    model = DifferentiableMicroscope.from_run_config(run_cfg).to(device)
     model.load_state_dict(payload["model_state_dict"])
     model.eval()
     for p in model.parameters():

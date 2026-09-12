@@ -149,6 +149,9 @@ def train_condition(
         opt_g.load_state_dict(state["opt_g"])
         if opt_d is not None and state.get("opt_d") is not None:
             opt_d.load_state_dict(state["opt_d"])
+            if state.get("discriminator") is None:
+                raise ValueError("Legacy GAN checkpoint has no discriminator weights; cannot resume faithfully")
+            disc.load_state_dict(state["discriminator"])
         start_step = int(state.get("step", 0))
         best_val = float(state.get("best_val", float("inf")))
         best_step = int(state.get("best_step", -1))
@@ -180,6 +183,9 @@ def train_condition(
                 "model": model.state_dict(),
                 "opt_g": opt_g.state_dict(),
                 "opt_d": opt_d.state_dict() if opt_d is not None else None,
+                "discriminator": disc.state_dict() if disc is not None else None,
+                "sigmoid_m": eval_m if learnable else None,
+                "resume_exact": False,  # worker/crop RNG stream is not checkpointed
                 "step": step,
                 "best_val": best_val,
                 "best_step": best_step,
@@ -279,7 +285,7 @@ def train_condition(
         best_step = step
 
     # --- save illumination patterns ---
-    illum = _save_illumination(model, cond_dir / "illumination", eval_m, learnable)
+    _save_illumination(model, cond_dir / "illumination_final", eval_m, learnable)
 
     # --- evaluate (best-val checkpoint primary; final as cross-check) ---
     ev = cfg["eval"]
@@ -303,12 +309,14 @@ def train_condition(
 
     # final-checkpoint eval (model currently holds final weights)
     per_final = eval_all("final")
-    _save_examples(model, cfg, device, eval_m, learnable, cond_dir / "examples", ps, amp_dtype)
+    _save_examples(model, cfg, device, eval_m, learnable, cond_dir / "examples_final", ps, amp_dtype)
 
     # best-val checkpoint eval
     best_state = torch.load(ckpt_dir / "best.pt", map_location=device, weights_only=False)
     model.load_state_dict(best_state["model"])
     per_best = eval_all("best")
+    illum = _save_illumination(model, cond_dir / "illumination", eval_m, learnable)
+    _save_examples(model, cfg, device, eval_m, learnable, cond_dir / "examples", ps, amp_dtype)
 
     # checkpoint metadata
     arch = A.model_arch_summary(model)

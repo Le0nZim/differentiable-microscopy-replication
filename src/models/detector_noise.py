@@ -3,13 +3,20 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Literal
 
 import torch
 import torch.nn as nn
 
-NoiseMode = Literal["noise_free", "differentiable_poisson", "differentiable_poisson_plus_read"]
+NoiseMode = Literal["noise_free", "differentiable_poisson", "differentiable_poisson_plus_read", "exact_poisson_plus_read"]
 NoiseNormalization = Literal["legacy", "paper", "paper_v3"]
+
+
+def _sqrt_variance(variance: torch.Tensor) -> torch.Tensor:
+    """Exact zero variance with a finite surrogate derivative at the boundary."""
+    positive = variance > 0
+    return torch.where(positive, variance, torch.ones_like(variance)).sqrt() * positive
 
 
 @dataclass
@@ -38,6 +45,14 @@ class DetectorNoise(nn.Module):
     def __init__(self, config: DetectorNoiseConfig) -> None:
         super().__init__()
         self.config = config
+        if config.mode not in {"noise_free", "differentiable_poisson", "differentiable_poisson_plus_read", "exact_poisson_plus_read"}:
+            raise ValueError(f"Unsupported noise mode: {config.mode}")
+        if config.noise_normalization not in {"legacy", "paper", "paper_v3"}:
+            raise ValueError(f"Unsupported noise normalization: {config.noise_normalization}")
+        if not all(math.isfinite(v) for v in (config.photon_count, config.gamma, config.sigma_read)):
+            raise ValueError("Noise parameters must be finite")
+        if config.photon_count <= 0 or config.gamma < 0 or config.sigma_read < 0:
+            raise ValueError("Photon count must be positive; background and read std must be nonnegative")
 
     @classmethod
     def from_dict(cls, data: dict) -> "DetectorNoise":
@@ -65,6 +80,21 @@ class DetectorNoise(nn.Module):
         use_noise = self.config.apply_noise if apply_noise is None else apply_noise
         if not use_noise or self.config.mode == "noise_free":
             return alpha_down
+
+        if self.config.mode == "exact_poisson_plus_read":
+            if self.config.noise_normalization != "paper_v3":
+                raise ValueError("Exact Poisson evaluation requires explicit paper_v3 photon units")
+            if torch.is_grad_enabled() and alpha_down.requires_grad:
+                raise ValueError("Exact Poisson is for evaluation; use the differentiable mode for training")
+            if poisson_noise is not None:
+                raise ValueError("A standard-normal draw is not an exact Poisson sample")
+            if not torch.isfinite(alpha_down).all() or torch.any(alpha_down < 0):
+                raise ValueError("Poisson rates require a finite nonnegative signal")
+            k = self.config.photon_count
+            z = torch.randn_like(alpha_down) if read_noise is None else read_noise
+            if z.shape != alpha_down.shape:
+                raise ValueError("read_noise must match alpha_down shape")
+            return (torch.poisson(k * alpha_down + self.config.gamma) + self.config.sigma_read * z) / k
 
         return self._apply_noise(alpha_down, poisson_noise=poisson_noise, read_noise=read_noise)
 
@@ -121,7 +151,7 @@ class DetectorNoise(nn.Module):
                 raise ValueError("poisson_noise must match alpha_down shape")
 
         poisson_mean = alpha_norm + gamma / photon_count
-        poisson_std = torch.sqrt(alpha_scaled + (gamma / (photon_count**2)))
+        poisson_std = _sqrt_variance(alpha_scaled + (gamma / (photon_count**2)))
         y_poiss = poisson_mean + poisson_std * poisson_noise
 
         if self.config.mode == "differentiable_poisson":
@@ -200,7 +230,7 @@ class DetectorNoise(nn.Module):
                 raise ValueError("poisson_noise must match alpha_down shape")
 
         poisson_mean = alpha_norm + gamma / k
-        poisson_std = torch.sqrt(alpha_norm / k + gamma / (k**2))
+        poisson_std = _sqrt_variance(alpha_norm / k + gamma / (k**2))
         y_poiss_norm = poisson_mean + poisson_std * poisson_noise
 
         if self.config.mode == "differentiable_poisson":

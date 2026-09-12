@@ -6,8 +6,10 @@ Implements the corrected paper supplement A.2.2 normalized detector model
 reruns the full 16-cell Table-1 grid plus multi-seed robustness for the
 historically failing extreme cell (photon_count=10, sigma_read=6.0).
 
-Everything is written under ``experiments/table01_noise_robustness/``.
-Frozen v1/v2 outputs are never touched.
+New runs go to ``experiments/audited_v1/table01_noise_robustness/`` and
+use equal learned/fixed update budgets. Historical results remain unchanged.
+This retains the soft-pattern Gaussian-noise protocol; see the audit runner
+for binary deployment, dose controls, and exact Poisson held-out evaluation.
 
 Usage (two GPUs, then aggregate):
 
@@ -43,7 +45,7 @@ from utils.device import resolve_device  # noqa: E402
 from utils.experiment_config import build_noise_sweep_experiments, load_experiment_config  # noqa: E402
 from utils.reproducibility import set_seed  # noqa: E402
 
-OUTPUT_ROOT = ROOT / "experiments/table01_noise_robustness"
+OUTPUT_ROOT = ROOT / "experiments/audited_v1/table01_noise_robustness"
 CONFIG_PATH = ROOT / "configs/table01_noise_robustness/noise_table.yaml"
 
 PHOTON_COUNTS = [10.0, 10000.0]
@@ -75,6 +77,11 @@ def _configure_run_kind(config: dict) -> dict:
     else:
         config["training"]["learn_patterns"] = False
         config["training"]["use_staged_hardening"] = False
+        phases = config["training"]["staged_hardening"]
+        config["training"]["max_steps"] = (
+            phases["inverse_warmup_steps"] + phases["joint_soft_steps"]
+            + len(phases["harden_m_values"]) * phases["harden_steps_per_m"]
+        )
     return config
 
 
@@ -118,7 +125,8 @@ def _materialize_config(spec: dict, device: str) -> dict:
     config = copy.deepcopy(spec["config"])
     seed = spec["seed"]
     config["experiment"]["seed"] = seed
-    config["dataset"]["seed"] = seed
+    config["dataset"]["seed"] = MAIN_SEED
+    config["training"]["loader_seed"] = seed + 1000
     config["pattern_generator"]["seed"] = seed
     config["experiment"]["device"] = device
     config["experiment"]["run_id"] = spec["run_id"]
@@ -311,7 +319,7 @@ def aggregate(args: argparse.Namespace) -> None:
             if res is not None:
                 eval_noise[mode] = {"run_id": run_id, **res}
 
-    # gates
+    # Observed trends. None is an implementation acceptance requirement.
     learnable_wins_all = all(c["learnable_wins"] for c in table) and len(table) == 8
     spread_pc10 = _spread(main_rows, "learnable_frequency", 10.0)
     spread_pc10000 = _spread(main_rows, "learnable_frequency", 10000.0)
@@ -339,6 +347,7 @@ def aggregate(args: argparse.Namespace) -> None:
     }
 
     payload = {
+        "interpretation": "Trend checks describe outcomes; learned wins and monotone rankings are not correctness gates.",
         "output_root": str(OUTPUT_ROOT.relative_to(ROOT)),
         "noise_normalization": "paper_v3",
         "config": str(CONFIG_PATH.relative_to(ROOT)),
@@ -356,7 +365,7 @@ def aggregate(args: argparse.Namespace) -> None:
     _write_table_md(table, extreme, eval_noise, gates)
     _make_plots(main_rows, eval_noise)
     print(f"Wrote {OUTPUT_ROOT / 'table1_v3_results.json'}", flush=True)
-    print(f"Gates: {json.dumps(gates, indent=2)}", flush=True)
+    print(f"Observed trends: {json.dumps(gates, indent=2)}", flush=True)
 
 
 def _spread(rows: list[dict], mode: str, pc: float) -> float:
@@ -406,7 +415,7 @@ def _write_table_md(table: list[dict], extreme: dict, eval_noise: dict, gates: d
         lines.append("| method | mean | std | n |\n|---|---:|---:|---:|\n")
         for mode, st in eval_noise.items():
             lines.append(f"| {mode} | {st.get('mean', float('nan')):.4f} | {st.get('std', float('nan')):.4f} | {st.get('n', 0)} |\n")
-    lines.append("\n## Gate snapshot\n\n")
+    lines.append("\n## Observed trends (no required winner)\n\n")
     for k, v in gates.items():
         lines.append(f"- `{k}`: {v}\n")
     (OUTPUT_ROOT / "table1_v3_results.md").write_text("".join(lines), encoding="utf-8")

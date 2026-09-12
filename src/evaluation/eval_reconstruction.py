@@ -12,6 +12,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from evaluation.metrics import mse, ssim
+from evaluation.checkpoint_protocol import checkpoint_sigmoid_m
 from models.microscope import DifferentiableMicroscope
 from training.dataloaders import build_dataloader
 from utils.device import device_from_config, resolve_device
@@ -44,9 +45,10 @@ def evaluate_reconstruction(
     for batch in dataloader:
         specimen = batch.to(device) if torch.is_tensor(batch) else batch[0].to(device)
         outputs = model(specimen, sigmoid_m=sigmoid_m, apply_noise=apply_noise)
-        total_mse += float(mse(outputs["x_recon"], specimen).item())
-        total_ssim += float(ssim(outputs["x_recon"], specimen).item())
-        count += 1
+        n = specimen.shape[0]
+        total_mse += float(mse(outputs["x_recon"], specimen).item()) * n
+        total_ssim += float(ssim(outputs["x_recon"], specimen).item()) * n
+        count += n
 
     if count == 0:
         raise ValueError("Cannot evaluate an empty dataloader")
@@ -62,6 +64,7 @@ def save_evaluation_artifacts(
     *,
     max_batches: int = 1,
     apply_noise: bool | None = None,
+    sigmoid_m: float | None = None,
 ) -> Path:
     """Save example reconstructions, measurements, and learned patterns."""
     model.eval()
@@ -72,7 +75,7 @@ def save_evaluation_artifacts(
     figure_path = None
     for batch_idx, batch in enumerate(dataloader):
         specimen = batch.to(device) if torch.is_tensor(batch) else batch[0].to(device)
-        outputs = model(specimen, apply_noise=apply_noise)
+        outputs = model(specimen, sigmoid_m=sigmoid_m, apply_noise=apply_noise)
 
         save_patterns(outputs["patterns"], output_dir)
         save_measurement_grid(specimen, figures_dir / f"ground_truth_batch{batch_idx}.png")
@@ -135,6 +138,7 @@ def evaluate_checkpoint(
     *,
     split: str = "test",
     output_dir: str | Path | None = None,
+    sigmoid_m: float | None = None,
 ) -> EvaluationResult:
     """Load a checkpoint and evaluate it on a dataset split."""
     checkpoint_path = Path(checkpoint_path)
@@ -144,6 +148,8 @@ def evaluate_checkpoint(
 
     model = DifferentiableMicroscope.from_run_config(config).to(device)
     model.load_state_dict(checkpoint["model_state_dict"])
+    if model.pattern_generator.patterns_are_learnable():
+        model.pattern_generator.sigmoid_m = checkpoint_sigmoid_m(checkpoint, override=sigmoid_m)
     model.eval()
 
     dataloader = build_dataloader(config, split)
@@ -172,6 +178,8 @@ def main() -> None:
     parser.add_argument("--split", default="test", choices=["train", "val", "test"])
     parser.add_argument("--output-dir", default=None)
     parser.add_argument("--results-csv", default=None)
+    parser.add_argument("--sigmoid-m", type=float, default=None,
+                        help="Explicit sharpness for legacy checkpoints missing acquisition metadata")
     parser.add_argument("--device", default=None, help="Override device, e.g. cuda:1 or gpu1")
     args = parser.parse_args()
 
@@ -184,6 +192,7 @@ def main() -> None:
         config,
         split=args.split,
         output_dir=args.output_dir,
+        sigmoid_m=args.sigmoid_m,
     )
 
     if args.results_csv:

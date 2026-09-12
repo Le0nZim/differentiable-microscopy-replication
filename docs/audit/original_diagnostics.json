@@ -1,0 +1,21 @@
+{
+  "upstream_commit": "f8cc74b51847bd31b320a7f153dcf3eedecc3e7a",
+  "source_sha256": {
+    "modules/train_utils.py": "491cba09435e1be9904e599661711943fa0f0351a7ed8650b6cfd8172f297781",
+    "modules/models/decoder_upsampling_nets.py": "4d5de2ac082abd64a0ee54ee24206a2bb67d581be1b6bc20ba1a9eba39843709",
+    "create_patchMNIST_dataset.py": "e47c383972a3b329c599788743ddbf29e68dc7a45a197d6814f05530ce38189a"
+  },
+  "gradient_accumulation": {
+    "observed_H_after_step": 0.6569374799728394,
+    "sum_of_two_gradients_prediction": 0.6569375,
+    "proper_alternating_prediction": 0.5819375
+  },
+  "validation_batchnorm": {
+    "upsampler_still_training": true,
+    "num_batches_tracked_increment": 1,
+    "running_mean_after": 0.05000000074505806
+  },
+  "custom_v2_projection_matches_new_original_locality": true,
+  "repeated_training_source_order_identical": true,
+  "limitation": "Tiny deterministic diagnostics, not an estimate of published performance bias."
+}

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import csv
-import itertools
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -15,6 +14,7 @@ from torch.utils.data import DataLoader
 from evaluation.metrics import mse, ssim
 from models.microscope import DifferentiableMicroscope
 from training.losses import reconstruction_loss_l1
+from training.iteration import repeat_dataloader
 from training.metrics_logging import batch_reconstruction_metrics, collect_step_metrics
 from training.pattern_tracking import PatternSnapshot, capture_detector_snapshot, capture_pattern_snapshot, finalize_pattern_snapshot
 
@@ -94,10 +94,12 @@ def train_fixed_m_phase(
     elif model.pattern_generator.patterns_are_learnable():
         model.set_illumination_trainable(True)
 
-    train_iter = itertools.cycle(train_loader)
+    train_iter = repeat_dataloader(train_loader)
+    model.pattern_generator.sigmoid_m = sigmoid_m
     best_val_mse = float("inf")
     best_state_dict: dict[str, torch.Tensor] | None = None
     best_step = step_offset
+    best_optimizer_state = None
 
     log_mode = "a" if append_log else "w"
     with step_log_path.open(log_mode, encoding="utf-8", newline="") as handle:
@@ -140,6 +142,7 @@ def train_fixed_m_phase(
                 best_val_mse = val_mse
                 best_state_dict = deepcopy(model.state_dict())
                 best_step = global_step
+                best_optimizer_state = deepcopy(optimizer.state_dict())
 
             row = {
                 "step": global_step,
@@ -171,8 +174,13 @@ def train_fixed_m_phase(
                 flush=True,
             )
 
+    phase_dir = run_dir / "checkpoints" / phase_name
+    phase_dir.mkdir(parents=True, exist_ok=True)
+    save_checkpoint(phase_dir / "last.pt", model, optimizer, epoch, config,
+                    step=step_offset + max_steps)
     if best_state_dict is not None:
         model.load_state_dict(best_state_dict)
+        optimizer.load_state_dict(best_optimizer_state)
 
     finalize_pattern_snapshot(
         pattern_snapshot,
@@ -182,9 +190,9 @@ def train_fixed_m_phase(
         apply_noise=apply_noise,
     )
 
-    phase_dir = run_dir / "checkpoints" / phase_name
-    phase_dir.mkdir(parents=True, exist_ok=True)
-    save_checkpoint(phase_dir / "best.pt", model, optimizer, int(sigmoid_m), config)
+    save_checkpoint(phase_dir / "best.pt", model, optimizer,
+                    max(1, (best_step - step_offset - 1) // max(len(train_loader), 1) + 1),
+                    config, step=best_step)
 
     pattern_metrics = pattern_snapshot.to_dict()
     pattern_metrics["best_val_mse"] = best_val_mse
@@ -221,8 +229,10 @@ def _evaluate_loader(
     for batch in dataloader:
         specimen = batch.to(device)
         outputs = model(specimen, sigmoid_m=sigmoid_m, apply_noise=apply_noise)
-        total_mse += float(mse(outputs["x_recon"], specimen).item())
-        total_ssim += float(ssim(outputs["x_recon"], specimen).item())
-        count += 1
+        total_mse += float(mse(outputs["x_recon"], specimen).item()) * specimen.shape[0]
+        total_ssim += float(ssim(outputs["x_recon"], specimen).item()) * specimen.shape[0]
+        count += specimen.shape[0]
     model.train()
-    return total_mse / max(count, 1), total_ssim / max(count, 1)
+    if not count:
+        raise ValueError("Cannot evaluate an empty dataloader")
+    return total_mse / count, total_ssim / count

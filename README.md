@@ -4,12 +4,23 @@ Standalone reproduction package for the **main-paper tables and figures** of
 *Differentiable Microscopy for Content and Task Aware Compressive Fluorescence Imaging*
 ([arXiv:2203.14945](https://arxiv.org/abs/2203.14945)).
 
+**Audit status (2026-09-12): historical results are exploratory.** Confirmed
+training, checkpoint, metric, and acquisition-accounting errors affect their
+interpretation. Read the [scientific audit](docs/SCIENTIFIC_AUDIT.md),
+[rerun protocol](docs/RERUN_PROTOCOL.md), and [validation evidence](docs/audit/VALIDATION.md).
+The corrected code has not regenerated the full paper results. New controlled
+experiments use `scripts/audit/run_controlled.py` and `configs/audit/`.
+
 **The slug is the path.** Finding Table 1 means opening anything named
 `table01_noise_robustness` under `paper/`, `scripts/`, `configs/`, and
 `experiments/`. Shared runs are stored once (Table 1 ↔ Fig. 6, Table 2 ↔ Fig. 7,
 Fig. 8 ↔ Fig. 9).
 
 ## Catalog
+
+The statuses below describe the pre-audit artifact catalog, **not validation
+of its scientific conclusions**. The audit's result-disposition table supersedes
+claims implied by “close” or “aligned.”
 
 | Item | Status | Paper | Scripts | Configs | Runs |
 |---|---|---|---|---|---|

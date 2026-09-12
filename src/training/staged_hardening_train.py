@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -103,7 +104,7 @@ def train_staged_hardening(config: dict[str, Any], output_dir: str | Path) -> di
 
         eval_results = evaluate_all_pattern_variants(
             model,
-            {"val": val_loader, "test": test_loader},
+            {"val": val_loader},
             device,
             training_m=sigmoid_m,
             sharpen_m=sharpen_m,
@@ -133,18 +134,19 @@ def train_staged_hardening(config: dict[str, Any], output_dir: str | Path) -> di
                 "best_step": pattern_metrics.get("best_step"),
                 "pattern_delta": pattern_metrics.get("pattern_delta"),
                 "detector_delta": eval_results.get("detector_delta"),
-                "soft_test_mse": eval_results["variants"]["soft"]["splits"]["test"]["mse"],
-                "soft_test_ssim": eval_results["variants"]["soft"]["splits"]["test"]["ssim"],
-                "sharpened_test_mse": eval_results["variants"]["sharpened"]["splits"]["test"]["mse"],
-                "thresholded_test_mse": eval_results["variants"]["thresholded"]["splits"]["test"]["mse"],
+                "soft_val_mse": eval_results["variants"]["soft"]["splits"]["val"]["mse"],
+                "soft_val_ssim": eval_results["variants"]["soft"]["splits"]["val"]["ssim"],
+                "sharpened_val_mse": eval_results["variants"]["sharpened"]["splits"]["val"]["mse"],
+                "thresholded_val_mse": eval_results["variants"]["thresholded"]["splits"]["val"]["mse"],
                 "H_t_binary_fraction": pattern_metrics.get("H_t_binary_fraction"),
             }
         )
 
     schedule = SigmoidSchedule.from_dict(config["sigmoid_schedule"])
     _ = schedule
-    save_checkpoint(run_dir / "checkpoints" / "best.pt", model, optimizer, int(final_training_m), config)
-    save_checkpoint(run_dir / "checkpoints" / "last.pt", model, optimizer, int(final_training_m), config)
+    for name in ("best.pt", "last.pt"):
+        shutil.copyfile(run_dir / "checkpoints" / phases[-1][0] / name,
+                        run_dir / "checkpoints" / name)
 
     with (run_dir / "metrics" / "step_history.json").open("w", encoding="utf-8") as handle:
         json.dump(all_history, handle, indent=2)
@@ -171,6 +173,8 @@ def train_staged_hardening(config: dict[str, Any], output_dir: str | Path) -> di
         apply_noise=apply_noise,
     )
 
+    (run_dir / "eval" / "final" / "variant_metrics.json").write_text(json.dumps(final_eval, indent=2))
+
     soft_test = final_eval["variants"]["soft"]["splits"]["test"]
     sharp_test = final_eval["variants"]["sharpened"]["splits"]["test"]
     thresh_test = final_eval["variants"]["thresholded"]["splits"]["test"]
@@ -193,6 +197,8 @@ def train_staged_hardening(config: dict[str, Any], output_dir: str | Path) -> di
     summary = {
         "run_dir": str(run_dir),
         "training_mode": "staged_hardening",
+        "pattern_evaluation": "binary" if model.pattern_generator.config.binarization == "ste" else "soft",
+        "selection_rule": "best validation MSE in final prescribed hardening phase",
         "final_training_m": final_training_m,
         "test_mse": soft_test["mse"],
         "test_ssim": soft_test["ssim"],

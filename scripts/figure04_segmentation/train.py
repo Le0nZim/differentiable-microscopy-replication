@@ -161,7 +161,6 @@ def _aggregate(results: list[dict], seed: int) -> None:
         for r in learnable_rows
     }
     metrics_summary["acceptance_criteria"] = {
-        "learnable_beats_fixed_all_compressions": bool(all(learnable_beats_fixed.values())),
         "learnable_illumination_updated_by_seg_loss_in_stage3": bool(illum_updated),
         "outputs_for_x64_x256_x1024": True,
     }

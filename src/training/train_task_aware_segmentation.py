@@ -38,6 +38,7 @@ from torch.utils.data import DataLoader
 from evaluation.pattern_inspection import save_pattern_inspection
 from models.task_aware_microscope import TaskAwareMicroscope
 from training.dataloaders import build_dataloader
+from training.iteration import repeat_dataloader
 from training.segmentation_losses import (
     TaskAwareLossWeights,
     bce_with_logits_loss,
@@ -136,11 +137,13 @@ def _collect_probs(
         specimen = specimen.to(device)
         mask = mask.to(device)
         outputs = model(specimen, sigmoid_m=sigmoid_m, apply_noise=apply_noise)
-        bce_total += float(bce_with_logits_loss(outputs["seg_logits"], mask).item())
-        n_batches += 1
+        bce_total += float(bce_with_logits_loss(outputs["seg_logits"], mask).item()) * specimen.shape[0]
+        n_batches += specimen.shape[0]
         probs.append(outputs["seg_prob"].cpu())
         masks.append(mask.cpu())
-    return torch.cat(probs), torch.cat(masks), bce_total / max(n_batches, 1)
+    if not n_batches:
+        raise ValueError("Cannot evaluate an empty segmentation dataloader")
+    return torch.cat(probs), torch.cat(masks), bce_total / n_batches
 
 
 def select_threshold(
@@ -265,7 +268,7 @@ def _train_segmentation_phase(
     illum_params = model.illumination_parameters()
     needs_specimen = weights.reconstruction_l1_weight != 0.0
 
-    train_iter = itertools.cycle(loader)
+    train_iter = repeat_dataloader(loader)
     for step in range(1, max_steps + 1):
         specimen, mask = next(train_iter)
         specimen = specimen.to(device)
@@ -450,7 +453,9 @@ def train_task_aware_segmentation(config: dict[str, Any], output_dir: str | Path
     val_t2, _ = select_threshold(model, val_loader, device, sigmoid_m=eval_m, apply_noise=apply_noise, thresholds=thresholds)
     stage2_val = evaluate_segmentation(model, val_loader, device, sigmoid_m=eval_m, apply_noise=apply_noise, threshold=val_t2)
     print(f"[stage2] val dice={stage2_val['dice']:.4f} iou={stage2_val['iou']:.4f} (t={val_t2})", flush=True)
-    torch.save({"model_state_dict": model.state_dict(), "config": config, "stage": "stage2"}, run_dir / "checkpoints" / "stage2_seg_head.pt")
+    torch.save({"model_state_dict": model.state_dict(), "config": config, "stage": "stage2",
+                "sigmoid_m": eval_m, "segmentation_threshold": val_t2,
+                "selection": "final prescribed stage2 step"}, run_dir / "checkpoints" / "stage2_seg_head.pt")
     # Evidence: microscope grads must be zero while head grads are nonzero.
     assert stage2["grad_norms"]["segmentation_head"]["max"] > 0.0, "Stage 2 seg head received no gradient"
     assert stage2["grad_norms"]["inverse_model"]["max"] == 0.0, "Stage 2 inverse model must not receive gradient"
@@ -518,11 +523,15 @@ def train_task_aware_segmentation(config: dict[str, Any], output_dir: str | Path
         assert stage3["grad_norms"]["illumination"]["max"] > 0.0, "Stage 3 illumination received no gradient"
         assert pattern_delta_l2 > 0.0, "Stage 3 illumination patterns did not change"
 
-    torch.save({"model_state_dict": model.state_dict(), "config": config, "stage": "stage3"}, run_dir / "checkpoints" / "stage3_finetuned.pt")
-    torch.save({"model_state_dict": model.state_dict(), "config": config, "stage": "stage3"}, run_dir / "checkpoints" / "best.pt")
-
     # ======================= EVALUATION ================================ #
     final_t, final_val_dice = select_threshold(model, val_loader, device, sigmoid_m=eval_m, apply_noise=apply_noise, thresholds=thresholds)
+    final_checkpoint = {"model_state_dict": model.state_dict(), "config": config, "stage": "stage3",
+                        "sigmoid_m": eval_m, "segmentation_threshold": final_t,
+                        "selection": "final prescribed stage3 step; threshold selected on validation",
+                        "checkpoint_schema": 2, "resume_exact": False}
+    torch.save(final_checkpoint, run_dir / "checkpoints" / "stage3_finetuned.pt")
+    # Compatibility alias: metadata states that this is final-step selection.
+    torch.save(final_checkpoint, run_dir / "checkpoints" / "best.pt")
     val_metrics = evaluate_segmentation(model, val_loader, device, sigmoid_m=eval_m, apply_noise=apply_noise, threshold=final_t)
     test_metrics = evaluate_segmentation(model, test_loader, device, sigmoid_m=eval_m, apply_noise=apply_noise, threshold=final_t)
     test_metrics_05 = evaluate_segmentation(model, test_loader, device, sigmoid_m=eval_m, apply_noise=apply_noise, threshold=0.5)

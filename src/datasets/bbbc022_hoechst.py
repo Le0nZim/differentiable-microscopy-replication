@@ -103,6 +103,8 @@ def assign_split_paths(
             key = well or path.stem
             by_well.setdefault(key, []).append(path)
         wells = sorted(by_well.keys())
+        if len(wells) < total_needed:
+            raise ValueError(f"Need {total_needed} distinct wells, found {len(wells)}; cannot make the requested split")
         gen = torch.Generator().manual_seed(config.seed)
         perm = torch.randperm(len(wells), generator=gen).tolist()
         shuffled_wells = [wells[i] for i in perm]

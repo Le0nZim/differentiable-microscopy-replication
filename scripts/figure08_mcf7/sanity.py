@@ -37,7 +37,7 @@ from utils.device import resolve_device
 import importlib.util
 
 _spec = importlib.util.spec_from_file_location(
-    "fig89_train", ROOT / "scripts" / "fig89_mcf7_swinir_fix_train.py")
+    "fig89_train", ROOT / "scripts" / "figure08_mcf7" / "train.py")
 T = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(T)
 

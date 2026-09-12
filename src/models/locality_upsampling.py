@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-UpsamplingMode = Literal["locality_aware", "transpose_conv"]
+UpsamplingMode = Literal["locality_aware", "transpose_conv", "original_locality", "original_transpose"]
 
 
 @dataclass
@@ -137,6 +137,13 @@ class LocalityUpsampling(nn.Module):
                 downscale_factor=config.downscale_factor,
             )
             self.mixing_cnn = None
+        elif config.mode == "original_locality":
+            self.upsampler = OriginalLocalityUpsampling(config.num_patterns, height_down,
+                                                       width_down, config.downscale_factor)
+            self.mixing_cnn = None
+        elif config.mode == "original_transpose":
+            self.upsampler = OriginalTransposeUpsampling(config.num_patterns, config.downscale_factor)
+            self.mixing_cnn = None
         else:
             raise ValueError(f"Unsupported upsampling mode: {config.mode}")
 
@@ -184,3 +191,55 @@ class TransposeConvUpsampling(nn.Module):
             y_up: [B, T, H, W]
         """
         return self.conv_transpose(y_down)
+
+
+class OriginalLocalityUpsampling(nn.Module):
+    """Independent implementation of upstream custom_v2 plus its channel lift.
+
+    Each detector site's T-vector maps to ONE d*d patch, with a site-dependent
+    bias, followed by Conv-BN(1 -> max(1,T//2) -> T). The historical rewrite's
+    `locality_aware` preserves T separate patches and is a different network.
+    """
+
+    def __init__(self, num_patterns, height_down, width_down, downscale_factor):
+        super().__init__()
+        self.shape = (num_patterns, height_down, width_down)
+        self.downscale_factor = downscale_factor
+        self.weights = nn.Parameter(torch.empty(height_down * width_down, num_patterns,
+                                                 downscale_factor**2))
+        self.bias = nn.Parameter(torch.zeros(height_down * width_down, downscale_factor**2))
+        nn.init.xavier_normal_(self.weights)
+        hidden = max(1, num_patterns // 2)
+        self.channel_lift = nn.Sequential(
+            nn.Conv2d(1, hidden, 3, padding=1), nn.BatchNorm2d(hidden),
+            nn.Conv2d(hidden, num_patterns, 3, padding=1), nn.BatchNorm2d(num_patterns),
+        )
+
+    def project(self, measurements):
+        if measurements.ndim != 4 or tuple(measurements.shape[1:]) != self.shape:
+            raise ValueError(f"Expected [B,{self.shape}], got {tuple(measurements.shape)}")
+        b, t, h, w = measurements.shape
+        d = self.downscale_factor
+        sites = measurements.flatten(2).transpose(1, 2)
+        patches = torch.einsum("blt,ltp->blp", sites, self.weights) + self.bias
+        return patches.reshape(b, h, w, d, d).permute(0, 1, 3, 2, 4).reshape(b, 1, h*d, w*d)
+
+    def forward(self, measurements):
+        return self.channel_lift(self.project(measurements))
+
+
+class OriginalTransposeUpsampling(nn.Module):
+    """Upstream repeated 2x ConvTranspose-ReLU-BN baseline, evaluated correctly."""
+
+    def __init__(self, num_patterns, downscale_factor):
+        super().__init__()
+        if downscale_factor < 1 or downscale_factor & (downscale_factor - 1):
+            raise ValueError("Original transpose baseline requires a power-of-two downscale")
+        blocks = []
+        for _ in range(downscale_factor.bit_length() - 1):
+            blocks.extend([nn.ConvTranspose2d(num_patterns, num_patterns, 4, stride=2, padding=1),
+                           nn.ReLU(), nn.BatchNorm2d(num_patterns)])
+        self.net = nn.Sequential(*blocks)
+
+    def forward(self, measurements):
+        return self.net(measurements)

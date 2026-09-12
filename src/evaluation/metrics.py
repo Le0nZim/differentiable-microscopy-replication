@@ -33,6 +33,7 @@ def ssim(
     data_range: float = 1.0,
     window_size: int = 11,
     sigma: float = 1.5,
+    padding_mode: str = "zeros",
 ) -> torch.Tensor:
     """Differentiable SSIM averaged over the batch. Inputs: [B, 1, H, W]."""
     if prediction.shape != target.shape:
@@ -40,9 +41,17 @@ def ssim(
     if prediction.ndim != 4 or prediction.shape[1] != 1:
         raise ValueError("prediction and target must have shape [B, 1, H, W]")
 
+    if padding_mode not in {"zeros", "reflect", "valid"}:
+        raise ValueError("SSIM padding_mode must be zeros, reflect or valid")
     channels = prediction.shape[1]
     window = _gaussian_window(window_size, sigma, channels, prediction.device, prediction.dtype)
     padding = window_size // 2
+    if padding_mode == "reflect":
+        prediction = F.pad(prediction, (padding,) * 4, mode="reflect")
+        target = F.pad(target, (padding,) * 4, mode="reflect")
+        padding = 0
+    elif padding_mode == "valid":
+        padding = 0
 
     c1 = (0.01 * data_range) ** 2
     c2 = (0.03 * data_range) ** 2
