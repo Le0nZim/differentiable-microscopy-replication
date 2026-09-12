@@ -135,16 +135,17 @@ def build_refiner(swinir_cfg: dict[str, Any], device: torch.device, *,
 # ---------------------------------------------------------------------------
 # Frozen base model
 # ---------------------------------------------------------------------------
-def base_run_dir(base_exp_root: Path, comp: str, pattern: str) -> Path:
-    return base_exp_root / f"bbbc022_{comp}_{pattern}_seed42"
+def base_run_dir(base_exp_root: Path, comp: str, pattern: str, seed: int = 42) -> Path:
+    return base_exp_root / f"bbbc022_{comp}_{pattern}_seed{seed}"
 
 
-def load_frozen_base(base_exp_root: Path, comp: str, pattern: str, device: torch.device):
+def load_frozen_base(base_exp_root: Path, comp: str, pattern: str, device: torch.device,
+                     *, seed: int = 42, run_dir: str | Path | None = None):
     """Load a frozen content-aware base microscope + its run config.
 
     Returns (model, run_cfg, eval_m). The model is fully frozen and in eval mode.
     """
-    rd = base_run_dir(base_exp_root, comp, pattern)
+    rd = Path(run_dir) if run_dir is not None else base_run_dir(base_exp_root, comp, pattern, seed)
     run_cfg = load_experiment_config(rd / "config.yaml")
     run_cfg["experiment"]["device"] = str(device)
     payload = torch.load(rd / "checkpoints" / "best.pt", map_location=device, weights_only=False)

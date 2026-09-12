@@ -158,7 +158,7 @@ class Adapter:
 def _loaders(cfg: dict, image_size: int, micro: int, seed: int,
              n_train: int, n_val: int, n_test: int) -> dict[str, DataLoader]:
     ds_cfg = dict(cfg["dataset"])
-    ds_cfg["seed"] = seed
+    ds_cfg["seed"] = int(cfg.get("data_seed", seed))
     ds_cfg["patch_size"] = image_size
     ds_cfg["image_size"] = image_size
     ds_cfg["num_train"] = n_train
@@ -376,10 +376,10 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
                         "condition": condition, "backbone": backbone, "image_size": image_size},
                        ckpt_dir / "best.pt")
 
+    torch.save({"model": model.state_dict(), "condition": condition, "backbone": backbone,
+                "image_size": image_size, "sigmoid_m": eval_m, "resume_exact": False}, ckpt_dir / "last.pt")
     if best_state is not None:
         model.load_state_dict(best_state)
-    torch.save({"model": model.state_dict(), "condition": condition, "backbone": backbone,
-                "image_size": image_size}, ckpt_dir / "last.pt")
 
     test = _evaluate(adapter, loaders["test"], device, eval_m, amp_dtype)
     _save_examples(adapter, loaders["test"], device, eval_m, amp_dtype, out_dir / "examples", n_examples)

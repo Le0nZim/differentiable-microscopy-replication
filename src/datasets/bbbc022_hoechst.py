@@ -30,6 +30,7 @@ class BBBC022HoechstConfig:
     """BBBC022 Hoechst substitute configuration."""
 
     data_root: str = "data/substitute_data"
+    split_path: str | None = None
     stack_glob: str = "**/*.tif"
     preprocessing_mode: PreprocessMode = "paper_strict"
     bias: float = 134.28
@@ -393,8 +394,12 @@ class BBBC022HoechstDataset(Dataset):
         self.config = config
         self.split = split
         self.data_root = Path(config.data_root)
-        all_paths = select_hoechst_paths(discover_image_paths(self.data_root, config.stack_glob))
-        split_paths = assign_split_paths(all_paths, config)
+        if config.split_path:
+            from datasets.bbbc022_split import load_split
+            split_paths = load_split(Path(config.split_path), Path.cwd())
+        else:
+            all_paths = select_hoechst_paths(discover_image_paths(self.data_root, config.stack_glob))
+            split_paths = assign_split_paths(all_paths, config)
         self.paths = split_paths[split]
         self.images = [self._load_and_preprocess(p) for p in self.paths]
         # Precompute full-image TrackMate masks (once, cached) so per-item access is

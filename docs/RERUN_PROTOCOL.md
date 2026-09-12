@@ -1,5 +1,9 @@
 # Rerun protocol after the scientific audit
 
+For the integrated workstation setup and sequential paper queue, start with
+[`START_HERE.md`](../START_HERE.md). The controlled protocol below remains a
+separate scientific experiment, available as `python paper.py run --stages controlled`.
+
 Read [SCIENTIFIC_AUDIT.md](SCIENTIFIC_AUDIT.md) before interpreting historical
 tables. The new runner is a controlled CNN experiment, not a replacement for
 every SwinIR or segmentation driver and not a numerical U2OS reproduction.
@@ -160,8 +164,9 @@ For a 256×1280 field, tile=256, d=8, T=4, nonoverlap acquires five tiles and
 20,480 detector scalar measurements: C=16. Overlap=64 acquires seven tiles
 and 28,672 measurements: effective C=80/7≈11.43. The overlap helper reruns
 the full optical model; smoothing is not free decoder postprocessing. With
-tile=64 and overlap=16, this field needs 162 tiles instead of 80, giving
-effective C≈7.90 at the same per-tile C=16.
+tile=64 and overlap=16, the implemented boundary-aligned grid uses 135 tiles
+instead of 80, giving effective C≈9.48 at the same per-tile C=16. The fresh
+workstation renderer smoke verifies these counts against its acquisition metadata.
 
 Use the updated Figure 9 metadata to report both acquisition totals. A future
 decoder-only overlap method must first acquire one shared global measurement

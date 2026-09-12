@@ -1,93 +1,43 @@
-# Differentiable Microscopy — main tables and figures
+# Differentiable Microscopy — fresh workstation experiments
 
-Standalone reproduction package for the **main-paper tables and figures** of
-*Differentiable Microscopy for Content and Task Aware Compressive Fluorescence Imaging*
-([arXiv:2203.14945](https://arxiv.org/abs/2203.14945)).
+Reproduction code for [Differentiable Microscopy for Content and Task Aware
+Compressive Fluorescence Imaging](https://arxiv.org/abs/2203.14945).
 
-**Audit status (2026-09-12): historical results are exploratory.** Confirmed
-training, checkpoint, metric, and acquisition-accounting errors affect their
-interpretation. Read the [scientific audit](docs/SCIENTIFIC_AUDIT.md),
-[rerun protocol](docs/RERUN_PROTOCOL.md), and [validation evidence](docs/audit/VALIDATION.md).
-The corrected code has not regenerated the full paper results. New controlled
-experiments use `scripts/audit/run_controlled.py` and `configs/audit/`.
+**Start with [START_HERE.md](START_HERE.md).** It includes the clean-clone commands
+and maps your existing dataset folders to one editable `workstation.yaml`.
 
-**The slug is the path.** Finding Table 1 means opening anything named
-`table01_noise_robustness` under `paper/`, `scripts/`, `configs/`, and
-`experiments/`. Shared runs are stored once (Table 1 ↔ Fig. 6, Table 2 ↔ Fig. 7,
-Fig. 8 ↔ Fig. 9).
-
-## Catalog
-
-The statuses below describe the pre-audit artifact catalog, **not validation
-of its scientific conclusions**. The audit's result-disposition table supersedes
-claims implied by “close” or “aligned.”
-
-| Item | Status | Paper | Scripts | Configs | Runs |
-|---|---|---|---|---|---|
-| Table 1 | close | [`paper/table01_noise_robustness`](paper/table01_noise_robustness) | [`scripts/table01_noise_robustness`](scripts/table01_noise_robustness) | [`configs/table01_noise_robustness`](configs/table01_noise_robustness) | [`experiments/table01_noise_robustness`](experiments/table01_noise_robustness) |
-| Table 2 | close | [`paper/table02_swinir_sr`](paper/table02_swinir_sr) | [`scripts/table02_swinir_sr`](scripts/table02_swinir_sr) | [`configs/table02_swinir_sr`](configs/table02_swinir_sr) | [`experiments/table02_swinir_sr`](experiments/table02_swinir_sr) |
-| Table 3 | data_blocked | [`paper/table03_ablation`](paper/table03_ablation) | [`scripts/table03_ablation`](scripts/table03_ablation) | [`configs/table03_ablation`](configs/table03_ablation) | [`experiments/table03_ablation`](experiments/table03_ablation) |
-| Figure 3 | data_blocked | [`paper/figure03_content_aware`](paper/figure03_content_aware) | [`scripts/figure03_content_aware`](scripts/figure03_content_aware) | [`configs/figure03_content_aware`](configs/figure03_content_aware) | [`experiments/figure03_content_aware`](experiments/figure03_content_aware) (`base/` + `swinir/`) |
-| Figure 4 | data_blocked | [`paper/figure04_segmentation`](paper/figure04_segmentation) | [`scripts/figure04_segmentation`](scripts/figure04_segmentation) | [`configs/figure04_segmentation`](configs/figure04_segmentation) | [`experiments/figure04_segmentation`](experiments/figure04_segmentation) (`task_aware/` + `stage1_frozen/`) |
-| Figure 5 | aligned | [`paper/figure05_upsampling`](paper/figure05_upsampling) | [`scripts/figure05_upsampling`](scripts/figure05_upsampling) | [`configs/figure05_upsampling`](configs/figure05_upsampling) | [`experiments/figure05_upsampling`](experiments/figure05_upsampling) |
-| Figure 6 | close | [`paper/figure06_noise_robustness`](paper/figure06_noise_robustness) | same as Table 1 | same as Table 1 | same as Table 1 |
-| Figure 7 | close | [`paper/figure07_swinir_sr`](paper/figure07_swinir_sr) | same as Table 2 | same as Table 2 | same as Table 2 |
-| Figure 8 | close | [`paper/figure08_mcf7_swinir`](paper/figure08_mcf7_swinir) | [`scripts/figure08_mcf7`](scripts/figure08_mcf7) | [`configs/figure08_mcf7`](configs/figure08_mcf7) | [`experiments/figure08_mcf7`](experiments/figure08_mcf7) |
-| Figure 9 | close | [`paper/figure09_mcf7_widefield`](paper/figure09_mcf7_widefield) | same as Figure 8 | same as Figure 8 | same as Figure 8 |
-| Figure 10 | data_blocked | [`paper/figure10_ablation`](paper/figure10_ablation) | [`scripts/figure10_ablation`](scripts/figure10_ablation) | [`configs/figure10_ablation`](configs/figure10_ablation) | [`experiments/figure10_ablation`](experiments/figure10_ablation) |
-
-**data_blocked** means the paper's U2OS confocal dataset is unavailable. Those items use a BBBC022 Hoechst widefield substitute and are not numerically comparable to the paper.
-
-Tables 1–2 and Figs 5–7 use leakage-safer splits (disjoint MNIST-test val/test; Flickr2K HR-only + scene-level val).
-
-Old path names (AM/RR codes, `_fixed` suffixes) are listed in [`paper/README.md`](paper/README.md).
-
-## Install
-
-Python ≥ 3.10, PyTorch 2.x, CUDA recommended for training.
+After installing the environment and VGG19 dependency:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
+python paper.py init --data-root /absolute/path/to/your/data
+python paper.py check
+python paper.py plan
+python paper.py run
 ```
 
-SwinIR experiments (Table 2, Figs 3/7/8/9) also need the upstream clone at the
-commit recorded in [`SwinIR.COMMIT`](SwinIR.COMMIT):
+One sequential queue covers all main-paper experiment families. PatchMNIST is
+generated and cached automatically. Downstream stages use newly trained
+checkpoints. Repeating `run` skips verified completed jobs and restarts incomplete
+jobs as separate attempts. `python paper.py status` shows progress;
+`python paper.py report` collects this campaign's metrics and figure artifacts.
 
-```bash
-git clone https://github.com/JingyunLiang/SwinIR.git SwinIR
-git -C SwinIR checkout 6545850fbf8df298df73d81f3e8cba638787c8bd
-```
+| Location | Purpose |
+|---|---|
+| `paper.py`, `workflow/` | Dataset setup, job order, execution, resume and reports |
+| `workstation.yaml` (local) | Your paths, GPU, output/cache directories and seeds |
+| `configs/` | Existing scientific recipes, separate from machine paths |
+| `src/`, `scripts/` | Models, datasets and individual experiment implementations |
+| `runs/` (local) | Fresh campaign configs, manifests, logs, checkpoints and reports |
+| `docs/` | Audit, protocol, validation and historical catalog |
 
-`timm` is required by that vendor code.
+The [workstation protocol](docs/WORKSTATION_PROTOCOL.md) lists all stages, budgets
+and data-split decisions. The [scientific audit](docs/SCIENTIFIC_AUDIT.md) explains
+why historical scores remain exploratory. BBBC022 substitutes for the missing
+original U2OS data, and the paper workflow retains documented soft-mask recipes
+and deviations. The optional `--stages controlled` queue runs the separate
+binary-mask/equal-dose audit experiment.
 
-## Data
-
-Datasets are **not** in this repository (~100 GB). See [`data/README.md`](data/README.md).
-Caveats and inferred paper details: [`ASSUMPTIONS.md`](ASSUMPTIONS.md).
-
-## View results vs re-run
-
-- **View:** open `paper/<slug>/comparison.md` (tables) and the SVG parts under `paper/figure*/`. No GPU.
-- **Re-run:** each `paper/<slug>/README.md` has the train/eval command. Drivers live in `scripts/<slug>/` and write under `experiments/<slug>/`.
-
-## Git LFS
-
-Checkpoints (`*.pt`, `*.pth`, `*.ckpt`) are tracked with Git LFS. Several SwinIR
-weights exceed GitHub's 100 MB blob limit. Cloning needs `git lfs`. GitHub Free
-LFS quota (10 GB storage / 1 GB monthly bandwidth) may be too small for this tree
-(~12 GB); use a data pack or another host with a higher quota.
-
-## Layout
-
-```
-src/           library (models, training, datasets, SwinIR adapters)
-scripts/       drivers grouped by paper slug
-configs/       YAML grouped by paper slug; shared bases in configs/_shared/
-tests/         unit tests
-experiments/   run trees (metrics + checkpoints), same slugs
-paper/         tables + constituent SVGs, same slugs
-data/          download instructions only
-archive/       superseded scripts, configs, and backup runs
-```
+Historical outputs remain in Git history and in full checkouts, with their
+[previous catalog](docs/LEGACY_CATALOG.md). The clean sparse checkout described in
+START_HERE excludes them and does not fetch old LFS weights. No old results are
+used as inputs to the fresh queue.

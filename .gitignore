@@ -48,3 +48,9 @@ SwinIR/
 # Credentials
 credentials.json
 secrets.yaml
+
+# Fresh workstation campaigns and machine configuration
+/workstation.yaml
+/runs/
+/.workstation-cache/
+/SwinIR

@@ -181,7 +181,7 @@ def _load_gray(path: Path) -> torch.Tensor:
 
 
 def list_test_images(root: Path, *, max_images: int | None = None) -> list[Path]:
-    paths = sorted(root.glob("*.png")) + sorted(root.glob("*.jpg"))
+    paths = sorted(p for p in root.iterdir() if p.suffix.lower() in {".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"})
     if max_images is not None:
         paths = paths[:max_images]
     return paths
@@ -450,6 +450,16 @@ def split_train_val(cfg: dict[str, Any]) -> tuple[list[Path], list[Path]]:
     When ``data.split_by_scene`` is true, every scale of a Flickr/DIV2K ID
     stays on the same side of the split.
     """
+    manifest = cfg["data"].get("split_manifest")
+    if manifest:
+        import json
+        payload = json.loads(Path(manifest).read_text())
+        train, val = ([Path(p) for p in payload[s]] for s in ("train", "val"))
+        if not train or not val or set(p.resolve() for p in train) & set(p.resolve() for p in val):
+            raise ValueError("SR manifest needs nonempty, disjoint train/val sets")
+        if any(not p.is_file() for p in train + val):
+            raise FileNotFoundError("An SR manifest input is missing")
+        return train, val
     paths = gather_train_paths(cfg)
     if bool(cfg["data"].get("split_by_scene", False)):
         return _split_train_val_by_scene(paths, cfg)

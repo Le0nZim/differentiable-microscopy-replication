@@ -107,7 +107,8 @@ def train_cell(cfg: dict, comp: str, pattern: str, device: torch.device, out_roo
     ckpt_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"[{comp}/{pattern}] loading frozen base ...", flush=True)
-    base_model, run_cfg, eval_m = S.load_frozen_base(base_root, comp, pattern, device)
+    base_model, run_cfg, eval_m = S.load_frozen_base(base_root, comp, pattern, device,
+                                                   seed=seed, run_dir=cfg.get("base_run_dir"))
     assert S.base_is_frozen(base_model), "base model must be fully frozen (requires_grad=False + eval)"
 
     print(f"[{comp}/{pattern}] building caches (frozen base forward) ...", flush=True)

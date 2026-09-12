@@ -172,9 +172,9 @@ def _evaluate(model, loader, device, m, apply_noise) -> tuple[float, float]:
     for batch in loader:
         x = batch.to(device)
         out = model(x, sigmoid_m=m, apply_noise=apply_noise)
-        tot_mse += float(mse_metric(out["x_recon"], x).item())
-        tot_ssim += float(ssim_metric(out["x_recon"], x).item())
-        n += 1
+        tot_mse += float(mse_metric(out["x_recon"], x).item()) * len(x)
+        tot_ssim += float(ssim_metric(out["x_recon"], x).item()) * len(x)
+        n += len(x)
     model.train()
     return tot_mse / max(n, 1), tot_ssim / max(n, 1)
 
@@ -309,7 +309,16 @@ def run_one(
     min_train_mse = float("inf")  # best (lowest) train MSE ever seen (fitting capacity)
     max_grad = {"illum": 0.0, "upsampler": 0.0, "recon": 0.0}
 
-    train_iter = itertools.cycle(train_loader)
+    # Legacy warmup replay intentionally keeps its historical cached ordering.
+    # Fresh campaigns opt in explicitly; no unsupported exact-resume claim.
+    fresh_loader = bool(config["training"].get("refresh_loader_each_pass", False))
+    if fresh_loader and resume_from_warmup is not None:
+        raise ValueError("Fresh-loader ablations cannot resume legacy cached-loader warmups")
+    from training.iteration import repeat_dataloader
+    if fresh_loader:
+        train_iter = repeat_dataloader(train_loader)
+    else:
+        train_iter = itertools.cycle(train_loader)
     global_step = 0
     t0 = time.time()
     n_phases = len(phases)
@@ -556,7 +565,7 @@ def run_one(
             "branched_from_shared_warmup": branched_from_shared_warmup,
             "warmup_checkpoint_out": None if warmup_checkpoint_out is None else str(warmup_checkpoint_out),
             "resume_from_warmup": None if resume_from_warmup is None else str(resume_from_warmup),
-            "train_iterator": "itertools.cycle(train_loader)",
+            "train_iterator": "repeat_dataloader(train_loader)" if fresh_loader else "itertools.cycle(train_loader)",
             "m_schedule_with_freeze": [
                 {"phase": p["name"], "m": p["m"], "steps": p["steps"],
                  "freeze_illum": p["freeze_illum"]}
