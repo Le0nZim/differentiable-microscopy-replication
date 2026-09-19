@@ -1,0 +1,39 @@
+{
+  "comp": "x64",
+  "pattern": "random_fixed",
+  "loss_mode": "paper_pixel_perceptual_gan",
+  "config_name": "paper_faithful_pixel_perceptual_gan",
+  "iterations": 50000,
+  "iterations_reached": 50000,
+  "effective_batch": 32,
+  "train_patch_size": 64,
+  "swinir_params_M": 11.498,
+  "swinir_embed_dim": 180,
+  "swinir_depths": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+  ],
+  "selection": "max_val_ssim",
+  "best_step": 27000,
+  "best_val_ssim": 0.8774329975247384,
+  "best_val_mse": 0.001950742815824924,
+  "base_val_ssim": 0.8634616211056709,
+  "base_val_mse": 0.0026806736968865152,
+  "test": {
+    "n": 60,
+    "base_mse": 0.0028895722988333244,
+    "base_ssim": 0.8550310065348943,
+    "base_psnr": 25.87946523030599,
+    "ref_mse": 0.002127064191154204,
+    "ref_ssim": 0.871452271938324,
+    "ref_psnr": 27.306291135152183
+  },
+  "delta_test_ssim": 0.016421265403429697,
+  "delta_test_mse": -0.0007625081076791202,
+  "checkpoint_path": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x64_random_fixed_seed42/attempt_001/x64/random_fixed/checkpoints/best.pt",
+  "minutes": 525.4721582452456
+}

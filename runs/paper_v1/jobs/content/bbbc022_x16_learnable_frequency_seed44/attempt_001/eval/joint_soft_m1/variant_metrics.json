@@ -1,0 +1,52 @@
+{
+  "training_m": 1.0,
+  "sharpen_m": 10.0,
+  "variants": {
+    "soft": {
+      "splits": {
+        "val": {
+          "mse": 0.0009357602102681994,
+          "ssim": 0.9169393062591553
+        }
+      }
+    },
+    "sharpened": {
+      "splits": {
+        "val": {
+          "mse": 0.0010170872905291618,
+          "ssim": 0.9144315242767334
+        }
+      }
+    },
+    "thresholded": {
+      "splits": {
+        "val": {
+          "mse": 0.001062523596920073,
+          "ssim": 0.912954592704773
+        }
+      }
+    }
+  },
+  "pattern_stats": {
+    "soft": {
+      "H_t_min": 0.005583154037594795,
+      "H_t_max": 0.9864423274993896,
+      "H_t_mean": 0.4993228316307068,
+      "H_t_binary_fraction": 0.003269195556640625
+    },
+    "sharpened": {
+      "H_t_min": 3.1125087617121263e-23,
+      "H_t_max": 1.0,
+      "H_t_mean": 0.49898654222488403,
+      "H_t_binary_fraction": 0.7690582275390625
+    },
+    "thresholded": {
+      "H_t_min": 0.0,
+      "H_t_max": 1.0,
+      "H_t_mean": 0.4987525939941406,
+      "H_t_binary_fraction": 1.0
+    }
+  },
+  "pattern_delta_soft": 0.0035818596370518208,
+  "detector_delta": 0.006290232762694359
+}

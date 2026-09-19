@@ -1,0 +1,39 @@
+{
+  "comp": "x64",
+  "pattern": "learnable_frequency",
+  "loss_mode": "paper_pixel_perceptual_gan",
+  "config_name": "paper_faithful_pixel_perceptual_gan",
+  "iterations": 50000,
+  "iterations_reached": 50000,
+  "effective_batch": 32,
+  "train_patch_size": 64,
+  "swinir_params_M": 11.498,
+  "swinir_embed_dim": 180,
+  "swinir_depths": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+  ],
+  "selection": "max_val_ssim",
+  "best_step": 12000,
+  "best_val_ssim": 0.9052366614341736,
+  "best_val_mse": 0.0009497485923930071,
+  "base_val_ssim": 0.907838499546051,
+  "base_val_mse": 0.0011440627444244456,
+  "test": {
+    "n": 60,
+    "base_mse": 0.0012165307891943181,
+    "base_ssim": 0.9032477527856827,
+    "base_psnr": 29.64946791330973,
+    "ref_mse": 0.0010068596178219498,
+    "ref_ssim": 0.9023255566755931,
+    "ref_psnr": 30.446531168619792
+  },
+  "delta_test_ssim": -0.0009221961100895903,
+  "delta_test_mse": -0.00020967117137236837,
+  "checkpoint_path": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x64_learnable_frequency_seed42/attempt_001/x64/learnable_frequency/checkpoints/best.pt",
+  "minutes": 525.2852122227351
+}

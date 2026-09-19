@@ -1,0 +1,17 @@
+{
+  "checked": "2026-09-15T02:25:12.802108+00:00",
+  "evidence": {
+    "bbbc022": "3456 w1 images, 384 wells; sample TIFFs decoded",
+    "mcf7": "13200 tubulin images, 60 well groups",
+    "sr": "HR train={'DIV2K': 800, 'Flickr2K': 2650}; all five test-set counts verified",
+    "swinir": "6545850fbf8df298df73d81f3e8cba638787c8bd",
+    "vgg": "/home/leonidas/.cache/torch/hub/checkpoints/vgg19-dcbb9e9d.pth"
+  },
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "torch": "2.11.0+cu128",
+    "device": "cuda:0",
+    "gpu": "NVIDIA RTX 6000 Ada Generation",
+    "CUDA_VISIBLE_DEVICES": null
+  }
+}

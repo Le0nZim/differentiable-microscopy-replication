@@ -1,0 +1,1410 @@
+{
+  "completed": 173,
+  "planned": 234,
+  "coverage": [
+    {
+      "job": "patchmnist/A_seed42",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/B_seed42",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/C_seed42",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/D_seed42",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/A_seed43",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/B_seed43",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/C_seed43",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/D_seed43",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/A_seed44",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/B_seed44",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/C_seed44",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "patchmnist/D_seed44",
+      "paper_item": "PatchMNIST A\u2013D diagnostic (additional to the paper)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n600_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n600_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n3000_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n3000_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n6000_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n6000_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n600_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n600_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n3000_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n3000_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n6000_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n6000_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n600_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n600_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n3000_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n3000_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n6000_transpose_conv_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n6000_locality_aware_seed42",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n600_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n600_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n3000_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n3000_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n6000_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n6000_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n600_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n600_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n3000_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n3000_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n6000_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n6000_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n600_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n600_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n3000_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n3000_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n6000_transpose_conv_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n6000_locality_aware_seed43",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n600_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n600_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n3000_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n3000_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n6000_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s128_n6000_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n600_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n600_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n3000_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n3000_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n6000_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s256_n6000_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n600_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n600_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n3000_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n3000_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n6000_transpose_conv_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "upsampling/s512_n6000_locality_aware_seed44",
+      "paper_item": "Figure 5: upsamplers, image sizes and training set sizes",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma0_random_fixed_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma0_learnable_frequency_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2.7_random_fixed_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2.7_learnable_frequency_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2_random_fixed_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2_learnable_frequency_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma6_random_fixed_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma6_learnable_frequency_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma0_random_fixed_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma0_learnable_frequency_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2.7_random_fixed_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2.7_learnable_frequency_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2_random_fixed_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2_learnable_frequency_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma6_random_fixed_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma6_learnable_frequency_seed42",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma0_random_fixed_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma0_learnable_frequency_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2.7_random_fixed_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2.7_learnable_frequency_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2_random_fixed_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2_learnable_frequency_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma6_random_fixed_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma6_learnable_frequency_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma0_random_fixed_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma0_learnable_frequency_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2.7_random_fixed_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2.7_learnable_frequency_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2_random_fixed_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2_learnable_frequency_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma6_random_fixed_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma6_learnable_frequency_seed43",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma0_random_fixed_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma0_learnable_frequency_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2.7_random_fixed_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2.7_learnable_frequency_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2_random_fixed_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma2_learnable_frequency_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma6_random_fixed_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10_sigma6_learnable_frequency_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma0_random_fixed_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma0_learnable_frequency_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2.7_random_fixed_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2.7_learnable_frequency_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2_random_fixed_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma2_learnable_frequency_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma6_random_fixed_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "noise/k10000_sigma6_learnable_frequency_seed44",
+      "paper_item": "Table 1 / Figure 6: Poisson and read-noise grid",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_uniform_all_ones_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_random_fixed_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_hadamard_fixed_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_learnable_frequency_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_uniform_all_ones_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_random_fixed_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_hadamard_fixed_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_learnable_frequency_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_uniform_all_ones_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_random_fixed_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_hadamard_fixed_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_learnable_frequency_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_uniform_all_ones_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_random_fixed_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_hadamard_fixed_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_learnable_frequency_seed42",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_uniform_all_ones_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_random_fixed_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_hadamard_fixed_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_learnable_frequency_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_uniform_all_ones_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_random_fixed_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_hadamard_fixed_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_learnable_frequency_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_uniform_all_ones_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_random_fixed_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_hadamard_fixed_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_learnable_frequency_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_uniform_all_ones_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_random_fixed_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_hadamard_fixed_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_learnable_frequency_seed43",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_uniform_all_ones_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_random_fixed_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_hadamard_fixed_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x16_learnable_frequency_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_uniform_all_ones_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_random_fixed_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_hadamard_fixed_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x64_learnable_frequency_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_uniform_all_ones_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_random_fixed_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_hadamard_fixed_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x256_learnable_frequency_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_uniform_all_ones_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_random_fixed_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_hadamard_fixed_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content/bbbc022_x1024_learnable_frequency_seed44",
+      "paper_item": "Figure 3: content-aware compression (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x16_random_fixed_seed42",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x16_learnable_frequency_seed42",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x64_random_fixed_seed42",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x64_learnable_frequency_seed42",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x256_random_fixed_seed42",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x256_learnable_frequency_seed42",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x1024_random_fixed_seed42",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x1024_learnable_frequency_seed42",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x16_random_fixed_seed43",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x16_learnable_frequency_seed43",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x64_random_fixed_seed43",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "completed",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x64_learnable_frequency_seed43",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "running",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x256_random_fixed_seed43",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x256_learnable_frequency_seed43",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x1024_random_fixed_seed43",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x1024_learnable_frequency_seed43",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x16_random_fixed_seed44",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x16_learnable_frequency_seed44",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x64_random_fixed_seed44",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x64_learnable_frequency_seed44",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x256_random_fixed_seed44",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x256_learnable_frequency_seed44",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x1024_random_fixed_seed44",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "content_swinir/x1024_learnable_frequency_seed44",
+      "paper_item": "Figure 3: frozen-base SwinIR refinement (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x64_random_fixed_seed42",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x64_learnable_frequency_seed42",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x256_random_fixed_seed42",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x256_learnable_frequency_seed42",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x1024_random_fixed_seed42",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x1024_learnable_frequency_seed42",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x64_random_fixed_seed43",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x64_learnable_frequency_seed43",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x256_random_fixed_seed43",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x256_learnable_frequency_seed43",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x1024_random_fixed_seed43",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x1024_learnable_frequency_seed43",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x64_random_fixed_seed44",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x64_learnable_frequency_seed44",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x256_random_fixed_seed44",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x256_learnable_frequency_seed44",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x1024_random_fixed_seed44",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "segmentation/x1024_learnable_frequency_seed44",
+      "paper_item": "Figure 4: all three training stages (BBBC022 pseudo-labels)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "sr/swinir_wo_li_seed42",
+      "paper_item": "Table 2 / Figure 7: natural-image SwinIR",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "sr/swinir_with_li_seed42",
+      "paper_item": "Table 2 / Figure 7: natural-image SwinIR",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "sr/swinir_wo_li_seed43",
+      "paper_item": "Table 2 / Figure 7: natural-image SwinIR",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "sr/swinir_with_li_seed43",
+      "paper_item": "Table 2 / Figure 7: natural-image SwinIR",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "sr/swinir_wo_li_seed44",
+      "paper_item": "Table 2 / Figure 7: natural-image SwinIR",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "sr/swinir_with_li_seed44",
+      "paper_item": "Table 2 / Figure 7: natural-image SwinIR",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/wswinir_seed42",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/transpose256_seed42",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/wcnn64_seed42",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/figures_seed42",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/wswinir_seed43",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/transpose256_seed43",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/wcnn64_seed43",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/figures_seed43",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/wswinir_seed44",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/transpose256_seed44",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/wcnn64_seed44",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "mcf7/figures_seed44",
+      "paper_item": "Figures 8\u20139: tubulin SwinIR and CNN models",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/A_seed42",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/B_seed42",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/C_seed42",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/D_seed42",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/A_seed43",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/B_seed43",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/C_seed43",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/D_seed43",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/A_seed44",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/B_seed44",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/C_seed44",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    },
+    {
+      "job": "ablation/D_seed44",
+      "paper_item": "Table 3 / Figure 10: A\u2013D (BBBC022 substitute)",
+      "status": "pending",
+      "protocol": "audited_legacy_soft_mask"
+    }
+  ]
+}

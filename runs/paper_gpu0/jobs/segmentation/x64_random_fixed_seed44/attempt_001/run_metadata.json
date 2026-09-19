@@ -1,0 +1,6 @@
+{
+  "seed": 44,
+  "git_commit": "8b228f1794e655159eec162b4e56c01f86afc54d",
+  "run_id": "segmentation/x64_random_fixed_seed44",
+  "training_mode": "task_aware_segmentation_staged"
+}

@@ -1,0 +1,14 @@
+{
+  "min": 1.0,
+  "max": 1.0,
+  "mean": 1.0,
+  "binary_fraction": 1.0,
+  "per_pattern_mean": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "patterns_differ": false,
+  "sigmoid_m": 1.0
+}

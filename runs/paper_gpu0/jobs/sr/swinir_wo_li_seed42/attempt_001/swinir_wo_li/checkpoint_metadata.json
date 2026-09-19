@@ -1,0 +1,46 @@
+{
+  "condition": "swinir_wo_li",
+  "learnable": false,
+  "iterations_target": 20000,
+  "iterations_reached": 20000,
+  "effective_batch_size": 32,
+  "micro_batch_size": 8,
+  "grad_accum": 4,
+  "best_val_l1": 0.05729676286379496,
+  "best_step": 20000,
+  "arch_summary": {
+    "embed_dim": 180,
+    "num_layers": 6,
+    "window_size": 8,
+    "upscale": 1,
+    "total_params": 11514070,
+    "swinir_params": 11497681,
+    "upsampling_params": 16384,
+    "fuse_params": 5,
+    "illumination_params": 0,
+    "illumination_learnable": false
+  },
+  "optimizer_groups": [
+    {
+      "name": "inverse",
+      "lr": 0.0002,
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "num_params": 11514070
+    }
+  ],
+  "amp_dtype": "torch.bfloat16",
+  "device": "cuda:0",
+  "torch_version": "2.11.0+cu128",
+  "git_commit": "8b228f1794e655159eec162b4e56c01f86afc54d",
+  "seed": 42,
+  "timestamp_utc": "2026-09-15T10:07:34.398381+00:00",
+  "train_images": 3381,
+  "val_images": 69,
+  "checkpoints": {
+    "best": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_gpu0/jobs/sr/swinir_wo_li_seed42/attempt_001/swinir_wo_li/checkpoints/best.pt",
+    "last": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_gpu0/jobs/sr/swinir_wo_li_seed42/attempt_001/swinir_wo_li/checkpoints/last.pt"
+  }
+}

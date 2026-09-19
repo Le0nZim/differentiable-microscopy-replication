@@ -1,0 +1,14 @@
+{
+  "pattern_delta": 0.3373360335826874,
+  "w_delta": 112.91780090332031,
+  "detector_delta": 1.3710743188858032,
+  "max_grad_norm_W": 5.529922418645583e-05,
+  "best_val_mse": 0.006579271292934815,
+  "best_step": 14850,
+  "sigmoid_m": 8.0,
+  "phase": "harden_m8",
+  "H_t_min": 1.5265207716287146e-18,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.47326651215553284,
+  "H_t_binary_fraction": 0.8322696685791016
+}

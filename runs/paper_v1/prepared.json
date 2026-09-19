@@ -1,0 +1,23 @@
+{
+  "paths": {
+    "mnist_root": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/mnist",
+    "mnist_sha256": "895b1dec347b06358d903e9351325a41aa0642181c6727b8e86abacd3096b333",
+    "bbbc022_large": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/bbbc022_large.json",
+    "bbbc022_segmentation": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/bbbc022_segmentation.json",
+    "mcf7_manifest": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/mcf7_tubulin.csv",
+    "sr_split": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/sr_split.json",
+    "sr_test_roots": {
+      "Set5": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/sr_test/Set5",
+      "Set14": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/sr_test/Set14",
+      "BSD100": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/sr_test/BSD100",
+      "Urban100": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/sr_test/Urban100",
+      "Manga109": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/sr_test/Manga109"
+    }
+  },
+  "hashes": {
+    "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/bbbc022_large.json": "c8adb81e863e3cd537190aad4901977e5d62de975f90f323dfda92c53dcd0dca",
+    "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/bbbc022_segmentation.json": "ec45a6a0f9f6c7c036c8d7dde086b51306e4d5cc24579bddfa1170fe2dc6a102",
+    "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/mcf7_tubulin.csv": "db327fd5f84a877ff64bb29b4dcf85578dfdd2433f6c804923cd97b15b41bcb8",
+    "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/prepared/sr_split.json": "bed278b28a03dc6b2ce3108a093bad566fb214d7aaa5c2f155ac6aa38f680171"
+  }
+}

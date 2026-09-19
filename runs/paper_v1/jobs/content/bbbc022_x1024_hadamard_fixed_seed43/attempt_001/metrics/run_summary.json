@@ -1,0 +1,18 @@
+{
+  "run_dir": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_hadamard_fixed_seed43/attempt_001",
+  "test_mse": 0.03867214024066925,
+  "test_ssim": 0.5913106203079224,
+  "checkpoint_path": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_hadamard_fixed_seed43/attempt_001/checkpoints/best.pt",
+  "best_val_mse": 0.03653789758682251,
+  "best_step": 4200,
+  "final_val_mse": 0.040197746455669404,
+  "final_loss": 0.09090231359004974,
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 0.0,
+  "max_grad_norm_W": 0.0,
+  "H_t_min": 0.0,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.625,
+  "H_t_binary_fraction": 1.0
+}

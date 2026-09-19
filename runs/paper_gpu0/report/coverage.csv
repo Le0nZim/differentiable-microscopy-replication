@@ -1,0 +1,49 @@
+job,paper_item,status,protocol
+segmentation/x64_random_fixed_seed42,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x64_learnable_frequency_seed42,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x256_random_fixed_seed42,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x256_learnable_frequency_seed42,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x1024_random_fixed_seed42,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x1024_learnable_frequency_seed42,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x64_random_fixed_seed43,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x64_learnable_frequency_seed43,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x256_random_fixed_seed43,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x256_learnable_frequency_seed43,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x1024_random_fixed_seed43,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x1024_learnable_frequency_seed43,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x64_random_fixed_seed44,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x64_learnable_frequency_seed44,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x256_random_fixed_seed44,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x256_learnable_frequency_seed44,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x1024_random_fixed_seed44,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+segmentation/x1024_learnable_frequency_seed44,Figure 4: all three training stages (BBBC022 pseudo-labels),completed,audited_legacy_soft_mask
+sr/swinir_wo_li_seed42,Table 2 / Figure 7: natural-image SwinIR,completed,audited_legacy_soft_mask
+sr/swinir_with_li_seed42,Table 2 / Figure 7: natural-image SwinIR,completed,audited_legacy_soft_mask
+sr/swinir_wo_li_seed43,Table 2 / Figure 7: natural-image SwinIR,completed,audited_legacy_soft_mask
+sr/swinir_with_li_seed43,Table 2 / Figure 7: natural-image SwinIR,interrupted,audited_legacy_soft_mask
+sr/swinir_wo_li_seed44,Table 2 / Figure 7: natural-image SwinIR,pending,audited_legacy_soft_mask
+sr/swinir_with_li_seed44,Table 2 / Figure 7: natural-image SwinIR,pending,audited_legacy_soft_mask
+mcf7/wswinir_seed42,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/transpose256_seed42,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/wcnn64_seed42,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/figures_seed42,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/wswinir_seed43,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/transpose256_seed43,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/wcnn64_seed43,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/figures_seed43,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/wswinir_seed44,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/transpose256_seed44,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/wcnn64_seed44,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+mcf7/figures_seed44,Figures 8–9: tubulin SwinIR and CNN models,pending,audited_legacy_soft_mask
+ablation/A_seed42,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/B_seed42,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/C_seed42,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/D_seed42,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/A_seed43,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/B_seed43,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/C_seed43,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/D_seed43,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/A_seed44,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/B_seed44,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/C_seed44,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask
+ablation/D_seed44,Table 3 / Figure 10: A–D (BBBC022 substitute),pending,audited_legacy_soft_mask

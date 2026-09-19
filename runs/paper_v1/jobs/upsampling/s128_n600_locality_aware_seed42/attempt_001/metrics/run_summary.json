@@ -1,0 +1,18 @@
+{
+  "run_dir": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n600_locality_aware_seed42/attempt_001",
+  "test_mse": 0.01619164637227853,
+  "test_ssim": 0.848427464167277,
+  "checkpoint_path": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n600_locality_aware_seed42/attempt_001/checkpoints/best.pt",
+  "best_val_mse": 0.01610138627390067,
+  "best_step": 4000,
+  "final_val_mse": 0.01610138627390067,
+  "final_loss": 0.031038798391819,
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 0.0,
+  "max_grad_norm_W": 0.0,
+  "H_t_min": 1.1581602133392859e-20,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.4998781681060791,
+  "H_t_binary_fraction": 0.769927978515625
+}

@@ -1,0 +1,24 @@
+Using device: cuda:0
+Generating PatchMNIST train: 600 x 128px -> /home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/.workstation-cache/patchmnist/7058bd1be8970a74d96140ccd9a17968dae5e304b10e11632b99a4a9230d4797.npy
+Generating PatchMNIST val: 375 x 128px -> /home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/.workstation-cache/patchmnist/7f2d1446026f4edc062a4f0de10983ba3a0d9824b63409ebe4f053c6c696f7e3.npy
+Generating PatchMNIST test: 375 x 128px -> /home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/.workstation-cache/patchmnist/14d974392b7df4b04e2c411451dea2a694288246034342e8e00a1973390ac77e.npy
+step=200 loss=0.09731 val_mse=0.05027 val_ssim=0.5491 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=400 loss=0.08792 val_mse=0.04405 val_ssim=0.6354 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=600 loss=0.08306 val_mse=0.04339 val_ssim=0.6734 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=800 loss=0.08202 val_mse=0.04181 val_ssim=0.6638 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1000 loss=0.08185 val_mse=0.04148 val_ssim=0.6848 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1200 loss=0.07862 val_mse=0.03953 val_ssim=0.6810 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1400 loss=0.08076 val_mse=0.04037 val_ssim=0.6821 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1600 loss=0.07533 val_mse=0.03916 val_ssim=0.6911 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1800 loss=0.07767 val_mse=0.03931 val_ssim=0.6830 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2000 loss=0.07442 val_mse=0.04138 val_ssim=0.6730 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2200 loss=0.07743 val_mse=0.03895 val_ssim=0.6960 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2400 loss=0.07538 val_mse=0.03843 val_ssim=0.6947 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2600 loss=0.07338 val_mse=0.03916 val_ssim=0.6917 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2800 loss=0.07254 val_mse=0.03934 val_ssim=0.6936 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3000 loss=0.07201 val_mse=0.03881 val_ssim=0.6936 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3200 loss=0.07008 val_mse=0.03939 val_ssim=0.6912 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3400 loss=0.06908 val_mse=0.04353 val_ssim=0.6724 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3600 loss=0.07007 val_mse=0.03898 val_ssim=0.6880 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3800 loss=0.06929 val_mse=0.03844 val_ssim=0.6987 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=4000 loss=0.06848 val_mse=0.03878 val_ssim=0.6978 grad_W=0.0000e+00 H_t=[0.000,1.000]

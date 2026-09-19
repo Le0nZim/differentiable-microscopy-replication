@@ -1,0 +1,2 @@
+Using device: cuda:0
+Generating PatchMNIST train: 3000 x 512px -> /home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/.workstation-cache/patchmnist/6971183da9d94d71b8e1d8751bd46d0fce191a3dea29157f6af101a4de99eb3e.npy

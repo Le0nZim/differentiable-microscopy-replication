@@ -1,0 +1,6 @@
+{
+  "seed": 43,
+  "git_commit": "8b228f1794e655159eec162b4e56c01f86afc54d",
+  "run_id": "noise/k10_sigma6_learnable_frequency_seed43",
+  "training_mode": "staged_hardening"
+}

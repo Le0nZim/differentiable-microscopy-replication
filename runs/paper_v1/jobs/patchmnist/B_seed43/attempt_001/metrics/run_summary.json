@@ -1,0 +1,15 @@
+{
+  "variant": "B",
+  "label": "learnable Ht + Tr.Conv.Up + freq",
+  "seed": 43,
+  "test_mse": 0.006319612314303716,
+  "test_ssim": 0.9392240513165792,
+  "best_val_mse": 0.006239832992355029,
+  "best_train_mse": 0.006442145444452763,
+  "min_train_mse": 0.006351423915475607,
+  "final_train_mse": 0.006280963696539402,
+  "overfit_gap": -0.00020231245209773388,
+  "best_m": 8.0,
+  "elapsed_sec": 760.4223630428314,
+  "run_dir": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/B_seed43/attempt_001"
+}

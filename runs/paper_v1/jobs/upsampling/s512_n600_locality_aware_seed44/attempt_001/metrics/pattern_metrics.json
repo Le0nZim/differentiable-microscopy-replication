@@ -1,0 +1,12 @@
+{
+  "pattern_delta": 0.0,
+  "w_delta": null,
+  "detector_delta": 0.0,
+  "max_grad_norm_W": 0.0,
+  "best_val_mse": 0.014981440238654614,
+  "best_step": 4000,
+  "H_t_min": 3.0866855577518976e-23,
+  "H_t_max": 1.0,
+  "H_t_mean": 0.49988454580307007,
+  "H_t_binary_fraction": 0.7681021690368652
+}

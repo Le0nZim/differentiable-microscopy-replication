@@ -1,0 +1,23 @@
+{
+  "run_dir": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_gpu0/jobs/segmentation/x1024_learnable_frequency_seed43/attempt_001",
+  "run_id": "segmentation/x1024_learnable_frequency_seed43",
+  "learnable": true,
+  "compression": 1024.0,
+  "content_aware_checkpoint": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_gpu0/jobs/segmentation/x1024_learnable_frequency_seed43/attempt_001/stage1_content_aware/checkpoints/best.pt",
+  "selected_threshold": 0.1,
+  "val_dice": 0.5437645330315545,
+  "val_iou": 0.3754689948899405,
+  "test_dice": 0.5509923483644213,
+  "test_iou": 0.38212289980479647,
+  "test_bce": 0.6691626906394958,
+  "test_dice_at_0p5": 0.5260305745261056,
+  "test_iou_at_0p5": 0.3595500176861173,
+  "stage2_val_dice": 0.5735806993075779,
+  "seg_head_steps": 1200,
+  "finetune_steps": 2500,
+  "illumination_grad_norm_stage3_max": 2.7447555112303235e-05,
+  "inverse_grad_norm_stage3_max": 6.554274082183838,
+  "seg_head_grad_norm_stage2_max": 1.2057992219924927,
+  "illumination_pattern_delta_l2": 111.813720703125,
+  "illumination_pattern_delta_relative": 0.32598566766503784
+}

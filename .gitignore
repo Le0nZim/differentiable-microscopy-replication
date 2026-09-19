@@ -41,16 +41,28 @@ data/**/*.TIFF
 # Nested upstream SwinIR clone (pin in SwinIR.COMMIT; clone locally to re-run)
 SwinIR/
 
-# Logs
+# Logs (keep campaign console / runner logs)
 *.log
 *.out
+!/runs/**/*.log
 
 # Credentials
 credentials.json
 secrets.yaml
 
-# Fresh workstation campaigns and machine configuration
+# Machine-local paths and caches
 /workstation.yaml
-/runs/
+/workstation_gpu0.yaml
 /.workstation-cache/
 /SwinIR
+
+# Campaign process files. last.pt and intermediate H_t dumps exceed GitHub Free LFS
+# (10 GB); best.pt, final/initial patterns, metrics and figures are kept.
+/runs/**/.campaign.lock
+/runs/**/last.pt
+/runs/**/H_t_soft_*.pt
+/runs/**/H_t_sharpened_*.pt
+/runs/**/H_t_thresholded_*.pt
+
+# Local symlink farms of SR test images; not portable.
+/runs/**/prepared/sr_test/

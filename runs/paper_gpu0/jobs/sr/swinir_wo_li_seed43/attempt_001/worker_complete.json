@@ -1,0 +1,6 @@
+{
+  "artifacts": [
+    "swinir_wo_li/result.json",
+    "swinir_wo_li/checkpoints/best.pt"
+  ]
+}
