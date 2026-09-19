@@ -20,7 +20,7 @@ def resolved_job(tmp_path, stage, **criteria):
     settings["run"].update(device="cpu", cache_root=str(tmp_path / "cache"))
     prepared = {"mnist_root": str(tmp_path), "mnist_sha256": "synthetic",
                 "bbbc022_large": str(tmp_path / "large.json"),
-                "bbbc022_segmentation": str(tmp_path / "small.json"),
+                "bbbc022_segmentation": str(tmp_path / "small.json"), "bbbc039": str(tmp_path / "manual.json"),
                 "mcf7_manifest": str(tmp_path / "mcf.csv")}
     job = next(j for j in jobs([42], [stage]) if j["stage"] == stage and all(j.get(k) == v for k, v in criteria.items()))
     deps = {}
@@ -188,11 +188,12 @@ def test_sr_metrics_cover_borders_weight_images_and_count_acquisitions(tmp_path)
         assert row["effective_compression"] == row["evaluated_pixels"] / row["scalar_measurements"]
 
 
-def test_segmentation_targets_do_not_use_undocumented_camera_calibration(tmp_path):
+def test_segmentation_defaults_to_manual_annotations_without_pseudo_parameters(tmp_path):
     _, cfg = resolved_job(tmp_path, "segmentation", mode="learnable_frequency")
     ds = cfg["dataset"]
-    assert ds["name"] == "bbbc022_preproc_ablation" and ds["preproc_mode"] == "minimal_percentile"
-    assert ds["mask_before_crop"] and ds["mask_closing_kernel"] == 10
+    assert ds["name"] == "bbbc039" and ds["label_source"] == "BBBC039 manual nucleus annotations"
+    assert ds["num_train_images"] == 100 and ds["num_val_images"] == ds["num_test_images"] == 50
+    assert not any(k.startswith("mask_") for k in ds)
     assert not {"bias", "clip_max", "mask_raw_threshold"} & ds.keys()
     assert cfg["training"]["task_aware"]["stage1_mode"] == "train"
 

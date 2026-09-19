@@ -19,7 +19,7 @@ def configure(cfg, job, dependencies):
     cfg["workflow"].update(protocol=p["id"], architecture_family=family,
                            tuning=bool(job.get("tuning")), claims=p["claims"])
     cfg["deviations_from_paper"] = [
-        "Prospective journal_v1; see docs/JOURNAL_PROTOCOL.md for all scientific choices.",
+        f"Prospective {p['id']}; see docs/JOURNAL_PROTOCOL.md for all scientific choices.",
         f"Declared {family} architecture family with repaired optimization/evaluation; original U2OS data unavailable.",
     ]
     inv = cfg.get("inverse_model")
@@ -33,7 +33,7 @@ def configure(cfg, job, dependencies):
         pg["random_fixed_m"] = 8.0
     tr = cfg.get("training", {})
     ds = cfg.get("dataset", {})
-    if stage in {"content", "ablation", "segmentation"}:
+    if stage in {"content", "ablation"}:
         ds.update(name="bbbc022_preproc_ablation", preproc_mode=p["bbbc022"]["preprocessing"],
                   q_low=p["bbbc022"]["q_low"], q_high=p["bbbc022"]["q_high"],
                   epoch_varying_train_crops=True)
@@ -74,11 +74,22 @@ def configure(cfg, job, dependencies):
         tr["validation_noise_seed"] = 105013
         tr["test_noise_seeds"] = [101, 202, 303, 404, 505]
     if stage == "segmentation":
-        ds.update(return_mask=True, canonical_mask_mode="minimal_percentile", mask_before_crop=True,
-                  mask_threshold=p["segmentation"]["threshold"], mask_closing_kernel=p["segmentation"]["closing_kernel"])
-        for key in ("preprocessing_mode", "bias", "clip_max", "mask_mode", "mask_raw_threshold",
-                    "mask_smooth_interval", "mask_dp_epsilon"):
-            ds.pop(key, None)
+        source = job.get("label_source", "bbbc039")
+        if source == "bbbc039":
+            cfg["dataset"] = {k: ds[k] for k in ("data_root", "split_path", "seed", "image_size", "patch_size",
+                                                "return_mask", "train_random_crops", "random_flips")}
+            cfg["dataset"].update(name="bbbc039", q_low=.001, q_high=.999,
+                                  label_source="BBBC039 manual nucleus annotations",
+                                  num_train_images=100, num_val_images=50, num_test_images=50)
+        elif source == "pseudo_trackmate":
+            # Keep the user's original raw threshold and contour parameters from
+            # configs/figure04_segmentation/task_aware.yaml, without retuning.
+            ds.update(name="bbbc022_hoechst", label_source="BBBC022 TrackMate-style pseudo-labels")
+        else:
+            raise ValueError(f"Unknown segmentation label source: {source}")
+        cfg["workflow"].update(dataset_identity=source, label_source=cfg["dataset"]["label_source"])
+        cfg["detector_noise"].update(mode="differentiable_poisson_plus_read", noise_normalization="paper_v3",
+                                     apply_noise=True, photon_count=10000., gamma=10., sigma_read=0.)
         task = tr["task_aware"]
         task.update(eval_sigmoid_m=8., finetune_sigmoid_m=1.)
         task["stage1"]["matched_phases"] = True

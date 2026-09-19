@@ -63,13 +63,15 @@ def defaults(data_root):
         "data": {
             "mnist": str(root / "mnist"),
             "bbbc022": str(root / "substitute_data/BBBC022_v1_images_20585w1"),
+            "bbbc039": str(root / "bbbc039"),
             "mcf7_images": str(selected),
             "mcf7_manifest": str(mcf / "manifests/mcf7_channel2_manifest.csv"),
             "sr_train": {"DIV2K": str(root / "sr/train/DIV2K"), "Flickr2K": str(flickr)},
             "sr_test": {name: str(root / "sr/test" / name) for name in SR_SETS},
         },
-        "run": {"output_root": str(ROOT / "runs/journal_v1"), "cache_root": str(ROOT / ".workstation-cache"),
-                "device": "cuda:1", "seeds": [42, 43, 44], "data_seed": 42, "num_workers": 8, "min_free_gb": 20},
+        "run": {"output_root": str(ROOT / "runs/journal_v2"), "cache_root": str(ROOT / ".workstation-cache"),
+                "device": "cuda:1", "seeds": [42, 43, 44], "data_seed": 42, "num_workers": 8, "min_free_gb": 20,
+                "segmentation_labels": "bbbc039"},
     }
 
 
@@ -81,10 +83,17 @@ def load_settings(path):
         raise ValueError("Unsupported workstation config. Run: python paper.py init --data-root /path/to/data")
     if set(cfg) != {"version", "data", "run"}:
         raise ValueError("workstation.yaml must contain only version, data and run; check for misspelled fields.")
-    required_data = {"mnist", "bbbc022", "mcf7_images", "mcf7_manifest", "sr_train", "sr_test"}
-    required_run = {"output_root", "cache_root", "device", "seeds", "data_seed", "num_workers", "min_free_gb"}
+    # Read existing workstation files without losing any user paths. The new
+    # annotation source defaults beside MNIST; no pseudo-label auto-fallback.
+    if "mnist" in cfg["data"]:
+        cfg["data"].setdefault("bbbc039", str(Path(cfg["data"]["mnist"]).parent / "bbbc039"))
+    cfg["run"].setdefault("segmentation_labels", "bbbc039")
+    required_data = {"mnist", "bbbc022", "bbbc039", "mcf7_images", "mcf7_manifest", "sr_train", "sr_test"}
+    required_run = {"output_root", "cache_root", "device", "seeds", "data_seed", "num_workers", "min_free_gb", "segmentation_labels"}
     if set(cfg["data"]) != required_data or set(cfg["run"]) != required_run:
         raise ValueError("workstation.yaml has missing/unknown fields; compare with configs/workstation.example.yaml")
+    if cfg["run"]["segmentation_labels"] not in {"bbbc039", "pseudo_trackmate"}:
+        raise ValueError("run.segmentation_labels must be bbbc039 (manual) or pseudo_trackmate (explicit fallback)")
     def absolute(value):
         p = Path(value).expanduser()
         return str((path.parent / p).resolve())
@@ -217,7 +226,7 @@ def inspect_pixels(paths, *, grayscale=False):
 
 def inspect(cfg, stages):
     """Gather all actionable errors instead of stopping after the first path."""
-    needed = requirements(stages)
+    needed = requirements(stages, segmentation_labels=cfg["run"].get("segmentation_labels", "bbbc039"))
     data = cfg["data"]
     evidence, inventories, resolved, errors = {}, {}, {}, []
     for need in needed:
@@ -231,6 +240,10 @@ def inspect(cfg, stages):
                 inspect_pixels(paths, grayscale=True)
                 resolved[need] = {w: [str(p.resolve()) for p in ps] for w, ps in groups.items()}
                 evidence[need] = f"{len(paths)} w1 images, {len(groups)} wells; sample TIFFs decoded"
+            elif need == "bbbc039":
+                from .bbbc039 import inspect as inspect_annotations
+                resolved[need], paths = inspect_annotations(data[need])
+                evidence[need] = "200 manual image/mask pairs decoded; official 100/50/50 split and plate+well separation verified"
             elif need == "mcf7":
                 rows, paths = inspect_mcf(data)
                 inspect_pixels(paths, grayscale=True)
@@ -282,6 +295,9 @@ def inspect(cfg, stages):
                 paths = [p]
                 evidence[need] = str(p)
             inventories[need] = [{"path": str(p.resolve()), "bytes": p.stat().st_size, "mtime_ns": p.stat().st_mtime_ns} for p in paths]
+            if need == "bbbc039":
+                for item in inventories[need]:
+                    item["sha256"] = file_sha(item["path"])
         except (ValueError, OSError, ImportError, RuntimeError) as exc:
             errors.append(f"{need}: {exc}")
     return {"evidence": evidence, "inventories": inventories, "resolved": resolved, "errors": errors}
@@ -293,6 +309,10 @@ def prepare(cfg, stages, inspection):
     out.mkdir(parents=True, exist_ok=True)
     result = {}
     rs = inspection["resolved"]
+    if "bbbc039" in rs:
+        p = out / "bbbc039_manual.json"
+        write_json(p, rs["bbbc039"])
+        result["bbbc039"] = str(p)
     if "mnist" in rs:
         source = Path(rs["mnist"])
         if all((source / "MNIST/raw" / n).exists() for n in MNIST_FILES):

@@ -11,7 +11,7 @@ STAGES = {
     "patchmnist_content": ("Supplement Figure S3: PatchMNIST compression sweep", ["mnist"]),
     "content": ("Figure 3: compression and acquisition geometry (BBBC022 substitute)", ["bbbc022"]),
     "content_swinir": ("Figure 3 / Table S1: frozen-base SwinIR refinement (substitute)", ["bbbc022", "swinir", "vgg"]),
-    "segmentation": ("Figure 4: three-stage pseudo-label segmentation (substitute)", ["bbbc022"]),
+    "segmentation": ("Figure 4: three-stage segmentation (BBBC039 manual masks by default)", ["bbbc039"]),
     "sr": ("Table 2 / Figure 7: natural-image SwinIR", ["sr", "swinir", "vgg"]),
     "mcf7": ("Figures 8-9: matched-loss tubulin SwinIR and CNN models", ["mcf7", "swinir", "vgg"]),
     "controlled": ("Additional binary-mask / equal-mean-dose controls", ["mnist"]),
@@ -45,7 +45,7 @@ def selection_id(stage, family):
     return f"{stage}/{family}_selection_seed{protocol()['tuning_seed']}"
 
 
-def jobs(seeds, stages=None):
+def jobs(seeds, stages=None, *, segmentation_labels="bbbc039"):
     p = protocol()
     if p["tuning_seed"] in seeds:
         raise ValueError("The tuning seed must be separate from final model seeds")
@@ -97,7 +97,8 @@ def jobs(seeds, stages=None):
                         requires=[f"content/bbbc022_{comp}_{mode}_seed{seed}"])
             elif stage == "segmentation":
                 for (comp, d), mode in product(COMPS[1:], ["random_fixed", "learnable_frequency"]):
-                    add(stage, seed, f"{comp}_{mode}", engine="segmentation", comp=comp, downscale=d, mode=mode)
+                    add(stage, seed, f"{comp}_{mode}", engine="segmentation", comp=comp, downscale=d, mode=mode,
+                        label_source=segmentation_labels)
             elif stage == "sr":
                 for condition in ["swinir_wo_li", "swinir_with_li"]:
                     add(stage, seed, condition, engine="sr", condition=condition)
@@ -114,5 +115,9 @@ def jobs(seeds, stages=None):
     return result
 
 
-def requirements(stages):
-    return sorted({d for s in select_stages(stages) for d in STAGES[s][1]})
+def requirements(stages, *, segmentation_labels="bbbc039"):
+    needed = {d for s in select_stages(stages) for d in STAGES[s][1]}
+    if "bbbc039" in needed and segmentation_labels == "pseudo_trackmate":
+        needed.remove("bbbc039")
+        needed.add("bbbc022")
+    return sorted(needed)

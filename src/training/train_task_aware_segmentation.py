@@ -323,6 +323,7 @@ def _save_qualitative_panel(
     apply_noise: bool,
     threshold: float,
     num_samples: int,
+    mask_label: str = "pseudo mask",
 ) -> None:
     model.eval()
     specimen, mask = next(iter(loader))
@@ -334,7 +335,7 @@ def _save_qualitative_panel(
     pred = (prob > threshold).float()
 
     n = min(num_samples, specimen.shape[0])
-    cols = ["GT image", "pseudo mask", "reconstruction", "seg prob", f"pred mask (t={threshold:.2f})"]
+    cols = ["GT image", mask_label, "reconstruction", "seg prob", f"pred mask (t={threshold:.2f})"]
     fig, axes = plt.subplots(n, len(cols), figsize=(3 * len(cols), 3 * n))
     if n == 1:
         axes = axes.reshape(1, -1)
@@ -545,6 +546,7 @@ def train_task_aware_segmentation(config: dict[str, Any], output_dir: str | Path
     _save_qualitative_panel(
         model, test_loader, device, run_dir / "figures" / "qualitative_panel.png",
         sigmoid_m=eval_m, apply_noise=apply_noise, threshold=final_t, num_samples=num_qual,
+        mask_label="manual nucleus mask" if config["dataset"]["name"] == "bbbc039" else "pseudo mask",
     )
     with torch.no_grad():
         patterns = model.microscope.pattern_generator(sigmoid_m=eval_m).detach().cpu()
@@ -585,6 +587,11 @@ def train_task_aware_segmentation(config: dict[str, Any], output_dir: str | Path
         json.dump(stage3["history"], handle, indent=2)
 
     summary = {
+        "dataset": config["dataset"]["name"],
+        "label_source": config["dataset"].get("label_source", "image-derived pseudo-labels"),
+        "target_type": "binary nucleus foreground",
+        "evaluation_region": f"center {config['dataset'].get('patch_size', 256)}x{config['dataset'].get('patch_size', 256)} crop per field",
+        "test_num_samples": test_metrics["num_samples"],
         "run_dir": str(run_dir),
         "run_id": experiment_cfg["run_id"],
         "learnable": learnable,

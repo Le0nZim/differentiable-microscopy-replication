@@ -11,6 +11,7 @@ from datasets.patchmnist import PatchMNISTDataset
 from datasets.u2os import U2OSDataset
 from datasets.bbbc022_hoechst import BBBC022HoechstDataset
 from datasets.bbbc022_preproc_ablation import PreprocAblationDataset
+from datasets.bbbc039 import BBBC039Dataset
 from datasets.mcf7_channel2 import MCF7Channel2Dataset
 
 
@@ -24,6 +25,8 @@ def build_dataset(config: dict[str, Any], split: str):
         dataset = BBBC022HoechstDataset.from_dict(config["dataset"], split=split)
     elif dataset_name in {"bbbc022_preproc_ablation", "preproc_ablation"}:
         dataset = PreprocAblationDataset.from_dict(config["dataset"], split=split)
+    elif dataset_name == "bbbc039":
+        dataset = BBBC039Dataset.from_dict(config["dataset"], split=split)
     elif dataset_name in {"mcf7_channel2", "mcf7"}:
         dataset = MCF7Channel2Dataset.from_dict(config["dataset"], split=split)
     else:
