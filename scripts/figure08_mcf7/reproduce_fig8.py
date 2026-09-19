@@ -68,7 +68,7 @@ def _to_viridis(gray: np.ndarray, lo: float, hi: float) -> np.ndarray:
 
 
 def _load_model(condition: str, cfg: dict, runs_dir: Path, device):
-    backbone, isz, up_mode, _ = TR.CONDITIONS[condition]
+    backbone, isz, up_mode, _ = TR.condition_spec(cfg, condition)
     if backbone == "swinir":
         model = TR._build_swinir_model(cfg, isz).to(device)
     else:

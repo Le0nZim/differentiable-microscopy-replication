@@ -1,5 +1,9 @@
 # Workstation experiment protocol
 
+**Historical 234-job workflow.** For new runs use the finalized
+[journal protocol](JOURNAL_PROTOCOL.md) and [setup guide](../START_HERE.md).
+The choices below describe the earlier workflow and are retained for provenance.
+
 This workflow starts from audit commit `8c27b7b`. It reorganizes execution and
 data preparation; it does not certify numerical reproduction. The source paper
 is [arXiv:2203.14945](https://arxiv.org/abs/2203.14945). Consult the existing

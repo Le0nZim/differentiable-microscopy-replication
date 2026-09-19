@@ -1,6 +1,11 @@
 # Workstation workflow
 
 Read START_HERE.md first. For a fresh setup use paper.py, not archived launchers.
+The finalized branch is journal/final-protocol. Read docs/JOURNAL_PROTOCOL.md;
+scientific choices are already fixed in configs/journal/protocol.yaml. Preserve
+the declared LR searches, selection criteria, original primary architectures,
+held-out reserve wells and distinct binary-control reporting. Do not choose an
+architecture or tune a recipe because it produces the desired test ranking.
 
 1. Keep the user's source datasets in place. Do not delete, rename or merge data
    folders. Do not download old Git LFS checkpoints for a clean rerun.

@@ -1,4 +1,4 @@
-# Differentiable Microscopy — fresh workstation experiments
+# Differentiable Microscopy — finalized journal experiments
 
 Reproduction code for [Differentiable Microscopy for Content and Task Aware
 Compressive Fluorescence Imaging](https://arxiv.org/abs/2203.14945).
@@ -25,17 +25,19 @@ jobs as separate attempts. `python paper.py status` shows progress;
 |---|---|
 | `paper.py`, `workflow/` | Dataset setup, job order, execution, resume and reports |
 | `workstation.yaml` (local) | Your paths, GPU, output/cache directories and seeds |
-| `configs/` | Existing scientific recipes, separate from machine paths |
+| `configs/journal/protocol.yaml` | Frozen scientific choices, search grids and schedule |
 | `src/`, `scripts/` | Models, datasets and individual experiment implementations |
 | `runs/` (local) | Fresh campaign configs, manifests, logs, checkpoints and reports |
 | `docs/` | Audit, protocol, validation and historical catalog |
 
-The [workstation protocol](docs/WORKSTATION_PROTOCOL.md) lists all stages, budgets
-and data-split decisions. The [scientific audit](docs/SCIENTIFIC_AUDIT.md) explains
-why historical scores remain exploratory. BBBC022 substitutes for the missing
-original U2OS data, and the paper workflow retains documented soft-mask recipes
-and deviations. The optional `--stages controlled` queue runs the separate
-binary-mask/equal-dose audit experiment.
+The [journal protocol](docs/JOURNAL_PROTOCOL.md) fixes every experiment's
+architecture, data policy, training budget and selection rule. The 369-job
+default queue uses original CNN architectures for primary comparisons, runs
+validation-only Fourier/spatial LR searches before final three-seed tests, and
+reports rewritten architectures as sensitivity analyses. Binary/equal-dose
+controls are included and reported separately. The [scientific audit](docs/SCIENTIFIC_AUDIT.md)
+explains why historical scores remain exploratory. BBBC022 substitutes for the
+missing original U2OS data; segmentation measures agreement with pseudo-labels.
 
 Historical outputs remain in Git history and in full checkouts, with their
 [previous catalog](docs/LEGACY_CATALOG.md). The clean sparse checkout described in

@@ -202,10 +202,12 @@ def make_pseudo_mask(image: torch.Tensor, threshold: float, closing_kernel: int)
     binary = (image >= threshold).float()
     if closing_kernel <= 1:
         return binary
-    k = closing_kernel if closing_kernel % 2 == 1 else closing_kernel + 1
-    pad = k // 2
-    dilated = F.max_pool2d(binary, kernel_size=k, stride=1, padding=pad)
-    closed = -F.max_pool2d(-dilated, kernel_size=k, stride=1, padding=pad)
+    # Match a square structuring element of EXACTLY the requested size, with
+    # zero background. Even kernels use opposite dilation/erosion anchors.
+    k = int(closing_kernel)
+    lo, hi = (k - 1) // 2, k // 2
+    dilated = F.max_pool2d(F.pad(binary, (lo, hi, lo, hi), value=0.), kernel_size=k, stride=1)
+    closed = -F.max_pool2d(-F.pad(dilated, (hi, lo, hi, lo), value=0.), kernel_size=k, stride=1)
     return closed
 
 

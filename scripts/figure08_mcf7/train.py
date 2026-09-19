@@ -61,8 +61,17 @@ CFG = ROOT / "configs/figure08_mcf7/swinir_fix.yaml"
 CONDITIONS = {
     "wswinir": ("swinir", 256, "locality_aware", True),
     "transpose256": ("conventional", 256, "transpose_conv", False),
+    "wcnn256": ("conventional", 256, "locality_aware", False),
     "wcnn64": ("conventional", 64, "locality_aware", False),
 }
+
+
+def condition_spec(cfg: dict, condition: str):
+    backbone, size, up, full_loss = CONDITIONS[condition]
+    if cfg.get("matched_loss"):
+        up = cfg["inverse_model"]["upsampling"]["mode"]
+        full_loss = True
+    return backbone, size, up, full_loss
 
 
 def _load_yaml(path: Path) -> dict:
@@ -96,7 +105,7 @@ def _build_swinir_model(cfg: dict, image_size: int) -> SwinIRTable2Model:
         "detector_noise": {"mode": "noise_free", "apply_noise": False},
         "inverse_model": {
             "upsampling": {
-                "mode": "locality_aware",
+                "mode": cfg.get("inverse_model", {}).get("upsampling", {}).get("mode", "locality_aware"),
                 "downscale_factor": int(fm["downscale_factor"]),
                 "num_patterns": int(pg["num_patterns"]),
             }
@@ -130,7 +139,7 @@ def _build_conventional_model(cfg: dict, image_size: int, up_mode: str) -> Diffe
             "upsampling": {"mode": up_mode, "downscale_factor": down, "num_patterns": npat},
             "reconstruction": {
                 "in_channels": npat,
-                "hidden_channels": [64, 64, 32, 32, 16, 1],
+                "hidden_channels": cfg.get("inverse_model", {}).get("reconstruction", {}).get("hidden_channels", [64, 64, 32, 32, 16, 1]),
                 "kernel_size": 3,
                 "padding": 1,
             },
@@ -178,7 +187,14 @@ def _loaders(cfg: dict, image_size: int, micro: int, seed: int,
     return out
 
 
-def _schedule_m(epoch: int, baseline: int, m_values: list[float], step: int) -> tuple[float, bool]:
+def _schedule_m(epoch: int, baseline: int, m_values: list[float], step: int,
+                schedule_cfg: dict | None = None) -> tuple[float, bool]:
+    if schedule_cfg and schedule_cfg.get("schedule") == "cumulative":
+        if step < 1:
+            raise ValueError("Cumulative sharpness interval must be positive")
+        cutoff = int(schedule_cfg["epoch_cutoff"])
+        increments = max(0, (epoch + 1) // step - cutoff // step)
+        return float(schedule_cfg.get("m_init", 1.)) + increments, epoch >= baseline
     if epoch < baseline:
         return 1.0, False
     idx = min((epoch - baseline) // max(1, step), len(m_values) - 1)
@@ -231,7 +247,7 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
           max_steps_per_epoch: int | None, seed: int, out_dir: Path,
           n_train: int, n_val: int, n_test: int, val_subset: int | None,
           n_examples: int, gan_warmup_epochs: int | None = None) -> dict:
-    backbone, image_size, up_mode, full_loss = CONDITIONS[condition]
+    backbone, image_size, up_mode, full_loss = condition_spec(cfg, condition)
     torch.manual_seed(seed)
     tr = cfg["training"]
     channel = str(cfg["dataset"].get("bbbc021_channel", "tubulin"))
@@ -244,6 +260,12 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
     amp_dtype = torch.bfloat16 if str(tr.get("amp_dtype", "bfloat16")) == "bfloat16" else None
     m_values = [float(v) for v in cfg["algorithm1"]["m_values"]]
     eval_m = float(tr.get("eval_sigmoid_m", 8.0))
+    selection_metric = tr.get("selection_metric", "ssim" if full_loss else "mse")
+    if selection_metric not in {"mse", "ssim"}:
+        raise ValueError("selection_metric must be mse or ssim")
+    selection_start = int(tr.get("selection_start_epoch", 0))
+    if not 0 <= selection_start < epochs:
+        raise ValueError("selection_start_epoch must leave at least one eligible epoch")
 
     if backbone == "swinir":
         model = _build_swinir_model(cfg, image_size).to(device)
@@ -295,7 +317,7 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
 
     for epoch in range(epochs):
         ep_t0 = time.time()
-        m, unfreeze = _schedule_m(epoch, baseline, m_values, step)
+        m, unfreeze = _schedule_m(epoch, baseline, m_values, step, cfg["algorithm1"])
         for p in adapter.illum_params():
             p.requires_grad = unfreeze
         model.train()
@@ -370,16 +392,16 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
              f"g={comp['g_total']:.4f} pix={comp['pixel']:.4f} perc={comp['perceptual']:.4f} "
              f"adv={comp['adv']:.4f} d={comp['d']:.4f} val_ssim={val['ssim']:.4f} "
              f"val_psnr={val['psnr']:.2f} ({ep_sec:.0f}s)")
-        # Declared criteria: max validation SSIM for SwinIR's full loss, min
-        # validation MSE for L1 baselines. The two rankings need not agree.
+        # Legacy defaults differ by objective; the journal recipe explicitly
+        # selects every matched backbone by minimum validation MSE.
         # Store both metrics from the actually selected checkpoint.
-        improved = (val["ssim"] > best_score) if full_loss else (val["mse"] < best_val)
+        improved = epoch >= selection_start and ((val["ssim"] > best_score) if selection_metric == "ssim" else (val["mse"] < best_val))
         if improved:
             best_val = val["mse"]
             best_score = val["ssim"]
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
             best_meta = {"epoch": epoch, "val_mse": val["mse"], "val_ssim": val["ssim"],
-                         "selection": "max_val_ssim" if full_loss else "min_val_mse"}
+                         "selection": "max_val_ssim" if selection_metric == "ssim" else "min_val_mse"}
             torch.save({"model": best_state, **best_meta,
                         "condition": condition, "backbone": backbone, "image_size": image_size,
                         "sigmoid_m": eval_m, "training_sigmoid_m": m, "resume_exact": False},
@@ -438,7 +460,7 @@ def _save_examples(adapter: Adapter, loader: DataLoader, device, m: float, amp_d
 
 def _smoke(cfg: dict, condition: str, device) -> None:
     """One-optimizer-step memory/speed probe for the given condition."""
-    backbone, image_size, up_mode, full_loss = CONDITIONS[condition]
+    backbone, image_size, up_mode, full_loss = condition_spec(cfg, condition)
     tr = cfg["training"]
     micro = int(tr["micro_batch_size"]) if full_loss else 8
     accum = int(tr["grad_accum"]) if full_loss else 1

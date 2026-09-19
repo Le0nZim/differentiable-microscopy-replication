@@ -315,6 +315,7 @@ class PreprocAblationConfig:
     canonical_mask_mode: PreprocMode = "minimal_percentile"
     mask_threshold: float = 0.3
     mask_closing_kernel: int = 10
+    mask_before_crop: bool = False
 
     @classmethod
     def from_dict(cls, data: dict) -> "PreprocAblationConfig":
@@ -378,6 +379,9 @@ class PreprocAblationDataset(Dataset):
                         f"input/canonical size mismatch {img.shape[-2:]} vs {canon.shape[-2:]}; "
                         "all modes must be native resolution for mask alignment."
                     )
+        self.full_masks = ([make_pseudo_mask(image, config.mask_threshold, config.mask_closing_kernel).bool()
+                            for image in self.canon_images]
+                           if config.return_mask and config.mask_before_crop else None)
 
     @classmethod
     def from_dict(cls, data: dict, split: SplitName) -> "PreprocAblationDataset":
@@ -433,10 +437,13 @@ class PreprocAblationDataset(Dataset):
             return crop
 
         assert self.canon_images is not None
-        canon_crop = self.canon_images[index][:, top : top + patch, left : left + patch]
+        full_masks = getattr(self, "full_masks", None)
+        source = self.canon_images[index] if full_masks is None else full_masks[index]
+        canon_crop = source[:, top : top + patch, left : left + patch]
         if flip_h:
             canon_crop = torch.flip(canon_crop, dims=[-1])
         if flip_v:
             canon_crop = torch.flip(canon_crop, dims=[-2])
-        mask = make_pseudo_mask(canon_crop, self.config.mask_threshold, self.config.mask_closing_kernel)
+        mask = (make_pseudo_mask(canon_crop, self.config.mask_threshold, self.config.mask_closing_kernel)
+                if full_masks is None else canon_crop.float())
         return crop, mask

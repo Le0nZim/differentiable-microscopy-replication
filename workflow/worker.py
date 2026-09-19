@@ -15,7 +15,10 @@ def materialize(job, settings, prepared, out, dependencies):
     sys.path.insert(0, str(ROOT / "src")) if str(ROOT / "src") not in sys.path else None
     from utils.experiment_config import load_experiment_config, sync_derived_config_fields
 
-    stage, seed = job["stage"], job["seed"]
+    stage, seed = job["stage"].removesuffix("_tune"), job["seed"]
+    if job["engine"] == "select_lr":
+        return {"experiment": {"seed": seed, "output_dir": str(out)},
+                "workflow": {"job": job, "protocol": job["protocol"]}}
     device = settings["run"]["device"]
     templates = {
         "patchmnist": "figure10_ablation_patchmnist/ablation.yaml",
@@ -27,9 +30,10 @@ def materialize(job, settings, prepared, out, dependencies):
         "mcf7": "figure08_mcf7/swinir_fix.yaml",
         "content_swinir": "figure03_content_aware/paper_faithful_pixel_perceptual_gan.yaml",
         "controlled": "audit/controlled_patchmnist.yaml",
+        "patchmnist_content": "_shared/base_patchmnist.yaml",
     }
     if stage == "content":
-        cfg = module("scripts/figure03_content_aware/train_base.py").build_config(job["comp"], job["downscale"], 4, job["mode"], seed, device)
+        cfg = module("scripts/figure03_content_aware/train_base.py").build_config(job["comp"], job["downscale"], job.get("patterns", 4), job["mode"], seed, device)
     elif stage in {"sr", "mcf7", "content_swinir", "controlled"}:
         cfg = yaml.safe_load((ROOT / "configs" / templates[stage]).read_text())
     else:
@@ -48,13 +52,14 @@ def materialize(job, settings, prepared, out, dependencies):
     if "training" in cfg:
         cfg["training"]["loader_seed"] = seed + 1000
 
-    if stage in {"patchmnist", "upsampling", "noise", "controlled"}:
+    if stage in {"patchmnist", "patchmnist_content", "upsampling", "noise", "controlled"}:
         ds.update(data_root=prepared["mnist_root"], download=False, disjoint_val_test=True,
                   cache_dir=str(Path(settings["run"]["cache_root"]) / "patchmnist"), source_sha256=prepared["mnist_sha256"])
     if stage in {"content", "ablation"}:
         ds.update(data_root=settings["data"]["bbbc022"], repo_root=str(ROOT),
                   split_path=prepared["bbbc022_large"])
     if stage in {"patchmnist", "ablation"}:
+        cfg["architecture_family"] = job.get("family", "original")
         cfg = module("scripts/table03_ablation/run.py").apply_variant(cfg, job["variant"])
         cfg["training"]["refresh_loader_each_pass"] = True
     elif stage == "upsampling":
@@ -91,6 +96,8 @@ def materialize(job, settings, prepared, out, dependencies):
         cfg["dataset"].update(data_root=settings["data"]["mcf7_images"], images_dir=".",
                                manifest_csv=prepared["mcf7_manifest"], bbbc021_channel="tubulin")
         cfg["data_seed"] = settings["run"]["data_seed"]
+    from .journal import configure
+    cfg = configure(cfg, job, dependencies)
     if stage not in {"sr", "mcf7", "content_swinir", "controlled"}:
         cfg = sync_derived_config_fields(cfg)
     return cfg
@@ -118,11 +125,19 @@ def execute(spec_path):
         fn = train_staged_hardening if cfg["training"].get("use_staged_hardening") else train
         fn(cfg, str(out))
         artifacts = ["metrics/run_summary.json", "checkpoints/best.pt", "config.yaml"]
+        if cfg["training"].get("test_noise_seeds"):
+            from .journal import repeated_noise_evaluation
+            repeated_noise_evaluation(cfg, out)
+            artifacts.append("metrics/test_noise_draws.json")
     elif engine == "ablation":
         impl = module("scripts/table03_ablation/run.py")
-        impl.run_one(cfg, out, letter=job["variant"], phases=impl.default_phases(), seed=job["seed"],
+        impl.run_one(cfg, out, letter=job["variant"], phases=cfg.get("journal_phases", impl.default_phases()), seed=job["seed"],
                      log_every=cfg["training"]["log_every"], save_config_yaml=True)
         artifacts = ["metrics/run_summary.json", "checkpoints_best.pt", "figures/qualitative_panel.png"]
+    elif engine == "select_lr":
+        from .journal import select_learning_rates
+        select_learning_rates(job, spec["dependencies"], out)
+        artifacts = ["selection.json"]
     elif engine == "segmentation":
         from training.train_task_aware_segmentation import train_task_aware_segmentation
         train_task_aware_segmentation(cfg, out)
@@ -143,7 +158,7 @@ def execute(spec_path):
         impl.train(cfg, job["condition"], device, epochs=schedule["epochs"], baseline=schedule["epoch_baseline"],
                    step=schedule["epoch_step"], max_steps_per_epoch=None, seed=job["seed"], out_dir=out,
                    n_train=cfg["dataset"]["num_train"], n_val=cfg["dataset"]["num_val"], n_test=cfg["dataset"]["num_test"],
-                   val_subset=None, n_examples=8)
+                   val_subset=None, n_examples=8, gan_warmup_epochs=cfg["training"].get("gan_warmup_epochs"))
         artifacts = ["result.json", "checkpoints/best.pt", "examples/pair_00.pt"]
     elif engine == "mcf7_figures":
         view = out / "models"
@@ -156,6 +171,11 @@ def execute(spec_path):
             for key in ("dataset", "pattern_generator", "forward_model", "swinir", "training", "data_seed"):
                 template[key] = copy.deepcopy(cfg[key])
             template["reproduce"]["runs_dir"] = str(view)
+            template["reproduce"]["eval_sigmoid_m"] = cfg["training"]["eval_sigmoid_m"]
+            template["matched_loss"] = cfg.get("matched_loss", False)
+            template["inverse_model"] = copy.deepcopy(cfg["inverse_model"])
+            if figure == 8:
+                template["reproduce"]["conditions"] = ["wswinir", "wcnn256"]
             p = out / f"figure{figure}.yaml"
             p.write_text(yaml.safe_dump(template))
             extra = ["--indices", "0", "1", "2"] if figure == 8 else []

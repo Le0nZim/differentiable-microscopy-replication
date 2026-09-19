@@ -104,7 +104,7 @@ def build_model_config(cfg: dict[str, Any], *, learnable: bool) -> dict[str, Any
         "detector_noise": {"mode": "noise_free", "apply_noise": False},
         "inverse_model": {
             "upsampling": {
-                "mode": "locality_aware",
+                "mode": m.get("upsampling_mode", "locality_aware"),
                 "downscale_factor": int(m["downscale_factor"]),
                 "num_patterns": int(m["num_patterns"]),
             }
@@ -202,18 +202,26 @@ def eval_dataset_fair(
     eval_batch: int = 64,
     amp_dtype: torch.dtype | None = None,
     compute_stitched: bool = True,
+    metric_scope: str = "tile",
+    include_borders: bool = False,
 ) -> dict[str, Any]:
     """Evaluate PSNR/SSIM over deterministic tiles of every test image.
 
-    Returns per-tile-averaged PSNR/SSIM (primary) and optionally stitched
-    full-image PSNR/SSIM (secondary cross-check).
+    Legacy defaults average tiles. The journal recipe requests image averaging
+    and complete coverage, including zero-padded border acquisitions.
     """
+    if metric_scope not in {"tile", "image"}:
+        raise ValueError("metric_scope must be tile or image")
+    if metric_scope == "image" and (selection != "all" or max_tiles_per_image is not None or not compute_stitched):
+        raise ValueError("Image metrics require a complete nonoverlapping grid and stitching")
     model.eval()
     paths = list_test_images(root, max_images=max_images)
     psnr_sum = ssim_sum = 0.0
     n_tiles = 0
     n_images = 0
     stitched_psnr_sum = stitched_ssim_sum = 0.0
+    image_mse_sum = 0.0
+    per_image = []
     autocast_ctx = (
         torch.autocast(device_type=device.type, dtype=amp_dtype)
         if amp_dtype is not None and device.type == "cuda"
@@ -222,10 +230,14 @@ def eval_dataset_fair(
     for p in paths:
         img = _load_gray(p)
         _, h, w = img.shape
-        n_h, n_w = h // patch_size, w // patch_size
+        n_h, n_w = ((h + patch_size - 1) // patch_size, (w + patch_size - 1) // patch_size) if include_borders else (h // patch_size, w // patch_size)
         if n_h == 0 or n_w == 0:
             continue
-        img = img[:, : n_h * patch_size, : n_w * patch_size]
+        valid_h, valid_w = min(h, n_h * patch_size), min(w, n_w * patch_size)
+        if include_borders:
+            img = torch.nn.functional.pad(img, (0, n_w * patch_size - w, 0, n_h * patch_size - h))
+        else:
+            img = img[:, : n_h * patch_size, : n_w * patch_size]
         coords = tile_coords(n_h, n_w, selection=selection, max_tiles=max_tiles_per_image)
         tiles = [
             img[:, ti * patch_size : (ti + 1) * patch_size, tj * patch_size : (tj + 1) * patch_size]
@@ -250,10 +262,20 @@ def eval_dataset_fair(
                         :, ti * patch_size : (ti + 1) * patch_size, tj * patch_size : (tj + 1) * patch_size
                     ] = rec[j]
         if canvas is not None:
-            gt_full = img.to(device).unsqueeze(0)
-            rec_full = canvas.unsqueeze(0)
-            stitched_psnr_sum += float(psnr_metric(rec_full, gt_full).item())
-            stitched_ssim_sum += float(ssim_metric(rec_full, gt_full).item())
+            gt_full = img[:, :valid_h, :valid_w].to(device).unsqueeze(0)
+            rec_full = canvas[:, :valid_h, :valid_w].unsqueeze(0)
+            image_psnr = float(psnr_metric(rec_full, gt_full).item())
+            image_ssim = float(ssim_metric(rec_full, gt_full).item())
+            image_mse = float((rec_full - gt_full).square().mean().item())
+            stitched_psnr_sum += image_psnr
+            stitched_ssim_sum += image_ssim
+            image_mse_sum += image_mse
+            measurements = (len(coords) * model.num_patterns * (patch_size // model.downscale) ** 2
+                            if hasattr(model, "num_patterns") and hasattr(model, "downscale") else None)
+            per_image.append({"image": p.name, "height": h, "width": w, "evaluated_pixels": valid_h * valid_w,
+                              "tiles": len(coords), "mse": image_mse, "psnr": image_psnr, "ssim": image_ssim,
+                              "scalar_measurements": measurements,
+                              "effective_compression": valid_h * valid_w / measurements if measurements else None})
         n_images += 1
     if n_tiles == 0:
         raise ValueError(f"No evaluable test tiles in {root}")
@@ -265,12 +287,18 @@ def eval_dataset_fair(
         "selection": selection,
         "max_tiles_per_image": max_tiles_per_image,
         "aggregation": "mean over tiles; images weighted by their tile count",
-        "spatial_coverage": "nonoverlapping patch grid; bottom/right remainders excluded",
+        "spatial_coverage": "all image pixels; nonoverlapping tiles with zero-padded acquisition borders" if include_borders else "nonoverlapping patch grid; bottom/right remainders excluded",
+        "per_image": per_image,
     }
     if compute_stitched and max_tiles_per_image is None and n_images > 0:
         out["stitched_psnr"] = stitched_psnr_sum / n_images
         out["stitched_ssim"] = stitched_ssim_sum / n_images
-        out["stitched_aggregation"] = "mean over cropped images"
+        out["stitched_aggregation"] = "mean over full images" if include_borders else "mean over cropped images"
+    if metric_scope == "image":
+        out.update(tile_psnr=out["psnr"], tile_ssim=out["ssim"],
+                   psnr=stitched_psnr_sum / n_images, ssim=stitched_ssim_sum / n_images,
+                   mse=image_mse_sum / n_images,
+                   aggregation="equal weight per image; full-image metrics before dataset averaging")
     return out
 
 

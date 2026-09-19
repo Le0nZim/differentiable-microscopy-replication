@@ -20,7 +20,8 @@ from typing import Any
 
 import torch.nn as nn
 
-from models.locality_upsampling import LocalityAwareUpsampling, TransposeConvUpsampling
+from models.locality_upsampling import (LocalityAwareUpsampling, TransposeConvUpsampling,
+                                       OriginalLocalityUpsampling, OriginalTransposeUpsampling)
 from models.microscope import DifferentiableMicroscope
 
 # Pattern-generator modes that carry learnable illumination parameters.
@@ -96,6 +97,7 @@ def describe_config(config: dict[str, Any]) -> dict[str, Any]:
     num_patterns = int(config["pattern_generator"]["num_patterns"])
     learn_patterns = bool(config["training"].get("learn_patterns", pattern_is_learnable(pattern_mode)))
     return {
+        "architecture_family": config.get("architecture_family", "rewritten"),
         "pattern_mode": pattern_mode,
         "learnable_patterns": pattern_is_learnable(pattern_mode) and learn_patterns,
         "frequency_domain_optimization": uses_frequency_domain_optimization(pattern_mode)
@@ -115,7 +117,11 @@ def audit_microscope(model: DifferentiableMicroscope, config: dict[str, Any]) ->
     not just what the config asked for.
     """
     upsampler = model.inverse_model.upsampling.upsampler
-    if isinstance(upsampler, LocalityAwareUpsampling):
+    if isinstance(upsampler, OriginalLocalityUpsampling):
+        actual_upsampling = "original_locality"
+    elif isinstance(upsampler, OriginalTransposeUpsampling):
+        actual_upsampling = "original_transpose"
+    elif isinstance(upsampler, LocalityAwareUpsampling):
         actual_upsampling = "locality_aware"
     elif isinstance(upsampler, TransposeConvUpsampling):
         actual_upsampling = "transpose_conv"
@@ -152,6 +158,8 @@ def expected_for_variant(letter: str) -> dict[str, Any]:
 def check_variant(letter: str, descriptor: dict[str, Any]) -> list[str]:
     """Return a list of human-readable mismatch strings (empty == wiring OK)."""
     expected = expected_for_variant(letter)
+    if descriptor.get("architecture_family") == "original":
+        expected["upsampling"] = {"transpose_conv": "original_transpose", "locality_aware": "original_locality"}[expected["upsampling"]]
     problems: list[str] = []
 
     if descriptor["pattern_mode"] != expected["pattern_mode"]:

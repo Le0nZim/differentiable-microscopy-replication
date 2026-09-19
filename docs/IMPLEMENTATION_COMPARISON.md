@@ -1,5 +1,9 @@
 # Original versus replication: experiment-level comparison
 
+The table below audits the pinned versions listed here. The prospective fixes
+and final decisions are now implemented in the [journal protocol](JOURNAL_PROTOCOL.md)
+on `journal/final-protocol`; follow [START_HERE.md](../START_HERE.md) for new runs.
+
 Audit date: 2026-09-19. **Use the original CNN architectures inside the corrected
 replication training/evaluation infrastructure for the primary reproduction.**
 Keep the rewritten architectures as an explicitly separate sensitivity study.
