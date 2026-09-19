@@ -74,9 +74,9 @@ VARIANTS = {
     "D": ("learnable_spatial", "locality_aware", True),
 }
 VARIANT_LABEL = {
-    "A": "fixed Ht + Tr.Conv.Up + freq",
+    "A": "fixed random Ht + Tr.Conv.Up",
     "B": "learnable Ht + Tr.Conv.Up + freq",
-    "C": "learnable Ht + locality + freq (paper best)",
+    "C": "learnable Ht + locality + freq",
     "D": "learnable Ht + locality + NO freq",
 }
 
@@ -108,6 +108,8 @@ def patchmnist_base(device: str) -> dict:
 def apply_variant(config: dict, letter: str) -> dict:
     pattern_mode, upsampling_mode, learn = VARIANTS[letter]
     cfg = copy.deepcopy(config)
+    if cfg.get("architecture_family") == "original":
+        upsampling_mode = {"transpose_conv": "original_transpose", "locality_aware": "original_locality"}[upsampling_mode]
     cfg["pattern_generator"]["mode"] = pattern_mode
     cfg["inverse_model"]["upsampling"]["mode"] = upsampling_mode
     cfg["training"]["learn_patterns"] = learn
@@ -165,18 +167,20 @@ def _param_count(params, only_trainable=False) -> int:
 
 
 @torch.no_grad()
-def _evaluate(model, loader, device, m, apply_noise) -> tuple[float, float]:
-    model.eval()
-    tot_mse = tot_ssim = 0.0
-    n = 0
-    for batch in loader:
-        x = batch.to(device)
-        out = model(x, sigmoid_m=m, apply_noise=apply_noise)
-        tot_mse += float(mse_metric(out["x_recon"], x).item())
-        tot_ssim += float(ssim_metric(out["x_recon"], x).item())
-        n += 1
-    model.train()
-    return tot_mse / max(n, 1), tot_ssim / max(n, 1)
+def _evaluate(model, loader, device, m, apply_noise, noise_seed=None) -> tuple[float, float]:
+    from utils.evaluation_mode import evaluating, evaluation_rng
+    with evaluating(model), evaluation_rng(noise_seed, device):
+        tot_mse = tot_ssim = 0.0
+        n = 0
+        for batch in loader:
+            x = batch.to(device)
+            out = model(x, sigmoid_m=m, apply_noise=apply_noise)
+            tot_mse += float(mse_metric(out["x_recon"], x).item()) * len(x)
+            tot_ssim += float(ssim_metric(out["x_recon"], x).item()) * len(x)
+            n += len(x)
+    if n == 0:
+        raise ValueError("Cannot evaluate an empty ablation split")
+    return tot_mse / n, tot_ssim / n
 
 
 def _illum_l2(model) -> float:
@@ -267,7 +271,10 @@ def run_one(
     # ----- data -----
     train_loader = build_dataloader(config, "train")
     val_loader = build_dataloader(config, "val")
-    test_loader = build_dataloader(config, "test")
+    evaluation = config.get("evaluation", {})
+    validation_only = bool(evaluation.get("validation_only", False))
+    noise_seed = evaluation.get("noise_seed")
+    test_loader = None if validation_only else build_dataloader(config, "test")
 
     # optimizer (paper: illum lr 1.0, inverse lr 0.001)
     illum_lr = float(config["training"]["illumination_lr"])
@@ -309,7 +316,16 @@ def run_one(
     min_train_mse = float("inf")  # best (lowest) train MSE ever seen (fitting capacity)
     max_grad = {"illum": 0.0, "upsampler": 0.0, "recon": 0.0}
 
-    train_iter = itertools.cycle(train_loader)
+    # Legacy warmup replay intentionally keeps its historical cached ordering.
+    # Fresh campaigns opt in explicitly; no unsupported exact-resume claim.
+    fresh_loader = bool(config["training"].get("refresh_loader_each_pass", False))
+    if fresh_loader and resume_from_warmup is not None:
+        raise ValueError("Fresh-loader ablations cannot resume legacy cached-loader warmups")
+    from training.iteration import repeat_dataloader
+    if fresh_loader:
+        train_iter = repeat_dataloader(train_loader)
+    else:
+        train_iter = itertools.cycle(train_loader)
     global_step = 0
     t0 = time.time()
     n_phases = len(phases)
@@ -418,7 +434,7 @@ def run_one(
                 else:
                     post_warmup_tau_disp_max = max(post_warmup_tau_disp_max, tau_disp)
                 train_mse = float(mse_metric(out["x_recon"].detach(), x).item())
-                val_mse, val_ssim = _evaluate(model, val_loader, device, m, apply_noise)
+                val_mse, val_ssim = _evaluate(model, val_loader, device, m, apply_noise, noise_seed)
                 illum_l2 = _illum_l2(model)
                 row = {
                     "step": global_step, "phase": phase["name"], "m": m,
@@ -438,11 +454,13 @@ def run_one(
                 step_log.flush()
                 history.append(row)
                 min_train_mse = min(min_train_mse, train_mse)
-                # Phase-boundary evaluations use this same path, so they ARE
-                # eligible for global-best checkpoint selection (not diagnostic-only).
-                if val_mse < best["val_mse"]:
-                    best.update(val_mse=val_mse, m=m, step=global_step,
-                                state=deepcopy(model.state_dict()), train_mse=train_mse)
+                # Phase boundaries use the same selection path. The journal
+                # recipe restricts eligibility to the final sharpness phase.
+                eligible = is_last_phase or not evaluation.get("selection_final_phase_only", False)
+                if eligible:
+                    if val_mse < best["val_mse"]:
+                        best.update(val_mse=val_mse, m=m, step=global_step,
+                                    state=deepcopy(model.state_dict()), train_mse=train_mse)
                 print(f"[{letter}] {phase['name']} step={global_step} m={m} "
                       f"loss={loss.item():.5f} train_mse={train_mse:.5f} val_mse={val_mse:.5f} "
                       f"gI={gI:.2e} gU={gU:.2e}", flush=True)
@@ -485,7 +503,8 @@ def run_one(
         model.load_state_dict(best["state"])
     best_m = best["m"]
 
-    test_mse, test_ssim = _evaluate(model, test_loader, device, best_m, apply_noise)
+    test_mse, test_ssim = (None, None) if validation_only else _evaluate(
+        model, test_loader, device, best_m, apply_noise, None if noise_seed is None else noise_seed + 1)
     final_train_mse, _ = _evaluate(model, train_loader, device, best_m, apply_noise)
 
     torch.save({"model_state_dict": model.state_dict(), "config": config,
@@ -499,13 +518,13 @@ def run_one(
         _save_patterns(patterns, output_dir / "learned_patterns" / "H_t.png")
         torch.save(patterns, output_dir / "learned_patterns" / "H_t.pt")
         # qualitative on a fixed held-out test batch (same indices across variants)
-        ref = next(iter(test_loader)).to(device)
+        ref = next(iter(val_loader if validation_only else test_loader)).to(device)
         ref_out = model(ref, sigmoid_m=best_m, apply_noise=apply_noise)
         torch.save({"gt": ref.detach().cpu(), "recon": ref_out["x_recon"].detach().cpu()},
                    output_dir / "figures" / "qualitative_tensors.pt")
         _save_qualitative(ref.detach().cpu(), ref_out["x_recon"].detach().cpu(),
                           output_dir / "figures" / "qualitative_panel.png",
-                          title=f"{letter}: {VARIANT_LABEL.get(letter,'')}")
+                          title=f"{letter}: {'VALIDATION ONLY' if validation_only else VARIANT_LABEL.get(letter,'')}")
 
     _save_curves(history, output_dir / "figures" / "curves.png", title=f"{letter} train/val MSE")
 
@@ -514,6 +533,8 @@ def run_one(
         overfit_gap = best["val_mse"] - best["train_mse"]
 
     diagnostics = {
+        "evaluation_split": "validation_only" if validation_only else "test",
+        "selection_rule": "minimum validation MSE in final phase" if evaluation.get("selection_final_phase_only") else "global minimum validation MSE",
         "elapsed_sec": elapsed,
         "best_val_mse": best["val_mse"],
         "best_step": best["step"],
@@ -556,7 +577,7 @@ def run_one(
             "branched_from_shared_warmup": branched_from_shared_warmup,
             "warmup_checkpoint_out": None if warmup_checkpoint_out is None else str(warmup_checkpoint_out),
             "resume_from_warmup": None if resume_from_warmup is None else str(resume_from_warmup),
-            "train_iterator": "itertools.cycle(train_loader)",
+            "train_iterator": "repeat_dataloader(train_loader)" if fresh_loader else "itertools.cycle(train_loader)",
             "m_schedule_with_freeze": [
                 {"phase": p["name"], "m": p["m"], "steps": p["steps"],
                  "freeze_illum": p["freeze_illum"]}

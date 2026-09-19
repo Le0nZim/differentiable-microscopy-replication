@@ -1,0 +1,41 @@
+Using device: cuda:0
+
+=== noise/k10_sigma0_learnable_frequency_seed44: inverse_warmup_m1 (m=1.0, steps=3000) ===
+[inverse_warmup_m1] step=500 m=1.0 loss=0.08513 val_mse=0.04377 bin_frac=0.028
+[inverse_warmup_m1] step=1000 m=1.0 loss=0.07642 val_mse=0.03691 bin_frac=0.028
+[inverse_warmup_m1] step=1500 m=1.0 loss=0.07348 val_mse=0.03515 bin_frac=0.028
+[inverse_warmup_m1] step=2000 m=1.0 loss=0.07188 val_mse=0.03424 bin_frac=0.028
+[inverse_warmup_m1] step=2500 m=1.0 loss=0.07088 val_mse=0.03408 bin_frac=0.028
+[inverse_warmup_m1] step=3000 m=1.0 loss=0.07092 val_mse=0.03390 bin_frac=0.028
+
+=== noise/k10_sigma0_learnable_frequency_seed44: joint_soft_m1 (m=1.0, steps=7350) ===
+[joint_soft_m1] step=3500 m=1.0 loss=0.06387 val_mse=0.02830 bin_frac=0.029
+[joint_soft_m1] step=4000 m=1.0 loss=0.05744 val_mse=0.02483 bin_frac=0.030
+[joint_soft_m1] step=4500 m=1.0 loss=0.05406 val_mse=0.02205 bin_frac=0.031
+[joint_soft_m1] step=5000 m=1.0 loss=0.05018 val_mse=0.01947 bin_frac=0.032
+[joint_soft_m1] step=5500 m=1.0 loss=0.04825 val_mse=0.01820 bin_frac=0.033
+[joint_soft_m1] step=6000 m=1.0 loss=0.04638 val_mse=0.48018 bin_frac=0.034
+[joint_soft_m1] step=6500 m=1.0 loss=0.04439 val_mse=0.01603 bin_frac=0.035
+[joint_soft_m1] step=7000 m=1.0 loss=0.04289 val_mse=0.01489 bin_frac=0.036
+[joint_soft_m1] step=7500 m=1.0 loss=0.04237 val_mse=0.01401 bin_frac=0.038
+[joint_soft_m1] step=8000 m=1.0 loss=0.04025 val_mse=0.01351 bin_frac=0.039
+[joint_soft_m1] step=8500 m=1.0 loss=0.03995 val_mse=0.01321 bin_frac=0.040
+[joint_soft_m1] step=9000 m=1.0 loss=0.03890 val_mse=0.01246 bin_frac=0.042
+[joint_soft_m1] step=9500 m=1.0 loss=0.03749 val_mse=0.01210 bin_frac=0.043
+[joint_soft_m1] step=10000 m=1.0 loss=0.03728 val_mse=0.01181 bin_frac=0.045
+[joint_soft_m1] step=10350 m=1.0 loss=0.03673 val_mse=0.01163 bin_frac=0.046
+
+=== noise/k10_sigma0_learnable_frequency_seed44: harden_m2 (m=2.0, steps=1500) ===
+[harden_m2] step=10850 m=2.0 loss=0.03163 val_mse=0.00858 bin_frac=0.427
+[harden_m2] step=11350 m=2.0 loss=0.03128 val_mse=0.00850 bin_frac=0.431
+[harden_m2] step=11850 m=2.0 loss=0.03085 val_mse=0.00829 bin_frac=0.435
+
+=== noise/k10_sigma0_learnable_frequency_seed44: harden_m4 (m=4.0, steps=1500) ===
+[harden_m4] step=12350 m=4.0 loss=0.02870 val_mse=0.00732 bin_frac=0.722
+[harden_m4] step=12850 m=4.0 loss=0.02867 val_mse=0.00705 bin_frac=0.725
+[harden_m4] step=13350 m=4.0 loss=0.02872 val_mse=0.00697 bin_frac=0.728
+
+=== noise/k10_sigma0_learnable_frequency_seed44: harden_m8 (m=8.0, steps=1500) ===
+[harden_m8] step=13850 m=8.0 loss=0.02731 val_mse=0.00653 bin_frac=0.872
+[harden_m8] step=14350 m=8.0 loss=0.02668 val_mse=0.00639 bin_frac=0.876
+[harden_m8] step=14850 m=8.0 loss=0.02667 val_mse=0.00632 bin_frac=0.882

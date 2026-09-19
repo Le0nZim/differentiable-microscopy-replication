@@ -29,6 +29,8 @@ class PatchMNISTConfig:
     # When True, val and test draw from disjoint halves of the MNIST test
     # digit pool (same 10k file, no shared digit indices). Train is unchanged.
     disjoint_val_test: bool = False
+    cache_dir: str | None = None
+    source_sha256: str | None = None
 
     @classmethod
     def from_dict(cls, data: dict) -> "PatchMNISTConfig":
@@ -102,10 +104,10 @@ def _mnist_test_pools(config: PatchMNISTConfig, n_digits: int) -> tuple[torch.Te
     return perm[:n_val], perm[n_val:]
 
 
-def generate_patchmnist_split(
+def _iter_patchmnist_split(
     config: PatchMNISTConfig,
     split: SplitName,
-) -> list[torch.Tensor]:
+):
     """Generate PatchMNIST images for one split."""
     if split == "train":
         count = config.num_train
@@ -130,7 +132,6 @@ def generate_patchmnist_split(
         val_pool, test_pool = _mnist_test_pools(config, digits.shape[0])
         index_pool = val_pool if split == "val" else test_pool
 
-    patches: list[torch.Tensor] = []
     cells_per_canvas = config.grid_size * config.grid_size
     max_origin = config.max_crop_origin
 
@@ -148,9 +149,58 @@ def generate_patchmnist_split(
         )
         top = int(torch.randint(0, max_origin + 1, (1,), generator=generator).item())
         left = int(torch.randint(0, max_origin + 1, (1,), generator=generator).item())
-        patches.append(_extract_patch(canvas, config.image_size, top, left))
+        yield _extract_patch(canvas, config.image_size, top, left)
 
-    return patches
+
+def generate_patchmnist_split(config: PatchMNISTConfig, split: SplitName) -> list[torch.Tensor]:
+    """Generate exactly the historical tensors, without an on-disk cache."""
+    return list(_iter_patchmnist_split(config, split))
+
+
+def _cached_split(config: PatchMNISTConfig, split: SplitName):
+    import hashlib
+    import json
+    import os
+    from pathlib import Path
+    import numpy as np
+    import fcntl
+
+    if not config.source_sha256:
+        raise ValueError("PatchMNIST disk caching requires source_sha256 from dataset preparation")
+    count = getattr(config, "num_" + split)
+    import torchvision
+    recipe = {"generator_version": 1, "source_sha256": config.source_sha256,
+              "generator_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              "torch": torch.__version__, "torchvision": torchvision.__version__,
+              "image_size": config.image_size, "digit_size": config.digit_size,
+              "grid_size": config.grid_size, "seed": config.seed,
+              "disjoint_val_test": config.disjoint_val_test, "split": split, "count": count}
+    key = hashlib.sha256(json.dumps(recipe, sort_keys=True).encode()).hexdigest()
+    folder = Path(config.cache_dir)
+    folder.mkdir(parents=True, exist_ok=True)
+    path = folder / (key + ".npy")
+    with (folder / (key + ".lock")).open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        if not path.exists():
+            tmp = path.with_name(path.name + f".{os.getpid()}.tmp")
+            arr = np.lib.format.open_memmap(tmp, mode="w+", dtype="float32",
+                                           shape=(count, 1, config.image_size, config.image_size))
+            try:
+                print(f"Generating PatchMNIST {split}: {count} x {config.image_size}px -> {path}", flush=True)
+                for i, tensor in enumerate(_iter_patchmnist_split(config, split)):
+                    arr[i] = tensor.numpy()
+                arr.flush()
+                del arr
+                os.replace(tmp, path)
+                path.with_suffix(".json").write_text(json.dumps(recipe, indent=2))
+            except BaseException:
+                if tmp.exists():
+                    tmp.unlink()
+                raise
+        arr = np.load(path, mmap_mode="r", allow_pickle=False)
+        if arr.shape != (count, 1, config.image_size, config.image_size) or arr.dtype != np.float32:
+            raise ValueError(f"Invalid PatchMNIST cache: {path}")
+        return arr
 
 
 class PatchMNISTDataset(Dataset):
@@ -159,7 +209,7 @@ class PatchMNISTDataset(Dataset):
     def __init__(self, config: PatchMNISTConfig, split: SplitName = "train") -> None:
         self.config = config
         self.split = split
-        self.images = generate_patchmnist_split(config, split)
+        self.images = _cached_split(config, split) if config.cache_dir else generate_patchmnist_split(config, split)
 
     @classmethod
     def from_dict(cls, data: dict, split: SplitName) -> "PatchMNISTDataset":
@@ -170,4 +220,6 @@ class PatchMNISTDataset(Dataset):
 
     def __getitem__(self, index: int) -> torch.Tensor:
         # image: [1, H, W]
+        if self.config.cache_dir:
+            return torch.from_numpy(self.images[index].copy())
         return self.images[index]

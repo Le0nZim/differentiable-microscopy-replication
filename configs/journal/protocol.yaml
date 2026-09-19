@@ -1,0 +1,49 @@
+# Frozen prospective protocol. Change machine paths in workstation.yaml only.
+id: journal_v2
+architecture: original
+decoder_widths: [24, 12, 8, 4, 2, 1]
+model_seeds: [42, 43, 44]
+tuning_seed: 314159
+learning_rates:
+  learnable_frequency: [0.01, 0.1, 1.0, 10.0]
+  learnable_spatial: [0.001, 0.01, 0.1, 1.0]
+# Equal four-candidate budgets; select on validation, never instantiate test data.
+ablation_phases:
+  - {name: inverse_warmup, m: 1.0, steps: 1500, freeze_illum: true}
+  - {name: joint_soft, m: 1.0, steps: 4000, freeze_illum: false}
+  - {name: harden_m2, m: 2.0, steps: 1000, freeze_illum: false}
+  - {name: harden_m4, m: 4.0, steps: 1000, freeze_illum: false}
+  - {name: harden_m8, m: 8.0, steps: 1000, freeze_illum: false}
+bbbc022:
+  preprocessing: minimal_percentile
+  q_low: 0.001
+  q_high: 0.999
+  # Simulated photons on normalized intensity, not a camera calibration.
+  photon_count: 10000.0
+  gamma: 10.0
+  sigma_read: 0.0
+segmentation:
+  source: BBBC039v1
+  target: manual_nucleus_foreground
+  split: official_100_50_50
+  pseudo_fallback:
+    mask_mode: trackmate
+    mask_raw_threshold: 506.0
+    mask_smooth_interval: 2.0
+    mask_dp_epsilon: 0.5
+mcf7:
+  epochs: 230
+  epoch_baseline: 150
+  epoch_cutoff: 150
+  epoch_step: 20
+  m_init: 1.0
+  eval_m: 5.0
+  selection_start_epoch: 219
+  selection_metric: mse
+  inverse_lr: 0.0002
+  conditions: [wswinir, wcnn256, wcnn64]
+claims:
+  - Computational replication and sensitivity analysis with substitute microscopy data.
+  - Fourier conclusions are conditional on the declared validation search.
+  - Default segmentation measures agreement with BBBC039 manual nucleus annotations; explicit pseudo-label fallback is separate.
+  - Soft-mask results and binary equal-dose controls are reported separately.

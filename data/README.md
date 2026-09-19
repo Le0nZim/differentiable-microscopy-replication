@@ -1,5 +1,11 @@
 # Datasets (not vendored)
 
+**Fresh workstation:** use [`START_HERE.md`](../START_HERE.md) and
+`python paper.py init --data-root /your/existing/data`. Keep datasets wherever
+they already live. The generated `workstation.yaml` is the single source of
+machine paths for the new workflow. The legacy relative paths below describe
+older individual drivers.
+
 Place data under this directory. Nothing here is committed except this README.
 
 Configs resolve paths relative to the **repository root**.

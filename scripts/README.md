@@ -1,5 +1,10 @@
 # Experiment drivers
 
+For a fresh workstation, run **`python paper.py`** from the repository root;
+see [`START_HERE.md`](../START_HERE.md). The workstation wrapper binds these
+implementations to new dataset manifests and output directories. Some original
+CLIs below retain historical defaults and are not the fresh-run entry point.
+
 Each subdirectory is a paper slug. Shared launchers live in `_shared/`.
 
 | Slug | Main entry |

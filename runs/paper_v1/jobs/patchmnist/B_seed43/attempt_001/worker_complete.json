@@ -1,0 +1,7 @@
+{
+  "artifacts": [
+    "metrics/run_summary.json",
+    "checkpoints_best.pt",
+    "figures/qualitative_panel.png"
+  ]
+}

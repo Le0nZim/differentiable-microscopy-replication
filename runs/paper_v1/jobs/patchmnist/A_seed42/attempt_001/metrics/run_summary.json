@@ -1,0 +1,15 @@
+{
+  "variant": "A",
+  "label": "fixed Ht + Tr.Conv.Up + freq",
+  "seed": 42,
+  "test_mse": 0.03619467995564143,
+  "test_ssim": 0.7042355661392212,
+  "best_val_mse": 0.035838134586811066,
+  "best_train_mse": 0.03632029891014099,
+  "min_train_mse": 0.035574160516262054,
+  "final_train_mse": 0.0358149472673734,
+  "overfit_gap": -0.00048216432332992554,
+  "best_m": 8.0,
+  "elapsed_sec": 753.1715199947357,
+  "run_dir": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/A_seed42/attempt_001"
+}

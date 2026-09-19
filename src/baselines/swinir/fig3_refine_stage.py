@@ -135,16 +135,17 @@ def build_refiner(swinir_cfg: dict[str, Any], device: torch.device, *,
 # ---------------------------------------------------------------------------
 # Frozen base model
 # ---------------------------------------------------------------------------
-def base_run_dir(base_exp_root: Path, comp: str, pattern: str) -> Path:
-    return base_exp_root / f"bbbc022_{comp}_{pattern}_seed42"
+def base_run_dir(base_exp_root: Path, comp: str, pattern: str, seed: int = 42) -> Path:
+    return base_exp_root / f"bbbc022_{comp}_{pattern}_seed{seed}"
 
 
-def load_frozen_base(base_exp_root: Path, comp: str, pattern: str, device: torch.device):
+def load_frozen_base(base_exp_root: Path, comp: str, pattern: str, device: torch.device,
+                     *, seed: int = 42, run_dir: str | Path | None = None):
     """Load a frozen content-aware base microscope + its run config.
 
     Returns (model, run_cfg, eval_m). The model is fully frozen and in eval mode.
     """
-    rd = base_run_dir(base_exp_root, comp, pattern)
+    rd = Path(run_dir) if run_dir is not None else base_run_dir(base_exp_root, comp, pattern, seed)
     run_cfg = load_experiment_config(rd / "config.yaml")
     run_cfg["experiment"]["device"] = str(device)
     payload = torch.load(rd / "checkpoints" / "best.pt", map_location=device, weights_only=False)
@@ -365,6 +366,8 @@ def compute_generator_loss(
 # ---------------------------------------------------------------------------
 @torch.no_grad()
 def eval_cache(refiner: OfflineSwinIRRefinement, cache: PairCache, device: torch.device, eval_batch: int = 16) -> dict[str, float]:
+    if len(cache) == 0:
+        raise ValueError("Cannot evaluate an empty refinement cache")
     refiner.eval()
     base_mse = base_ssim = base_psnr = 0.0
     ref_mse = ref_ssim = ref_psnr = 0.0
@@ -383,12 +386,21 @@ def eval_cache(refiner: OfflineSwinIRRefinement, cache: PairCache, device: torch
             base_psnr += float(psnr_metric(xbc[j : j + 1], t).item())
             ref_psnr += float(psnr_metric(rec[j : j + 1], t).item())
             n += 1
-    m = max(1, n)
+    m = n
     return {
         "n": n,
         "base_mse": base_mse / m, "base_ssim": base_ssim / m, "base_psnr": base_psnr / m,
         "ref_mse": ref_mse / m, "ref_ssim": ref_ssim / m, "ref_psnr": ref_psnr / m,
     }
+
+
+def refinement_selection_score(metrics, *, base_mse, mse_gate):
+    """Validation SSIM, with an actual feasibility constraint when requested."""
+    if not all(math.isfinite(float(metrics[k])) for k in ("ref_ssim", "ref_mse")):
+        raise ValueError("Nonfinite refinement validation metrics")
+    if mse_gate and metrics["ref_mse"] > base_mse:
+        return None
+    return float(metrics["ref_ssim"])
 
 
 # ---------------------------------------------------------------------------

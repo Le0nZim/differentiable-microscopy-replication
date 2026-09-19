@@ -15,6 +15,7 @@ from evaluation.metrics import mse, ssim
 from models.microscope import DifferentiableMicroscope
 from training.losses import reconstruction_loss_l1
 from training.iteration import repeat_dataloader
+from utils.evaluation_mode import evaluation_rng
 from training.metrics_logging import batch_reconstruction_metrics, collect_step_metrics
 from training.pattern_tracking import PatternSnapshot, capture_detector_snapshot, capture_pattern_snapshot, finalize_pattern_snapshot
 
@@ -137,7 +138,8 @@ def train_fixed_m_phase(
                 apply_noise=apply_noise,
                 sigmoid_m=sigmoid_m,
             )
-            val_mse, val_ssim = _evaluate_loader(model, val_loader, device, apply_noise, sigmoid_m)
+            with evaluation_rng(training_cfg.get("validation_noise_seed"), device):
+                val_mse, val_ssim = _evaluate_loader(model, val_loader, device, apply_noise, sigmoid_m)
             if val_mse < best_val_mse:
                 best_val_mse = val_mse
                 best_state_dict = deepcopy(model.state_dict())

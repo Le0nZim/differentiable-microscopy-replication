@@ -1,0 +1,175 @@
+{
+  "job": {
+    "id": "segmentation/x256_random_fixed_seed43",
+    "stage": "segmentation",
+    "seed": 43,
+    "key": "x256_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x256",
+    "downscale": 32,
+    "mode": "random_fixed"
+  },
+  "config": {
+    "experiment": {
+      "seed": 43,
+      "device": "cuda:0",
+      "study_label": "Fresh three-stage segmentation; BBBC022 pseudo-labels, nested well split",
+      "results_csv": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_gpu0/jobs/segmentation/x256_random_fixed_seed43/attempt_001/results.csv",
+      "run_id": "segmentation/x256_random_fixed_seed43",
+      "output_dir": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_gpu0/jobs/segmentation/x256_random_fixed_seed43/attempt_001",
+      "compression": 256.0
+    },
+    "dataset": {
+      "name": "bbbc022_hoechst",
+      "data_root": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/substitute_data/BBBC022_v1_images_20585w1",
+      "stack_glob": "**/*.tif",
+      "preprocessing_mode": "paper_strict",
+      "bias": 134.28,
+      "clip_max": 500.0,
+      "downscale_factor": 1.0,
+      "background_percentile": 1.0,
+      "clip_percentile": 99.9,
+      "patch_size": 256,
+      "image_size": 256,
+      "num_train_images": 168,
+      "num_val_images": 21,
+      "num_test_images": 21,
+      "seed": 42,
+      "train_random_crops": true,
+      "random_flips": true,
+      "split_by_well": true,
+      "return_mask": true,
+      "mask_mode": "trackmate",
+      "mask_raw_threshold": 506.0,
+      "mask_smooth_interval": 2.0,
+      "mask_dp_epsilon": 0.5,
+      "mask_threshold": 0.3,
+      "mask_closing_kernel": 10,
+      "split_path": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_gpu0/prepared/bbbc022_segmentation.json"
+    },
+    "pattern_generator": {
+      "mode": "random_fixed",
+      "num_patterns": 4,
+      "sigmoid_m": 1.0,
+      "random_fixed_m": 10.0,
+      "seed": 43,
+      "height": 256,
+      "width": 256
+    },
+    "sigmoid_schedule": {
+      "epoch_baseline": 0,
+      "epoch_cutoff": 0,
+      "epoch_step": 1,
+      "m_init": 1.0
+    },
+    "forward_model": {
+      "downscale_factor": 32,
+      "use_impulse_psfs": true,
+      "ex_psf_kernel_size": 3,
+      "em_psf_kernel_size": 3
+    },
+    "detector_noise": {
+      "mode": "noise_free",
+      "photon_count": 10000.0,
+      "gamma": 10.0,
+      "sigma_read": 0.0,
+      "apply_noise": false
+    },
+    "inverse_model": {
+      "upsampling": {
+        "mode": "locality_aware",
+        "downscale_factor": 32,
+        "num_patterns": 4,
+        "use_mixing_cnn": false,
+        "mixing_hidden_channels": 16
+      },
+      "reconstruction": {
+        "in_channels": 4,
+        "hidden_channels": [
+          64,
+          64,
+          32,
+          32,
+          16,
+          1
+        ],
+        "kernel_size": 3,
+        "padding": 1
+      }
+    },
+    "segmentation_head": {
+      "in_channels": 1,
+      "hidden_channels": [
+        16,
+        16,
+        1
+      ],
+      "kernel_size": 3,
+      "padding": 1
+    },
+    "training": {
+      "batch_size": 32,
+      "log_every": 200,
+      "illumination_lr": 1.0,
+      "inverse_lr": 0.001,
+      "gradient_clip_norm": 1.0,
+      "sharpen_eval_m": 10.0,
+      "loss": "l1",
+      "learn_patterns": false,
+      "fixed_sigmoid_m": 1.0,
+      "seg_bce_weight": 1.0,
+      "seg_dice_weight": 0.5,
+      "reconstruction_l1_weight": 0.0,
+      "task_aware": {
+        "stage1_mode": "train",
+        "content_aware_checkpoint": null,
+        "eval_sigmoid_m": 10.0,
+        "finetune_sigmoid_m": 1.0,
+        "finetune_harden_m_values": [
+          2.0,
+          4.0,
+          8.0
+        ],
+        "finetune_soft_fraction": 0.6,
+        "seg_head_lr": 0.001,
+        "num_qualitative_samples": 6,
+        "stage1": {
+          "learnable": {
+            "inverse_warmup_steps": 1500,
+            "joint_soft_steps": 3500,
+            "harden_m_values": [
+              2,
+              4,
+              8
+            ],
+            "harden_steps_per_m": 800
+          },
+          "fixed_steps": 7400
+        },
+        "seg_head_steps": 1200,
+        "finetune_steps": 2500
+      },
+      "loader_seed": 1043
+    },
+    "workflow": {
+      "job": {
+        "id": "segmentation/x256_random_fixed_seed43",
+        "stage": "segmentation",
+        "seed": 43,
+        "key": "x256_random_fixed",
+        "requires": [],
+        "engine": "segmentation",
+        "comp": "x256",
+        "downscale": 32,
+        "mode": "random_fixed"
+      },
+      "dataset_identity": "BBBC022 substitute",
+      "protocol": "audited_legacy_soft_mask",
+      "note": "Fresh rerun; not evidence that previous numerical results are valid."
+    }
+  },
+  "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_gpu0/jobs/segmentation/x256_random_fixed_seed43/attempt_001",
+  "device": "cuda:0",
+  "dependencies": {}
+}

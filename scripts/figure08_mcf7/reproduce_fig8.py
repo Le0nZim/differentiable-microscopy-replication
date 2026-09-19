@@ -68,7 +68,7 @@ def _to_viridis(gray: np.ndarray, lo: float, hi: float) -> np.ndarray:
 
 
 def _load_model(condition: str, cfg: dict, runs_dir: Path, device):
-    backbone, isz, up_mode, _ = TR.CONDITIONS[condition]
+    backbone, isz, up_mode, _ = TR.condition_spec(cfg, condition)
     if backbone == "swinir":
         model = TR._build_swinir_model(cfg, isz).to(device)
     else:
@@ -121,7 +121,7 @@ def main() -> None:
     q_model, isz, q_ep = _load_model(conds[0], cfg, runs_dir, device)
     r_model, _, r_ep = _load_model(conds[1], cfg, runs_dir, device)
 
-    ds_cfg = dict(cfg["dataset"]); ds_cfg["seed"] = 42; ds_cfg["patch_size"] = 256; ds_cfg["image_size"] = 256
+    ds_cfg = dict(cfg["dataset"]); ds_cfg["seed"] = int(cfg.get("data_seed", 42)); ds_cfg["patch_size"] = 256; ds_cfg["image_size"] = 256
     ds = MCF7Channel2Dataset.from_dict(ds_cfg, split="test")
     indices = args.indices
     if not indices:

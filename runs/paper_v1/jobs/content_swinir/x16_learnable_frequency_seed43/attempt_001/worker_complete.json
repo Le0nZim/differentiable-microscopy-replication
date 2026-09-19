@@ -1,0 +1,7 @@
+{
+  "artifacts": [
+    "x16/learnable_frequency/metrics.json",
+    "x16/learnable_frequency/checkpoints/best.pt",
+    "x16/learnable_frequency/grids/test_grid.png"
+  ]
+}

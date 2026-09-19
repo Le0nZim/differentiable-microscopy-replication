@@ -1,0 +1,479 @@
+[
+  {
+    "id": "segmentation/x64_random_fixed_seed42",
+    "stage": "segmentation",
+    "seed": 42,
+    "key": "x64_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x64",
+    "downscale": 16,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x64_learnable_frequency_seed42",
+    "stage": "segmentation",
+    "seed": 42,
+    "key": "x64_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x64",
+    "downscale": 16,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "segmentation/x256_random_fixed_seed42",
+    "stage": "segmentation",
+    "seed": 42,
+    "key": "x256_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x256",
+    "downscale": 32,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x256_learnable_frequency_seed42",
+    "stage": "segmentation",
+    "seed": 42,
+    "key": "x256_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x256",
+    "downscale": 32,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "segmentation/x1024_random_fixed_seed42",
+    "stage": "segmentation",
+    "seed": 42,
+    "key": "x1024_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x1024",
+    "downscale": 64,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x1024_learnable_frequency_seed42",
+    "stage": "segmentation",
+    "seed": 42,
+    "key": "x1024_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x1024",
+    "downscale": 64,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "segmentation/x64_random_fixed_seed43",
+    "stage": "segmentation",
+    "seed": 43,
+    "key": "x64_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x64",
+    "downscale": 16,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x64_learnable_frequency_seed43",
+    "stage": "segmentation",
+    "seed": 43,
+    "key": "x64_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x64",
+    "downscale": 16,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "segmentation/x256_random_fixed_seed43",
+    "stage": "segmentation",
+    "seed": 43,
+    "key": "x256_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x256",
+    "downscale": 32,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x256_learnable_frequency_seed43",
+    "stage": "segmentation",
+    "seed": 43,
+    "key": "x256_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x256",
+    "downscale": 32,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "segmentation/x1024_random_fixed_seed43",
+    "stage": "segmentation",
+    "seed": 43,
+    "key": "x1024_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x1024",
+    "downscale": 64,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x1024_learnable_frequency_seed43",
+    "stage": "segmentation",
+    "seed": 43,
+    "key": "x1024_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x1024",
+    "downscale": 64,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "segmentation/x64_random_fixed_seed44",
+    "stage": "segmentation",
+    "seed": 44,
+    "key": "x64_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x64",
+    "downscale": 16,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x64_learnable_frequency_seed44",
+    "stage": "segmentation",
+    "seed": 44,
+    "key": "x64_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x64",
+    "downscale": 16,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "segmentation/x256_random_fixed_seed44",
+    "stage": "segmentation",
+    "seed": 44,
+    "key": "x256_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x256",
+    "downscale": 32,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x256_learnable_frequency_seed44",
+    "stage": "segmentation",
+    "seed": 44,
+    "key": "x256_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x256",
+    "downscale": 32,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "segmentation/x1024_random_fixed_seed44",
+    "stage": "segmentation",
+    "seed": 44,
+    "key": "x1024_random_fixed",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x1024",
+    "downscale": 64,
+    "mode": "random_fixed"
+  },
+  {
+    "id": "segmentation/x1024_learnable_frequency_seed44",
+    "stage": "segmentation",
+    "seed": 44,
+    "key": "x1024_learnable_frequency",
+    "requires": [],
+    "engine": "segmentation",
+    "comp": "x1024",
+    "downscale": 64,
+    "mode": "learnable_frequency"
+  },
+  {
+    "id": "sr/swinir_wo_li_seed42",
+    "stage": "sr",
+    "seed": 42,
+    "key": "swinir_wo_li",
+    "requires": [],
+    "engine": "sr",
+    "condition": "swinir_wo_li"
+  },
+  {
+    "id": "sr/swinir_with_li_seed42",
+    "stage": "sr",
+    "seed": 42,
+    "key": "swinir_with_li",
+    "requires": [],
+    "engine": "sr",
+    "condition": "swinir_with_li"
+  },
+  {
+    "id": "sr/swinir_wo_li_seed43",
+    "stage": "sr",
+    "seed": 43,
+    "key": "swinir_wo_li",
+    "requires": [],
+    "engine": "sr",
+    "condition": "swinir_wo_li"
+  },
+  {
+    "id": "sr/swinir_with_li_seed43",
+    "stage": "sr",
+    "seed": 43,
+    "key": "swinir_with_li",
+    "requires": [],
+    "engine": "sr",
+    "condition": "swinir_with_li"
+  },
+  {
+    "id": "sr/swinir_wo_li_seed44",
+    "stage": "sr",
+    "seed": 44,
+    "key": "swinir_wo_li",
+    "requires": [],
+    "engine": "sr",
+    "condition": "swinir_wo_li"
+  },
+  {
+    "id": "sr/swinir_with_li_seed44",
+    "stage": "sr",
+    "seed": 44,
+    "key": "swinir_with_li",
+    "requires": [],
+    "engine": "sr",
+    "condition": "swinir_with_li"
+  },
+  {
+    "id": "mcf7/wswinir_seed42",
+    "stage": "mcf7",
+    "seed": 42,
+    "key": "wswinir",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "wswinir"
+  },
+  {
+    "id": "mcf7/transpose256_seed42",
+    "stage": "mcf7",
+    "seed": 42,
+    "key": "transpose256",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "transpose256"
+  },
+  {
+    "id": "mcf7/wcnn64_seed42",
+    "stage": "mcf7",
+    "seed": 42,
+    "key": "wcnn64",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "wcnn64"
+  },
+  {
+    "id": "mcf7/figures_seed42",
+    "stage": "mcf7",
+    "seed": 42,
+    "key": "figures",
+    "requires": [
+      "mcf7/wswinir_seed42",
+      "mcf7/transpose256_seed42",
+      "mcf7/wcnn64_seed42"
+    ],
+    "engine": "mcf7_figures"
+  },
+  {
+    "id": "mcf7/wswinir_seed43",
+    "stage": "mcf7",
+    "seed": 43,
+    "key": "wswinir",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "wswinir"
+  },
+  {
+    "id": "mcf7/transpose256_seed43",
+    "stage": "mcf7",
+    "seed": 43,
+    "key": "transpose256",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "transpose256"
+  },
+  {
+    "id": "mcf7/wcnn64_seed43",
+    "stage": "mcf7",
+    "seed": 43,
+    "key": "wcnn64",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "wcnn64"
+  },
+  {
+    "id": "mcf7/figures_seed43",
+    "stage": "mcf7",
+    "seed": 43,
+    "key": "figures",
+    "requires": [
+      "mcf7/wswinir_seed43",
+      "mcf7/transpose256_seed43",
+      "mcf7/wcnn64_seed43"
+    ],
+    "engine": "mcf7_figures"
+  },
+  {
+    "id": "mcf7/wswinir_seed44",
+    "stage": "mcf7",
+    "seed": 44,
+    "key": "wswinir",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "wswinir"
+  },
+  {
+    "id": "mcf7/transpose256_seed44",
+    "stage": "mcf7",
+    "seed": 44,
+    "key": "transpose256",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "transpose256"
+  },
+  {
+    "id": "mcf7/wcnn64_seed44",
+    "stage": "mcf7",
+    "seed": 44,
+    "key": "wcnn64",
+    "requires": [],
+    "engine": "mcf7",
+    "condition": "wcnn64"
+  },
+  {
+    "id": "mcf7/figures_seed44",
+    "stage": "mcf7",
+    "seed": 44,
+    "key": "figures",
+    "requires": [
+      "mcf7/wswinir_seed44",
+      "mcf7/transpose256_seed44",
+      "mcf7/wcnn64_seed44"
+    ],
+    "engine": "mcf7_figures"
+  },
+  {
+    "id": "ablation/A_seed42",
+    "stage": "ablation",
+    "seed": 42,
+    "key": "A",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "A"
+  },
+  {
+    "id": "ablation/B_seed42",
+    "stage": "ablation",
+    "seed": 42,
+    "key": "B",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "B"
+  },
+  {
+    "id": "ablation/C_seed42",
+    "stage": "ablation",
+    "seed": 42,
+    "key": "C",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "C"
+  },
+  {
+    "id": "ablation/D_seed42",
+    "stage": "ablation",
+    "seed": 42,
+    "key": "D",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "D"
+  },
+  {
+    "id": "ablation/A_seed43",
+    "stage": "ablation",
+    "seed": 43,
+    "key": "A",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "A"
+  },
+  {
+    "id": "ablation/B_seed43",
+    "stage": "ablation",
+    "seed": 43,
+    "key": "B",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "B"
+  },
+  {
+    "id": "ablation/C_seed43",
+    "stage": "ablation",
+    "seed": 43,
+    "key": "C",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "C"
+  },
+  {
+    "id": "ablation/D_seed43",
+    "stage": "ablation",
+    "seed": 43,
+    "key": "D",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "D"
+  },
+  {
+    "id": "ablation/A_seed44",
+    "stage": "ablation",
+    "seed": 44,
+    "key": "A",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "A"
+  },
+  {
+    "id": "ablation/B_seed44",
+    "stage": "ablation",
+    "seed": 44,
+    "key": "B",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "B"
+  },
+  {
+    "id": "ablation/C_seed44",
+    "stage": "ablation",
+    "seed": 44,
+    "key": "C",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "C"
+  },
+  {
+    "id": "ablation/D_seed44",
+    "stage": "ablation",
+    "seed": 44,
+    "key": "D",
+    "requires": [],
+    "engine": "ablation",
+    "variant": "D"
+  }
+]

@@ -1,0 +1,4679 @@
+{
+  "patchmnist/A_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/A_seed42/attempt_001",
+    "started": "2026-09-12T21:50:25.095903+00:00",
+    "finished": "2026-09-12T22:03:08.689943+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 551,
+        "mtime_ns": 1789250588089111185,
+        "sha256": "85729e1555655433b785f17ff06253403e18c095c404137366a360831d42dceb"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 1363285,
+        "mtime_ns": 1789250587751108703,
+        "sha256": "29ca5cae2f7d9d48acd48186c07deb9e2be4a749859252c7a4f24df07f8ed6cd"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 393352,
+        "mtime_ns": 1789250587969110303,
+        "sha256": "d499fda9c9b6df23f4cc2c7ecba3666bc01a661c9e332a7b731a8b86ebe223c5"
+      }
+    ]
+  },
+  "patchmnist/B_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/B_seed42/attempt_001",
+    "started": "2026-09-12T22:03:08.695905+00:00",
+    "finished": "2026-09-12T22:15:53.762649+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 556,
+        "mtime_ns": 1789251353153740575,
+        "sha256": "a42898edf86b056d540bb5903528eb1a8eac1323098008ab9d36d2808751530d"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 2411861,
+        "mtime_ns": 1789251352792737900,
+        "sha256": "da27243554ce68fe965e9fa8dd2275b7ac390ceb8e571ff67a578b6046aff090"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 397761,
+        "mtime_ns": 1789251353010739515,
+        "sha256": "47daf6594397816d4592d0472de02d3471e5cebab77a05ea273297a77d1b1f33"
+      }
+    ]
+  },
+  "patchmnist/C_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/C_seed42/attempt_001",
+    "started": "2026-09-12T22:15:53.768561+00:00",
+    "finished": "2026-09-12T22:28:36.561971+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 568,
+        "mtime_ns": 1789252115970369731,
+        "sha256": "51cd0fce282bcd4b879dbc75ca3f6d98b6ec6d21667a3e52b1f3b4c243d8a18f"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 3455887,
+        "mtime_ns": 1789252115598366993,
+        "sha256": "749f00d2b263d42aa858ab358efe52fad58effc501894494598fcf62e290e4be"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 398635,
+        "mtime_ns": 1789252115821368635,
+        "sha256": "ccf440e15c01f39b8b3281c924baa8a2d66d553431575f7c207af232bc88038f"
+      }
+    ]
+  },
+  "patchmnist/D_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/D_seed42/attempt_001",
+    "started": "2026-09-12T22:28:36.568915+00:00",
+    "finished": "2026-09-12T22:41:16.358152+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 558,
+        "mtime_ns": 1789252875760955558,
+        "sha256": "8e031c21b3fc7b2ccaa7f659c0d253e20bf4be70b0c81d2c588db4266cb74c6c"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 2407311,
+        "mtime_ns": 1789252875405952949,
+        "sha256": "3d9026bde0343bdd9ffc764ec3f9e9a52b78abfe5549c619e5745cdd1384b234"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 397162,
+        "mtime_ns": 1789252875611954463,
+        "sha256": "70e38df174633acc5e4ef981d7168374faeeca6486af04b674f8bfaa9895c8ab"
+      }
+    ]
+  },
+  "patchmnist/A_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/A_seed43/attempt_001",
+    "started": "2026-09-12T22:41:16.364799+00:00",
+    "finished": "2026-09-12T22:53:58.475295+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 551,
+        "mtime_ns": 1789253637837083944,
+        "sha256": "95c669f1aadd75ac95054560f8b852f5d262a2ee372187f333ba13fdfe1cf7ba"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 1363285,
+        "mtime_ns": 1789253637497081711,
+        "sha256": "74c017eb9819ebe5e4ce052a9490fd2557ff20a420d9e2a0c2fcfb1a6b86dd0a"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 391326,
+        "mtime_ns": 1789253637717083156,
+        "sha256": "0b88ea8eedaa0151a89a02ebac35575837a708da0588ba2195a128fb3a68a8a7"
+      }
+    ]
+  },
+  "patchmnist/B_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/B_seed43/attempt_001",
+    "started": "2026-09-12T22:53:58.480847+00:00",
+    "finished": "2026-09-12T23:06:44.430571+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 559,
+        "mtime_ns": 1789254403868338569,
+        "sha256": "736958dd4d7d6f80d38a9fed0159f2d4ed84d62ad05bff5f0377c51e2d141c78"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 2411861,
+        "mtime_ns": 1789254403496335951,
+        "sha256": "b4a032021cdc4af8581732a88efb910459fdd3236266cda5da64e696dbedd9a9"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 397945,
+        "mtime_ns": 1789254403718337513,
+        "sha256": "c475f1ce904f697c44bce7953d7f3f2bf44abb6db6fa13725458827b65675451"
+      }
+    ]
+  },
+  "patchmnist/C_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/C_seed43/attempt_001",
+    "started": "2026-09-12T23:06:44.436737+00:00",
+    "finished": "2026-09-12T23:19:29.302493+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 568,
+        "mtime_ns": 1789255168731770559,
+        "sha256": "c63498dd5f82bfabfc80e970f53042568bc2eeb75192a0e01086d2338d0ee36f"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 3455887,
+        "mtime_ns": 1789255168358767895,
+        "sha256": "63bceb7a918d11a1ec4c9adf3ba268cba8a5165f2b14c7f1e9a043aac700bf79"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 397137,
+        "mtime_ns": 1789255168582769495,
+        "sha256": "45dcb4ab13ddb1422aaf99cd6e1a87db10041087e6c9ba130597d930dacbdc88"
+      }
+    ]
+  },
+  "patchmnist/D_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/D_seed43/attempt_001",
+    "started": "2026-09-12T23:19:29.308846+00:00",
+    "finished": "2026-09-12T23:32:14.606778+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 557,
+        "mtime_ns": 1789255934039941784,
+        "sha256": "f91db9c75061b7a84a501a977802457180322f8496c381c3a39433c5284adc2b"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 2407311,
+        "mtime_ns": 1789255933680939307,
+        "sha256": "2e011e200e79b7e5e17c2302334e2f014b3008efbba01fa343ed8d26e5d08157"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 398714,
+        "mtime_ns": 1789255933891940763,
+        "sha256": "76c4d28706c128b6c412ead1b60378f6bc60686ec527afa33b5a2ad39792bf54"
+      }
+    ]
+  },
+  "patchmnist/A_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/A_seed44/attempt_001",
+    "started": "2026-09-12T23:32:14.612948+00:00",
+    "finished": "2026-09-12T23:45:01.814192+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 548,
+        "mtime_ns": 1789256701247304514,
+        "sha256": "84c76a9a15a921f0d20b95d6df2950ed5fb0d09617633f48c21441db9b91a128"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 1363285,
+        "mtime_ns": 1789256700892302013,
+        "sha256": "cf72997d836f503a14fac1f10e9889c39ce649b56508c1c163670b3b828e7c3f"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 390241,
+        "mtime_ns": 1789256701122303633,
+        "sha256": "59f38e3259df1c67c353b1ddc0f0d27f3d2d4638fe42f8c321f5fd9f92d77bb8"
+      }
+    ]
+  },
+  "patchmnist/B_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/B_seed44/attempt_001",
+    "started": "2026-09-12T23:45:01.819616+00:00",
+    "finished": "2026-09-12T23:57:53.729462+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 558,
+        "mtime_ns": 1789257473129798897,
+        "sha256": "263080665f59f1870e8f3bd2ead32726a1e2269eb3683ebfb271de8b344b719b"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 2411861,
+        "mtime_ns": 1789257472764796232,
+        "sha256": "df259573fe848701df74117a139f7c905c18873ef307377b3fc5a1b127c77d2a"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 397198,
+        "mtime_ns": 1789257472986797853,
+        "sha256": "c85b87659d0bc3ba7155b9a0bb812645570fc6d972f522b92a4635fa16866dbb"
+      }
+    ]
+  },
+  "patchmnist/C_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/C_seed44/attempt_001",
+    "started": "2026-09-12T23:57:53.735108+00:00",
+    "finished": "2026-09-13T00:10:36.096246+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 569,
+        "mtime_ns": 1789258235485296404,
+        "sha256": "e32c882ffae865489681ec75eb5185c911f24ac38ff35e07d4d3eddebb680ba6"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 3455887,
+        "mtime_ns": 1789258235108293706,
+        "sha256": "61cc3b44ae393adf74ace7b373f862ad3b2eed6d4512ac7a43f79374c1fce4df"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 397424,
+        "mtime_ns": 1789258235334295323,
+        "sha256": "04382a0dff776dcebc4d6ed4e3be938b4ca6d17b68c9c2d2ff769e6bae32cd69"
+      }
+    ]
+  },
+  "patchmnist/D_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/D_seed44/attempt_001",
+    "started": "2026-09-13T00:10:36.102624+00:00",
+    "finished": "2026-09-13T00:23:17.045963+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 558,
+        "mtime_ns": 1789258996440728281,
+        "sha256": "4281591b9a22e0b52d120ce50a8d4716de9a2e9f07fe9e2caa0a13e98c88e631"
+      },
+      {
+        "path": "checkpoints_best.pt",
+        "bytes": 2407311,
+        "mtime_ns": 1789258996081725723,
+        "sha256": "1da4747d757210d981b4077948ebbe948d158a8dde160c0e7605f8ef9772b436"
+      },
+      {
+        "path": "figures/qualitative_panel.png",
+        "bytes": 397015,
+        "mtime_ns": 1789258996292727226,
+        "sha256": "0321ba6a9d97b538a6f431afb0a0ab4514301e91373e6ad92a5bd91252a26dfb"
+      }
+    ]
+  },
+  "upsampling/s128_n600_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n600_transpose_conv_seed42/attempt_001",
+    "started": "2026-09-13T00:23:17.051356+00:00",
+    "finished": "2026-09-13T00:24:51.023552+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 802,
+        "mtime_ns": 1789259090445398103,
+        "sha256": "6eb83129fd051bee809e39d14b9195723d97c326f58314b5f3c366a905da0456"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789259090025395110,
+        "sha256": "c6d8caf82c4d6bacd602c24d38f4e2d200322aa115924fdad70748a4b5d71d45"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789258998594743631,
+        "sha256": "f656ab8119aa2dd883e6a08fb97f102df59a4c3a1ef08bfe7bc7603f7112de22"
+      }
+    ]
+  },
+  "upsampling/s128_n600_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n600_locality_aware_seed42/attempt_001",
+    "started": "2026-09-13T00:24:51.028309+00:00",
+    "finished": "2026-09-13T00:26:20.426823+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 799,
+        "mtime_ns": 1789259179902035394,
+        "sha256": "f6d7aefd77230749911dc7dc623981430f8931b3e1fb9c60647564b7c5e2f906"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789259179498032516,
+        "sha256": "0fb6c6c5c4a0a1277cd3108160ec6dc6d087491497bb160f659593815baf03e3"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789259092513412836,
+        "sha256": "91071530585d8eaa448317d2a2b276fd8cb1f6faee52f407bb88b8098caaca69"
+      }
+    ]
+  },
+  "upsampling/s128_n3000_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n3000_transpose_conv_seed42/attempt_001",
+    "started": "2026-09-13T00:26:20.431977+00:00",
+    "finished": "2026-09-13T00:27:55.456133+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789259274891711993,
+        "sha256": "2ef113a6534efffd174f34f2d84f5824a71dff209fb21ccd4e8f31b488112873"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789259274420708638,
+        "sha256": "7af2aeda0766fe9629c9fb43ba3112f8d4aa1a5124367c535790175b29c81040"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789259181931049848,
+        "sha256": "8e185b8d76f1daf29ee108454e57df844d0a768b7e2cf396740f41df1fb68df4"
+      }
+    ]
+  },
+  "upsampling/s128_n3000_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n3000_locality_aware_seed42/attempt_001",
+    "started": "2026-09-13T00:27:55.460431+00:00",
+    "finished": "2026-09-13T00:29:24.776593+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789259364202347849,
+        "sha256": "0c619b39895c1dbaa5fecf463f6ee7cd746350bb979b746f9038deae0b806c28"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789259363798344991,
+        "sha256": "ac34fa81ee62445dde00839af08af87dd237f15926d6a4f28f6abfbfa69d3c57"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789259276960726729,
+        "sha256": "0aabc1e86168b8f04256cc4c57f97c534c2ff9708ea1985e66b13e5c01491a57"
+      }
+    ]
+  },
+  "upsampling/s128_n6000_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n6000_transpose_conv_seed42/attempt_001",
+    "started": "2026-09-13T00:29:24.781859+00:00",
+    "finished": "2026-09-13T00:31:00.306736+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789259459745024080,
+        "sha256": "626797717b5dd7b7db6e8340e6d4060fc9f2f4f743411fb995630b9f178e53d6"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789259459272020730,
+        "sha256": "892f2b6e5232addad5426d083c366f09402f7fabbc0df36f57ef3519d68fbea5"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789259366300362692,
+        "sha256": "e47c745b6d8e67e0fc3492d0053316c2b37442751fcfac046e908dd32f2125ea"
+      }
+    ]
+  },
+  "upsampling/s128_n6000_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n6000_locality_aware_seed42/attempt_001",
+    "started": "2026-09-13T00:31:00.311208+00:00",
+    "finished": "2026-09-13T00:32:30.079793+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 808,
+        "mtime_ns": 1789259549530660047,
+        "sha256": "840cc7539e03aa29535f50c190edf99dc3aea2406087e9e4085276089b79abc6"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789259549126657185,
+        "sha256": "cd70a8b530883b0cb510f3e4873c94b46cf6deb522e98090d18fe2894aeda7f7"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789259461797038610,
+        "sha256": "085eb0cc18b7373692315793aae68d6678328744b152b70c3668d44a5ee5b70c"
+      }
+    ]
+  },
+  "upsampling/s256_n600_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n600_transpose_conv_seed42/attempt_001",
+    "started": "2026-09-13T00:32:30.085192+00:00",
+    "finished": "2026-09-13T00:38:47.033486+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 799,
+        "mtime_ns": 1789259926482333663,
+        "sha256": "00eff32f4e86ecc527d9a1b8abcc338ba9473666f15182aab829c2ac326ade87"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789259925144324165,
+        "sha256": "3c49514df3cdc5f72393680a02ea7ccc875e01224a202285fdf97c538207cf95"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789259551611674792,
+        "sha256": "56d7ce02f2a177832f49b6cc5f0bfbb00005b1f6f6ca9ef4f867632c251571fc"
+      }
+    ]
+  },
+  "upsampling/s256_n600_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n600_locality_aware_seed42/attempt_001",
+    "started": "2026-09-13T00:38:47.038692+00:00",
+    "finished": "2026-09-13T00:44:54.670922+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789260294121944567,
+        "sha256": "245fda6c692211ebe0537f82bb58eec0d62e0ae65df2d3ecbc558190c6e282c8"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317767,
+        "mtime_ns": 1789260292856935579,
+        "sha256": "6cc51c693c657bdf9709b6150b544d3b4470dc94540a93ffdcb4cc8d4098a05f"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789259928518348115,
+        "sha256": "e7fab0a2a0dc7061886397571c241f3fa923d5b40766d25c6775a79df1828d6c"
+      }
+    ]
+  },
+  "upsampling/s256_n3000_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n3000_transpose_conv_seed42/attempt_001",
+    "started": "2026-09-13T00:44:54.679406+00:00",
+    "finished": "2026-09-13T00:51:12.428576+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789260671850628772,
+        "sha256": "e192c3750595d5b6365d80a5206f53eea945b8ebfe34e68c0568637e0e70b443"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789260670590619817,
+        "sha256": "6519c1ec99b9a0616c2b3b7f90c3f6c4c39b906310ecef72c4562a2b01ad5797"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789260296194959294,
+        "sha256": "437d10009737b7d7281d8377a12655923a49c2dfae450843547640a85941598c"
+      }
+    ]
+  },
+  "upsampling/s256_n3000_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n3000_locality_aware_seed42/attempt_001",
+    "started": "2026-09-13T00:51:12.434158+00:00",
+    "finished": "2026-09-13T00:57:23.943090+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789261043374269673,
+        "sha256": "ae9a5ae48ba545cc057a9ecaec1f8d9ffa2bd41ea0bf28301dbd6c4d889d3219"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317831,
+        "mtime_ns": 1789261042120260758,
+        "sha256": "5186d1636baac47f499398c02375f94c25d5e815603be8588bea8eb6e47ea39d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789260673955643734,
+        "sha256": "c256cbd329bbeaac77919b32bea2f8b1d7bbd9c05785adc32ea6082d0abcb4ef"
+      }
+    ]
+  },
+  "upsampling/s256_n6000_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n6000_transpose_conv_seed42/attempt_001",
+    "started": "2026-09-13T00:57:23.951398+00:00",
+    "finished": "2026-09-13T01:03:46.558765+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789261425964001121,
+        "sha256": "05c4e0bcf28e33f3d48293048c75d28ebdbacaf9913e7513aee44b84327f4af1"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789261424581990427,
+        "sha256": "ff3c85fe8b179753467319b36067e7b910168d6c6f597c7bcc2833dcfd12c534"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789261045468284559,
+        "sha256": "eadcf4296c21de77ca30488246d09e1c061a72741855046d2bc8294381df36cb"
+      }
+    ]
+  },
+  "upsampling/s256_n6000_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n6000_locality_aware_seed42/attempt_001",
+    "started": "2026-09-13T01:03:46.564345+00:00",
+    "finished": "2026-09-13T01:09:58.105056+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789261797557816482,
+        "sha256": "2397c3fabe4a32b0d74dbc2d25bc6ff780170ba0ef24aa1426cb722a99256f0e"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317831,
+        "mtime_ns": 1789261796232806610,
+        "sha256": "447c689c26e74c3fa2a7e24093d20f6d04925b9f43dbff6feb36378359e857a9"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789261428051017266,
+        "sha256": "ca3f6c6d993a2d6f9d21483c4b99322793be3ebc0c31383793a4bc0135ef0ea4"
+      }
+    ]
+  },
+  "upsampling/s512_n600_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n600_transpose_conv_seed42/attempt_001",
+    "started": "2026-09-13T01:09:58.113866+00:00",
+    "finished": "2026-09-13T01:36:14.470056+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789263373908268841,
+        "sha256": "5e8f4e1068b38fa3a9a3a2527ac6969d78c93fb3799fecea551dfaf612f92722"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789263369054233918,
+        "sha256": "c21ca87af3566c9227e5d7560df0fd2883e0516a26a4069b8fab168ff6646af7"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789261799623831873,
+        "sha256": "42eecb4eb236381a9026003a61fb91a442a9ea72081a3f082e563d2b959489fa"
+      }
+    ]
+  },
+  "upsampling/s512_n600_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 2,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n600_locality_aware_seed42/attempt_002",
+    "started": "2026-09-13T18:16:58.175615+00:00",
+    "finished": "2026-09-13T18:42:52.854530+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789324972295466868,
+        "sha256": "75f10618476af4cdf3489cf97fed36bc3bd76b3956de71066b09852451bb91f7"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483591,
+        "mtime_ns": 1789324967421435678,
+        "sha256": "c94243271ea62de7f9d51409dcdc2f5dfa9655c325a65350f6fe1899044b9e52"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789323419670230639,
+        "sha256": "3ec1c6f9dda94bbc364944b7b1729e8cced22952e1a358449a6ac8ad9165cb1a"
+      }
+    ]
+  },
+  "upsampling/s512_n3000_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 2,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n3000_transpose_conv_seed42/attempt_002",
+    "started": "2026-09-13T18:44:40.022289+00:00",
+    "finished": "2026-09-13T19:11:06.599454+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789326665945201877,
+        "sha256": "1375cab91cf8c65ff1d65ef557a92d83e4a8b7d50d2ad2bdd5d1c59eb6006d7b"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789326661001166688,
+        "sha256": "01a0307e854271275739c351e5128fb8cb5c0a9019a4ccc8ef008d070c42b532"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789325081523174302,
+        "sha256": "8a62795a7177c19f4066e2cd8713b8258dc73d5ad1d1df06da46158486cd1749"
+      }
+    ]
+  },
+  "upsampling/s512_n3000_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n3000_locality_aware_seed42/attempt_001",
+    "started": "2026-09-13T19:11:06.608973+00:00",
+    "finished": "2026-09-13T19:37:26.272346+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789328245580557494,
+        "sha256": "4d5354696d095e87c8e2a995957ac932064fb85256db2edf0618196e150381b8"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483655,
+        "mtime_ns": 1789328240748521286,
+        "sha256": "459f45b011a21a1e285b0c4adf156f55039287df1ea4dfe008a743b95f502556"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789326668106217259,
+        "sha256": "854260719958398ddfa18f4ffdb987356f8cb36923092cda60dbc369f1504c63"
+      }
+    ]
+  },
+  "upsampling/s512_n6000_transpose_conv_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n6000_transpose_conv_seed42/attempt_001",
+    "started": "2026-09-13T19:37:26.293449+00:00",
+    "finished": "2026-09-13T20:03:58.675150+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 802,
+        "mtime_ns": 1789329837905094037,
+        "sha256": "f9f1c09d03e4542009d45e80c534f8edcf744409050b1da5c0a8cc26be852a12"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789329832994061654,
+        "sha256": "b7e834e8babad6d4f19003c22ab85be3b5f8e0968ff6dfc3fe12f82c12ea3733"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789328247781573985,
+        "sha256": "fbff506420f2fdedce12ff1dccbf98f20e27801263a5be3b206784940a317112"
+      }
+    ]
+  },
+  "upsampling/s512_n6000_locality_aware_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n6000_locality_aware_seed42/attempt_001",
+    "started": "2026-09-13T20:03:58.683959+00:00",
+    "finished": "2026-09-13T20:30:17.095313+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789331416363993878,
+        "sha256": "4e6d626bc2c684cea36950d263fbfa42698d3529291a42e953beddf15c4dffa2"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483655,
+        "mtime_ns": 1789331411576960355,
+        "sha256": "924e32ae4b49d6b6ffbc5137d1abe1ca821499f75b45fb0339305d4e312ca2ff"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789329840208109231,
+        "sha256": "3ccb0a4db13a01de53dcfebe66cb0be7b2595b9acf7aa70e2b4204c1d6c7156f"
+      }
+    ]
+  },
+  "upsampling/s128_n600_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n600_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T20:30:17.116078+00:00",
+    "finished": "2026-09-13T20:31:47.031797+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 800,
+        "mtime_ns": 1789331506478625287,
+        "sha256": "a09c4bcbd94da83a8fd568387e5dad64f24b15a5ad48ebd0c688f92b3ff388b9"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789331506078622483,
+        "sha256": "6df49a3b9bf5ac33e17c7e15581bf8f99a895c695d5baaa1eaa90e3cdfa12442"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789331418614009635,
+        "sha256": "7e743d55bcd5288514c0f27aea805d492cf3782afb369d1ce83d83d58c9db185"
+      }
+    ]
+  },
+  "upsampling/s128_n600_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n600_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T20:31:47.036556+00:00",
+    "finished": "2026-09-13T20:33:15.101169+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789331594556243003,
+        "sha256": "bd430f1f84eeb4b9af9dd4471442db67d5ea0d20807cf862334794b19281623d"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789331594143240106,
+        "sha256": "2223c2a327e62fd2da080f7d3438d36073b9e44d51439e94703a0e4e5496d8b2"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789331508537639721,
+        "sha256": "c893e7ab9fffffc403c818c71c3b68ba53a34cd89aed031508cca2fe294994bb"
+      }
+    ]
+  },
+  "upsampling/s128_n3000_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n3000_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T20:33:15.107465+00:00",
+    "finished": "2026-09-13T20:34:45.824111+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789331685288879844,
+        "sha256": "c15baa709e175919101ebe52edb11ddc9c2bfb196c9119e89a7fc1d79ff712ee"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789331684883877000,
+        "sha256": "7de3d86f85a6d8887acafb6d2172cb071a23e9118ce4905096166002fffb4b17"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789331596598257331,
+        "sha256": "7342fd03104e3e6c3fb89505630019e3f15f68791c7f26f10f60a36505dc6a3c"
+      }
+    ]
+  },
+  "upsampling/s128_n3000_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n3000_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T20:34:45.829319+00:00",
+    "finished": "2026-09-13T20:36:16.245278+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789331775723515019,
+        "sha256": "0376616e6781f387a9a8b16db98888259edeb5ab2b63c4fa38cf7a2f4f0b165a"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789331775317512166,
+        "sha256": "6c3fb089ef37f241c5ae58e1338a29f018a51482959814821f3228e3ddd8839e"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789331687318894097,
+        "sha256": "70c067eca36161f31bb1f5c51b57fb72add3147d9e908d5c86775706d1012663"
+      }
+    ]
+  },
+  "upsampling/s128_n6000_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n6000_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T20:36:16.250649+00:00",
+    "finished": "2026-09-13T20:37:45.769026+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789331865212143901,
+        "sha256": "fac9fe7c93ca8f8ccdebe7ae36dc83a830c0642413e053dd9a36b6ceed82dbe8"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789331864809141068,
+        "sha256": "fa688bc7aae7bc4bc668b5e3ff93689526d5893af83f8567e55cb904de318453"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789331777820529752,
+        "sha256": "62b5c45efecc404c20429b047be32fca230cc6ef272d6839843ceaca3e6c1641"
+      }
+    ]
+  },
+  "upsampling/s128_n6000_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n6000_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T20:37:45.774061+00:00",
+    "finished": "2026-09-13T20:39:16.711263+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789331956168783400,
+        "sha256": "b82273db57c58f90addbbdbefe16caba0587a2c296bfd9f810897f2cc54433c6"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789331955764780559,
+        "sha256": "f1a1cdbc4d81e8661cc490f9b9e93d5401bcb07f5142f7a292bf14399397d19e"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789331867295158542,
+        "sha256": "fb2691ee6f6516397c5e64092fe060d48b33986dc23bd89ae69b97373420097d"
+      }
+    ]
+  },
+  "upsampling/s256_n600_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n600_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T20:39:16.717058+00:00",
+    "finished": "2026-09-13T20:45:26.802263+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789332326247387565,
+        "sha256": "fef95e35c9b1f29202190d371967abdee33064ae8e4b6f9136cc3a7402cbefe3"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789332324963378525,
+        "sha256": "4b908026a09b86ab57d27004f536298876d71095cc388a364ce675997d951693"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789331958228797886,
+        "sha256": "ad771332b55ecd36c088fae71bf9a52ccdbc233066cf3cb99b862d852077b19f"
+      }
+    ]
+  },
+  "upsampling/s256_n600_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n600_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T20:45:26.831484+00:00",
+    "finished": "2026-09-13T20:51:32.860847+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 805,
+        "mtime_ns": 1789332692304965527,
+        "sha256": "881238cc5649d0120534cdee75df3c3fc5565904fa3e47979cfd601681608f55"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317767,
+        "mtime_ns": 1789332691026956523,
+        "sha256": "4666a798b769e393983882b35fdb6f5a7feca6064c2a3d3721925ffd333c4239"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789332328372402526,
+        "sha256": "d64abec062721be2555e190e57ad54ecf3233548a0aa8ae0a7678461a3181e7a"
+      }
+    ]
+  },
+  "upsampling/s256_n3000_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n3000_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T20:51:32.869425+00:00",
+    "finished": "2026-09-13T20:57:47.564180+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789333067019605498,
+        "sha256": "fb70d9648bfaba052616e778706097f1976d0242f9b37bd0d5cf6be8a2578e2e"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789333065737596465,
+        "sha256": "64af8a3ef3cb9d0e68288513118d844dada33f394b14759859a231fac9e34d87"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789332694365980044,
+        "sha256": "b61c5c68719d9d3e5b1ee47eb3978922ecbb2d315d2806a65fc73820b6e6127f"
+      }
+    ]
+  },
+  "upsampling/s256_n3000_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n3000_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T20:57:47.569813+00:00",
+    "finished": "2026-09-13T21:03:59.729948+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 809,
+        "mtime_ns": 1789333439152548171,
+        "sha256": "c158edd2d341dda41e49319a0de9336d0c07e861a7d82a00c74672f968a1c6c6"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317831,
+        "mtime_ns": 1789333437856538111,
+        "sha256": "8f1865a4cbeee4df7bf1e4efef4c578ef6411da8c8dcc6ed9acc0c2991ff110d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789333069077619999,
+        "sha256": "0b3354577b7ea692c61c2273e92180440689cceb108bb1b9e2a215de7e89fc8b"
+      }
+    ]
+  },
+  "upsampling/s256_n6000_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n6000_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T21:03:59.761952+00:00",
+    "finished": "2026-09-13T21:10:14.807268+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789333814252402361,
+        "sha256": "72ce55eec92d7a71c7a25187097f13a231ae10b0fb1dc27408978ab624327a70"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789333812963392706,
+        "sha256": "a8d56961a301336ac3a210e533a3ff97470ee2c044fac9e84d94c322f9eab7a1"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789333441249564444,
+        "sha256": "03b7a2acea5108d119615cc4954bfd1a1bc2b5efe501d0861bd1e4f4e1022a60"
+      }
+    ]
+  },
+  "upsampling/s256_n6000_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n6000_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T21:10:14.812998+00:00",
+    "finished": "2026-09-13T21:16:26.652821+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 808,
+        "mtime_ns": 1789334186108160502,
+        "sha256": "b1781cf9df4e029cce8adcaad067299524516aaf227aa8ebe9abcc4bfcb2b1c9"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317831,
+        "mtime_ns": 1789334184833151118,
+        "sha256": "38fd70e81d5a7cf3490d1deb861aad57ce67b575a2cf88084c8113386c6553a3"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789333816319417842,
+        "sha256": "b5e0d329d9628b44c267c8390883fccec7389aace8d4a7398d2c234136a41890"
+      }
+    ]
+  },
+  "upsampling/s512_n600_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n600_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T21:16:26.661664+00:00",
+    "finished": "2026-09-13T21:42:30.365863+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789335749811195768,
+        "sha256": "85c93d2aea474527dff7cb820091b8a339408872b5b8b30ff12fe12c03054485"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789335744975162398,
+        "sha256": "98941933d5dc65231e49f936355fe6690fa3cede164a65011b6754a64de68d2a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789334188196175870,
+        "sha256": "5b140eebab879977b1a7e66fded2cfe904e8e89764e55c83aeff265360e00e89"
+      }
+    ]
+  },
+  "upsampling/s512_n600_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n600_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T21:42:30.398628+00:00",
+    "finished": "2026-09-13T22:08:30.131210+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789337309558201198,
+        "sha256": "ef8519928296ff99107ff61431c9326ff756acfaee7333b2366aa1c57e8c906c"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483591,
+        "mtime_ns": 1789337304785167767,
+        "sha256": "571e9bb461bb7600ab1ad2d6122923875778dcd2061c79f37f986a0cb7c4c98a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789335751896210159,
+        "sha256": "d53df00a81a96c93a6e6ba73559de8616da774c18197c3f4638d67e79651a0b5"
+      }
+    ]
+  },
+  "upsampling/s512_n3000_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n3000_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T22:08:30.151797+00:00",
+    "finished": "2026-09-13T22:34:51.468558+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 805,
+        "mtime_ns": 1789338890799406246,
+        "sha256": "eac4c525b7193b16e48c5bd22fb64ea7906a26a146e4842f4e493bd73e76b9dc"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789338885956371777,
+        "sha256": "08f05e20bd5427a7ace0abcd77f5d897b2a6a8316b3dd818cacee74df6f85a86"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789337311650215852,
+        "sha256": "ad7efa7698966b36d0c6be759bc3aa195861ba8160fe0d071ec45633daa357a1"
+      }
+    ]
+  },
+  "upsampling/s512_n3000_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n3000_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T22:34:51.477624+00:00",
+    "finished": "2026-09-13T23:01:09.037441+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789340468339308293,
+        "sha256": "ace7fbe9bda949783686504164c41be14507796834ce1337cc16e501e16ccd59"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483655,
+        "mtime_ns": 1789340463561274816,
+        "sha256": "2fb3a11b9b78a9c5d869efb79ac6ad09fe0f32a8121f151e260eae2b3992f07a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789338892997421890,
+        "sha256": "f0431744cb067e3091334d7724f2af3c814de666d8822eb446993035fa6b5e5c"
+      }
+    ]
+  },
+  "upsampling/s512_n6000_transpose_conv_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n6000_transpose_conv_seed43/attempt_001",
+    "started": "2026-09-13T23:01:09.058118+00:00",
+    "finished": "2026-09-13T23:27:31.827145+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789342051084406325,
+        "sha256": "6fbdb4eaeea6e7e2ea453cb64bca61bce3a5a209ebc9ec9d719e49a33fc20da0"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789342046212372134,
+        "sha256": "b101740731253d9eb873bf4a5be4ac85beae425d43947d546e7d22104ae73da2"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789340470550323785,
+        "sha256": "02e5bfe56763a410787a15eb5d85ed84bd2cd7c8b877c9aba2637d490facd3ce"
+      }
+    ]
+  },
+  "upsampling/s512_n6000_locality_aware_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n6000_locality_aware_seed43/attempt_001",
+    "started": "2026-09-13T23:27:31.836131+00:00",
+    "finished": "2026-09-13T23:53:50.547836+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789343629781759094,
+        "sha256": "62e7f766e7ce470a42b08aeb13e3e0a56a4876fc0d7b002e030c3a3e8bbe4c70"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483655,
+        "mtime_ns": 1789343625004722264,
+        "sha256": "0b705529d68f614153f1d24d3c64dfbd98ab2f4b979c3718f280aed4e128273e"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789342053339422151,
+        "sha256": "e1a4443624ba41097bcedf4984b76faffd736ca4973d32291001c05a9b002f40"
+      }
+    ]
+  },
+  "upsampling/s128_n600_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n600_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-13T23:53:50.567957+00:00",
+    "finished": "2026-09-13T23:55:19.986015+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 805,
+        "mtime_ns": 1789343719446446095,
+        "sha256": "5ab7cc4aa56033518acd976ddde06735bbad4455b0abf6da76782212def038de"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789343719040443002,
+        "sha256": "2715d89f5653f35e09a665e9f32d5464c4666b968be81d2054d4a702aa430edb"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789343632067776710,
+        "sha256": "19b425b1a488ac791c98989f83daf3d1cac40574b00d8d7538b9f4d489b1de44"
+      }
+    ]
+  },
+  "upsampling/s128_n600_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n600_locality_aware_seed44/attempt_001",
+    "started": "2026-09-13T23:55:19.991332+00:00",
+    "finished": "2026-09-13T23:56:48.656650+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 805,
+        "mtime_ns": 1789343808143118547,
+        "sha256": "791691cfbccfb5bfb93138a40870276b82c9db62c47c7055ee74ab1960b0f806"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789343807717115333,
+        "sha256": "0bd0709236046ca4631958b6df416d45d4e6ae37df738d73ca4aca24d5add5d6"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789343721535462010,
+        "sha256": "6bb7d34847261377978deb056e2e7e00f1cbf55f8f7b0abdabb3235d3473c372"
+      }
+    ]
+  },
+  "upsampling/s128_n3000_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n3000_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-13T23:56:48.662017+00:00",
+    "finished": "2026-09-13T23:58:18.499914+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789343897948793339,
+        "sha256": "acea64096dfdeb3cacc5f44a78f2aa8552bf183cea35b7aec8b8adede9cb4a2e"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789343897543790308,
+        "sha256": "1df49447adc94f33c8217606f7f0a105be1ded7b70b37aae06d048b346697814"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789343810187133970,
+        "sha256": "5e43314b30637f23637740dae686493d5624edb64c798ac3b48ef6f9c804153a"
+      }
+    ]
+  },
+  "upsampling/s128_n3000_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n3000_locality_aware_seed44/attempt_001",
+    "started": "2026-09-13T23:58:18.504956+00:00",
+    "finished": "2026-09-13T23:59:49.071776+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789343988557468973,
+        "sha256": "0abaeb1deaa552df8b6be1180b204720c37971535ba37efc69dbe24d5c174df2"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789343988153465971,
+        "sha256": "12a533a48630d231fc5d0697233e4d6797ddf1b8ca53fc32100795d5989f57a1"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789343899985808582,
+        "sha256": "c3caf96268664b1b45d633b6594f2c425e20c8e1c2fafae5693c2dfa8b6fb0f9"
+      }
+    ]
+  },
+  "upsampling/s128_n6000_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n6000_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-13T23:59:49.078631+00:00",
+    "finished": "2026-09-14T00:01:18.148759+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789344077593128617,
+        "sha256": "9918db7866b2d635379894aaaaa677a5624fea797dfaa06cd79d5395562db787"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 1503859,
+        "mtime_ns": 1789344077170125491,
+        "sha256": "1b7783c5cfdcceffb4b43323ec14ad89736383bfebcfc3ef03179fbd42b7fd7e"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789343990596484124,
+        "sha256": "531aae3feff639afa46bad18be60dacdafca4127ad44af97f0cfb7f75c117dac"
+      }
+    ]
+  },
+  "upsampling/s128_n6000_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s128_n6000_locality_aware_seed44/attempt_001",
+    "started": "2026-09-14T00:01:18.154020+00:00",
+    "finished": "2026-09-14T00:02:48.269621+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 808,
+        "mtime_ns": 1789344167736792859,
+        "sha256": "5fa5658a5d194d8b69c9f43632f372d3ed92912160d164896573b727b446d7c7"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3026311,
+        "mtime_ns": 1789344167329789867,
+        "sha256": "ae822c20eafc1767ec7f62fdcd7b3a3d40a933ff13c42d411e3d51d37a3009bc"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789344079637143716,
+        "sha256": "f0aa700952b6cd6485556ddddaf730e081adfa9992570cdb3a96a96df964e073"
+      }
+    ]
+  },
+  "upsampling/s256_n600_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n600_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-14T00:02:48.274998+00:00",
+    "finished": "2026-09-14T00:08:55.506336+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 805,
+        "mtime_ns": 1789344534971472194,
+        "sha256": "a2b3da55121e9d7a3bf7b608d58b034c47ef08bf01151ce1574b9be2363ffbfe"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789344533695462939,
+        "sha256": "e3b27109cf5bf048b9e987a0f11376a40ffa4a26cbc4454112701f289ecffd4a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789344169761807744,
+        "sha256": "6c3a25a0b138348f8b907a428686d457cd1b1074d9ace38490d640361468e26f"
+      }
+    ]
+  },
+  "upsampling/s256_n600_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n600_locality_aware_seed44/attempt_001",
+    "started": "2026-09-14T00:08:55.511843+00:00",
+    "finished": "2026-09-14T00:15:01.240484+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789344900658114690,
+        "sha256": "b3a9dcadd37e4c6e975315dde736b99045c19f52e9692bc032cb5999aee51fd0"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317767,
+        "mtime_ns": 1789344899382105496,
+        "sha256": "8b429b5ec5a0f89355d01fe69ffc844c12b3338fb05c81c886e1c1891407f451"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789344537032487142,
+        "sha256": "39893fa9c4985a3068ad4b83ad460d93827f2669d813a5478c667e6c92d7221b"
+      }
+    ]
+  },
+  "upsampling/s256_n3000_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n3000_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-14T00:15:01.249811+00:00",
+    "finished": "2026-09-14T00:21:13.139412+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 808,
+        "mtime_ns": 1789345272589789580,
+        "sha256": "371ae9cd20c0b87209caa28b61631b4a77b517993f94300dbe2965e40ee8484c"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789345271313780416,
+        "sha256": "58bd4bb176cd43534c0627b6a024a9b2f479c6e7349fc89ac6c7f684b506fd83"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789344902747129741,
+        "sha256": "8c2cb0051b8ad4e1e94eaaf83b279f9cfbd46cefd2f44c4921d3e3b78d55a63b"
+      }
+    ]
+  },
+  "upsampling/s256_n3000_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n3000_locality_aware_seed44/attempt_001",
+    "started": "2026-09-14T00:21:13.145451+00:00",
+    "finished": "2026-09-14T00:27:23.401795+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 809,
+        "mtime_ns": 1789345642823100712,
+        "sha256": "4f5d62c2be13ec5181dff9bbe7b2eacfd455c6ac5c0c2d84c6f88a0ed1f12cd2"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317831,
+        "mtime_ns": 1789345641565093049,
+        "sha256": "140055a57b72c66e7df6777a370d32dfb0adda99f201b0b94b8b5f8df785cc89"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789345274691804676,
+        "sha256": "78fbb2194b9a104e70267f595247599b26b283386a4e39d016636a7f277bb3fc"
+      }
+    ]
+  },
+  "upsampling/s256_n6000_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n6000_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-14T00:27:23.410364+00:00",
+    "finished": "2026-09-14T00:33:35.720626+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789346015134464592,
+        "sha256": "0e7bfba6586564cbaafaeed19face5e28efddf8c9d08939cf1af7d2f56fac8b5"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 3076723,
+        "mtime_ns": 1789346013853456202,
+        "sha256": "80124a21e6b8d5c07cbe4eb742372516c463e3f08c706d7e369fe5573ba37e7d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789345644936113591,
+        "sha256": "ca091ffe1ec519651bcd12c848a5e8ac1ae3808a0e0b58e9fdb6b801c43bb9a2"
+      }
+    ]
+  },
+  "upsampling/s256_n6000_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s256_n6000_locality_aware_seed44/attempt_001",
+    "started": "2026-09-14T00:33:35.726728+00:00",
+    "finished": "2026-09-14T00:39:47.686249+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789346387135947244,
+        "sha256": "d2298e4de5d0bb7c45df3aa57c0b777b9808e8656a6a43373964738176e77458"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317831,
+        "mtime_ns": 1789346385863938633,
+        "sha256": "8354b74032e00d481b4ec5780ba55186d5b349a4846b9d58ab9c0c0ba7577a35"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789346017233478343,
+        "sha256": "0fce8dd1b98f63ee407d906347841809d14e7d3fad589cc3c65e78952e8cb91e"
+      }
+    ]
+  },
+  "upsampling/s512_n600_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n600_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-14T00:39:47.696178+00:00",
+    "finished": "2026-09-14T01:05:40.836574+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789347940285411404,
+        "sha256": "b6f315e5ccc8dec6026152b1595665647170e3883b20753b4cd78d352cbb2dd1"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789347935443379379,
+        "sha256": "d8e9ecdcd692c09d78fa54be3c0768e0dc5f1c0e630fecb2d7790d308f5ea061"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789346389208961282,
+        "sha256": "02b5514d9b362d0414ab66d10295b29fcf649df0a2917a589b963f5e7b5baa90"
+      }
+    ]
+  },
+  "upsampling/s512_n600_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n600_locality_aware_seed44/attempt_001",
+    "started": "2026-09-14T01:05:40.846703+00:00",
+    "finished": "2026-09-14T01:31:37.422501+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789349496842025440,
+        "sha256": "3d4320b3705ce0b02e9d2efb0a3ef0cc9a8fdcdfa3102e31626afbcace1d6049"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483591,
+        "mtime_ns": 1789349492076983397,
+        "sha256": "208613501973774982dbc5470adc2fffca55c4ef50d4af0c5fadec532fc8b88d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2886,
+        "mtime_ns": 1789347942349425058,
+        "sha256": "e240bbad20adba086e37cfdbc0c80c5e5f90cd38b3062e77f7ab95bf85959f70"
+      }
+    ]
+  },
+  "upsampling/s512_n3000_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n3000_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-14T01:31:37.443889+00:00",
+    "finished": "2026-09-14T01:57:46.187892+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 808,
+        "mtime_ns": 1789351065507104966,
+        "sha256": "6587957208684d8faf0a8057140231dd58367b9902edeea4b0737c6b2622d7c1"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789351060673069807,
+        "sha256": "f75ab7a4d1946ea591a2cdeabfe5f1542c09598fae49732fb9f6a8b53f44886b"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789349498932043858,
+        "sha256": "84451a376e88be0d10361d50110b98f112720506b7f70a7b6767082aa503bd97"
+      }
+    ]
+  },
+  "upsampling/s512_n3000_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n3000_locality_aware_seed44/attempt_001",
+    "started": "2026-09-14T01:57:46.197210+00:00",
+    "finished": "2026-09-14T02:24:03.777115+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789352643114652227,
+        "sha256": "68c37d84f9d5905c9ea38c806a0d6cba39e313f657ee9a8edc4c1818df145bed"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483655,
+        "mtime_ns": 1789352638370617757,
+        "sha256": "bec404018db75d3d5c7aea7d5dcd43705a9a57e1f6f2a19a199ec1c64a5ff33a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789351067721121068,
+        "sha256": "f360b0bf01a9dea00338ad8305425dfd0b45d657e93d1ef0ecc8b65ada7f3b3f"
+      }
+    ]
+  },
+  "upsampling/s512_n6000_transpose_conv_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n6000_transpose_conv_seed44/attempt_001",
+    "started": "2026-09-14T02:24:03.798094+00:00",
+    "finished": "2026-09-14T02:50:12.092395+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789354211341438219,
+        "sha256": "d2b49b30cabbb401691021d4c3c1b45aded2068444f9951285a778ad7f037862"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9368179,
+        "mtime_ns": 1789354206515405911,
+        "sha256": "f759ad44d4400fc129810e31b5e7a009ec5b8c4af1b9e0c54575c1430196a86d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789352645292668051,
+        "sha256": "efe8d929fbb0ca3a807d18ce8287607ebb8a87acbff418a53d5dc7ab79bdfe83"
+      }
+    ]
+  },
+  "upsampling/s512_n6000_locality_aware_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/upsampling/s512_n6000_locality_aware_seed44/attempt_001",
+    "started": "2026-09-14T02:50:12.101597+00:00",
+    "finished": "2026-09-14T03:16:31.734918+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 808,
+        "mtime_ns": 1789355790968347592,
+        "sha256": "c85efb956bd9320e293fa180855eb09b6bbf42fb3db6dfaf049dbd99b7c50cc4"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 34483655,
+        "mtime_ns": 1789355786199315928,
+        "sha256": "a09fe6e19e45377de0c509971e42c5f07b96d59a215a79db5b2e67db8af8ef00"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2893,
+        "mtime_ns": 1789354213627453529,
+        "sha256": "1c49d6f66ba869176b67f947fbf904a407bce2e2b5090464669af469894b6db2"
+      }
+    ]
+  },
+  "noise/k10_sigma0_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma0_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T03:16:31.902940+00:00",
+    "finished": "2026-09-14T03:39:08.691952+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789357148110684507,
+        "sha256": "ae5590186a2c2bb7942d64822ae14aff89a261ac662aece2acc00fe30d5f9ed5"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789357146862675793,
+        "sha256": "f353949ae8ef60e731fccc0ccbeca717feab72507f9df4613affccca8a2cafde"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789355793400363745,
+        "sha256": "cd7256086a80e1741e4532a5e9d2e9a49a653801df89649c50aeb7ef8f07cdab"
+      }
+    ]
+  },
+  "noise/k10_sigma0_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma0_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T03:39:08.700585+00:00",
+    "finished": "2026-09-14T04:02:08.130404+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3381,
+        "mtime_ns": 1789358527559169097,
+        "sha256": "b578a90f5bd9b9c1ce9fdf66f1985baf7c834e87be9ea0d861d2bedace33e842"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789358524429147519,
+        "sha256": "b26f56fbf5d8e3b11b0d346acf1de7f1a1ce8b5057ac573f292ae8997374958e"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789357150212699185,
+        "sha256": "ca334e9e6c59db2214aa064fe707d3855822b1884bc4ccdd939cebab447cef37"
+      }
+    ]
+  },
+  "noise/k10_sigma2.7_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2.7_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T04:02:08.143852+00:00",
+    "finished": "2026-09-14T04:24:44.982214+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789359884394809651,
+        "sha256": "9577be69526d2b4d79f3e062e86906cb3dcd2ffb841e7c6d08b3d3c4f34b6949"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317639,
+        "mtime_ns": 1789359883116799137,
+        "sha256": "dfa37bfecd8d06ab5b3c4ae2f639504f9a009f2894cf8c32ea5cf2503ce214e7"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2700,
+        "mtime_ns": 1789358529633183395,
+        "sha256": "35c8a951f817ce0627f198a46e068f4dd20007f819829f3d7794201921541b3d"
+      }
+    ]
+  },
+  "noise/k10_sigma2.7_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2.7_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T04:24:44.990991+00:00",
+    "finished": "2026-09-14T04:47:46.269701+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3383,
+        "mtime_ns": 1789361265672188083,
+        "sha256": "205ba98cc26e4e4f4fe8c3bc14c8633dee760a505565465a6862fa32a4500a35"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789361262496165181,
+        "sha256": "bd47b733a2299b5a600f4ba00c1f17ade3b0d9e36254dff328a51d31a19dc8de"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2746,
+        "mtime_ns": 1789359886490826889,
+        "sha256": "ad4453b43875e63db081d34fd15bdb8ef8f960075aa4e328d8384b9e6d6455f8"
+      }
+    ]
+  },
+  "noise/k10_sigma2_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T04:47:46.282900+00:00",
+    "finished": "2026-09-14T05:10:20.166445+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789362619570832978,
+        "sha256": "ba4f19cc1c502d014580e984ac77a0bb1bcd8f5b26564a6051124fdd9fa84d53"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789362618260823662,
+        "sha256": "74be1a7af393ba3266f3116e24d9d798f43281742d78656c1a0cde3712aa1623"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789361267774203239,
+        "sha256": "54ed7ac53b0b04ce089f6b7125896cd18b2ca1af559ceaad9b16812c4387db9e"
+      }
+    ]
+  },
+  "noise/k10_sigma2_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T05:10:20.175392+00:00",
+    "finished": "2026-09-14T05:33:22.756492+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3377,
+        "mtime_ns": 1789364002189569004,
+        "sha256": "e55ef1bd98bbb322c2aa111c3e339593f73cef33763095dc9becb8c5f55034c0"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789363999045548240,
+        "sha256": "c14da670537b17745e4367bae8300125d4a8a0eeb57e19161ab7cbb79d21e047"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789362621672847928,
+        "sha256": "8b673c583902ce6f42669c5e6935d978ecf9f4b5ac1b4e5aa0b9174904ad2197"
+      }
+    ]
+  },
+  "noise/k10_sigma6_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma6_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T05:33:22.769785+00:00",
+    "finished": "2026-09-14T05:56:03.364145+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 806,
+        "mtime_ns": 1789365362779948332,
+        "sha256": "6035d8de3e981187f238b33db13f4fe0886b0a964adc8145dd0bd0bcbc4db7aa"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789365361514939455,
+        "sha256": "74155641973f3964c6ec122111c9aabb1c4eca142bccb1108b28471e2a03fbe5"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789364004271582759,
+        "sha256": "b5b82ce620f0a3fa1fcfd3bf4e82bcb4b628de17f92f2ed5c69560cd77bf0d38"
+      }
+    ]
+  },
+  "noise/k10_sigma6_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma6_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T05:56:03.372381+00:00",
+    "finished": "2026-09-14T06:19:05.321414+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3379,
+        "mtime_ns": 1789366744763416277,
+        "sha256": "a7a4186108876dd0647e1b7421723483d445cdd680a9d61e82232522ddf00fca"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789366741634394742,
+        "sha256": "902e8e2a8ffc592aff145fc8ba2ae218471a5051f270a5fc660e052becc3d219"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789365364886963118,
+        "sha256": "1dd0599eb4667b898099eb94c2359fd5458fabab483f87aaf8c3f81b75718b0c"
+      }
+    ]
+  },
+  "noise/k10000_sigma0_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma0_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T06:19:05.335432+00:00",
+    "finished": "2026-09-14T06:41:43.876551+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 816,
+        "mtime_ns": 1789368103294112139,
+        "sha256": "f11025f9c2bea21daaf1be98128c36e23af55411b565ebb7b4329234900189cc"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789368102049101918,
+        "sha256": "b5a88a915ee8bed14554303e748715a0f87b7e72d947c303d891c723eeb991d8"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789366746823430456,
+        "sha256": "267e94b4a1ee4e7945220587480aff2fa3c3e007b01d0c323a9dec890b9ebd27"
+      }
+    ]
+  },
+  "noise/k10000_sigma0_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma0_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T06:41:43.885845+00:00",
+    "finished": "2026-09-14T07:04:46.166270+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3397,
+        "mtime_ns": 1789369485579503566,
+        "sha256": "ead478933ad7f16553f06ea645c0bac63b4da791873ad8cd3c5f5c89aed3436b"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789369482397480577,
+        "sha256": "de61b256a3341e0ea49fdbbf2bd5a23006db99ad81cb077e9fb81fa9f5a5e3f4"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789368105384129289,
+        "sha256": "bbd2c380b2a24d79c78056e35bd7437a82981e7163bc24f51bd9ee7f5d08a7c7"
+      }
+    ]
+  },
+  "noise/k10000_sigma2.7_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2.7_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T07:04:46.180040+00:00",
+    "finished": "2026-09-14T07:27:25.222441+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 818,
+        "mtime_ns": 1789370844668006130,
+        "sha256": "d6944ea86185c3d71d8dc90ca7121f5617bf164dbb105f1af314527e8564777e"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317639,
+        "mtime_ns": 1789370843378997088,
+        "sha256": "70b84a2f1854c8b3cebd0a142d75c219e298e91d4d46fda705afc74047f5ef79"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2721,
+        "mtime_ns": 1789369487680518744,
+        "sha256": "1090d510c538f06b71a2dd8a1ec9b2ec9787be58f255fde28701629ca0a3f6c9"
+      }
+    ]
+  },
+  "noise/k10000_sigma2.7_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2.7_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T07:27:25.231610+00:00",
+    "finished": "2026-09-14T07:50:26.559962+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3403,
+        "mtime_ns": 1789372225991800651,
+        "sha256": "bc512b94a51a143c772c2e8e7d8f8be4d66292fd98f5f6551e1741184afeaa5d"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789372222788777551,
+        "sha256": "f2a9537691724bc9b6402cc210f08fe89b5729bdc25cbd7f982386bdd98afa09"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2767,
+        "mtime_ns": 1789370846742020680,
+        "sha256": "9763910e9a26ea4268a68cbaea2b88943ff057f05ddee7f4de8e2c398e173560"
+      }
+    ]
+  },
+  "noise/k10000_sigma2_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T07:50:26.573659+00:00",
+    "finished": "2026-09-14T08:13:04.964563+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 816,
+        "mtime_ns": 1789373584410511502,
+        "sha256": "7830d4fa3e0a7bd3349595a0fd0f3cd25252c51d1e5e46a28802e34f33306356"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789373583163502621,
+        "sha256": "4ff7222c00ba33bee049e6b18e0b54b2e4be013b6b1e6768e50baf703f0f6055"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789372228058815556,
+        "sha256": "1a43a4686d02343a33ed459bba2544e4195ccdc58a49617839af8c210b98c7b4"
+      }
+    ]
+  },
+  "noise/k10000_sigma2_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T08:13:04.972969+00:00",
+    "finished": "2026-09-14T08:36:07.473554+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3404,
+        "mtime_ns": 1789374966910697895,
+        "sha256": "719dc95cce8f7b69b0cb63d6ab1470f548df1e48ba38bd59de2e894f9c739391"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789374963731674610,
+        "sha256": "e4de4432f9733bc8535b52c6d173afe54ef2d134409b3c5d9a607f8d479b2969"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789373586486526286,
+        "sha256": "0019b704503a3654e30f98cadfeec4c5681c24d6aedfdb9c6df79f1c655b72ac"
+      }
+    ]
+  },
+  "noise/k10000_sigma6_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma6_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T08:36:07.487418+00:00",
+    "finished": "2026-09-14T08:58:43.224814+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 813,
+        "mtime_ns": 1789376322632208151,
+        "sha256": "0f459350616a8868fb94016310fe0cd85e9e734d718d21773ae22ba581f7f8f9"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789376321372200676,
+        "sha256": "29dad28c84b49f64cbbfb9afa76f785a46a563c8dea56baad6c07fbe363a5c71"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789374968995713167,
+        "sha256": "0463be39136537db83358f0160ed05ad69fa34520a773e63a292717fc60ef58d"
+      }
+    ]
+  },
+  "noise/k10000_sigma6_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma6_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T08:58:43.234762+00:00",
+    "finished": "2026-09-14T09:21:44.814742+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3394,
+        "mtime_ns": 1789377704216388033,
+        "sha256": "3e7214f32102d6f9a722d3a0eda237912d428ae7d91e5d05ebae61e575e1a837"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789377701024365860,
+        "sha256": "c861dbacb94c2cf137c66e77231cd94326614f420070d8ac3f2f191662ae2e2a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789376324761220790,
+        "sha256": "5d3f6ec9dc650e4c906e57f774a67e1d301be047557d79b0793cb935215d1278"
+      }
+    ]
+  },
+  "noise/k10_sigma0_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma0_random_fixed_seed43/attempt_001",
+    "started": "2026-09-14T09:21:44.828312+00:00",
+    "finished": "2026-09-14T09:44:26.979573+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 810,
+        "mtime_ns": 1789379066416561082,
+        "sha256": "b420217a22dbe7ad3e60557ffb3c32e111aad860de69a3a9a63f4ab962bd575e"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789379065163552538,
+        "sha256": "8883dbe27f5e6e4e300e28b1f5bf06da511beecfbe490403402377c521a29107"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789377706322402662,
+        "sha256": "0c1c3c4fb4bc36683b0e02232dc310fe81382cddebc4a04e099de6d77c59e48a"
+      }
+    ]
+  },
+  "noise/k10_sigma0_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma0_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-14T09:44:26.988635+00:00",
+    "finished": "2026-09-14T10:07:31.875176+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3385,
+        "mtime_ns": 1789380451283281770,
+        "sha256": "5e9616b56f73d989c72f5ceb5270facb18cf86d7ebc68ecd0fd82d0cd4108626"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789380448140258204,
+        "sha256": "273f0bd739a4937b4a8b6c07187742f56abb86d32f8e96c153d93ce3ddb84dff"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789379068497575273,
+        "sha256": "6cca0d274484d07bc970820f09059e0f14f1c8ca0c8f21caec61532a9bd6235b"
+      }
+    ]
+  },
+  "noise/k10_sigma2.7_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2.7_random_fixed_seed43/attempt_001",
+    "started": "2026-09-14T10:07:31.889037+00:00",
+    "finished": "2026-09-14T10:30:12.783740+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 813,
+        "mtime_ns": 1789381812242069861,
+        "sha256": "c54b64568588b13b1e0607de5e37158ff4181884e6f0acbddc72a26c4f8c8ee1"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317639,
+        "mtime_ns": 1789381810946060710,
+        "sha256": "7bbf332d3e91a5d396bbdc1c8fa642c4188ff4e96da4908ecb430ec749ce47b9"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2700,
+        "mtime_ns": 1789380453381297495,
+        "sha256": "d911b537cf9bb20a82da2802249d08b70a2c98bdcfe8fd8369d5f97c31db16e1"
+      }
+    ]
+  },
+  "noise/k10_sigma2.7_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2.7_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-14T10:30:12.793551+00:00",
+    "finished": "2026-09-14T10:53:20.686900+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3386,
+        "mtime_ns": 1789383200024569955,
+        "sha256": "5b19ee891631a855edade3800f8c23edff7dd8459fe6c39f1e27b8f3f73bff0f"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789383196871546475,
+        "sha256": "fe69a01001488e2d12f8812eb1a0524da96be45e205b84cd29646be58f4583c2"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2746,
+        "mtime_ns": 1789381814288084308,
+        "sha256": "08673ca2e7655475a4069da3d2b2522fd1b3074d241215a4f1fb49f41a8438fa"
+      }
+    ]
+  },
+  "noise/k10_sigma2_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2_random_fixed_seed43/attempt_001",
+    "started": "2026-09-14T10:53:20.700923+00:00",
+    "finished": "2026-09-14T11:16:03.951146+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 809,
+        "mtime_ns": 1789384563372421097,
+        "sha256": "e3c7d4a561184aa1a8c43c302e8d4e7aad972ab13d2eedc1fde59d973cd5839c"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789384562119412495,
+        "sha256": "f1779d0b0527ed3da10f173e0fac7a0739d4a6edef84647b8d02022705ca9a41"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789383202175585971,
+        "sha256": "06087424f1774539cde66e0e28ef8f80852eb12526062a02e56e49cfbeaf4f2b"
+      }
+    ]
+  },
+  "noise/k10_sigma2_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-14T11:16:03.960231+00:00",
+    "finished": "2026-09-14T11:39:12.471899+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3384,
+        "mtime_ns": 1789385951908248780,
+        "sha256": "317b9890468073eb78b2603569130bf82ee4e5fe8fc3f84ee4c04edd234aea92"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789385948753226168,
+        "sha256": "b686d8ede7d863d25658af59ba0854f892f62b655bace330ba053187f9c00d39"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789384565495435677,
+        "sha256": "5db07b46106f5c9b36ce7b64b3f09cabb4e6549605f96e25403157bc21f7f7fe"
+      }
+    ]
+  },
+  "noise/k10_sigma6_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma6_random_fixed_seed43/attempt_001",
+    "started": "2026-09-14T11:39:12.486043+00:00",
+    "finished": "2026-09-14T12:01:51.949074+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 810,
+        "mtime_ns": 1789387311390716580,
+        "sha256": "5d57c5c93dd92e4b4425f70a8330cfc113c651e5ed6e60c9e1a9e05b4345b8be"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789387310105707536,
+        "sha256": "4ed98c656868eb26bfcaf6de3e328643619f5dbd948410ff1b22882ac2d7692a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789385954028263975,
+        "sha256": "09912aee0fd662390512353d295f365d21c9f4a2f1139c32c5797bafc83eaafd"
+      }
+    ]
+  },
+  "noise/k10_sigma6_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma6_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-14T12:01:51.958657+00:00",
+    "finished": "2026-09-14T12:24:58.441659+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3382,
+        "mtime_ns": 1789388697874511818,
+        "sha256": "8e4c8084bc422719638341a7f489320897fd5495c1b87f93ff9636c34c54b750"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789388694700489551,
+        "sha256": "dea7a156a60486a32d5c778acee7d1ee065eab00adf421a58a500e663db83555"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789387313443731030,
+        "sha256": "f71dcc1aedb4d1f33d7d2375fae76818df09ddfa202b5eeae191690296adde14"
+      }
+    ]
+  },
+  "noise/k10000_sigma0_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma0_random_fixed_seed43/attempt_001",
+    "started": "2026-09-14T12:24:58.456328+00:00",
+    "finished": "2026-09-14T12:47:33.614659+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 814,
+        "mtime_ns": 1789390053031094893,
+        "sha256": "2c4c12febf162fbbb7d13790d326e3a54e5dcb50e9c2aa5bdfc761a2a788f00b"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789390051764085903,
+        "sha256": "f4db76503d31b2c23adbe86e593997ba15bc6d84dbc211a97aa7ef26eee85137"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789388699938526299,
+        "sha256": "15d94a1d3927499e71ddc9789909951e25f88c8feddbaba9732bf5254bd154da"
+      }
+    ]
+  },
+  "noise/k10000_sigma0_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma0_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-14T12:47:33.629522+00:00",
+    "finished": "2026-09-14T13:10:30.656157+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3403,
+        "mtime_ns": 1789391430059302641,
+        "sha256": "58a908c3e3025d9dda95b234bd5bae93069d13f84b9ae89f6e1ce21317921e3c"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789391426890281108,
+        "sha256": "3b93952463ce095d3d3bda11df5811a3ed36cb4e8529913e7a3e0d7adf17cf0b"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789390055113109667,
+        "sha256": "e912b5e2974dff146ec88dadec2cb2633b1cec6db5d7916de71241eda190393f"
+      }
+    ]
+  },
+  "noise/k10000_sigma2.7_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2.7_random_fixed_seed43/attempt_001",
+    "started": "2026-09-14T13:10:30.669922+00:00",
+    "finished": "2026-09-14T13:33:05.004430+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 822,
+        "mtime_ns": 1789392784428887670,
+        "sha256": "99db0f9aa879194b68ca80b0a62c935a03eb289759b7fcd1d47bcff26915cbd6"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317639,
+        "mtime_ns": 1789392783185878182,
+        "sha256": "d6a15121d9cc99de14486e5ad2e6958149cad5704f56a6378439378fa94c58b9"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2721,
+        "mtime_ns": 1789391432176317027,
+        "sha256": "3a85bae605686f245945fdbf97feb05df427fbb60d02e5cbd3c58f8c47c9088f"
+      }
+    ]
+  },
+  "noise/k10000_sigma2.7_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2.7_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-14T13:33:05.013699+00:00",
+    "finished": "2026-09-14T13:56:04.563238+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3411,
+        "mtime_ns": 1789394163972896981,
+        "sha256": "974057238aaa9807e24a75dff511c6ee85b190e2f98e8be112a84a570d3ba309"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789394160766874233,
+        "sha256": "2852802a0621cd51696c7b801401231a0a44c97eeeb223f3b0c40de49c1dec86"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2767,
+        "mtime_ns": 1789392786527903688,
+        "sha256": "e7dcaeffa6a363ba65d39c4fc48af2c9468c3a5b55859ee26afa3da1e7aab4ac"
+      }
+    ]
+  },
+  "noise/k10000_sigma2_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2_random_fixed_seed43/attempt_001",
+    "started": "2026-09-14T13:56:04.577260+00:00",
+    "finished": "2026-09-14T14:18:38.410283+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 817,
+        "mtime_ns": 1789395517840456982,
+        "sha256": "47322c3e6b828477a107611c56bd5b4a59e9e4cd1fac34b28a8f2219fb062756"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789395516572448037,
+        "sha256": "17035b70c7e42efc83c4dbfd63694d7fff6a3ccfb69f8ec47c53fdbb8ee272f4"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789394166050911724,
+        "sha256": "a372f602ebbd76f94788f517af7a5c4a2dd5235ed917ae22b0fadc86d4186f8d"
+      }
+    ]
+  },
+  "noise/k10000_sigma2_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-14T14:18:38.419645+00:00",
+    "finished": "2026-09-14T14:41:43.807425+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3402,
+        "mtime_ns": 1789396903223243946,
+        "sha256": "d3a5762ac7e9cdc7e0f4a8774ef68c646aa49c32fcdc4d77474afc5a72d3514f"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789396899891220331,
+        "sha256": "e14987d014ff49c1206444fce2d0f0105562c2c2e7eec79c5ba93a3fb4ca7f6c"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789395519910471585,
+        "sha256": "4a5fca63491ec56683aee38fb61dcfae4fe3a995e1bc5c006841c227a4ae0e42"
+      }
+    ]
+  },
+  "noise/k10000_sigma6_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma6_random_fixed_seed43/attempt_001",
+    "started": "2026-09-14T14:41:43.821695+00:00",
+    "finished": "2026-09-14T15:04:32.984253+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 818,
+        "mtime_ns": 1789398272429924734,
+        "sha256": "6f03e9bbb9fa236c453cec654b27124a975f11d3b86e9e6f698aa1b4b1ba1d26"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789398271181915919,
+        "sha256": "de743b538ebd68eb94e559efce5176f54f165c3867a20f697e5c30e9a65bcfbb"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789396905368259148,
+        "sha256": "090d04273b2e6b17bac47058d0d43a5726f228bbe45774a525cff15b7072315d"
+      }
+    ]
+  },
+  "noise/k10000_sigma6_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma6_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-14T15:04:32.993837+00:00",
+    "finished": "2026-09-14T15:27:56.635178+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3401,
+        "mtime_ns": 1789399676043979012,
+        "sha256": "e1af49ca6e774391c91fe53d7005a88efaeecabf5c2809ca81ae6a0d0ce08414"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789399672791954186,
+        "sha256": "d774118e524e6fe8c22784e01bf23ec33de351fd760096c22d933f58feb3741d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789398274508939419,
+        "sha256": "e58e9a4a206907d0437bee12625fbe910c6af3e90c1ad2b8e35053bff0d47f75"
+      }
+    ]
+  },
+  "noise/k10_sigma0_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma0_random_fixed_seed44/attempt_001",
+    "started": "2026-09-14T15:27:56.649282+00:00",
+    "finished": "2026-09-14T15:51:04.640374+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 807,
+        "mtime_ns": 1789401064039924861,
+        "sha256": "ef1666663a7188335b6c7bfd2fe3e48dac07bc6da3a6995a1bf5c59b189b2df7"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789401062713916145,
+        "sha256": "29c927883eb60b6e360e512b7135cdc6b8fceecf99bd7e32f69a28c231d54bdd"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789399678171995255,
+        "sha256": "3c499232a13541ce5d2fbac8510c4aa78cedf56fa2ae8d99ebbcb1ad10eea940"
+      }
+    ]
+  },
+  "noise/k10_sigma0_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma0_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-14T15:51:04.649817+00:00",
+    "finished": "2026-09-14T16:14:13.142989+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3391,
+        "mtime_ns": 1789402452572647800,
+        "sha256": "0b70a5330b83c1734e1a5db7d0b95f5fbbb8d6a1574bbe84e793296540ae4031"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789402449364624755,
+        "sha256": "56945a1e0e7b45372f3499d549fefed09bcb708d2459eae2ed640ed885e10cf5"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789401066180938939,
+        "sha256": "d7b0262efb65d26f00b758e5aaf91de96b097d169ccedb3b6d00d1394575c33b"
+      }
+    ]
+  },
+  "noise/k10_sigma2.7_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2.7_random_fixed_seed44/attempt_001",
+    "started": "2026-09-14T16:14:13.157215+00:00",
+    "finished": "2026-09-14T16:36:57.879436+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 815,
+        "mtime_ns": 1789403817332203348,
+        "sha256": "7f99fe8faf24584d04c45ff39166e3a296f87feea16ea9cf66fb865dfbfc3fe5"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317639,
+        "mtime_ns": 1789403816082193945,
+        "sha256": "8b96003cdc1863b918781c6367b11ea2575ace3fd0ce828619d793f299f958ee"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2700,
+        "mtime_ns": 1789402454667662850,
+        "sha256": "6524896b3a1c7de8d036f6e020b0796ed7af1e506d881c279a587ca92d37cfd5"
+      }
+    ]
+  },
+  "noise/k10_sigma2.7_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2.7_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-14T16:36:57.888524+00:00",
+    "finished": "2026-09-14T17:00:05.599404+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3393,
+        "mtime_ns": 1789405205031020070,
+        "sha256": "ab5d81aa26cb7ac2d4f547d31e050f5af5ba35d8286773a71d9eb91992a4fb07"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789405201867999290,
+        "sha256": "0e6df71edf94336f23aeb296de3b5e9c5108384eded710ab74594d6b1d621ae0"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2746,
+        "mtime_ns": 1789403819395218866,
+        "sha256": "02f092ea7843c8882a9ce0de4de84461e16e72e3500f464886f03cdda4efbdc4"
+      }
+    ]
+  },
+  "noise/k10_sigma2_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2_random_fixed_seed44/attempt_001",
+    "started": "2026-09-14T17:00:05.613383+00:00",
+    "finished": "2026-09-14T17:22:52.491336+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 808,
+        "mtime_ns": 1789406571897561277,
+        "sha256": "b6cb1ca70e2cd384c54028182f40fcac437fd1d4c4c4e497fd7f241817cc53cc"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789406570635552246,
+        "sha256": "9a120a5a76db49c715b2dbf15b22702579e6979d20a7213fcb0d6def955ff175"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789405207119033794,
+        "sha256": "ea2bc114b1176ac92e2b3514a92481929a6a78d2d255ae9748901bd89c22b52f"
+      }
+    ]
+  },
+  "noise/k10_sigma2_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma2_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-14T17:22:52.500806+00:00",
+    "finished": "2026-09-14T17:46:00.541863+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3385,
+        "mtime_ns": 1789407959988761577,
+        "sha256": "c34f218d0ae8bfce75188d8408acd2c50eef784d701263b429aad5c1133be44f"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789407956841740026,
+        "sha256": "f126a66d497b636c541624afbbecadb4312f2aed7230ffa3b6514b789863f881"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789406573995576289,
+        "sha256": "cd163fd6aafd4b1ccbb86093a08ef350a277da612dd65cfe33e16d36ca77468b"
+      }
+    ]
+  },
+  "noise/k10_sigma6_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma6_random_fixed_seed44/attempt_001",
+    "started": "2026-09-14T17:46:00.556089+00:00",
+    "finished": "2026-09-14T18:08:46.663337+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 811,
+        "mtime_ns": 1789409326110613631,
+        "sha256": "ec32db2739faea07deaf62c43783d4adfd3aa4811e2824d9896fde594af7e1dd"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789409324829603949,
+        "sha256": "fa44a0356d03518dabb4bc7e9bae76c9750a69c75e20226daccc509aa52e78fe"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2686,
+        "mtime_ns": 1789407962039775623,
+        "sha256": "2d28d530bb7b4e20a0ffb9ba22ed4cc31ab75dcb60b2d54c1085ee08058e130b"
+      }
+    ]
+  },
+  "noise/k10_sigma6_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10_sigma6_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-14T18:08:46.672687+00:00",
+    "finished": "2026-09-14T18:32:12.896994+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3387,
+        "mtime_ns": 1789410732279826413,
+        "sha256": "0a3186e34a8efba0d5d2e02b960f1fbc56008dc4a16ea2979ca9654f1d965d3a"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789410729125803894,
+        "sha256": "643b76ea9ca334681d997fe56c0b3794c0e5e03d0da49f46b946ef21696a6f96"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2732,
+        "mtime_ns": 1789409328215629536,
+        "sha256": "fa4ed870436c967c07667da9437a10d9d5aa74b38cb402ffa61d00768b91bf8c"
+      }
+    ]
+  },
+  "noise/k10000_sigma0_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma0_random_fixed_seed44/attempt_001",
+    "started": "2026-09-14T18:32:12.911120+00:00",
+    "finished": "2026-09-14T18:55:01.976029+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 818,
+        "mtime_ns": 1789412101403236571,
+        "sha256": "1b16a5ce868275a1fd9482a1f42181d14177db7fb3837ea6e89b56e9a044e290"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789412100137227252,
+        "sha256": "26bbd987f0ae1c8c3802cb6b2ab108df4d8874fe086a7fdef78de1655aa4ca8b"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789410734475842091,
+        "sha256": "f523bb55fff73b0f7b6a7872ad50ec2d1d6614f3c8ecbbb3a0f9409349934a14"
+      }
+    ]
+  },
+  "noise/k10000_sigma0_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma0_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-14T18:55:01.986738+00:00",
+    "finished": "2026-09-14T19:18:15.907422+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3408,
+        "mtime_ns": 1789413495299008643,
+        "sha256": "7d982ebcbf2da733cf9e6b93ab2367d6912b40a05d1e84d518487d1089072f24"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789413492111987059,
+        "sha256": "e9eafd146bf150d0be772c0a57facf9871aaea4e5de447ac5f51b700bc34aab8"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789412103492251947,
+        "sha256": "58ca4d515d84c0ba7a0184c1e04685d1597dc8e11bd82eda9b6b7f9d427185e3"
+      }
+    ]
+  },
+  "noise/k10000_sigma2.7_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2.7_random_fixed_seed44/attempt_001",
+    "started": "2026-09-14T19:18:15.922143+00:00",
+    "finished": "2026-09-14T19:40:59.075515+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 824,
+        "mtime_ns": 1789414858369555818,
+        "sha256": "b488590d0b09d51cfde422f3755674f6a4a228ee16162c69528a4a305f2c2631"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317639,
+        "mtime_ns": 1789414857037546356,
+        "sha256": "c8d2f316f7f3f2bd7ea9ca21a68ba54e43974367e7ba1e04c7003d562569229f"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2721,
+        "mtime_ns": 1789413497435023115,
+        "sha256": "62233499ce52dc4707943fe6cd975885bf36dac2b222a02c66a92984e9e7618b"
+      }
+    ]
+  },
+  "noise/k10000_sigma2.7_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2.7_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-14T19:40:59.086855+00:00",
+    "finished": "2026-09-14T20:04:10.584933+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3411,
+        "mtime_ns": 1789416250002858506,
+        "sha256": "ff41b4b1f30bb329da237ede82d1f2d4d8dc4ecb79a7c3c4746641390d20ad81"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789416246797835163,
+        "sha256": "b4bdfdea5762c55e0e7589d9968d9fada59dd822286ef8a0a82d285085e11e63"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2767,
+        "mtime_ns": 1789414860838573355,
+        "sha256": "f22398b1bbe77b5f179f76e2990f011cc4b07edbc608deaa8ff75e2bdf8e09b7"
+      }
+    ]
+  },
+  "noise/k10000_sigma2_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2_random_fixed_seed44/attempt_001",
+    "started": "2026-09-14T20:04:10.600419+00:00",
+    "finished": "2026-09-14T20:26:57.157584+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 819,
+        "mtime_ns": 1789417616550707055,
+        "sha256": "f2ebfb3aa9de7e8f895c4f5e962fdb1079bf306a26e3202e93e11a62105500d7"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789417615238697652,
+        "sha256": "566ef8342f8b0d05dd5e86c66d6c504233a558b4e9f33ec2909160a548483828"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789416252119873924,
+        "sha256": "e0ec8a73676465b283a071c1cabf86b2534624920654d36fc90fb8294eff94d2"
+      }
+    ]
+  },
+  "noise/k10000_sigma2_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma2_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-14T20:26:57.167305+00:00",
+    "finished": "2026-09-14T20:50:12.141606+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3404,
+        "mtime_ns": 1789419011567749103,
+        "sha256": "0b5b1296f892cbbbfc78d083284328c56cd8401abc75c9e512165ace4a270426"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789419008308725600,
+        "sha256": "3ef644f6dc5d39f10824b4f12b0e97da3ab5faf115784f2c7fd9f3dbc559ca2a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789417618706722507,
+        "sha256": "f542c973b1f6e9546ade4e731e476c24b4d98aa4a4ea8b8825704447882cb987"
+      }
+    ]
+  },
+  "noise/k10000_sigma6_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma6_random_fixed_seed44/attempt_001",
+    "started": "2026-09-14T20:50:12.155479+00:00",
+    "finished": "2026-09-14T21:12:57.960818+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 819,
+        "mtime_ns": 1789420377354350792,
+        "sha256": "0981af637101b76d672996e593b2e299ac53403c7c449842705d498dd372081d"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 9317575,
+        "mtime_ns": 1789420376088341338,
+        "sha256": "3a4edb704ae1027f6d81a0d8def127014feae1b4bfab697c89ffa207aaaacb31"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2707,
+        "mtime_ns": 1789419013680764342,
+        "sha256": "39b78e2016e3fbd855144bd03e2f6d06df75e7019e407c17963e8095650e4f89"
+      }
+    ]
+  },
+  "noise/k10000_sigma6_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/noise/k10000_sigma6_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-14T21:12:57.971014+00:00",
+    "finished": "2026-09-14T21:36:15.130929+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3409,
+        "mtime_ns": 1789421774494766600,
+        "sha256": "5f491e821b9069b67cade15097ca936092555965443a0c9e159d3bcb9b795d8f"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 19804280,
+        "mtime_ns": 1789421771264745792,
+        "sha256": "a8f585bb207358e08f6e8bd265fd033329dfe31873e27716598628fc1be3be88"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2753,
+        "mtime_ns": 1789420379570367341,
+        "sha256": "70008a431a0a3aa4244a7fedc19628f96df99d26734eb14f220fbe9f6eca27c8"
+      }
+    ]
+  },
+  "content/bbbc022_x16_uniform_all_ones_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_uniform_all_ones_seed42/attempt_001",
+    "started": "2026-09-14T21:36:15.145866+00:00",
+    "finished": "2026-09-14T21:51:40.014904+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789422699315051657,
+        "sha256": "34eb1578f32cb7ca2677b6983de2aeda5655cde9d3fbc935313fe845dc8e0c98"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789422698590046589,
+        "sha256": "b73100c43fdb36bae614dba11e73d066a2a5ad748a075dc06fc311355af4492a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2804,
+        "mtime_ns": 1789421776675780657,
+        "sha256": "02eebc54974945ac6655f0254346f9e4395952bac09c59546de57756c0a60ceb"
+      }
+    ]
+  },
+  "content/bbbc022_x16_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T21:51:40.022447+00:00",
+    "finished": "2026-09-14T22:06:59.481208+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789423618758548617,
+        "sha256": "3be36f33558fce4a20c786124a11cedb04fae582056c113d51a8eec73adcff7e"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789423617824541977,
+        "sha256": "fef037960f574a2cd8da298e4ddf8f18c3cbd64f5acb82b03b50d73f96d6b905"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2776,
+        "mtime_ns": 1789422701547067262,
+        "sha256": "19c43a6c71e40891ab161c37ad6b3a4c14f035bdb720373de21f5fba44cd2463"
+      }
+    ]
+  },
+  "content/bbbc022_x16_hadamard_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_hadamard_fixed_seed42/attempt_001",
+    "started": "2026-09-14T22:06:59.488378+00:00",
+    "finished": "2026-09-14T22:22:26.160815+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789424545459132420,
+        "sha256": "70e9611b19c81269012bf78fe7e2b1e4ef165e458c362b3a5358eafbeefa21e5"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789424544720127171,
+        "sha256": "998bde551e3b992ee822150627cc798cc7dbc25f9533ed0a5e9fe3b76c42d63d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2790,
+        "mtime_ns": 1789423621039564830,
+        "sha256": "a3ae83565d79befb97276a967a678cbbf831732fa51384ec7becd16d428f9c80"
+      }
+    ]
+  },
+  "content/bbbc022_x16_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T22:22:26.168138+00:00",
+    "finished": "2026-09-14T22:37:57.994820+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3399,
+        "mtime_ns": 1789425477250889853,
+        "sha256": "1fb292fc4683506b37bac003b79bd7c2e5832f3fb9498cafbc97f43ebffc1c98"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789425475928879726,
+        "sha256": "d8d8cb31543bb96b7f1aa4224dc91e8581f4f1f5a56d859e81f7a1b4ed00b043"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2956,
+        "mtime_ns": 1789424547732148564,
+        "sha256": "43ae0e2cf0e34b8eb64ae81c5a692827d38fde28fcb3ccbb7801238bd95c8981"
+      }
+    ]
+  },
+  "content/bbbc022_x64_uniform_all_ones_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_uniform_all_ones_seed42/attempt_001",
+    "started": "2026-09-14T22:37:58.005448+00:00",
+    "finished": "2026-09-14T22:53:32.807578+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 762,
+        "mtime_ns": 1789426412026812228,
+        "sha256": "d7a9ab7380d9c2a781d9763b194a0856ac95d7bb3388c69e832d8a7cee18fd39"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789426411236806489,
+        "sha256": "0e9d9d25670fc1ba73dfa0e68c346b0fb26127d788b04988f16d3f72f3696319"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2807,
+        "mtime_ns": 1789425479631908087,
+        "sha256": "a6c376afc21787d47a58a61fdb52ea000c46a2014f4eeda1b05434ee3170da6a"
+      }
+    ]
+  },
+  "content/bbbc022_x64_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T22:53:32.815534+00:00",
+    "finished": "2026-09-14T23:09:09.299820+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789427348585586218,
+        "sha256": "42cde710d51a35459534cfe934387ca2dad9f66c2378cb4ac6de9e951bcc2a87"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789427347624579069,
+        "sha256": "d90a938ded236e2df79cc947f0a26d2ae98bd1ae479f6700e878ce4fd2d8e979"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2779,
+        "mtime_ns": 1789426414320828895,
+        "sha256": "94599ede1404e48d43e5322febba5874f8de2a421d1e82722f834e6ebc49170f"
+      }
+    ]
+  },
+  "content/bbbc022_x64_hadamard_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_hadamard_fixed_seed42/attempt_001",
+    "started": "2026-09-14T23:09:09.308417+00:00",
+    "finished": "2026-09-14T23:24:46.394863+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 760,
+        "mtime_ns": 1789428285643445332,
+        "sha256": "2018664e083fe5a2c187456bd5bb0e090a6466b77db91ca898861309247244f9"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789428284894439898,
+        "sha256": "3c508b7de79b3c2bd6c44eebec1d8a32be4665cc2b04b7ffdc3b60016536ca6a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2793,
+        "mtime_ns": 1789427350852603081,
+        "sha256": "b91e1f89ce9ca392c3b7e6988a5d377d37b78cf8ae85296a13263a1348e7c8c9"
+      }
+    ]
+  },
+  "content/bbbc022_x64_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-14T23:24:46.403596+00:00",
+    "finished": "2026-09-14T23:40:27.316009+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3393,
+        "mtime_ns": 1789429226554252902,
+        "sha256": "6ba20a72101f27fc6daaac8ba806ebed69c4f45c80a4a442c118ab4ac34d7ce6"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789429225200243120,
+        "sha256": "8005d6d61fc83060ab7547612c10abf7ed5e8e6a954f69bfc7bf4d88b8ea41a8"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2959,
+        "mtime_ns": 1789428287980462285,
+        "sha256": "40bcbd73683b28e53fe43be3f27293f51390ffbfe31c453cd49675e4dd196641"
+      }
+    ]
+  },
+  "content/bbbc022_x256_uniform_all_ones_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_uniform_all_ones_seed42/attempt_001",
+    "started": "2026-09-14T23:40:27.326798+00:00",
+    "finished": "2026-09-14T23:56:09.943071+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789430169171937540,
+        "sha256": "5d1b081ce57d91147fa06ab996b1e61e142bd1523549b41a0e41303aafd317bb"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789430168441932328,
+        "sha256": "3e495535bf64deace9211b0338b22d3bbaaced577af18a62fca61fc670016baa"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2814,
+        "mtime_ns": 1789429228888269764,
+        "sha256": "c26042d35df082207b822c8e38a1a618c57ce0da9dce9b694b1bcf3b543fa2e1"
+      }
+    ]
+  },
+  "content/bbbc022_x256_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_random_fixed_seed42/attempt_001",
+    "started": "2026-09-14T23:56:09.951180+00:00",
+    "finished": "2026-09-15T00:11:53.650373+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 801,
+        "mtime_ns": 1789431112900700882,
+        "sha256": "0daed05c960264d4821165dfdd14d08bcc54e3ac6dca820e109c0b6ea0c7fe81"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789431111900693701,
+        "sha256": "4be4a6457fd740979ba3ff1d2756cb5a3ee39f90bb52791e2735cbf8d6eae973"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2786,
+        "mtime_ns": 1789430171461953891,
+        "sha256": "906d5e777da2aa902ca3a1d7ca3b00143755de34dd548c13b5a5f725de8b7158"
+      }
+    ]
+  },
+  "content/bbbc022_x256_hadamard_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_hadamard_fixed_seed42/attempt_001",
+    "started": "2026-09-15T00:11:53.658591+00:00",
+    "finished": "2026-09-15T00:27:40.383123+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 755,
+        "mtime_ns": 1789432059665863376,
+        "sha256": "87a4f88ec638f27c70120028f5ce897fb338905fd2217095aefb72707ab3b0ad"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789432058890857538,
+        "sha256": "4538f16e4c7d3801b079b34d9a8dd86f64889d90b5ab3a146ceaeb4bd24e84ba"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2800,
+        "mtime_ns": 1789431115194717356,
+        "sha256": "0cc1e0539a7cdf7378953c40b810eab80dd4b0100d3edac5f1aeb5cc1ce67d68"
+      }
+    ]
+  },
+  "content/bbbc022_x256_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-15T00:27:40.390626+00:00",
+    "finished": "2026-09-15T00:43:36.414670+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3376,
+        "mtime_ns": 1789433015679957059,
+        "sha256": "c2aeba861352c38e96a06dcfd15703131096a37dd3d0293361078706b2b49363"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789433014285946801,
+        "sha256": "1337fba45d52dafc66a10eafa915574d56b526359cbca6f7bd51c3736c0a3d0a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2966,
+        "mtime_ns": 1789432061956880634,
+        "sha256": "cac331479b23995d7f9453b442a2a01ce6564c3d7f6a6601ba7c6786b3950c11"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_uniform_all_ones_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_uniform_all_ones_seed42/attempt_001",
+    "started": "2026-09-15T00:43:36.425250+00:00",
+    "finished": "2026-09-15T00:59:32.948755+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 757,
+        "mtime_ns": 1789433972199285438,
+        "sha256": "63ffbcbb7053fe6aaaec7337d45ced0108cde06df1ed25d2ca25fde4b0e6b211"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789433971466280710,
+        "sha256": "83edb43dd41d3ca8d3b29d55bed0b1486dcab818975c6f892791954be76b892a"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2821,
+        "mtime_ns": 1789433017940973696,
+        "sha256": "83dbee177706a93242b9fb22abecb02fa10869502a7e37ef6cf6d27f55282417"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_random_fixed_seed42/attempt_001",
+    "started": "2026-09-15T00:59:32.956460+00:00",
+    "finished": "2026-09-15T01:15:31.704531+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 801,
+        "mtime_ns": 1789434930912812657,
+        "sha256": "325b74d9ef566827fc09dfefe4ac9bc3d203933c024a09827c68fbf7adb82bc7"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789434929986806172,
+        "sha256": "581b3ca800dca041f1e4e691cab245030a58cc4f392156ff64766fb0adffa8ff"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2793,
+        "mtime_ns": 1789433974473300106,
+        "sha256": "1272e120020bb96447748da74db78df0d887754ec2f06e51cd29da6774d3034a"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_hadamard_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_hadamard_fixed_seed42/attempt_001",
+    "started": "2026-09-15T01:15:31.711904+00:00",
+    "finished": "2026-09-15T01:31:29.295694+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789435888544503995,
+        "sha256": "700afab838e2717d43482e352a05b7e58a42765bb28caeb3a499ac61f76ebd6d"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789435887790498749,
+        "sha256": "946ace6abe69f5fe02858d4a1fd9285b6156759ae7b7462035fec4ff9e6e71da"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2807,
+        "mtime_ns": 1789434933243828983,
+        "sha256": "3a923f9a9f99d8b349a5a430a5f3cfbb26d8e1458a8dbf9d69a691e1a5d0e838"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-15T01:31:29.304299+00:00",
+    "finished": "2026-09-15T01:47:37.743522+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3372,
+        "mtime_ns": 1789436856964303750,
+        "sha256": "9e376164e2f0cbb81b89ab2b1162c4d9fda9ab41eb831ddc98763c20a3209489"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789436855538293688,
+        "sha256": "e182605f27a80cf384237a9e74206b076db6840f48c73905cb9075ab48119364"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2973,
+        "mtime_ns": 1789435890809519754,
+        "sha256": "dc19f7f7b77a319b450d930a0ccbdc9c9a8125e0d9fd7f70751f2e0c41e26d9a"
+      }
+    ]
+  },
+  "content/bbbc022_x16_uniform_all_ones_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_uniform_all_ones_seed43/attempt_001",
+    "started": "2026-09-15T01:47:37.753101+00:00",
+    "finished": "2026-09-15T02:03:01.489656+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789437780732145953,
+        "sha256": "17a6194f6db2b76dfd976947f04433e0c594b2467e4c1ab1c61dccc2948e5e92"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789437780009140001,
+        "sha256": "124e47559106a8f28f99f0c11bd24dbb4ef294a26f7a4d92de7ae0afad99055d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2804,
+        "mtime_ns": 1789436859299320226,
+        "sha256": "ea7ff5e7edd3aedade841d542d7464e4768ae915f4bc5196f94de2d0fb960f0e"
+      }
+    ]
+  },
+  "content/bbbc022_x16_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_random_fixed_seed43/attempt_001",
+    "started": "2026-09-15T02:03:01.498131+00:00",
+    "finished": "2026-09-15T02:18:28.523292+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789438707788293095,
+        "sha256": "0fb5389875c6b47d6c0c7f41998af10d354365c6396409bd077f06a6db14a007"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789438706852286150,
+        "sha256": "bdcefaea3116a553d210afd14347c5308b3f39ebd8aec967ffa271461499cbc3"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2776,
+        "mtime_ns": 1789437782995164578,
+        "sha256": "5756ac00f6a0daf7bf1b7d9e34627bbde1d4787d4fa49024f518da2365ca74bd"
+      }
+    ]
+  },
+  "content/bbbc022_x16_hadamard_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_hadamard_fixed_seed43/attempt_001",
+    "started": "2026-09-15T02:18:28.532279+00:00",
+    "finished": "2026-09-15T02:33:58.514630+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789439637751120870,
+        "sha256": "e3666ce29bf0b1aeca328f8dc0f5e4cb28a18bc5799cdbccb1cee6a2098f6fa1"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789439636994115191,
+        "sha256": "e21233a494c10cef7bc4ba57706f5f110bc81d91d1c1e601c2e98b9763e04d61"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2790,
+        "mtime_ns": 1789438710044309833,
+        "sha256": "200366edaf047ab04d999927d3aa414d9c68b0b26e428ab35854f2c1cc615f68"
+      }
+    ]
+  },
+  "content/bbbc022_x16_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 2,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_learnable_frequency_seed43/attempt_002",
+    "started": "2026-09-15T02:35:09.338269+00:00",
+    "finished": "2026-09-15T02:50:57.800560+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3406,
+        "mtime_ns": 1789440656973651502,
+        "sha256": "9fc12ca56ca58c97aca482a77a07be0bb7232087d015fbb481cb7731af8f2b35"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789440655627641637,
+        "sha256": "483708dd666246f906c385ce4244db1d1292cb2e2c419239fdbf1465d9e0c42f"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2956,
+        "mtime_ns": 1789439710944669003,
+        "sha256": "b24573db46b44bf8c6cf75411dc95ba66a63789b972a1bb69ba3f3e0a8f8f968"
+      }
+    ]
+  },
+  "content/bbbc022_x64_uniform_all_ones_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_uniform_all_ones_seed43/attempt_001",
+    "started": "2026-09-15T02:50:57.810972+00:00",
+    "finished": "2026-09-15T03:06:37.403128+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 758,
+        "mtime_ns": 1789441596603523968,
+        "sha256": "c9d029e28c6068a2a3ae03ad114536d344d985a409e19c8c719f574ead9fe1d6"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789441595871518620,
+        "sha256": "d2ba79ccff553a4426acaca00e7b5d0b434fa143df1221787c302c0946604e3f"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2807,
+        "mtime_ns": 1789440659453669677,
+        "sha256": "d8e1d007498342f54acc7a0e3e1f436bcaaef0342e0d6952660d1a148d85a803"
+      }
+    ]
+  },
+  "content/bbbc022_x64_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_random_fixed_seed43/attempt_001",
+    "started": "2026-09-15T03:06:37.411714+00:00",
+    "finished": "2026-09-15T03:22:20.660345+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 801,
+        "mtime_ns": 1789442539881413156,
+        "sha256": "0a7d1d3237b571d57c552ec36ce46f928ec1ef00941ada23db92965ba2a6b9db"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789442538898405978,
+        "sha256": "6d5aacd0279631bb0da606ea1fdd30953a63c9bd5402c9f166f5485588159e86"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2779,
+        "mtime_ns": 1789441598982541349,
+        "sha256": "c9b06c489a124aa5617fc171552def77c03931aa50be49b33829614bb8f74e08"
+      }
+    ]
+  },
+  "content/bbbc022_x64_hadamard_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_hadamard_fixed_seed43/attempt_001",
+    "started": "2026-09-15T03:22:20.668263+00:00",
+    "finished": "2026-09-15T03:37:58.406759+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789443477611260248,
+        "sha256": "01388508eeab8761e78c1c0ab60a6e90c7a03d05a5dda36fe9bf262f6523d1ac"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789443476838254604,
+        "sha256": "4edc2ce296bb47a412a4c784e1ec71d6dc6467111a9e558a0bdc2b5813124619"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2793,
+        "mtime_ns": 1789442542235430345,
+        "sha256": "22a071ddc7c73342825c486a0a2ea49df17e438cac6e9206da01b50208412625"
+      }
+    ]
+  },
+  "content/bbbc022_x64_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-15T03:37:58.413905+00:00",
+    "finished": "2026-09-15T03:53:57.182256+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3390,
+        "mtime_ns": 1789444436402059033,
+        "sha256": "78911460b6ab6df08b12bcc3c349ab0887bdb8c765ad1c231410da2e1c5cc99e"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789444435042053569,
+        "sha256": "ba91870af99370f6f9eaf9271ac23701db135b3049dc866817a995369f3b66d9"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2959,
+        "mtime_ns": 1789443479968277458,
+        "sha256": "d94fc3f2fa075856472083e9ac4d5a7465ace82cd39c329740a62ff07195a0bf"
+      }
+    ]
+  },
+  "content/bbbc022_x256_uniform_all_ones_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_uniform_all_ones_seed43/attempt_001",
+    "started": "2026-09-15T03:53:57.192385+00:00",
+    "finished": "2026-09-15T04:09:44.198168+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789445383402887936,
+        "sha256": "f88c9a87d19ff4bc8e987a769ab1ea8247627727b70e2f35c4af710feedd29db"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789445382646883635,
+        "sha256": "ec7f4e265d84fe40792dc96b063522c6461df978e588dd319baf01493d7c234d"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2814,
+        "mtime_ns": 1789444438779068599,
+        "sha256": "a82840da8fd3050083d8d1b7a2ad935279bd56a91499074a47faa18f85c08ab1"
+      }
+    ]
+  },
+  "content/bbbc022_x256_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_random_fixed_seed43/attempt_001",
+    "started": "2026-09-15T04:09:44.205550+00:00",
+    "finished": "2026-09-15T04:25:35.870885+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 799,
+        "mtime_ns": 1789446335064498471,
+        "sha256": "77c4a6575f50f71edf8c85efadd6eeed1dfd4321bd0246e65cee6e11e3c3e077"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789446334068491466,
+        "sha256": "1e29af971f647d151417bab349dce82a7ef3db308bbe0d66b7b7e36a8a9071c7"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2786,
+        "mtime_ns": 1789445385789901521,
+        "sha256": "c5d7afaf6bfbd1ca1c9878ec1a67056aa36038b9a967919d7089c7591b5503e2"
+      }
+    ]
+  },
+  "content/bbbc022_x256_hadamard_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_hadamard_fixed_seed43/attempt_001",
+    "started": "2026-09-15T04:25:35.879229+00:00",
+    "finished": "2026-09-15T04:41:26.892033+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 757,
+        "mtime_ns": 1789447286166802677,
+        "sha256": "0295d781236f0a14ccc3803f76a05bce62c34976b0d989e0ed3659fcbbc35c26"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789447285372797589,
+        "sha256": "bc7083613c270cb3f8675b0afcdcb4749958462fc2ddc7d28b066eeb5816da8b"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2800,
+        "mtime_ns": 1789446337498515585,
+        "sha256": "1ac49665a099f4fd7236088c17e357a9d5a981d6feec43cd593d22f6b7e24911"
+      }
+    ]
+  },
+  "content/bbbc022_x256_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-15T04:41:26.899461+00:00",
+    "finished": "2026-09-15T04:57:23.173191+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3371,
+        "mtime_ns": 1789448242365574938,
+        "sha256": "4907a8fe9639919d08e8c52fe9254aa4bef5f8370c5cb7d3ae02c0575a869c92"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789448240944564362,
+        "sha256": "5ada0406d10239a5f4229eabf32ef00353231abfc1db4b532ce94f98aa098551"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2966,
+        "mtime_ns": 1789447288471817445,
+        "sha256": "21886c16eff50b1136fc32ee2eab22e4dc3ef0aa78f66bd39cd95112d86b4610"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_uniform_all_ones_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_uniform_all_ones_seed43/attempt_001",
+    "started": "2026-09-15T04:57:23.206330+00:00",
+    "finished": "2026-09-15T05:13:17.881349+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 759,
+        "mtime_ns": 1789449197143264581,
+        "sha256": "a91ed3aad656a382106e865354209522e9c7db4da8903b4d55c0b2090daf25c0"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789449196420259687,
+        "sha256": "11e99bbac6016bc9e4a3214fc38a82c888077eaad398ad640011b96b67a7f415"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2821,
+        "mtime_ns": 1789448244781592912,
+        "sha256": "b9d70fd5df6bd59f771307312bce508f72037986191a285843fdb8be474b1ffa"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_random_fixed_seed43/attempt_001",
+    "started": "2026-09-15T05:13:17.889661+00:00",
+    "finished": "2026-09-15T05:29:19.334270+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 802,
+        "mtime_ns": 1789450158581065891,
+        "sha256": "77727ffad372bde25361f3a5ab5583892bbfb74a837179cae12251e2e95e0e13"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789450157642061112,
+        "sha256": "b7a650b728dc55dc764123f2126957aad7410905dd373947001282a5268bf62f"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2793,
+        "mtime_ns": 1789449199472280346,
+        "sha256": "9a4cb53dee4944cfb911b4319498c977935908dce18551cbb0cd879f7fcf1366"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_hadamard_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_hadamard_fixed_seed43/attempt_001",
+    "started": "2026-09-15T05:29:19.341888+00:00",
+    "finished": "2026-09-15T05:45:14.466627+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 759,
+        "mtime_ns": 1789451113670588639,
+        "sha256": "90a7d29976bfd6782dc49dc667ea533c0f75c646e5134232ecfbf81891b30996"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789451112920584019,
+        "sha256": "2f684c235f4af6c2d7fa3ad3d29048b6da391d56c6aedd4316cc111ec24cf916"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2807,
+        "mtime_ns": 1789450160938077894,
+        "sha256": "86131537fd0cd8417b77289b158511a62dd58604e06e36b558e2fb62a037701f"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-15T05:45:14.474740+00:00",
+    "finished": "2026-09-15T06:01:16.401941+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3371,
+        "mtime_ns": 1789452075621566220,
+        "sha256": "e4638e996665acbe7562cbfb3cb3d3545212e41dbf057f25a56967a3d1eeee6a"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789452074187557499,
+        "sha256": "d54f92b3a296ae57e041a3d4eca4891c8458f6820d33f085211c2a266812d2fa"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2973,
+        "mtime_ns": 1789451116033603196,
+        "sha256": "2f08d91294dd98f3a73a42a4e759a5f9d8649657e18cd8c20b928db46fa5dd25"
+      }
+    ]
+  },
+  "content/bbbc022_x16_uniform_all_ones_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_uniform_all_ones_seed44/attempt_001",
+    "started": "2026-09-15T06:01:16.411848+00:00",
+    "finished": "2026-09-15T06:16:52.546414+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 762,
+        "mtime_ns": 1789453011762377429,
+        "sha256": "97c764d457b2a19def5f9901a2243a78351bd311287e5e2580608956cad894b1"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789453011007372690,
+        "sha256": "1d771717633d46afa1f8a2a845d614f19efde0544a032a93b52904251a295239"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2804,
+        "mtime_ns": 1789452077995580659,
+        "sha256": "6809e67a35a3b37dfa1c4f56da83cff8590411f6d38c3182585ef431b40a1ece"
+      }
+    ]
+  },
+  "content/bbbc022_x16_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_random_fixed_seed44/attempt_001",
+    "started": "2026-09-15T06:16:52.553585+00:00",
+    "finished": "2026-09-15T06:32:30.142727+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 805,
+        "mtime_ns": 1789453949372296649,
+        "sha256": "8d26261b29ea5488abf4da3d124f72460256f5513e4d0d622a133c8953225264"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789453948423288460,
+        "sha256": "00d05a6f597deb059f0fe9684272f8c596ce3a427841a6b8656851bb42abc1b6"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2776,
+        "mtime_ns": 1789453014175392576,
+        "sha256": "1870825390d85641d8dab1d4a0e2ec973489d53d4183636f8fbd2c122d6a4d82"
+      }
+    ]
+  },
+  "content/bbbc022_x16_hadamard_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_hadamard_fixed_seed44/attempt_001",
+    "started": "2026-09-15T06:32:30.150704+00:00",
+    "finished": "2026-09-15T06:48:06.637341+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 761,
+        "mtime_ns": 1789454885864335142,
+        "sha256": "782b2a010cd0e2657c4076755875cd83502b4c2951d64ee11f39473b5beae742"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789454885127330054,
+        "sha256": "768bb72a03fc28e4db5cd22e459b73a823c37019411d8ddb94f2fbbf547b2782"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2790,
+        "mtime_ns": 1789453951712316827,
+        "sha256": "c7aefe09667a52cca405cf30c4d6561f59bc2014c76ecf895d199df55260343e"
+      }
+    ]
+  },
+  "content/bbbc022_x16_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x16_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-15T06:48:06.645438+00:00",
+    "finished": "2026-09-15T07:03:53.422373+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3409,
+        "mtime_ns": 1789455832457699884,
+        "sha256": "33b826b7bd337e61f4b2b64229650aa3dd8b9549f79532a3c196d2b72f9d6d20"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789455831021690369,
+        "sha256": "b5b84e76225052215bc47fb35243f1517d71374bc6105f8f54766c17313fab37"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2956,
+        "mtime_ns": 1789454888243351562,
+        "sha256": "0e97b71d7516487c9b7b560ffac2bebcdcb5e461e96c1e1e1313d51c3fa35eb2"
+      }
+    ]
+  },
+  "content/bbbc022_x64_uniform_all_ones_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_uniform_all_ones_seed44/attempt_001",
+    "started": "2026-09-15T07:03:53.434320+00:00",
+    "finished": "2026-09-15T07:19:46.534756+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 760,
+        "mtime_ns": 1789456785495048319,
+        "sha256": "a60791addb463a238ec984696b67adf973cd1aa9493da26d41e0d1a2b2ab4ff1"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789456784667042830,
+        "sha256": "b51627fd86b2aff2e79abd2bf4256f02c65c3f6f9f5443b0416a06e69df1445c"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2807,
+        "mtime_ns": 1789455835329718912,
+        "sha256": "c849f08939bb8178b63b22ee804c992a91d7b4ad6f35c2b945999c8bdd48f494"
+      }
+    ]
+  },
+  "content/bbbc022_x64_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_random_fixed_seed44/attempt_001",
+    "started": "2026-09-15T07:19:46.543202+00:00",
+    "finished": "2026-09-15T07:35:40.987266+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789457739989360408,
+        "sha256": "352ee8fc0e5b87ee0558f2d361425ceba2d17e4d6715f5a94fa849c79a9e1168"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789457738932353428,
+        "sha256": "ea1ac4869706ac63dabf79fde6e21f139ef8d422754ec8659aef38c2056a1f81"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2779,
+        "mtime_ns": 1789456788445067875,
+        "sha256": "12f48ddd73e8d17b0198a4cea0dfff58056a90dfb52e0287892a1aee60cec37e"
+      }
+    ]
+  },
+  "content/bbbc022_x64_hadamard_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_hadamard_fixed_seed44/attempt_001",
+    "started": "2026-09-15T07:35:40.994957+00:00",
+    "finished": "2026-09-15T07:51:40.206666+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 760,
+        "mtime_ns": 1789458699223443048,
+        "sha256": "fad445fa0c35d865165e979b1d9b9b48035dd1e7755b9b14b6bd71abf26af6a1"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789458698391437740,
+        "sha256": "53195cc932a1d5804c985b13e2dcead335ee9b7314339d66af17c12a0b7f3c19"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2793,
+        "mtime_ns": 1789457742909379693,
+        "sha256": "d038416ca7fbaf77b491316164b4410c230dcd08928ceb535a29e72dc3adfe46"
+      }
+    ]
+  },
+  "content/bbbc022_x64_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x64_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-15T07:51:40.215657+00:00",
+    "finished": "2026-09-15T08:07:41.443658+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3395,
+        "mtime_ns": 1789459660413654968,
+        "sha256": "e07c8d3abd09a0053ed61b168997f0aedc5c01dc50d20ca4acf0038c317a7a4a"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789459658960645512,
+        "sha256": "0122962ef10f52275b4e70be1fb0d804f3b2029e5d6458efb17d8ff7ec262654"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2959,
+        "mtime_ns": 1789458702091461345,
+        "sha256": "c9edf58178969baef619988c2d82bd0a9a05d4ddb32f43e8f0eb39b5382483ce"
+      }
+    ]
+  },
+  "content/bbbc022_x256_uniform_all_ones_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_uniform_all_ones_seed44/attempt_001",
+    "started": "2026-09-15T08:07:41.455169+00:00",
+    "finished": "2026-09-15T08:23:46.062445+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 759,
+        "mtime_ns": 1789460625090753111,
+        "sha256": "bd9e2be38a412b89fa5cfa2659f0d84845a30cad28a54878bca41b0c7a6a8b16"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789460624296746222,
+        "sha256": "980be94bc80bae580e08d33bc3bcbccbce39fcca211ce42c9878fab1e6a66735"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2814,
+        "mtime_ns": 1789459663365674180,
+        "sha256": "69a4caf11d3ca9ddfbc8aae746762ee1fb22aca9d1dd9219ff63389bb958727e"
+      }
+    ]
+  },
+  "content/bbbc022_x256_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_random_fixed_seed44/attempt_001",
+    "started": "2026-09-15T08:23:46.071240+00:00",
+    "finished": "2026-09-15T08:39:46.815268+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 804,
+        "mtime_ns": 1789461585771253706,
+        "sha256": "26efd539bfca9b2d6192e6ef2ea4f267c2f2750bc2f51986e04e779c772cdcc4"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789461584701245856,
+        "sha256": "bb2dce69164f29bc9ed93ae7534927063bef97a60cf56e1a01503ff35569bd97"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2786,
+        "mtime_ns": 1789460627972778100,
+        "sha256": "58d5a44673e9aefed8245b15841216e40ec9777fdeb37eca646df23c596d85d6"
+      }
+    ]
+  },
+  "content/bbbc022_x256_hadamard_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_hadamard_fixed_seed44/attempt_001",
+    "started": "2026-09-15T08:39:46.823273+00:00",
+    "finished": "2026-09-15T08:55:50.708050+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 757,
+        "mtime_ns": 1789462549631312755,
+        "sha256": "dc4463bf47ebaddcab69c4af6c9cbb4e9884b35d36fde8c489fcb25bd81b2595"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789462548751306303,
+        "sha256": "c36e604d509816cfe0fa6c049aaca4638dd908be4a659d719b623753f96ab2f7"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2800,
+        "mtime_ns": 1789461588699275185,
+        "sha256": "c3487a0ad7669d5b1b0d1b50cdfbed749fbabc52267657b8eaec674236920953"
+      }
+    ]
+  },
+  "content/bbbc022_x256_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x256_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-15T08:55:50.716433+00:00",
+    "finished": "2026-09-15T09:12:00.667014+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3373,
+        "mtime_ns": 1789463519577325046,
+        "sha256": "6e102177481ec3714f92ff42952ec4cded979ab4c8b40778ed128e66f22b2651"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789463518066314205,
+        "sha256": "6d6c37b66a819d59592b4ccb3233213a6739b612ac86de79ed2545d744a4717b"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2966,
+        "mtime_ns": 1789462552565334264,
+        "sha256": "d567f13d710b4ae36d6b4ba480eeafdf39d227f2bb3feabc31a14a1b72350818"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_uniform_all_ones_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_uniform_all_ones_seed44/attempt_001",
+    "started": "2026-09-15T09:12:00.677737+00:00",
+    "finished": "2026-09-15T09:28:18.454911+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 759,
+        "mtime_ns": 1789464497429812050,
+        "sha256": "e6d524343aa7113948c429766058bd688fa871a2d35d66f77c11f4bf99698986"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789464496621805290,
+        "sha256": "3145c6a46afcedfe0fd523a28bff5ae6dedb1c3b624fae8f383c3a53d2c0f274"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2821,
+        "mtime_ns": 1789463522551346383,
+        "sha256": "5b4406b285610f773976fb339860efef9ca3df7075b6dee47134851157f63b21"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_random_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_random_fixed_seed44/attempt_001",
+    "started": "2026-09-15T09:28:18.463777+00:00",
+    "finished": "2026-09-15T09:44:30.173076+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 803,
+        "mtime_ns": 1789465469209455076,
+        "sha256": "92ffb30bf9b5a484ae4dd54457bb3a885e1e57a16f7e66235911604d8fadfd31"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789465468194447367,
+        "sha256": "2e78789e41edc085e101afc6a3fb03d36dfe2480f583883c75d3ff214d3fb687"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2793,
+        "mtime_ns": 1789464500339836386,
+        "sha256": "57b749709023a9671a006e13583a38d2a0ae9557efdbb49b05f63edc23799299"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_hadamard_fixed_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_hadamard_fixed_seed44/attempt_001",
+    "started": "2026-09-15T09:44:30.181778+00:00",
+    "finished": "2026-09-15T10:00:43.531263+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 760,
+        "mtime_ns": 1789466442802800811,
+        "sha256": "5f67a234e9ddb325798ee9782aadcf4aef3442f66d5753f4ba27eeef6f031514"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 5095751,
+        "mtime_ns": 1789466442039798063,
+        "sha256": "eb06850d4ea2978df3d24c89f7abf1fe61d9d51cad7884e61ccd0e0e8905183c"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2807,
+        "mtime_ns": 1789465472064476759,
+        "sha256": "08d95e5313d5b6fc107af6f5a966167f0f11e93be4348730cebd59477ac3f7c9"
+      }
+    ]
+  },
+  "content/bbbc022_x1024_learnable_frequency_seed44": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content/bbbc022_x1024_learnable_frequency_seed44/attempt_001",
+    "started": "2026-09-15T10:00:43.539530+00:00",
+    "finished": "2026-09-15T10:16:53.944028+00:00",
+    "artifacts": [
+      {
+        "path": "metrics/run_summary.json",
+        "bytes": 3360,
+        "mtime_ns": 1789467412893033533,
+        "sha256": "6d2d45a424b936386d2714e61aee015579ad2c92159722d4b3f414853e021164"
+      },
+      {
+        "path": "checkpoints/best.pt",
+        "bytes": 10339704,
+        "mtime_ns": 1789467411378023896,
+        "sha256": "54b02f36e8916879823110750e95ee0ad6f3816aec699efa173dc89ee802effb"
+      },
+      {
+        "path": "config.yaml",
+        "bytes": 2973,
+        "mtime_ns": 1789466445092809079,
+        "sha256": "57b616262b0fefeeb6329dfd21d0e2d158177703b2bb7cbc74341a8f486b8447"
+      }
+    ]
+  },
+  "content_swinir/x16_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x16_random_fixed_seed42/attempt_001",
+    "started": "2026-09-15T10:16:53.954589+00:00",
+    "finished": "2026-09-15T19:04:25.153328+00:00",
+    "artifacts": [
+      {
+        "path": "x16/random_fixed/metrics.json",
+        "bytes": 1169,
+        "mtime_ns": 1789499063959886686,
+        "sha256": "b21163bea6510cc57807563050f9c0a7f30d9445121ab586788182d0b62f02a0"
+      },
+      {
+        "path": "x16/random_fixed/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789469389815341145,
+        "sha256": "6e6bde1b1f8830e16fba9fa54bd8dea99c77a580a9c9df7f5db9448be69d691d"
+      },
+      {
+        "path": "x16/random_fixed/grids/test_grid.png",
+        "bytes": 907534,
+        "mtime_ns": 1789499063958886677,
+        "sha256": "09c41683f25fac0566acde00cb5426b47ffcaf4d4ce61a1fc71ed6983b601c33"
+      }
+    ]
+  },
+  "content_swinir/x16_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x16_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-15T19:04:25.193432+00:00",
+    "finished": "2026-09-16T03:50:30.120034+00:00",
+    "artifacts": [
+      {
+        "path": "x16/learnable_frequency/metrics.json",
+        "bytes": 1192,
+        "mtime_ns": 1789530628908980348,
+        "sha256": "c833f6cdcef8dcf918b9d39aac4d8d2a631b5675fa501f39043cb0588ba28bc3"
+      },
+      {
+        "path": "x16/learnable_frequency/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789503536052651024,
+        "sha256": "01c7dfca6b243d9cb0cd8613d57be7b1966929bc80bfbbbcb50a9c51a1fac916"
+      },
+      {
+        "path": "x16/learnable_frequency/grids/test_grid.png",
+        "bytes": 904606,
+        "mtime_ns": 1789530628907980341,
+        "sha256": "f60cb0e760f22f7ad73191757f4bc75cc214435e84b948aa552837307f68e1ca"
+      }
+    ]
+  },
+  "content_swinir/x64_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x64_random_fixed_seed42/attempt_001",
+    "started": "2026-09-16T03:50:30.159493+00:00",
+    "finished": "2026-09-16T12:37:11.758118+00:00",
+    "artifacts": [
+      {
+        "path": "x64/random_fixed/metrics.json",
+        "bytes": 1167,
+        "mtime_ns": 1789562230482189047,
+        "sha256": "a72118f5f7be155a7e17dce594bd6b4b3ba2da959dce7eea76a7082e95fe5d32"
+      },
+      {
+        "path": "x64/random_fixed/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789547714798405644,
+        "sha256": "14e94d747afe5d80f0da83f512956168055ad226e3f11863b4aee2f4f4a05f90"
+      },
+      {
+        "path": "x64/random_fixed/grids/test_grid.png",
+        "bytes": 928848,
+        "mtime_ns": 1789562230481189040,
+        "sha256": "3ea9cedfa90d2995d2c6f122085c3f366728929e8f7e3da82d6223bd399f37ca"
+      }
+    ]
+  },
+  "content_swinir/x64_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x64_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-16T12:37:11.799083+00:00",
+    "finished": "2026-09-16T21:23:37.723654+00:00",
+    "artifacts": [
+      {
+        "path": "x64/learnable_frequency/metrics.json",
+        "bytes": 1193,
+        "mtime_ns": 1789593816400745259,
+        "sha256": "346a61b5ead7dd732222ec09a89901dd0e1ab68d6085504727e232ddbfc60c63"
+      },
+      {
+        "path": "x64/learnable_frequency/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789569851530415027,
+        "sha256": "02928d9912e8e83cbeb3df5cb471aa4f5548c4a1032579ff84e2c19065895e28"
+      },
+      {
+        "path": "x64/learnable_frequency/grids/test_grid.png",
+        "bytes": 917336,
+        "mtime_ns": 1789593816399745252,
+        "sha256": "9272473903bd81b0f1a8f173ecb6e3140bb61c8116d3044df84d977e3d92b66a"
+      }
+    ]
+  },
+  "content_swinir/x256_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x256_random_fixed_seed42/attempt_001",
+    "started": "2026-09-16T21:23:37.761732+00:00",
+    "finished": "2026-09-17T06:09:26.792125+00:00",
+    "artifacts": [
+      {
+        "path": "x256/random_fixed/metrics.json",
+        "bytes": 1165,
+        "mtime_ns": 1789625365524675058,
+        "sha256": "9b6c05440243dc129936599fee319b12f919823d70af82523a16b133cba49c95"
+      },
+      {
+        "path": "x256/random_fixed/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789603317272129053,
+        "sha256": "e7570bd22e01adf63f31a9bdf2c1937e7de4c9a48341ce86c3ccc53db29ea930"
+      },
+      {
+        "path": "x256/random_fixed/grids/test_grid.png",
+        "bytes": 917083,
+        "mtime_ns": 1789625365523675049,
+        "sha256": "fdef900e6acf9084b39c337aae6024d96c725784bb4d2a7cb8a7bb69089217ef"
+      }
+    ]
+  },
+  "content_swinir/x256_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x256_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-17T06:09:26.835970+00:00",
+    "finished": "2026-09-17T14:56:13.511679+00:00",
+    "artifacts": [
+      {
+        "path": "x256/learnable_frequency/metrics.json",
+        "bytes": 1190,
+        "mtime_ns": 1789656972231146323,
+        "sha256": "83fc1ee6c321f7d9c31f631aa63eac6094209a2a1a3b44007fd1b938a913dc2d"
+      },
+      {
+        "path": "x256/learnable_frequency/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789651224415662159,
+        "sha256": "c64ff13cefd48221862ccdfa33a3bfaee3eed2bd0a58fe4ca5465a2c7058b43d"
+      },
+      {
+        "path": "x256/learnable_frequency/grids/test_grid.png",
+        "bytes": 918947,
+        "mtime_ns": 1789656972231146323,
+        "sha256": "9eed8291c316b048dd21233c146f0ddc9476d4a6a87879577979edbbb11f19ba"
+      }
+    ]
+  },
+  "content_swinir/x1024_random_fixed_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x1024_random_fixed_seed42/attempt_001",
+    "started": "2026-09-17T14:56:13.551591+00:00",
+    "finished": "2026-09-18T00:55:00.782995+00:00",
+    "artifacts": [
+      {
+        "path": "x1024/random_fixed/metrics.json",
+        "bytes": 1167,
+        "mtime_ns": 1789692899425762146,
+        "sha256": "eb09d65578b343c94acee9cc70cb47a0568051b3407d1bb80e1c5d480c22d203"
+      },
+      {
+        "path": "x1024/random_fixed/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789660862406224221,
+        "sha256": "6a35227c8d18dd30dd3a0c21995be40b8a4e938b3a0fb2bd14092fa7de4c3165"
+      },
+      {
+        "path": "x1024/random_fixed/grids/test_grid.png",
+        "bytes": 557183,
+        "mtime_ns": 1789692899424762139,
+        "sha256": "7872280b6275b8e7cd5a15f3959e30c95abc4564596cdddce4e8226f20be35a6"
+      }
+    ]
+  },
+  "content_swinir/x1024_learnable_frequency_seed42": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x1024_learnable_frequency_seed42/attempt_001",
+    "started": "2026-09-18T00:55:00.825556+00:00",
+    "finished": "2026-09-18T09:39:39.405365+00:00",
+    "artifacts": [
+      {
+        "path": "x1024/learnable_frequency/metrics.json",
+        "bytes": 1190,
+        "mtime_ns": 1789724378199832437,
+        "sha256": "dd1d917b402f41c139b8a8c09911b398f621b8a3643598f42bfcc16f67bea0a3"
+      },
+      {
+        "path": "x1024/learnable_frequency/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789694853694587605,
+        "sha256": "b843632fe53b1a664f689ed0e15990e737f9ff9f300ef5f1da8d396c692f4d62"
+      },
+      {
+        "path": "x1024/learnable_frequency/grids/test_grid.png",
+        "bytes": 798451,
+        "mtime_ns": 1789724378198832431,
+        "sha256": "e36715e93b27daf5d4dd9feaeff73849fdc09e1924e53545fcf37c6754751d9b"
+      }
+    ]
+  },
+  "content_swinir/x16_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x16_random_fixed_seed43/attempt_001",
+    "started": "2026-09-18T09:39:39.447749+00:00",
+    "finished": "2026-09-18T18:25:03.965930+00:00",
+    "artifacts": [
+      {
+        "path": "x16/random_fixed/metrics.json",
+        "bytes": 1168,
+        "mtime_ns": 1789755902644403810,
+        "sha256": "05d9200dedb064c797b0f49d9bb8b3eed5173f7f7454f3fe6b807680e88df755"
+      },
+      {
+        "path": "x16/random_fixed/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789748332835245340,
+        "sha256": "dac16cf26f4b270089a111c5cbbd09b8dd5b23f6d23db4014270a8318d517907"
+      },
+      {
+        "path": "x16/random_fixed/grids/test_grid.png",
+        "bytes": 918043,
+        "mtime_ns": 1789755902643403803,
+        "sha256": "cf250d869bb8d60b1016dd0a5c1b4840168c5b945255e730ac762e03e6e0c48d"
+      }
+    ]
+  },
+  "content_swinir/x16_learnable_frequency_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x16_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-18T18:25:04.009103+00:00",
+    "finished": "2026-09-19T03:10:05.694876+00:00",
+    "artifacts": [
+      {
+        "path": "x16/learnable_frequency/metrics.json",
+        "bytes": 1189,
+        "mtime_ns": 1789787404349685430,
+        "sha256": "c34ae71b1c3145aa1adf90ef688c1b49f048a79b4cce59852c748c9ecb0ecdb3"
+      },
+      {
+        "path": "x16/learnable_frequency/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789776708508403648,
+        "sha256": "fd6a681348c00aee4ebd576aa2cc13941556472a8a7ef1b8373772c2cd98856e"
+      },
+      {
+        "path": "x16/learnable_frequency/grids/test_grid.png",
+        "bytes": 913631,
+        "mtime_ns": 1789787404348685422,
+        "sha256": "ded7d2d2088e22957da82a3aad9d52b2bd7a7ab76fd1d180a4f53ff91240778e"
+      }
+    ]
+  },
+  "content_swinir/x64_random_fixed_seed43": {
+    "status": "completed",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x64_random_fixed_seed43/attempt_001",
+    "started": "2026-09-19T03:10:05.738018+00:00",
+    "finished": "2026-09-19T11:55:22.597036+00:00",
+    "artifacts": [
+      {
+        "path": "x64/random_fixed/metrics.json",
+        "bytes": 1167,
+        "mtime_ns": 1789818921238022144,
+        "sha256": "bf8571b43cc3212b0ced8ebc0a94ffae56a9699583cf98012bd397d13d9184b7"
+      },
+      {
+        "path": "x64/random_fixed/checkpoints/best.pt",
+        "bytes": 66202952,
+        "mtime_ns": 1789797514643594654,
+        "sha256": "c79a191ec651e5affd734b5bc7a71d93a98fa3a54d474f17fd07c01b7333a52f"
+      },
+      {
+        "path": "x64/random_fixed/grids/test_grid.png",
+        "bytes": 919392,
+        "mtime_ns": 1789818921238022144,
+        "sha256": "728b70066c3d1c5a05944ac2f2fa3f245f4a2a51b9854e3b8ccce4ed434498d7"
+      }
+    ]
+  },
+  "content_swinir/x64_learnable_frequency_seed43": {
+    "status": "running",
+    "attempt": 1,
+    "output": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/content_swinir/x64_learnable_frequency_seed43/attempt_001",
+    "started": "2026-09-19T11:55:22.637309+00:00"
+  }
+}

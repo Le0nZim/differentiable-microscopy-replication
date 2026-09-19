@@ -1,0 +1,39 @@
+{
+  "settings": {
+    "version": 1,
+    "data": {
+      "mnist": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/mnist",
+      "bbbc022": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/substitute_data/BBBC022_v1_images_20585w1",
+      "mcf7_images": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/mcf7_bbbc021/channel2_selected",
+      "mcf7_manifest": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/mcf7_bbbc021/manifests/mcf7_channel2_manifest.csv",
+      "sr_train": {
+        "DIV2K": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/sr/train/DIV2K",
+        "Flickr2K": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/sr/train/Flickr2K"
+      },
+      "sr_test": {
+        "Set5": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/sr/test/Set5",
+        "Set14": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/sr/test/Set14",
+        "BSD100": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/sr/test/BSD100",
+        "Urban100": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/sr/test/Urban100",
+        "Manga109": "/home/leonidas/workspace/differentiable_micoscopy_replication/data/sr/test/Manga109"
+      }
+    },
+    "run": {
+      "output_root": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1",
+      "cache_root": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/.workstation-cache",
+      "device": "cuda:0",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "data_seed": 42,
+      "num_workers": 8,
+      "min_free_gb": 20
+    }
+  },
+  "source_sha256": "db3f0ba9729dc17d8261f8f125605bd0b59801fc554f1004080288a6cec75c0b",
+  "fingerprint": "c77143fa1a9962909725f2220f926b2b1d895a24e939a4f78e4a64154a867ea8",
+  "git_commit": "8b228f1794e655159eec162b4e56c01f86afc54d",
+  "created": "2026-09-12T21:50:24.441340+00:00"
+}

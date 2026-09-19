@@ -1,0 +1,6 @@
+{
+  "artifacts": [
+    "metrics/run_summary.json",
+    "checkpoints/best.pt"
+  ]
+}

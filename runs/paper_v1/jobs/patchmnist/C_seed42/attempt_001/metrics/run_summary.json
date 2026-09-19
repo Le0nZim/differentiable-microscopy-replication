@@ -1,0 +1,15 @@
+{
+  "variant": "C",
+  "label": "learnable Ht + locality + freq (paper best)",
+  "seed": 42,
+  "test_mse": 0.00676654867331187,
+  "test_ssim": 0.9381527576446533,
+  "best_val_mse": 0.0067005555679400764,
+  "best_train_mse": 0.006327680312097073,
+  "min_train_mse": 0.006327680312097073,
+  "final_train_mse": 0.006233243808150292,
+  "overfit_gap": 0.00037287525584300384,
+  "best_m": 8.0,
+  "elapsed_sec": 757.243566274643,
+  "run_dir": "/home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/runs/paper_v1/jobs/patchmnist/C_seed42/attempt_001"
+}

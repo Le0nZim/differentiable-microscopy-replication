@@ -1,0 +1,68 @@
+Using device: cuda:0
+[stage1] training content-aware microscope (learnable=False)...
+Using device: cuda:0
+step=200 loss=0.13982 val_mse=0.10058 val_ssim=0.5057 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=400 loss=0.14024 val_mse=0.10245 val_ssim=0.5357 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=600 loss=0.14461 val_mse=0.10340 val_ssim=0.5433 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=800 loss=0.12563 val_mse=0.10240 val_ssim=0.5363 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1000 loss=0.12319 val_mse=0.10008 val_ssim=0.5392 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1200 loss=0.15677 val_mse=0.09282 val_ssim=0.5296 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1400 loss=0.10751 val_mse=0.09505 val_ssim=0.5444 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1600 loss=0.11322 val_mse=0.08696 val_ssim=0.5502 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=1800 loss=0.11660 val_mse=0.08147 val_ssim=0.5507 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2000 loss=0.10234 val_mse=0.08063 val_ssim=0.5553 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2200 loss=0.10158 val_mse=0.08003 val_ssim=0.5627 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2400 loss=0.10584 val_mse=0.07703 val_ssim=0.5622 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2600 loss=0.09783 val_mse=0.07689 val_ssim=0.5626 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=2800 loss=0.08665 val_mse=0.07783 val_ssim=0.5720 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3000 loss=0.09635 val_mse=0.07424 val_ssim=0.5668 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3200 loss=0.08060 val_mse=0.07677 val_ssim=0.5559 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3400 loss=0.09681 val_mse=0.07476 val_ssim=0.5582 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3600 loss=0.08287 val_mse=0.07317 val_ssim=0.5850 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=3800 loss=0.08560 val_mse=0.07428 val_ssim=0.5661 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=4000 loss=0.08301 val_mse=0.07451 val_ssim=0.5815 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=4200 loss=0.08017 val_mse=0.07052 val_ssim=0.5811 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=4400 loss=0.08694 val_mse=0.07265 val_ssim=0.5693 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=4600 loss=0.09381 val_mse=0.07253 val_ssim=0.5750 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=4800 loss=0.07689 val_mse=0.07214 val_ssim=0.5677 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=5000 loss=0.09880 val_mse=0.07302 val_ssim=0.5733 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=5200 loss=0.08987 val_mse=0.07250 val_ssim=0.5692 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=5400 loss=0.07848 val_mse=0.07069 val_ssim=0.5826 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=5600 loss=0.09183 val_mse=0.07093 val_ssim=0.5747 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=5800 loss=0.07777 val_mse=0.07043 val_ssim=0.5726 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=6000 loss=0.07535 val_mse=0.07275 val_ssim=0.5902 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=6200 loss=0.07334 val_mse=0.07128 val_ssim=0.5758 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=6400 loss=0.07593 val_mse=0.06983 val_ssim=0.5745 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=6600 loss=0.09740 val_mse=0.07157 val_ssim=0.5899 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=6800 loss=0.08360 val_mse=0.07138 val_ssim=0.5555 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=7000 loss=0.08738 val_mse=0.06857 val_ssim=0.5675 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=7200 loss=0.08358 val_mse=0.06980 val_ssim=0.5907 grad_W=0.0000e+00 H_t=[0.000,1.000]
+step=7400 loss=0.06779 val_mse=0.06932 val_ssim=0.5730 grad_W=0.0000e+00 H_t=[0.000,1.000]
+[stage2] trainable report: {"illumination": {"num_params": 0, "total_elems": 0, "trainable_elems": 0, "all_trainable": false, "all_frozen": true}, "inverse_model": {"num_params": 23, "total_elems": 334337, "trainable_elems": 0, "all_trainable": false, "all_frozen": true}, "segmentation_head": {"num_params": 6, "total_elems": 2625, "trainable_elems": 2625, "all_trainable": true, "all_frozen": false}}
+[stage2] segmentation-head-only training (1200 steps)...
+[stage2_seg_head] step=1/1200 total=1.05843 bce=0.69088 gn_seg=4.210e-01 gn_inv=0.000e+00 gn_illum=0.000e+00
+[stage2_seg_head] step=200/1200 total=0.26987 bce=0.14984 gn_seg=1.459e-01 gn_inv=0.000e+00 gn_illum=0.000e+00
+[stage2_seg_head] step=400/1200 total=0.26471 bce=0.15931 gn_seg=1.009e-01 gn_inv=0.000e+00 gn_illum=0.000e+00
+[stage2_seg_head] step=600/1200 total=0.25495 bce=0.15810 gn_seg=8.017e-02 gn_inv=0.000e+00 gn_illum=0.000e+00
+[stage2_seg_head] step=800/1200 total=0.25925 bce=0.15109 gn_seg=1.082e-01 gn_inv=0.000e+00 gn_illum=0.000e+00
+[stage2_seg_head] step=1000/1200 total=0.24951 bce=0.14334 gn_seg=8.599e-02 gn_inv=0.000e+00 gn_illum=0.000e+00
+[stage2_seg_head] step=1200/1200 total=0.31728 bce=0.20615 gn_seg=1.345e-01 gn_inv=0.000e+00 gn_illum=0.000e+00
+[stage2] val dice=0.7012 iou=0.5418 (t=0.2)
+[stage3] trainable report: {"illumination": {"num_params": 0, "total_elems": 0, "trainable_elems": 0, "all_trainable": false, "all_frozen": true}, "inverse_model": {"num_params": 23, "total_elems": 334337, "trainable_elems": 334337, "all_trainable": true, "all_frozen": false}, "segmentation_head": {"num_params": 6, "total_elems": 2625, "trainable_elems": 2625, "all_trainable": true, "all_frozen": false}}
+[stage3] end-to-end finetuning (2500 steps; phases=[(1.0, 2500)])...
+[stage3_finetune_all_m1] step=1/2500 total=0.27255 bce=0.15329 gn_seg=6.455e-02 gn_inv=9.443e-01 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=200/2500 total=0.23667 bce=0.13956 gn_seg=3.388e-01 gn_inv=1.731e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=400/2500 total=0.24579 bce=0.14515 gn_seg=7.980e-02 gn_inv=1.516e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=600/2500 total=0.28205 bce=0.13530 gn_seg=5.502e-01 gn_inv=1.501e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=800/2500 total=0.22522 bce=0.12428 gn_seg=1.002e-01 gn_inv=1.246e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=1000/2500 total=0.22067 bce=0.12787 gn_seg=1.974e-01 gn_inv=1.497e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=1200/2500 total=0.26821 bce=0.16108 gn_seg=3.260e-01 gn_inv=3.703e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=1400/2500 total=0.26990 bce=0.16549 gn_seg=3.504e-01 gn_inv=1.836e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=1600/2500 total=0.19313 bce=0.11028 gn_seg=3.012e-01 gn_inv=1.262e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=1800/2500 total=0.26872 bce=0.16776 gn_seg=2.462e-01 gn_inv=2.922e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=2000/2500 total=0.18113 bce=0.10052 gn_seg=5.542e-01 gn_inv=1.367e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=2200/2500 total=0.21311 bce=0.12855 gn_seg=6.955e-02 gn_inv=1.718e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=2400/2500 total=0.18755 bce=0.10835 gn_seg=2.303e-01 gn_inv=2.253e+00 gn_illum=0.000e+00
+[stage3_finetune_all_m1] step=2500/2500 total=0.19399 bce=0.10322 gn_seg=2.771e-01 gn_inv=1.194e+00 gn_illum=0.000e+00
+[stage3] illumination pattern change (eval m=10.0): L2=0.0000e+00 rel=0.0000e+00
+[final] test dice=0.6797 iou=0.5158 (val-selected t=0.15); dice@0.5=0.6579

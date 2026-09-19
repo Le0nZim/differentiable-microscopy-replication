@@ -78,7 +78,7 @@ def _frame(img, color, width):
 
 
 def _load_model(condition, cfg, runs_dir, device):
-    backbone, isz, up_mode, _ = TR.CONDITIONS[condition]
+    backbone, isz, up_mode, _ = TR.condition_spec(cfg, condition)
     model = (TR._build_swinir_model(cfg, isz) if backbone == "swinir"
              else TR._build_conventional_model(cfg, isz, up_mode)).to(device)
     model(torch.zeros(1, 1, isz, isz, device=device))
@@ -157,7 +157,7 @@ def main() -> None:
     swin, _ = _load_model(conds[0], cfg, runs_dir, device)
     cnn, _ = _load_model(conds[1], cfg, runs_dir, device)
 
-    ds_cfg = dict(cfg["dataset"]); ds_cfg["seed"] = 42; ds_cfg["patch_size"] = 256; ds_cfg["image_size"] = 256
+    ds_cfg = dict(cfg["dataset"]); ds_cfg["seed"] = int(cfg.get("data_seed", 42)); ds_cfg["patch_size"] = 256; ds_cfg["image_size"] = 256
     ds = MCF7Channel2Dataset.from_dict(ds_cfg, split="test")
     src_index = int(rep.get("fig9_src_index", 0))
     top, left = int(rep.get("fig9_top", 384)), int(rep.get("fig9_left", 0))

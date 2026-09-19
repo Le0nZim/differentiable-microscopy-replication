@@ -131,11 +131,16 @@ def train_condition(
     train_ds = A.PathListSRDataset(train_paths, patch_size=ps, grayscale=True, random_crops=True, seed=seed)
     val_ds = A.PathListSRDataset(val_paths, patch_size=ps, grayscale=True, random_crops=False, seed=seed)
     g = torch.Generator().manual_seed(seed)  # identical batch order across conditions
+    workers = int(tr.get("num_workers", 4))
+    eval_workers = int(tr.get("eval_num_workers", 2))
+    context = tr.get("multiprocessing_context")
     train_loader = DataLoader(
-        train_ds, batch_size=micro, shuffle=True, num_workers=int(tr.get("num_workers", 4)),
-        drop_last=True, generator=g, persistent_workers=int(tr.get("num_workers", 4)) > 0,
+        train_ds, batch_size=micro, shuffle=True, num_workers=workers,
+        drop_last=True, generator=g, persistent_workers=workers > 0,
+        multiprocessing_context=context if workers else None,
     )
-    val_loader = DataLoader(val_ds, batch_size=max(8, micro), shuffle=False, num_workers=2)
+    val_loader = DataLoader(val_ds, batch_size=max(8, micro), shuffle=False, num_workers=eval_workers,
+                          multiprocessing_context=context if eval_workers else None)
 
     history: list[dict[str, Any]] = []
     start_step = 0
@@ -302,6 +307,7 @@ def train_condition(
                 model, ROOT / rel, patch_size=ps, device=device, learnable=learnable,
                 eval_sigmoid_m=eval_m, selection=sel, max_tiles_per_image=max_tiles,
                 max_images=max_imgs, eval_batch=eval_batch, amp_dtype=amp_dtype, compute_stitched=stitched,
+                metric_scope=ev.get("metric_scope", "tile"), include_borders=ev.get("include_borders", False),
             )
             print(f"[{name}/{tag}] {ds_name}: PSNR {per[ds_name]['psnr']:.2f} SSIM {per[ds_name]['ssim']:.4f} "
                   f"({per[ds_name]['tiles']} tiles, {per[ds_name]['images']} imgs)", flush=True)

@@ -1,0 +1,46 @@
+Generating PatchMNIST train: 3000 x 256px -> /home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/.workstation-cache/patchmnist/ca0719086599fb3d35adf09cd5854c66f192c5199d9502ca6510cf139ec6bb21.npy
+Generating PatchMNIST val: 375 x 256px -> /home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/.workstation-cache/patchmnist/4cc4b82b5266477a55ea0419ceb232d2443082d762c08828c690be6ad16c65fb.npy
+Generating PatchMNIST test: 375 x 256px -> /home/leonidas/workspace/differentiable_micoscopy_replication/microscopy-clean/.workstation-cache/patchmnist/d0fc88a84589ae623347711b398286e2c9c2afb40d78ac98c450219aa234c215.npy
+[A] inverse_warmup step=200 m=1.0 loss=0.10237 train_mse=0.05748 val_mse=0.05595 gI=0.00e+00 gU=4.10e-02
+[A] inverse_warmup step=400 m=1.0 loss=0.08853 train_mse=0.04470 val_mse=0.04663 gI=0.00e+00 gU=1.06e-01
+[A] inverse_warmup step=600 m=1.0 loss=0.08197 train_mse=0.04034 val_mse=0.04055 gI=0.00e+00 gU=1.18e-01
+[A] inverse_warmup step=800 m=1.0 loss=0.08063 train_mse=0.03904 val_mse=0.03981 gI=0.00e+00 gU=6.51e-02
+[A] inverse_warmup step=1000 m=1.0 loss=0.08078 train_mse=0.03917 val_mse=0.03874 gI=0.00e+00 gU=1.22e-01
+[A] inverse_warmup step=1200 m=1.0 loss=0.07999 train_mse=0.03810 val_mse=0.03847 gI=0.00e+00 gU=9.34e-02
+[A] inverse_warmup step=1400 m=1.0 loss=0.07932 train_mse=0.03836 val_mse=0.03799 gI=0.00e+00 gU=7.00e-02
+[A] joint_soft step=1600 m=1.0 loss=0.07961 train_mse=0.03836 val_mse=0.03815 gI=0.00e+00 gU=1.06e-01
+[A] joint_soft step=1800 m=1.0 loss=0.07863 train_mse=0.03788 val_mse=0.03789 gI=0.00e+00 gU=8.67e-02
+[A] joint_soft step=2000 m=1.0 loss=0.07848 train_mse=0.03790 val_mse=0.03726 gI=0.00e+00 gU=8.40e-02
+[A] joint_soft step=2200 m=1.0 loss=0.07866 train_mse=0.03774 val_mse=0.03760 gI=0.00e+00 gU=1.72e-01
+[A] joint_soft step=2400 m=1.0 loss=0.07852 train_mse=0.03793 val_mse=0.03732 gI=0.00e+00 gU=7.79e-02
+[A] joint_soft step=2600 m=1.0 loss=0.07709 train_mse=0.03692 val_mse=0.03724 gI=0.00e+00 gU=7.64e-02
+[A] joint_soft step=2800 m=1.0 loss=0.07723 train_mse=0.03718 val_mse=0.03786 gI=0.00e+00 gU=3.82e-01
+[A] joint_soft step=3000 m=1.0 loss=0.07745 train_mse=0.03689 val_mse=0.03675 gI=0.00e+00 gU=2.51e-01
+[A] joint_soft step=3200 m=1.0 loss=0.07774 train_mse=0.03739 val_mse=0.03696 gI=0.00e+00 gU=7.80e-02
+[A] joint_soft step=3400 m=1.0 loss=0.07873 train_mse=0.03799 val_mse=0.03750 gI=0.00e+00 gU=1.57e-01
+[A] joint_soft step=3600 m=1.0 loss=0.07662 train_mse=0.03663 val_mse=0.03681 gI=0.00e+00 gU=1.67e-01
+[A] joint_soft step=3800 m=1.0 loss=0.07741 train_mse=0.03688 val_mse=0.03711 gI=0.00e+00 gU=2.21e-01
+[A] joint_soft step=4000 m=1.0 loss=0.07576 train_mse=0.03572 val_mse=0.03646 gI=0.00e+00 gU=1.62e-01
+[A] joint_soft step=4200 m=1.0 loss=0.07668 train_mse=0.03648 val_mse=0.03708 gI=0.00e+00 gU=2.51e-01
+[A] joint_soft step=4400 m=1.0 loss=0.07830 train_mse=0.03777 val_mse=0.03667 gI=0.00e+00 gU=5.64e-02
+[A] joint_soft step=4600 m=1.0 loss=0.07535 train_mse=0.03627 val_mse=0.03722 gI=0.00e+00 gU=1.16e-01
+[A] joint_soft step=4800 m=1.0 loss=0.07606 train_mse=0.03632 val_mse=0.03678 gI=0.00e+00 gU=4.93e-01
+[A] joint_soft step=5000 m=1.0 loss=0.07594 train_mse=0.03619 val_mse=0.03639 gI=0.00e+00 gU=3.91e-01
+[A] joint_soft step=5200 m=1.0 loss=0.07684 train_mse=0.03683 val_mse=0.03670 gI=0.00e+00 gU=1.64e-01
+[A] joint_soft step=5400 m=1.0 loss=0.07747 train_mse=0.03708 val_mse=0.03667 gI=0.00e+00 gU=6.13e-02
+[A] harden_m2 step=5600 m=2.0 loss=0.07740 train_mse=0.03717 val_mse=0.03640 gI=0.00e+00 gU=1.18e+00
+[A] harden_m2 step=5800 m=2.0 loss=0.07751 train_mse=0.03720 val_mse=0.03668 gI=0.00e+00 gU=4.47e-01
+[A] harden_m2 step=6000 m=2.0 loss=0.07601 train_mse=0.03653 val_mse=0.03616 gI=0.00e+00 gU=2.32e-01
+[A] harden_m2 step=6200 m=2.0 loss=0.07595 train_mse=0.03647 val_mse=0.03682 gI=0.00e+00 gU=8.59e-02
+[A] harden_m2 step=6400 m=2.0 loss=0.07560 train_mse=0.03607 val_mse=0.03647 gI=0.00e+00 gU=2.34e-01
+[A] harden_m4 step=6600 m=4.0 loss=0.07464 train_mse=0.03557 val_mse=0.03653 gI=0.00e+00 gU=6.38e-02
+[A] harden_m4 step=6800 m=4.0 loss=0.07710 train_mse=0.03703 val_mse=0.03653 gI=0.00e+00 gU=4.85e-02
+[A] harden_m4 step=7000 m=4.0 loss=0.07565 train_mse=0.03617 val_mse=0.03678 gI=0.00e+00 gU=1.14e-01
+[A] harden_m4 step=7200 m=4.0 loss=0.07590 train_mse=0.03593 val_mse=0.03628 gI=0.00e+00 gU=7.85e-02
+[A] harden_m4 step=7400 m=4.0 loss=0.07630 train_mse=0.03668 val_mse=0.03638 gI=0.00e+00 gU=4.91e-01
+[A] harden_m8 step=7600 m=8.0 loss=0.07603 train_mse=0.03640 val_mse=0.03608 gI=0.00e+00 gU=4.49e-02
+[A] harden_m8 step=7800 m=8.0 loss=0.07588 train_mse=0.03651 val_mse=0.03646 gI=0.00e+00 gU=7.72e-02
+[A] harden_m8 step=8000 m=8.0 loss=0.07625 train_mse=0.03632 val_mse=0.03584 gI=0.00e+00 gU=1.28e-01
+[A] harden_m8 step=8200 m=8.0 loss=0.07524 train_mse=0.03569 val_mse=0.03602 gI=0.00e+00 gU=2.46e-01
+[A] harden_m8 step=8400 m=8.0 loss=0.07569 train_mse=0.03621 val_mse=0.03623 gI=0.00e+00 gU=1.75e-01
+[A] harden_m8 step=8500 m=8.0 loss=0.07511 train_mse=0.03560 val_mse=0.03618 gI=0.00e+00 gU=1.35e-01

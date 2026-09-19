@@ -1,0 +1,7 @@
+{
+  "artifacts": [
+    "x16/random_fixed/metrics.json",
+    "x16/random_fixed/checkpoints/best.pt",
+    "x16/random_fixed/grids/test_grid.png"
+  ]
+}

@@ -13,11 +13,12 @@ from evaluation.pattern_inspection import save_pattern_inspection
 from models.microscope import DifferentiableMicroscope
 from training.pattern_tracking import capture_detector_snapshot, capture_pattern_snapshot
 from utils.logging import save_measurement_grid
+from utils.evaluation_mode import evaluation_mode
 
 PatternVariant = Literal["soft", "sharpened", "thresholded"]
 
 
-@torch.no_grad()
+@evaluation_mode
 def forward_with_pattern_variant(
     model: DifferentiableMicroscope,
     specimen: torch.Tensor,
@@ -49,7 +50,7 @@ def forward_with_pattern_variant(
     }
 
 
-@torch.no_grad()
+@evaluation_mode
 def evaluate_pattern_variant(
     model: DifferentiableMicroscope,
     dataloader: DataLoader,
@@ -60,7 +61,6 @@ def evaluate_pattern_variant(
     sharpen_m: float = 10.0,
     apply_noise: bool = False,
 ) -> tuple[float, float]:
-    model.eval()
     total_mse = 0.0
     total_ssim = 0.0
     count = 0
@@ -92,7 +92,7 @@ def pattern_stats_from_tensor(patterns: torch.Tensor) -> dict[str, float]:
     }
 
 
-@torch.no_grad()
+@evaluation_mode
 def evaluate_all_pattern_variants(
     model: DifferentiableMicroscope,
     dataloaders: dict[str, DataLoader],
@@ -146,7 +146,7 @@ def evaluate_all_pattern_variants(
     return results
 
 
-@torch.no_grad()
+@evaluation_mode
 def save_variant_artifacts(
     model: DifferentiableMicroscope,
     specimen: torch.Tensor,
