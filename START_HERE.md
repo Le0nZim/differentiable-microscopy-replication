@@ -10,6 +10,11 @@ Finish stopping any old training process before starting this queue on the same
 GPU. Keep its results for the audit; the new campaign trains its own models.
 No experiment-by-experiment choice or path edit is required.
 
+The current revision is `journal_v2`: segmentation uses BBBC039 manual masks.
+If an older campaign has already started, keep it intact and use a new output
+directory for this revision. Existing non-segmentation scores are not numerically
+changed by this label correction, but the runner will not silently mix source revisions.
+
 ## 1. Get a clean source checkout
 
 Run these from the parent folder where you want the **new** checkout. Historical
@@ -40,6 +45,7 @@ Replace **only** the path in this command with your actual existing data folder:
 
 ```bash
 python paper.py init --data-root /absolute/path/to/differentiable_micoscopy_replication/data
+python paper.py download-segmentation-data
 ```
 
 This generates `workstation.yaml` from exactly the directory layout you supplied.
@@ -54,6 +60,7 @@ environments that do not permit worker IPC. It does not change batch size or tra
 |---|---|
 | `mnist/MNIST/raw/` | All four IDX files: train/t10k images and labels. Plain files or `.gz` accepted. PatchMNIST is generated automatically, not downloaded. |
 | `substitute_data/BBBC022_v1_images_20585w1/` | One w1 plate, 3,456 TIFFs / 384 wells / 9 sites. No channel mixing. |
+| `bbbc039/` | Downloaded by `download-segmentation-data`: 200 paired TIFF images/manual PNG nucleus masks, plus the official 100/50/50 split lists. About 81 MB downloaded. |
 | `mcf7_bbbc021/channel2_selected/` | **Tubulin w2 only**. If empty/missing, init uses `channel2_tubulin/` when available. It never combines the two folders. |
 | `mcf7_bbbc021/manifests/mcf7_channel2_manifest.csv` | `image_file` and `well` columns. Missing referenced images or duplicate rows fail early. Old absolute image paths are rebased by unique basename. If the manifest is absent, well/plate identities must be recoverable from filenames. |
 | `sr/train/DIV2K/` | 800 training HR originals. Nested `HR/` or `DIV2K_train_HR/` works. If validation images are also present, point the config directly at the training HR directory. |
@@ -67,6 +74,16 @@ and flat symlink views for SR test images. Gzip-only MNIST is extracted into the
 campaign's prepared folder. Preflight checks filenames, identity overlaps,
 expected counts, all source file sizes/timestamps, and decodes representative
 images. It does not claim to decode every microscopy image in advance.
+
+BBBC039 is checked more fully: every image/mask pair is decoded, shape-checked,
+hashed and assigned using the published split. The annotation PNG red-channel
+labels define binary nucleus foreground; no image threshold or morphology is
+applied to them. Alpha is ignored. The original TrackMate-style pseudo-mask
+definition remains available only when explicitly selecting
+`run.segmentation_labels: pseudo_trackmate` (raw threshold `506`, spacing `2`,
+epsilon `0.5`). An unavailable manual dataset never triggers automatic fallback.
+For an offline setup, pass `--archives-dir /path/to/official/zips` to the download
+command; it verifies and extracts `images.zip`, `masks.zip` and `metadata.zip`.
 
 ## 3. Check, inspect the queue, run
 
@@ -126,7 +143,7 @@ runner, first stop any orphan worker before restarting.
 
 Source edits, path changes and modified input inventories cannot silently reuse
 completed work. For a genuinely new run, set `run.output_root` to a new empty
-folder such as `runs/journal_v1_second`. **Do not delete your datasets.** A disk floor of
+folder such as `runs/journal_v2_second`. **Do not delete your datasets.** A disk floor of
 20 GiB is checked before each job; it is a guard, not an estimate of total disk
 needs. PatchMNIST caches require about 14 GiB for the full size/count grid,
 and checkpoints add more. You can place `cache_root` and `output_root` on larger
@@ -145,7 +162,8 @@ disks. Do not edit experiment recipes simply to make a preferred method win.
 | `report/learning_rate_search.csv` | Validation trials and selections, excluded from final test aggregates |
 
 The original U2OS confocal dataset is still unavailable. BBBC022-based results
-are explicitly labeled substitutes, and segmentation uses pseudo-labels.
+are explicitly labeled substitutes. Default segmentation uses BBBC039 manual
+nucleus annotations; the optional TrackMate fallback is explicitly labeled pseudo-labels.
 The primary CNN comparisons use the original architectures with repaired
 training/evaluation. The A-D stages also test rewritten-architecture C/D arms.
 The default queue includes separate binary-mask/equal-dose controls; those

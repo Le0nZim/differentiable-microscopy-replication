@@ -1,12 +1,15 @@
-# Finalized experiment protocol: journal_v1
+# Finalized experiment protocol: journal_v2
 
 This is the prospective protocol for the next manuscript, built on audit commit
 `10f79d74ce3fdb3dd3b748adcf612505d4cc5e48`. Its runnable source is the
 `journal/final-protocol` branch. All earlier fixes are included. Historical
-results remain historical; they are not inputs to this campaign.
+results remain historical; they are not inputs to this campaign. This revision
+replaces the journal_v1 pseudo-mask segmentation target with real manual
+annotations at the user's request, and restores the original pseudo-mask
+definition for the explicit fallback. Other experiment recipes are unchanged.
 
 The scientific question is whether jointly optimized illumination improves
-reconstruction or pseudo-label prediction under explicitly specified simulated
+reconstruction or nucleus segmentation under explicitly specified simulated
 acquisitions, and whether that result depends on the inverse architecture and
 illumination coordinates. A learned method is allowed to lose. No completion
 gate requires a favorable ranking.
@@ -23,7 +26,7 @@ introduces optical convolution/translation invariance is not retained.
 |---|---|---|
 | Fig. 3, content-aware | Original locality block and CNN widths; BBBC022 native-resolution percentile-normalized specimens; simulated photon scale 10,000. All four illumination types at T=4; additional random/learned pairs at T=1 and T=16 for each compression. | Original inverse architecture removes a reproduction confound. Additional geometry conditions distinguish compression from the number of exposures. BBBC022 is explicitly a substitute. |
 | Fig. 3 / Table S1, refinement | Frozen freshly trained T=4 bases followed by the declared SwinIR refinement recipe. Maximum validation SSIM selects a checkpoint, with the initial identity candidate eligible. The configured MSE gate is recorded. | SwinIR can trade pixel error for structural similarity. Report MSE and SSIM together and retain a no-improvement outcome. This is an explicit independent recipe because the original executable is unavailable. |
-| Fig. 4, segmentation | Reconstruction pretraining, head-only training, joint finetuning; original inverse CNN. Targets use the same 0.1/99.9 percentile normalization, threshold 0.3 and exact 10x10 closing. Generate masks on full fields before aligned cropping/flipping. | Follows the supplement's three-stage procedure. Removes the unjustified U2OS offset/500-count clipping and raw threshold 506 from BBBC022. Targets measure pseudo-label agreement, not biological accuracy. BCE + 0.5 soft Dice and validation-selected thresholds are declared choices. |
+| Fig. 4, segmentation | Three-stage training on BBBC039's paired images and manual nucleus masks, with its official 100/50/50 split. Original inverse CNN; aligned native-resolution crops/flips. | Uses available manual annotations instead of intensity-derived targets. Positive annotation labels form binary nucleus foreground; no threshold or morphology is applied to image intensities to generate labels. BCE + 0.5 soft Dice and validation-selected output thresholds remain unchanged. This is semantic foreground segmentation, not an instance-separation benchmark. |
 | Fig. 5, upsampling | Original locality and original multistage transpose blocks with the same original decoder; fixed random illumination, C=8; sizes 128/256/512 and train counts 600/3000/6000. | Reproduces the architectural question. These blocks have different parameter counts and weight sharing; the result cannot isolate locality independently of capacity. |
 | Table 1 / Fig. 6, noise | Preserve the correct normalized `paper_v3` Gaussian approximation. Original inverse architecture; k=10/10,000 and read SD=0/2.7/2/6. Fixed/learned arms share budgets and phase/selection rules. | The original and corrected replication equations agree. Mean test scores use five explicitly seeded detector-noise draws; exact Poisson is checked separately in the binary controls. |
 | Table 2 / Fig. 7, natural images | Original locality block, declared 1x1 channel adapter and SwinIR-M; identical learned/fixed recipe; scene-separated validation. Primary scores average full-image metrics equally over images, covering every pixel. | Avoids weighting larger images more through their tile counts. Border tiles use zero padding; their measurements and effective compression are counted. SwinIR hyperparameters remain disclosed assumptions. |
@@ -75,8 +78,29 @@ the BBBC022 camera. The active noise equation remains unchanged.
   come from the previously unused final 64 wells in the deterministic ordering.
   For the same `data_seed`, they are disjoint from all wells used by the recorded
   220/40/60 campaign. The previous 60 test wells are excluded from this campaign.
-  The prepared manifests record the policy and identities. Segmentation uses a
-  nested 168/21/21-image subset of the same well partition.
+  The prepared manifests record the policy and identities. The explicit
+  pseudo_trackmate fallback uses a nested 168/21/21-image subset of this partition.
+- Default segmentation instead uses [BBBC039v1](https://bbbc.broadinstitute.org/BBBC039):
+  200 fields from BBBC022 with manually annotated nuclei. Use the published
+  100 training / 50 validation / 50 test lists. The loader checks matching image
+  identities, native 520x696 dimensions and plate+well separation; masks are not
+  resized, smoothed or rethresholded from specimen intensities. Following the
+  [dataset's decoding example](https://gist.github.com/jccaicedo/15e811722fca51e3ae90e8b43057f075),
+  use positive red-channel labels and ignore alpha, uniting instances for the
+  binary task. Train on random 256x256 crops and evaluate one deterministic
+  center 256x256 crop per field; these are not full-field instance AP scores.
+- All three segmentation stages use that same BBBC039 split. Reconstruction
+  pretraining starts fresh from its training images; no BBBC022 content-stage
+  checkpoint is transferred. BBBC039 is drawn from BBBC022 and is not an
+  independent acquisition cohort. The two studies' results must not be pooled
+  as independent datasets.
+- The explicit `run.segmentation_labels: pseudo_trackmate` fallback preserves
+  `mask_mode: trackmate`, `mask_raw_threshold: 506.0`,
+  `mask_smooth_interval: 2.0`, and `mask_dp_epsilon: 0.5` from the user's original
+  template, including raw-MIP contour generation. The journal_v1 override to
+  normalized threshold 0.3 plus closing has been removed. Those two target
+  generators are different definitions; changing their values is not a mere
+  preprocessing fix. Missing manual masks fail preflight instead of falling back.
 - This reserve-well statement is relative to the recorded campaign, not proof
   that no earlier external analysis ever viewed those images. Natural-image
   benchmarks and MNIST are reused public datasets; disclose their role honestly.
@@ -169,7 +193,7 @@ of real source images; the noisy optical controls are separate.
 ## Running and interpreting the campaign
 
 Follow [START_HERE.md](../START_HERE.md). Use a fresh checkout of
-`journal/final-protocol` and a new `runs/journal_v1` output directory. The runner
+`journal/final-protocol` and a new `runs/journal_v2` output directory. The runner
 freezes this protocol, source fingerprint, exact resolved configs, environment
 and manifests. An old campaign cannot silently resume with the new recipe.
 
@@ -189,7 +213,8 @@ metrics; do not select the manuscript's architecture after inspecting the test
 winner.
 
 Implementation checks and their limits are recorded in
-[JOURNAL_VALIDATION.md](audit/JOURNAL_VALIDATION.md).
+[JOURNAL_VALIDATION.md](audit/JOURNAL_VALIDATION.md); the manual-label revision is
+validated separately in [MANUAL_MASK_VALIDATION.md](audit/MANUAL_MASK_VALIDATION.md).
 
 The run produces evidence for a manuscript, not an automatic acceptance or
 confirmation of the original rankings. Conclusions must follow those results.

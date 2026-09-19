@@ -10,6 +10,7 @@ After installing the environment and VGG19 dependency:
 
 ```bash
 python paper.py init --data-root /absolute/path/to/your/data
+python paper.py download-segmentation-data
 python paper.py check
 python paper.py plan
 python paper.py run
@@ -37,7 +38,12 @@ validation-only Fourier/spatial LR searches before final three-seed tests, and
 reports rewritten architectures as sensitivity analyses. Binary/equal-dose
 controls are included and reported separately. The [scientific audit](docs/SCIENTIFIC_AUDIT.md)
 explains why historical scores remain exploratory. BBBC022 substitutes for the
-missing original U2OS data; segmentation measures agreement with pseudo-labels.
+missing original U2OS data. Segmentation now uses the paired images and manual
+nucleus annotations of [BBBC039](https://bbbc.broadinstitute.org/BBBC039), with
+its official 100/50/50 split. The one-time download is about 81 MB. An explicit
+`run.segmentation_labels: pseudo_trackmate` fallback preserves the user's
+original pseudo-mask parameters (raw threshold 506, spacing 2, epsilon 0.5).
+Missing manual annotations fail preflight instead of silently using pseudo-labels.
 
 Historical outputs remain in Git history and in full checkouts, with their
 [previous catalog](docs/LEGACY_CATALOG.md). The clean sparse checkout described in

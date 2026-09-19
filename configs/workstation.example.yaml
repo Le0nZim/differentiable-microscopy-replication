@@ -4,6 +4,7 @@ version: 1
 data:
   mnist: /absolute/path/to/data/mnist
   bbbc022: /absolute/path/to/data/substitute_data/BBBC022_v1_images_20585w1
+  bbbc039: /absolute/path/to/data/bbbc039
   mcf7_images: /absolute/path/to/data/mcf7_bbbc021/channel2_selected
   mcf7_manifest: /absolute/path/to/data/mcf7_bbbc021/manifests/mcf7_channel2_manifest.csv
   sr_train:
@@ -16,10 +17,11 @@ data:
     Urban100: /absolute/path/to/data/sr/test/Urban100
     Manga109: /absolute/path/to/data/sr/test/Manga109
 run:
-  output_root: runs/journal_v1
+  output_root: runs/journal_v2
   cache_root: .workstation-cache
   device: cuda:1
   seeds: [42, 43, 44]
   data_seed: 42
   num_workers: 8
   min_free_gb: 20
+  segmentation_labels: bbbc039  # manual masks; pseudo_trackmate explicitly restores the original pseudo-label fallback

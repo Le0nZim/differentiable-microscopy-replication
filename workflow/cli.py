@@ -122,7 +122,7 @@ def freeze_campaign(cfg, stages, inspection):
     # Preparation is deterministic and idempotent; stages may be added later.
     additions = prepare(cfg, stages, inspection)
     previous["paths"].update(additions)
-    for name in ("bbbc022_large", "bbbc022_segmentation", "mcf7_manifest", "sr_split"):
+    for name in ("bbbc022_large", "bbbc022_segmentation", "bbbc039", "mcf7_manifest", "sr_split"):
         if name in previous["paths"]:
             p = previous["paths"][name]
             previous["hashes"][p] = file_sha(p)
@@ -151,7 +151,7 @@ def record_artifacts(out):
 
 
 def run_campaign(cfg, stages, *, dry_run=False):
-    plan = jobs(cfg["run"]["seeds"], stages)
+    plan = jobs(cfg["run"]["seeds"], stages, segmentation_labels=cfg["run"].get("segmentation_labels", "bbbc039"))
     if dry_run:
         print_plan(plan)
         for job in plan:
@@ -262,6 +262,8 @@ def main(argv=None):
     sub.add_parser("status")
     sub.add_parser("report")
     sub.add_parser("download-weights", help="Download and verify torchvision VGG19 weights once; requires internet")
+    labels = sub.add_parser("download-segmentation-data", help="Download BBBC039 manual masks, paired images and official splits (~81 MB)")
+    labels.add_argument("--archives-dir", help="Optional directory containing official images.zip, masks.zip and metadata.zip for offline extraction")
     smoke = sub.add_parser("smoke", help="Small synthetic CPU smoke; does not require datasets")
     smoke.add_argument("--output", default=str(ROOT / "runs" / ("smoke_" + datetime.now().strftime("%Y%m%d_%H%M%S"))))
     args = parser.parse_args(argv)
@@ -294,9 +296,14 @@ def main(argv=None):
                             "--seeds", "42", "--output", str(Path(args.output).resolve())], cwd=ROOT, env=env, check=True)
             return 0
         cfg = load_settings(args.config)
+        if args.command == "download-segmentation-data":
+            from .bbbc039 import download
+            manifest = download(cfg["data"]["bbbc039"], args.archives_dir)
+            print(f"BBBC039 manual annotations ready: {manifest['counts']}. Next: python paper.py check --stages segmentation")
+            return 0
         stages = select_stages(getattr(args, "stages", None))
         if args.command == "plan":
-            print_plan(jobs(cfg["run"]["seeds"], stages))
+            print_plan(jobs(cfg["run"]["seeds"], stages, segmentation_labels=cfg["run"].get("segmentation_labels", "bbbc039")))
         elif args.command == "check":
             validate(cfg, stages, environment=not args.data_only)
         elif args.command == "prepare":

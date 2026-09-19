@@ -98,13 +98,16 @@ def build_report(root):
         plt.close(fig)
         figures.append(f"![{stage}]({stage}.png)")
     completed = sum(c["status"] == "completed" for c in coverage)
+    segmentation_labels = sorted({j.get("label_source", "historical pseudo-label recipe") for j in plan if j["stage"] == "segmentation"})
     write_json(out / "summary.json", {"completed": completed, "planned": len(plan), "coverage": coverage})
     body = ["# Fresh campaign results", f"\n{completed}/{len(plan)} planned jobs are verified complete. Missing jobs are listed in coverage.csv.",
             "\n[Per-seed metrics](metrics_by_seed.csv) · [Aggregates](aggregate.csv) · [Paired differences](paired_differences.csv) · [Validation search](learning_rate_search.csv) · [Paper coverage](coverage.csv)",
-            "\nBBBC022 substitutes for the missing original U2OS confocal data. Segmentation uses generated pseudo-labels. "
+            "\nBBBC022 substitutes for the missing original U2OS confocal data. Default segmentation uses BBBC039 manual nucleus masks; "
+            "the explicit pseudo_trackmate fallback retains the original raw-threshold pseudo-labels. Each segmentation summary records its label source. "
             "The journal workflow uses the original CNN architectures for primary comparisons. Rewritten-architecture C/D results are sensitivity analyses. "
             "Binary/equal-dose controls are distinct from the soft-mask experiments. Validation-search trials are excluded from final result aggregates. "
             "Code checks do not establish numerical reproduction or a preferred method ranking.",
+            "\nConfigured segmentation labels: " + (", ".join(segmentation_labels) or "no segmentation jobs in this campaign") + ".",
             "\nThe LR search has a fixed, equal candidate budget. A boundary winner does not establish an optimum outside that grid. "
             "Paired differences are candidate minus reference, within the same training seed. Seed SD describes training variability, not uncertainty over populations of specimens.",
             "\nFigure 9's primary panel uses nonoverlapping acquisitions. Its overlap diagnostic reports additional measurements.",

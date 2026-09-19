@@ -24,7 +24,7 @@ def settings(tmp_path):
 
 def prepared(tmp_path):
     return {"mnist_root": str(tmp_path / "mnist"), "mnist_sha256": "test-input-hash",
-            "bbbc022_large": str(tmp_path / "large.json"), "bbbc022_segmentation": str(tmp_path / "small.json"),
+            "bbbc022_large": str(tmp_path / "large.json"), "bbbc022_segmentation": str(tmp_path / "small.json"), "bbbc039": str(tmp_path / "manual.json"),
             "mcf7_manifest": str(tmp_path / "mcf.csv"), "sr_split": str(tmp_path / "sr.json"),
             "sr_test_roots": {n: str(tmp_path / n) for n in ["Set5", "Set14", "BSD100", "Urban100", "Manga109"]}}
 

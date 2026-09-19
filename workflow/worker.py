@@ -73,7 +73,9 @@ def materialize(job, settings, prepared, out, dependencies):
         cfg["detector_noise"].update(photon_count=job["photons"], sigma_read=job["sigma"])
         cfg = module("scripts/table01_noise_robustness/run.py")._configure_run_kind(cfg)
     elif stage == "segmentation":
-        cfg["dataset"].update(data_root=settings["data"]["bbbc022"], split_path=prepared["bbbc022_segmentation"])
+        source = job.get("label_source", "bbbc039")
+        cfg["dataset"].update(data_root=settings["data"]["bbbc039" if source == "bbbc039" else "bbbc022"],
+                              split_path=prepared["bbbc039" if source == "bbbc039" else "bbbc022_segmentation"])
         cfg["dataset"]["epoch_varying_train_crops"] = True
         cfg["pattern_generator"]["mode"] = job["mode"]
         cfg["forward_model"]["downscale_factor"] = job["downscale"]
@@ -82,7 +84,7 @@ def materialize(job, settings, prepared, out, dependencies):
         task.update(stage1_mode="train", content_aware_checkpoint=None)
         phases = task["stage1"]["learnable"]
         task["stage1"]["fixed_steps"] = phases["inverse_warmup_steps"] + phases["joint_soft_steps"] + len(phases["harden_m_values"]) * phases["harden_steps_per_m"]
-        cfg["experiment"]["study_label"] = "Fresh three-stage segmentation; BBBC022 pseudo-labels, nested well split"
+        cfg["experiment"]["study_label"] = "Fresh three-stage segmentation; " + ("BBBC039 manual annotations, official splits" if source == "bbbc039" else "original BBBC022 TrackMate-style pseudo-labels")
     elif stage == "content_swinir":
         cfg.update(seed=seed, base_exp_root=str(out.parent), base_run_dir=dependencies[job["requires"][0]])
     elif stage == "sr":
