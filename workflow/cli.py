@@ -64,6 +64,7 @@ def check_environment(cfg, *, needs_workers=False):
         except OSError as exc:
             raise ValueError("This environment blocks dataloader worker IPC. Set run.num_workers: 0 before starting.") from exc
     return {"python": sys.version, "torch": torch.__version__, "device": str(device),
+            "cuda_runtime": torch.version.cuda, "cudnn": torch.backends.cudnn.version(),
             "gpu": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
             "CUDA_VISIBLE_DEVICES": os.environ.get("CUDA_VISIBLE_DEVICES")}
 
@@ -105,7 +106,9 @@ def freeze_campaign(cfg, stages, inspection):
     else:
         if any(p.name != ".campaign.lock" for p in root.iterdir()):
             raise ValueError(f"New campaign requires an empty dedicated directory: {root}")
-        write_json(path, {**fingerprint, "fingerprint": digest(fingerprint), "git_commit": git_commit(), "created": now()})
+        from .catalog import protocol
+        write_json(path, {**fingerprint, "fingerprint": digest(fingerprint), "git_commit": git_commit(),
+                          "scientific_protocol": protocol(), "created": now()})
     inv_path = root / "input_inventory.json"
     old = read_json(inv_path) if inv_path.exists() else {}
     for key, inventory in inspection["inventories"].items():

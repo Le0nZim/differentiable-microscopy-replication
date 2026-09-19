@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 import torch
 
 from models.microscope import DifferentiableMicroscope
+from utils.evaluation_mode import evaluation_mode
 
 
 @dataclass
@@ -58,7 +59,7 @@ def capture_pattern_snapshot(
     return patterns, w_tensor
 
 
-@torch.no_grad()
+@evaluation_mode
 def capture_detector_snapshot(
     model: DifferentiableMicroscope,
     specimen: torch.Tensor,
@@ -66,10 +67,11 @@ def capture_detector_snapshot(
     sigmoid_m: float,
     apply_noise: bool,
 ) -> torch.Tensor:
-    model.eval()
-    outputs = model(specimen, sigmoid_m=sigmoid_m, apply_noise=apply_noise)
-    model.train()
-    return outputs["y_down"].detach().cpu().clone()
+    # A detector diagnostic does not need to run the reconstruction network.
+    patterns = model.pattern_generator(sigmoid_m=sigmoid_m)
+    alpha = model.forward_model(specimen, patterns)
+    measurements = model.detector_noise(alpha, apply_noise=apply_noise)
+    return measurements.detach().cpu().clone()
 
 
 def finalize_pattern_snapshot(

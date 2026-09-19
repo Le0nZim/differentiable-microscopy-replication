@@ -1,8 +1,14 @@
-# Run from a clean workstation
+# Run the finalized journal experiments
 
 Use Linux (or WSL2 with working CUDA). The only file you normally edit is
 `workstation.yaml`. Keep your existing `data/` folder wherever it is. The workflow
 reads its images in place and writes new experiments to a separate campaign.
+
+**Use the `journal/final-protocol` branch and a new campaign.** It contains all
+audit fixes and the scientific decisions in [JOURNAL_PROTOCOL.md](docs/JOURNAL_PROTOCOL.md).
+Finish stopping any old training process before starting this queue on the same
+GPU. Keep its results for the audit; the new campaign trains its own models.
+No experiment-by-experiment choice or path edit is required.
 
 ## 1. Get a clean source checkout
 
@@ -12,9 +18,9 @@ downloads are needed. Use a new folder, not your existing working directory.
 
 ```bash
 GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --single-branch \
-  --branch workflow/clean-workstation --filter=blob:none --sparse \
-  https://github.com/Le0nZim/differentiable-microscopy-replication.git microscopy-clean
-cd microscopy-clean
+  --branch journal/final-protocol --filter=blob:none --sparse \
+  https://github.com/Le0nZim/differentiable-microscopy-replication.git microscopy-journal
+cd microscopy-journal
 git sparse-checkout set src workflow scripts configs tests docs data
 bash scripts/workstation/setup.sh
 source .venv/bin/activate
@@ -72,11 +78,12 @@ python paper.py run
 
 `run` automatically prepares the datasets, freezes the configuration and split
 manifests, and starts **one job at a time**. Three model seeds (42, 43, 44) are
-used throughout. The full default queue has **234 jobs**, including three MCF7
+used for final runs. The full default queue has **369 jobs**, including
+validation-only learning-rate searches, selection jobs, and three MCF7
 figure-rendering jobs. These are full existing recipe budgets, not a quick demo;
 SwinIR stages can take substantial time. No wall-time estimate is inferred from
 this CPU-only implementation environment. The exact recipes and budgets are in
-[WORKSTATION_PROTOCOL.md](docs/WORKSTATION_PROTOCOL.md).
+[JOURNAL_PROTOCOL.md](docs/JOURNAL_PROTOCOL.md).
 
 For a short software check that needs no datasets:
 
@@ -84,15 +91,16 @@ For a short software check that needs no datasets:
 python paper.py smoke
 ```
 
-For a gradual launch, start with PatchMNIST and add the remaining stages later:
+For a gradual launch, resolve the Fourier question first (72 jobs, including
+automatic validation searches and final three-seed comparisons):
 
 ```bash
-python paper.py check --stages patchmnist
-python paper.py run --stages patchmnist
+python paper.py check --stages patchmnist ablation
+python paper.py run --stages patchmnist ablation
 python paper.py run
 ```
 
-The last command skips the already completed PatchMNIST jobs. A stage can be
+The last command skips the already completed jobs. A stage can be
 run independently, for example `--stages noise` or `--stages sr`.
 `--stages content_swinir` automatically includes its `content` prerequisites.
 To see every job ID without writing or training: `python paper.py run --dry-run`.
@@ -118,7 +126,7 @@ runner, first stop any orphan worker before restarting.
 
 Source edits, path changes and modified input inventories cannot silently reuse
 completed work. For a genuinely new run, set `run.output_root` to a new empty
-folder such as `runs/paper_v2`. **Do not delete your datasets.** A disk floor of
+folder such as `runs/journal_v1_second`. **Do not delete your datasets.** A disk floor of
 20 GiB is checked before each job; it is a guard, not an estimate of total disk
 needs. PatchMNIST caches require about 14 GiB for the full size/count grid,
 and checkpoints add more. You can place `cache_root` and `output_root` on larger
@@ -133,11 +141,20 @@ disks. Do not edit experiment recipes simply to make a preferred method win.
 | `state.json` | Completed/running/failed job ledger |
 | `jobs/<stage>/<condition_seed>/attempt_001/` | Exact config, console log, checkpoints, metrics and per-job qualitative outputs |
 | `report/README.md` | Progress, comparison plots and links to verified outputs |
-| `report/metrics_by_seed.csv`, `aggregate.csv`, `coverage.csv` | Raw per-seed metrics, means/SDs and paper-item coverage |
+| `report/metrics_by_seed.csv`, `aggregate.csv`, `paired_differences.csv`, `coverage.csv` | Final per-seed metrics, means/SDs, matched differences and coverage |
+| `report/learning_rate_search.csv` | Validation trials and selections, excluded from final test aggregates |
 
 The original U2OS confocal dataset is still unavailable. BBBC022-based results
 are explicitly labeled substitutes, and segmentation uses pseudo-labels.
-This workflow runs the audited repository recipes, which retain soft masks and
-documented budget/architecture deviations. For the separate binary-mask,
-equal-dose audit comparison use `python paper.py run --stages controlled`.
-That experiment is not silently merged into the paper's legacy-protocol tables.
+The primary CNN comparisons use the original architectures with repaired
+training/evaluation. The A-D stages also test rewritten-architecture C/D arms.
+The default queue includes separate binary-mask/equal-dose controls; those
+results stay separate from the soft-mask experiments. BBBC022 test wells now
+come from the reserve unused by the recorded old campaign, for the same data
+seed. All choices and limitations are fixed in JOURNAL_PROTOCOL.md.
+
+For a quick check of the new execution paths without microscopy data or a GPU:
+
+```bash
+python -m pytest -q tests/test_journal_protocol.py tests/test_workstation.py
+```

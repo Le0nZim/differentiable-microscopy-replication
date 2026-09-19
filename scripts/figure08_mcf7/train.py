@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""MCF7 Figure 8 & 9 — paper-faithful SwinIR high-resolution reconstruction (fix).
+"""MCF7 Figure 8 & 9 — SwinIR and CNN reconstruction pipelines.
 
-Ports the VALIDATED Table-2/Fig-7 SwinIR recipe (full pixel+perceptual+adversarial loss,
-SwinIR-M capacity) onto the MCF7 end-to-end pipeline with the Algorithm-1 sharpness
-schedule, fixing the "SwinIR resolution deviates" defect of the frozen mcf7_fig8_qr run.
+Reuses the Table-2/Fig-7 recipe (pixel+perceptual+adversarial loss, SwinIR-M)
+with a declared sharpness schedule that differs from the original cumulative
+rule. These conditions compare complete pipelines, varying the upsampler,
+loss, checkpoint selection and, for Figure 9, patch size. See
+docs/IMPLEMENTATION_COMPARISON.md before attributing gains to the backbone.
 
 Conditions (paper §5.6, Fig 8/9):
   wswinir      Q / wSwinIR : locality-aware upsampling + SwinIR(upscale=1), 256x256,
@@ -30,6 +32,7 @@ import json
 import sys
 import time
 from datetime import datetime, timezone
+from itertools import islice
 from pathlib import Path
 
 import torch
@@ -49,6 +52,7 @@ from evaluation.metrics import psnr as psnr_metric
 from evaluation.metrics import ssim as ssim_metric
 from models.microscope import DifferentiableMicroscope
 from utils.device import resolve_device
+from utils.evaluation_mode import evaluating
 
 EXP = ROOT / "experiments/figure08_mcf7"
 CFG = ROOT / "configs/figure08_mcf7/swinir_fix.yaml"
@@ -57,8 +61,17 @@ CFG = ROOT / "configs/figure08_mcf7/swinir_fix.yaml"
 CONDITIONS = {
     "wswinir": ("swinir", 256, "locality_aware", True),
     "transpose256": ("conventional", 256, "transpose_conv", False),
+    "wcnn256": ("conventional", 256, "locality_aware", False),
     "wcnn64": ("conventional", 64, "locality_aware", False),
 }
+
+
+def condition_spec(cfg: dict, condition: str):
+    backbone, size, up, full_loss = CONDITIONS[condition]
+    if cfg.get("matched_loss"):
+        up = cfg["inverse_model"]["upsampling"]["mode"]
+        full_loss = True
+    return backbone, size, up, full_loss
 
 
 def _load_yaml(path: Path) -> dict:
@@ -92,7 +105,7 @@ def _build_swinir_model(cfg: dict, image_size: int) -> SwinIRTable2Model:
         "detector_noise": {"mode": "noise_free", "apply_noise": False},
         "inverse_model": {
             "upsampling": {
-                "mode": "locality_aware",
+                "mode": cfg.get("inverse_model", {}).get("upsampling", {}).get("mode", "locality_aware"),
                 "downscale_factor": int(fm["downscale_factor"]),
                 "num_patterns": int(pg["num_patterns"]),
             }
@@ -126,7 +139,7 @@ def _build_conventional_model(cfg: dict, image_size: int, up_mode: str) -> Diffe
             "upsampling": {"mode": up_mode, "downscale_factor": down, "num_patterns": npat},
             "reconstruction": {
                 "in_channels": npat,
-                "hidden_channels": [64, 64, 32, 32, 16, 1],
+                "hidden_channels": cfg.get("inverse_model", {}).get("reconstruction", {}).get("hidden_channels", [64, 64, 32, 32, 16, 1]),
                 "kernel_size": 3,
                 "padding": 1,
             },
@@ -169,12 +182,19 @@ def _loaders(cfg: dict, image_size: int, micro: int, seed: int,
     for split, shuffle in (("train", True), ("val", False), ("test", False)):
         ds = MCF7Channel2Dataset.from_dict(ds_cfg, split=split)
         bs = micro if split == "train" else 1
-        out[split] = DataLoader(ds, batch_size=bs, shuffle=shuffle, drop_last=(split == "train"))
+        out[split] = DataLoader(ds, batch_size=bs, shuffle=shuffle, drop_last=False)
         print(f"  -> {split}: {len(ds)} patches", flush=True)
     return out
 
 
-def _schedule_m(epoch: int, baseline: int, m_values: list[float], step: int) -> tuple[float, bool]:
+def _schedule_m(epoch: int, baseline: int, m_values: list[float], step: int,
+                schedule_cfg: dict | None = None) -> tuple[float, bool]:
+    if schedule_cfg and schedule_cfg.get("schedule") == "cumulative":
+        if step < 1:
+            raise ValueError("Cumulative sharpness interval must be positive")
+        cutoff = int(schedule_cfg["epoch_cutoff"])
+        increments = max(0, (epoch + 1) // step - cutoff // step)
+        return float(schedule_cfg.get("m_init", 1.)) + increments, epoch >= baseline
     if epoch < baseline:
         return 1.0, False
     idx = min((epoch - baseline) // max(1, step), len(m_values) - 1)
@@ -198,22 +218,26 @@ def _autocast(device, amp_dtype):
 @torch.no_grad()
 def _evaluate(adapter: Adapter, loader: DataLoader, device, m: float,
               amp_dtype, max_items: int | None = None) -> dict:
-    adapter.model.eval()
     mse_s = ssim_s = psnr_s = 0.0
     n = 0
-    for batch in loader:
-        x = batch.to(device)
-        with _autocast(device, amp_dtype):
-            rec = adapter.forward(x, m)
-        rec = rec.float().clamp(0, 1)
-        mse_s += float(mse_metric(rec, x).item())
-        ssim_s += float(ssim_metric(rec, x).item())
-        psnr_s += float(psnr_metric(rec, x).item())
-        n += 1
-        if max_items is not None and n >= max_items:
-            break
-    adapter.model.train()
-    return {"mse": mse_s / max(1, n), "ssim": ssim_s / max(1, n), "psnr": psnr_s / max(1, n)}
+    with evaluating(adapter.model):
+        for batch in loader:
+            if max_items is not None and n >= max_items:
+                break
+            x = batch.to(device)
+            if max_items is not None:
+                x = x[:max_items - n]
+            with _autocast(device, amp_dtype):
+                rec = adapter.forward(x, m)
+            rec = rec.float().clamp(0, 1)
+            for pred, target in zip(rec, x):
+                mse_s += float(mse_metric(pred[None], target[None]).item())
+                ssim_s += float(ssim_metric(pred[None], target[None]).item())
+                psnr_s += float(psnr_metric(pred[None], target[None]).item())
+                n += 1
+    if n == 0:
+        raise ValueError("Cannot evaluate an empty MCF7 dataset")
+    return {"mse": mse_s / n, "ssim": ssim_s / n, "psnr": psnr_s / n, "num_images": n}
 
 
 # ---------------------------------------------------------------------------
@@ -223,7 +247,7 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
           max_steps_per_epoch: int | None, seed: int, out_dir: Path,
           n_train: int, n_val: int, n_test: int, val_subset: int | None,
           n_examples: int, gan_warmup_epochs: int | None = None) -> dict:
-    backbone, image_size, up_mode, full_loss = CONDITIONS[condition]
+    backbone, image_size, up_mode, full_loss = condition_spec(cfg, condition)
     torch.manual_seed(seed)
     tr = cfg["training"]
     channel = str(cfg["dataset"].get("bbbc021_channel", "tubulin"))
@@ -231,9 +255,17 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
           f"image_size={image_size} | GAN warmup epochs={gan_warmup_epochs}", flush=True)
     micro = int(tr["micro_batch_size"]) if full_loss else int(tr.get("conv_batch_size", 8))
     accum = int(tr["grad_accum"]) if full_loss else 1
+    if micro < 1 or accum < 1:
+        raise ValueError("Microbatch size and gradient accumulation must be positive")
     amp_dtype = torch.bfloat16 if str(tr.get("amp_dtype", "bfloat16")) == "bfloat16" else None
     m_values = [float(v) for v in cfg["algorithm1"]["m_values"]]
     eval_m = float(tr.get("eval_sigmoid_m", 8.0))
+    selection_metric = tr.get("selection_metric", "ssim" if full_loss else "mse")
+    if selection_metric not in {"mse", "ssim"}:
+        raise ValueError("selection_metric must be mse or ssim")
+    selection_start = int(tr.get("selection_start_epoch", 0))
+    if not 0 <= selection_start < epochs:
+        raise ValueError("selection_start_epoch must leave at least one eligible epoch")
 
     if backbone == "swinir":
         model = _build_swinir_model(cfg, image_size).to(device)
@@ -285,48 +317,50 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
 
     for epoch in range(epochs):
         ep_t0 = time.time()
-        m, unfreeze = _schedule_m(epoch, baseline, m_values, step)
+        m, unfreeze = _schedule_m(epoch, baseline, m_values, step, cfg["algorithm1"])
         for p in adapter.illum_params():
             p.requires_grad = unfreeze
         model.train()
         use_gan = full_loss and (opt_d is not None) and (epoch >= gan_warmup_epochs)
         comp = {"pixel": 0.0, "perceptual": 0.0, "adv": 0.0, "d": 0.0, "g_total": 0.0}
         opt_steps = 0
+        train_images = 0
         it = iter(loaders["train"])
-        exhausted = False
-        while not exhausted:
+        while True:
             if max_steps_per_epoch is not None and opt_steps >= max_steps_per_epoch:
                 break
+            # Keep this small group on the CPU. Normalize by its actual image
+            # count, including incomplete accumulation groups and microbatches.
+            batches = list(islice(it, accum))
+            if not batches:
+                break
+            group_images = sum(batch.shape[0] for batch in batches)
             if use_gan:
                 opt_d.zero_grad(set_to_none=True)
             opt_g.zero_grad(set_to_none=True)
-            micro_done = 0
-            for _ in range(accum):
-                try:
-                    x = next(it).to(device)
-                except StopIteration:
-                    exhausted = True
-                    break
+            for batch in batches:
+                x = batch.to(device)
+                weight = x.shape[0] / group_images
                 with _autocast(device, amp_dtype):
                     rec = adapter.forward(x, m)
                     if full_loss:
                         if use_gan:
                             d_loss = (stack["gan_loss"](disc(x), True)
-                                      + stack["gan_loss"](disc(rec.detach()), False)) / accum
+                                      + stack["gan_loss"](disc(rec.detach()), False)) * weight
                         g_pix = stack["pixel_weight"] * pixel_loss(rec, x, stack["pixel_kind"])
                         g_loss = g_pix
-                        comp["pixel"] += float(g_pix.item()) / accum
+                        comp["pixel"] += float(g_pix.item()) * weight
                         if "perceptual" in stack:
                             g_perc = stack["perceptual_weight"] * stack["perceptual"](rec, x)
                             g_loss = g_loss + g_perc
-                            comp["perceptual"] += float(g_perc.item()) / accum
+                            comp["perceptual"] += float(g_perc.item()) * weight
                         if use_gan:
                             g_adv = stack["gan_weight"] * stack["gan_loss"](disc(rec), True)
                             g_loss = g_loss + g_adv
-                            comp["adv"] += float(g_adv.item()) / accum
-                        g_loss = g_loss / accum
+                            comp["adv"] += float(g_adv.item()) * weight
+                        g_loss = g_loss * weight
                     else:
-                        g_loss = F.l1_loss(rec, x) / accum
+                        g_loss = F.l1_loss(rec, x) * weight
                         comp["pixel"] += float(g_loss.item())
                 if use_gan:
                     d_loss.backward()
@@ -340,17 +374,16 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
                 comp["g_total"] += float(g_loss.item())
                 if not torch.isfinite(g_loss).item():
                     finite = False
-                micro_done += 1
-            if micro_done == 0:
-                break
             if use_gan:
                 opt_d.step()
             opt_g.step()
             opt_steps += 1
+            train_images += group_images
 
         val = _evaluate(adapter, loaders["val"], device, eval_m, amp_dtype, max_items=val_subset)
         ep_sec = time.time() - ep_t0
         rec_line = {"epoch": epoch, "m": m, "illum_unfrozen": unfreeze, "opt_steps": opt_steps,
+                    "train_images": train_images,
                     **{k: round(v, 6) for k, v in comp.items()},
                     "val_mse": val["mse"], "val_ssim": val["ssim"], "val_psnr": val["psnr"],
                     "epoch_sec": round(ep_sec, 1)}
@@ -359,21 +392,19 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
              f"g={comp['g_total']:.4f} pix={comp['pixel']:.4f} perc={comp['perceptual']:.4f} "
              f"adv={comp['adv']:.4f} d={comp['d']:.4f} val_ssim={val['ssim']:.4f} "
              f"val_psnr={val['psnr']:.2f} ({ep_sec:.0f}s)")
-        # Checkpoint selection.
-        #   * Perceptual + adversarial SwinIR (full_loss): select by MAX val SSIM. Selecting
-        #     by MIN val MSE picks the blurry conditional-mean epoch (the exact defect that
-        #     made the frozen Q "over-smoothed"). GAN/perceptual deliberately trades pixel
-        #     MSE for high-frequency realism, so MSE is the wrong selection metric here.
-        #   * L1 baselines (R / wCNN): keep MIN val MSE (== MAX SSIM for L1).
-        improved = (val["ssim"] > best_score) if full_loss else (val["mse"] < best_val)
+        # Legacy defaults differ by objective; the journal recipe explicitly
+        # selects every matched backbone by minimum validation MSE.
+        # Store both metrics from the actually selected checkpoint.
+        improved = epoch >= selection_start and ((val["ssim"] > best_score) if selection_metric == "ssim" else (val["mse"] < best_val))
         if improved:
-            best_val = min(best_val, val["mse"])
-            best_score = max(best_score, val["ssim"])
+            best_val = val["mse"]
+            best_score = val["ssim"]
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
             best_meta = {"epoch": epoch, "val_mse": val["mse"], "val_ssim": val["ssim"],
-                         "selection": "max_val_ssim" if full_loss else "min_val_mse"}
+                         "selection": "max_val_ssim" if selection_metric == "ssim" else "min_val_mse"}
             torch.save({"model": best_state, **best_meta,
-                        "condition": condition, "backbone": backbone, "image_size": image_size},
+                        "condition": condition, "backbone": backbone, "image_size": image_size,
+                        "sigmoid_m": eval_m, "training_sigmoid_m": m, "resume_exact": False},
                        ckpt_dir / "best.pt")
 
     torch.save({"model": model.state_dict(), "condition": condition, "backbone": backbone,
@@ -429,7 +460,7 @@ def _save_examples(adapter: Adapter, loader: DataLoader, device, m: float, amp_d
 
 def _smoke(cfg: dict, condition: str, device) -> None:
     """One-optimizer-step memory/speed probe for the given condition."""
-    backbone, image_size, up_mode, full_loss = CONDITIONS[condition]
+    backbone, image_size, up_mode, full_loss = condition_spec(cfg, condition)
     tr = cfg["training"]
     micro = int(tr["micro_batch_size"]) if full_loss else 8
     accum = int(tr["grad_accum"]) if full_loss else 1

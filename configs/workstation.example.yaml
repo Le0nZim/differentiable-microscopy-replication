@@ -16,7 +16,7 @@ data:
     Urban100: /absolute/path/to/data/sr/test/Urban100
     Manga109: /absolute/path/to/data/sr/test/Manga109
 run:
-  output_root: runs/paper_v1
+  output_root: runs/journal_v1
   cache_root: .workstation-cache
   device: cuda:1
   seeds: [42, 43, 44]

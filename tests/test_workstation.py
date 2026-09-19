@@ -32,10 +32,13 @@ def prepared(tmp_path):
 def test_entire_queue_materializes_without_datasets_or_historical_artifacts(tmp_path):
     cfg = settings(tmp_path)
     plan = jobs([42, 43, 44])
-    assert len(plan) == 234
+    assert len(plan) == 369
     positions = {job["id"]: i for i, job in enumerate(plan)}
     for job in plan + jobs([42], ["controlled"]):
         deps = {name: str(tmp_path / "fresh dependency" / name) for name in job["requires"]}
+        for directory in deps.values():
+            write_json(Path(directory) / "selection.json", {"selected": {
+                "learnable_frequency": {"learning_rate": 1.}, "learnable_spatial": {"learning_rate": .01}}})
         out = tmp_path / "outputs" / job["id"]
         resolved = materialize(job, cfg, prepared(tmp_path), out, deps)
         assert resolved["experiment"]["output_dir"] == str(out)
@@ -173,6 +176,7 @@ def test_worker_executes_real_small_cnn_and_ablation_trainers(tmp_path, monkeypa
     if stage == "patchmnist":
         impl = module("scripts/table03_ablation/run.py")
         monkeypatch.setattr(impl, "default_phases", lambda: [{"name": "test", "steps": 2, "m": 1., "freeze_illum": True}])
+        resolved["journal_phases"] = impl.default_phases()
     spec_path = tmp_path / "job.json"
     write_json(spec_path, {"job": job, "config": resolved, "output": str(out), "device": "cpu", "dependencies": {}})
     execute(spec_path)
@@ -268,13 +272,16 @@ def test_worker_executes_mcf_cnn_with_current_paths_and_data_seed(tmp_path):
         writer.writerows(rows)
     out = tmp_path / "attempt"
     resolved = materialize(job, cfg, prep, out, {})
-    resolved["dataset"].update(num_train=4, num_val=2, num_test=2, verbose=False)
-    resolved["training"].update(conv_batch_size=2, amp_dtype="none")
+    resolved["dataset"].update(num_train=5, num_val=2, num_test=2, verbose=False)
+    resolved["training"].update(conv_batch_size=2, amp_dtype="none", selection_start_epoch=0)
+    resolved["matched_loss"] = False  # this integration check exercises the inexpensive CNN path
     resolved["algorithm1"].update(epochs=2, epoch_baseline=0, epoch_step=1)
     spec = tmp_path / "job.json"
     write_json(spec, {"job": job, "config": resolved, "output": str(out), "device": "cpu", "dependencies": {}})
     execute(spec)
-    assert read_json(out / "result.json")["epochs"] == 2
+    result = read_json(out / "result.json")
+    assert result["epochs"] == 2
+    assert all(row["train_images"] == 5 and row["opt_steps"] == 3 for row in result["history"])
     assert record_artifacts(out)
     loaders = module("scripts/figure08_mcf7/train.py")._loaders(resolved, 64, 2, 43, 4, 2, 2)
     assert loaders["test"].dataset.config.seed == 17
@@ -296,6 +303,8 @@ def test_segmentation_worker_trains_all_three_stages_without_old_checkpoint(tmp_
     resolved["training"].update(batch_size=2, log_every=1)
     task = resolved["training"]["task_aware"]
     task["stage1"]["fixed_steps"] = 2
+    task["stage1"]["learnable"].update(inverse_warmup_steps=1, joint_soft_steps=1,
+                                      harden_m_values=[8], harden_steps_per_m=1)
     task.update(seg_head_steps=2, finetune_steps=2, num_qualitative_samples=2)
     resolved = sync_derived_config_fields(resolved)
     arrays = {s: torch.rand(n, 1, 16, 16) for s, n in [("train", 4), ("val", 3), ("test", 3)]}

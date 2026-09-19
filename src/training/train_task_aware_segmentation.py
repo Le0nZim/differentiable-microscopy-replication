@@ -220,9 +220,9 @@ def _run_stage1_content_aware(
     task_cfg = config["training"].get("task_aware", {})
     stage1_cfg = task_cfg.get("stage1", {})
 
-    if learnable:
+    if learnable or stage1_cfg.get("matched_phases", False):
         learn_cfg = stage1_cfg.get("learnable", {})
-        recon_config["training"]["learn_patterns"] = True
+        recon_config["training"]["learn_patterns"] = learnable
         recon_config["training"]["staged_hardening"] = {
             "inverse_warmup_steps": int(learn_cfg.get("inverse_warmup_steps", 1500)),
             "joint_soft_steps": int(learn_cfg.get("joint_soft_steps", 3500)),

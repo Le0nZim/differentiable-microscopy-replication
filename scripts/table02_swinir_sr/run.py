@@ -307,6 +307,7 @@ def train_condition(
                 model, ROOT / rel, patch_size=ps, device=device, learnable=learnable,
                 eval_sigmoid_m=eval_m, selection=sel, max_tiles_per_image=max_tiles,
                 max_images=max_imgs, eval_batch=eval_batch, amp_dtype=amp_dtype, compute_stitched=stitched,
+                metric_scope=ev.get("metric_scope", "tile"), include_borders=ev.get("include_borders", False),
             )
             print(f"[{name}/{tag}] {ds_name}: PSNR {per[ds_name]['psnr']:.2f} SSIM {per[ds_name]['ssim']:.4f} "
                   f"({per[ds_name]['tiles']} tiles, {per[ds_name]['images']} imgs)", flush=True)

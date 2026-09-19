@@ -68,7 +68,7 @@ def defaults(data_root):
             "sr_train": {"DIV2K": str(root / "sr/train/DIV2K"), "Flickr2K": str(flickr)},
             "sr_test": {name: str(root / "sr/test" / name) for name in SR_SETS},
         },
-        "run": {"output_root": str(ROOT / "runs/paper_v1"), "cache_root": str(ROOT / ".workstation-cache"),
+        "run": {"output_root": str(ROOT / "runs/journal_v1"), "cache_root": str(ROOT / ".workstation-cache"),
                 "device": "cuda:1", "seeds": [42, 43, 44], "data_seed": 42, "num_workers": 8, "min_free_gb": 20},
     }
 
@@ -315,7 +315,9 @@ def prepare(cfg, stages, inspection):
         wells = sorted(groups)
         gen = torch.Generator().manual_seed(cfg["run"]["data_seed"])
         order = [wells[i] for i in torch.randperm(len(wells), generator=gen).tolist()]
-        assigned = {"train": order[:220], "val": order[220:260], "test": order[260:320]}
+        # The last 64 wells were unused by the recorded 220/40/60 campaign.
+        # Reserve 60 of those for the journal test, retaining train/validation.
+        assigned = {"train": order[:220], "val": order[220:260], "test": order[320:380]}
         large = {s: [p for w in ws for p in groups[w][:9 if s == "train" else 1]] for s, ws in assigned.items()}
         # A single global partition prevents one family's training wells becoming
         # another family's held-out wells. Segmentation uses a nested small split.
@@ -324,6 +326,8 @@ def prepare(cfg, stages, inspection):
             p = out / (name + ".json")
             write_json(p, {"splits": splits, "data_seed": cfg["run"]["data_seed"],
                            "counts": {s: len(v) for s, v in splits.items()}, "global_wells": assigned,
+                           "excluded_previous_test_wells": order[260:320],
+                           "test_policy": "Previously unused reserve wells, for the same data_seed",
                            "label": "BBBC022 20585w1 substitute, not original U2OS"})
             result[name] = str(p)
     if "mcf7" in rs:
