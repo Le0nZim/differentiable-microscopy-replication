@@ -264,10 +264,13 @@ def eval_dataset_fair(
         "images": n_images,
         "selection": selection,
         "max_tiles_per_image": max_tiles_per_image,
+        "aggregation": "mean over tiles; images weighted by their tile count",
+        "spatial_coverage": "nonoverlapping patch grid; bottom/right remainders excluded",
     }
     if compute_stitched and max_tiles_per_image is None and n_images > 0:
         out["stitched_psnr"] = stitched_psnr_sum / n_images
         out["stitched_ssim"] = stitched_ssim_sum / n_images
+        out["stitched_aggregation"] = "mean over cropped images"
     return out
 
 

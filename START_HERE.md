@@ -4,6 +4,11 @@ Use Linux (or WSL2 with working CUDA). The only file you normally edit is
 `workstation.yaml`. Keep your existing `data/` folder wherever it is. The workflow
 reads its images in place and writes new experiments to a separate campaign.
 
+**Existing September 2026 campaigns:** read the
+[progress audit and rerun guide](docs/PROGRESS_AUDIT_2026-09-19.md) before
+continuing microscopy training. It identifies affected results and corrected
+stages. Use a new campaign for these source changes; preserve previous results.
+
 ## 1. Get a clean source checkout
 
 Run these from the parent folder where you want the **new** checkout. Historical

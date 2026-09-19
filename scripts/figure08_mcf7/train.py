@@ -49,6 +49,7 @@ from evaluation.metrics import psnr as psnr_metric
 from evaluation.metrics import ssim as ssim_metric
 from models.microscope import DifferentiableMicroscope
 from utils.device import resolve_device
+from utils.evaluation_mode import evaluating
 
 EXP = ROOT / "experiments/figure08_mcf7"
 CFG = ROOT / "configs/figure08_mcf7/swinir_fix.yaml"
@@ -198,22 +199,26 @@ def _autocast(device, amp_dtype):
 @torch.no_grad()
 def _evaluate(adapter: Adapter, loader: DataLoader, device, m: float,
               amp_dtype, max_items: int | None = None) -> dict:
-    adapter.model.eval()
     mse_s = ssim_s = psnr_s = 0.0
     n = 0
-    for batch in loader:
-        x = batch.to(device)
-        with _autocast(device, amp_dtype):
-            rec = adapter.forward(x, m)
-        rec = rec.float().clamp(0, 1)
-        mse_s += float(mse_metric(rec, x).item())
-        ssim_s += float(ssim_metric(rec, x).item())
-        psnr_s += float(psnr_metric(rec, x).item())
-        n += 1
-        if max_items is not None and n >= max_items:
-            break
-    adapter.model.train()
-    return {"mse": mse_s / max(1, n), "ssim": ssim_s / max(1, n), "psnr": psnr_s / max(1, n)}
+    with evaluating(adapter.model):
+        for batch in loader:
+            if max_items is not None and n >= max_items:
+                break
+            x = batch.to(device)
+            if max_items is not None:
+                x = x[:max_items - n]
+            with _autocast(device, amp_dtype):
+                rec = adapter.forward(x, m)
+            rec = rec.float().clamp(0, 1)
+            for pred, target in zip(rec, x):
+                mse_s += float(mse_metric(pred[None], target[None]).item())
+                ssim_s += float(ssim_metric(pred[None], target[None]).item())
+                psnr_s += float(psnr_metric(pred[None], target[None]).item())
+                n += 1
+    if n == 0:
+        raise ValueError("Cannot evaluate an empty MCF7 dataset")
+    return {"mse": mse_s / n, "ssim": ssim_s / n, "psnr": psnr_s / n, "num_images": n}
 
 
 # ---------------------------------------------------------------------------
@@ -359,21 +364,19 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
              f"g={comp['g_total']:.4f} pix={comp['pixel']:.4f} perc={comp['perceptual']:.4f} "
              f"adv={comp['adv']:.4f} d={comp['d']:.4f} val_ssim={val['ssim']:.4f} "
              f"val_psnr={val['psnr']:.2f} ({ep_sec:.0f}s)")
-        # Checkpoint selection.
-        #   * Perceptual + adversarial SwinIR (full_loss): select by MAX val SSIM. Selecting
-        #     by MIN val MSE picks the blurry conditional-mean epoch (the exact defect that
-        #     made the frozen Q "over-smoothed"). GAN/perceptual deliberately trades pixel
-        #     MSE for high-frequency realism, so MSE is the wrong selection metric here.
-        #   * L1 baselines (R / wCNN): keep MIN val MSE (== MAX SSIM for L1).
+        # Declared criteria: max validation SSIM for SwinIR's full loss, min
+        # validation MSE for L1 baselines. The two rankings need not agree.
+        # Store both metrics from the actually selected checkpoint.
         improved = (val["ssim"] > best_score) if full_loss else (val["mse"] < best_val)
         if improved:
-            best_val = min(best_val, val["mse"])
-            best_score = max(best_score, val["ssim"])
+            best_val = val["mse"]
+            best_score = val["ssim"]
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
             best_meta = {"epoch": epoch, "val_mse": val["mse"], "val_ssim": val["ssim"],
                          "selection": "max_val_ssim" if full_loss else "min_val_mse"}
             torch.save({"model": best_state, **best_meta,
-                        "condition": condition, "backbone": backbone, "image_size": image_size},
+                        "condition": condition, "backbone": backbone, "image_size": image_size,
+                        "sigmoid_m": eval_m, "training_sigmoid_m": m, "resume_exact": False},
                        ckpt_dir / "best.pt")
 
     torch.save({"model": model.state_dict(), "condition": condition, "backbone": backbone,

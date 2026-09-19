@@ -69,6 +69,7 @@ def materialize(job, settings, prepared, out, dependencies):
         cfg = module("scripts/table01_noise_robustness/run.py")._configure_run_kind(cfg)
     elif stage == "segmentation":
         cfg["dataset"].update(data_root=settings["data"]["bbbc022"], split_path=prepared["bbbc022_segmentation"])
+        cfg["dataset"]["epoch_varying_train_crops"] = True
         cfg["pattern_generator"]["mode"] = job["mode"]
         cfg["forward_model"]["downscale_factor"] = job["downscale"]
         cfg["training"]["learn_patterns"] = job["mode"].startswith("learnable")

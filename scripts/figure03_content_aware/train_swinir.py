@@ -127,7 +127,8 @@ def train_cell(cfg: dict, comp: str, pattern: str, device: torch.device, out_roo
           f"({time.time()-t_cache:.0f}s)", flush=True)
 
     # SwinIR refiner (direct mode = image-to-image, paper-faithful; identity init
-    # so the untrained refiner == frozen base and can only improve it).
+    # so the untrained refiner starts at the frozen base. Validation selects
+    # among this initial candidate and the trained candidates; test can worsen).
     swinir_cfg = S.swinir_cfg_from_stage(cfg)
     identity_init = bool(cfg["swinir"].get("identity_init", True))
     refiner = S.build_refiner(swinir_cfg, device, identity_init=identity_init, seed=seed)
@@ -149,6 +150,9 @@ def train_cell(cfg: dict, comp: str, pattern: str, device: torch.device, out_roo
     print(f"[{comp}/{pattern}] base val: ssim={base_val_ssim:.4f} mse={base_val_mse:.6f}", flush=True)
 
     gate = bool(cfg["selection"].get("mse_no_regression_gate", True))
+    if cfg["selection"].get("primary", "ssim") != "ssim":
+        raise ValueError("This refiner supports selection.primary=ssim only")
+    include_initial = bool(cfg["selection"].get("include_initial_checkpoint", True))
     grad_clip = float(tr.get("grad_clip", 0.0))
     warmup = int(tr.get("warmup", 0)); min_lr_frac = float(tr.get("min_lr_frac", 0.02))
     base_lr = float(tr["swinir_lr"])
@@ -166,24 +170,52 @@ def train_cell(cfg: dict, comp: str, pattern: str, device: torch.device, out_roo
         refiner.load_state_dict(st["refiner"])
         opt_g.load_state_dict(st["opt_g"])
         if opt_d is not None and st.get("opt_d") is not None:
+            if st.get("discriminator") is None:
+                raise ValueError("Legacy refinement checkpoint lacks discriminator weights; restart this job")
+            disc.load_state_dict(st["discriminator"])
             opt_d.load_state_dict(st["opt_d"])
+        elif opt_d is not None:
+            raise ValueError("Refinement GAN resume requires discriminator weights and optimizer state")
+        if st.get("patch_rng_state") is not None:
+            gen.set_state(st["patch_rng_state"].cpu())
+        if st.get("torch_rng_state") is not None:
+            torch.set_rng_state(st["torch_rng_state"].cpu())
+        if device.type == "cuda" and st.get("cuda_rng_state") is not None:
+            torch.cuda.set_rng_state(st["cuda_rng_state"].cpu(), device)
         start_step = int(st.get("step", 0)); best_score = float(st.get("best_score", -1e9))
         best_val_ssim = float(st.get("best_val_ssim", -1.0)); best_val_mse = float(st.get("best_val_mse", 1e9))
         best_step = int(st.get("best_step", -1)); history = st.get("history", [])
+        if not (ckpt_dir / "best.pt").exists():
+            raise ValueError("Refinement resume requires its selected best.pt checkpoint")
+        if bool(st.get("selection_includes_initial", False)) != include_initial:
+            raise ValueError("Refinement checkpoint uses a different initial-candidate selection rule; restart this job")
         print(f"[{comp}/{pattern}] resumed @ step {start_step}", flush=True)
 
     def save_ckpt(path: Path, step: int, best: bool = False):
         payload = {"step": step, "swinir_cfg": swinir_cfg, "comp": comp, "pattern": pattern,
                    "loss_mode": cfg["loss"]["mode"], "best_score": best_score,
-                   "best_val_ssim": best_val_ssim, "best_val_mse": best_val_mse, "best_step": best_step}
+                   "best_val_ssim": best_val_ssim, "best_val_mse": best_val_mse, "best_step": best_step,
+                   "checkpoint_schema": 2, "resume_exact": False,
+                   "selection_includes_initial": include_initial}
         if best:
             payload["refiner_state_dict"] = {k: v.detach().cpu().clone() for k, v in refiner.state_dict().items()}
         else:
             payload["refiner"] = refiner.state_dict()
             payload["opt_g"] = opt_g.state_dict()
             payload["opt_d"] = opt_d.state_dict() if opt_d is not None else None
+            payload["discriminator"] = disc.state_dict() if disc is not None else None
+            payload["patch_rng_state"] = gen.get_state()
+            payload["torch_rng_state"] = torch.get_rng_state()
+            payload["cuda_rng_state"] = torch.cuda.get_rng_state(device) if device.type == "cuda" else None
             payload["history"] = history
         torch.save(payload, path)
+
+    if start_step == 0 and include_initial:
+        score = S.refinement_selection_score(base_val, base_mse=base_val_mse, mse_gate=gate)
+        if score is not None:
+            best_score = score
+            best_val_ssim, best_val_mse, best_step = base_val["ref_ssim"], base_val["ref_mse"], 0
+            save_ckpt(ckpt_dir / "best.pt", 0, best=True)
 
     t0 = time.time(); step = start_step
     refiner.swinir.train()
@@ -232,10 +264,8 @@ def train_cell(cfg: dict, comp: str, pattern: str, device: torch.device, out_roo
         if step % val_every == 0 or step == iterations:
             vm = S.eval_cache(refiner, val_cache, device, eval_batch)
             refiner.swinir.train()
-            improves_ssim = vm["ref_ssim"] > base_val_ssim
-            no_mse_regress = vm["ref_mse"] <= base_val_mse
-            score = vm["ref_ssim"] if (not gate or no_mse_regress) else vm["ref_ssim"] - 1.0
-            is_best = score > best_score
+            score = S.refinement_selection_score(vm, base_mse=base_val_mse, mse_gate=gate)
+            is_best = score is not None and score > best_score
             if is_best:
                 best_score = score; best_val_ssim = vm["ref_ssim"]; best_val_mse = vm["ref_mse"]; best_step = step
                 save_ckpt(ckpt_dir / "best.pt", step, best=True)
@@ -247,10 +277,9 @@ def train_cell(cfg: dict, comp: str, pattern: str, device: torch.device, out_roo
         if step % ckpt_every == 0 or step == iterations:
             save_ckpt(last_ckpt, step)
 
-    # ensure best exists
+    # Never disguise an infeasible or nonfinite candidate as a selected model.
     if not (ckpt_dir / "best.pt").exists():
-        save_ckpt(ckpt_dir / "best.pt", step, best=True)
-        best_step = step
+        raise ValueError("No refinement checkpoint satisfies the validation selection rule")
 
     # load best and test
     best = torch.load(ckpt_dir / "best.pt", map_location=device, weights_only=False)
@@ -266,6 +295,8 @@ def train_cell(cfg: dict, comp: str, pattern: str, device: torch.device, out_roo
         "swinir_params_M": round(n_params / 1e6, 3), "swinir_embed_dim": swinir_cfg["embed_dim"],
         "swinir_depths": swinir_cfg["depths"],
         "selection": f"max_val_ssim{'+mse_gate' if gate else ''}",
+        "selection_includes_initial": include_initial,
+        "selected_initial_checkpoint": best_step == 0,
         "best_step": best_step, "best_val_ssim": best_val_ssim, "best_val_mse": best_val_mse,
         "base_val_ssim": base_val_ssim, "base_val_mse": base_val_mse,
         "test": tm,

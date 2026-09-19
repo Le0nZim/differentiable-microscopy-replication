@@ -9,6 +9,7 @@ import torch.nn as nn
 
 from evaluation.metrics import mse, ssim
 from models.microscope import DifferentiableMicroscope
+from utils.evaluation_mode import evaluation_mode
 
 
 def _grad_norm(parameters: list[nn.Parameter]) -> float:
@@ -41,7 +42,7 @@ def detector_stats(y_down: torch.Tensor) -> dict[str, float]:
     }
 
 
-@torch.no_grad()
+@evaluation_mode
 def batch_reconstruction_metrics(
     model: DifferentiableMicroscope,
     specimen: torch.Tensor,
@@ -50,7 +51,6 @@ def batch_reconstruction_metrics(
     apply_noise: bool,
     sigmoid_m: float,
 ) -> dict[str, float]:
-    model.eval()
     outputs = model(specimen, sigmoid_m=sigmoid_m, apply_noise=apply_noise)
     metrics = {
         "mse": float(mse(outputs["x_recon"], specimen).item()),
@@ -58,7 +58,6 @@ def batch_reconstruction_metrics(
     }
     metrics.update(pattern_stats(outputs["patterns"]))
     metrics.update(detector_stats(outputs["y_down"]))
-    model.train()
     return metrics
 
 

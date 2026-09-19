@@ -303,7 +303,7 @@ class PreprocAblationConfig:
     patch_size: int = 256
     train_random_crops: bool = True
     random_flips: bool = True
-    # When True, training crops/flips are drawn from the (seeded) global RNG so
+    # When True, training crops/flips use a dedicated advancing RNG so
     # they vary every epoch (true data augmentation). When False (default) the
     # legacy behaviour is kept: crops/flips are seeded per-index and therefore
     # identical every epoch (one fixed patch per image). The legacy default is
@@ -401,13 +401,14 @@ class PreprocAblationDataset(Dataset):
     def _sample_generator(self, index: int) -> torch.Generator | None:
         """Return the RNG used for train-time crops/flips.
 
-        ``None`` selects the (seeded) global RNG so crops vary every epoch (true
-        augmentation); used for the train split when ``epoch_varying_train_crops``
-        is set. Otherwise a per-index deterministic generator reproduces the
+        A dedicated advancing RNG makes augmentation independent of model and
+        detector-noise random draws when ``epoch_varying_train_crops`` is set.
+        Otherwise a per-index deterministic generator reproduces the
         legacy fixed-patch behaviour (one identical crop per image every epoch).
         """
         if self.split == "train" and self.config.epoch_varying_train_crops:
-            return None
+            from datasets.augmentation import training_crop_generator
+            return training_crop_generator(self)
         generator = torch.Generator()
         generator.manual_seed(self.config.seed + index + {"train": 0, "val": 10_000, "test": 20_000}[self.split])
         return generator
