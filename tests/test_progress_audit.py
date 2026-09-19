@@ -147,6 +147,94 @@ def test_mcf7_metrics_weight_images_and_preserve_modes():
         impl._evaluate(adapter, DataLoader(x[:0]), torch.device("cpu"), 8, None)
 
 
+@pytest.mark.parametrize("use_gan", [False, True])
+def test_mcf7_partial_accumulation_matches_actual_batch_gradients(tmp_path, monkeypatch, use_gan):
+    """Exercise the real loop against an unaccumulated reference, including G/D.
+
+    Nine images form groups of six and three. With microbatch two, the last
+    group has only two microbatches, and the final microbatch has one image.
+    Models omit batch-dependent layers so the mean gradients should agree.
+    """
+    impl = module("scripts/figure08_mcf7/train.py")
+    cfg = impl._load_yaml(Path("configs/figure08_mcf7/swinir_fix.yaml"))
+    x = torch.linspace(.05, .9, 9).view(9, 1, 1, 1).expand(-1, 1, 16, 16)
+
+    class Patterns(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.logits = torch.nn.Parameter(torch.tensor([.2]))
+
+        def forward(self, sigmoid_m=1.):
+            return (sigmoid_m * self.logits).sigmoid()
+
+    class Model(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.recon = torch.nn.Conv2d(1, 1, 1)
+            self.pattern_generator = Patterns()
+
+        def forward(self, batch, sigmoid_m=1., **kwargs):
+            return {"x_recon": self.recon(batch) * self.pattern_generator(sigmoid_m)}
+
+        def illumination_parameters(self):
+            return list(self.pattern_generator.parameters())
+
+        def inverse_parameters(self):
+            return list(self.recon.parameters())
+
+    recorded = []
+    adam = torch.optim.Adam
+
+    class RecordingAdam(adam):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.gradients = []
+            recorded.append(self)
+
+        def step(self, *args, **kwargs):
+            self.gradients.append([p.grad.detach().clone() for group in self.param_groups
+                                   for p in group["params"]])
+            return super().step(*args, **kwargs)
+
+    def losses(*args, **kwargs):
+        stack = {"pixel_weight": 1., "pixel_kind": "l1", "perceptual_weight": .2,
+                 "perceptual": lambda a, b: (a - b).square().mean()}
+        if use_gan:
+            stack.update(discriminator=torch.nn.Conv2d(1, 1, 1), gan_weight=.1,
+                         gan_loss=lambda logits, real: (logits - float(real)).square().mean())
+        return stack
+
+    def loaders(_cfg, _size, micro, *args):
+        return {split: DataLoader(x, batch_size=micro, drop_last=False)
+                for split in ("train", "val", "test")}
+
+    monkeypatch.setattr(impl, "_build_swinir_model", lambda *a: Model())
+    monkeypatch.setattr(impl, "_loaders", loaders)
+    monkeypatch.setattr(impl, "build_loss_stack", losses)
+    monkeypatch.setattr(impl, "_save_examples", lambda *a, **k: None)
+    monkeypatch.setattr(impl.torch.optim, "Adam", RecordingAdam)
+
+    def run(micro, accum, label):
+        cfg["training"].update(micro_batch_size=micro, grad_accum=accum, amp_dtype="none")
+        recorded.clear()
+        result = impl.train(cfg, "wswinir", torch.device("cpu"), epochs=1, baseline=0, step=1,
+                            max_steps_per_epoch=None, seed=818, out_dir=tmp_path / label,
+                            n_train=9, n_val=9, n_test=9, val_subset=None, n_examples=0,
+                            gan_warmup_epochs=0)
+        assert result["history"][0]["train_images"] == 9
+        assert result["history"][0]["opt_steps"] == 2
+        return [opt.gradients for opt in recorded]
+
+    reference = run(6, 1, "batch")
+    accumulated = run(2, 3, "accumulated")
+    assert len(reference) == len(accumulated) == (2 if use_gan else 1)
+    for opt_ref, opt_acc in zip(reference, accumulated):
+        assert len(opt_ref) == len(opt_acc) == 2
+        for step_ref, step_acc in zip(opt_ref, opt_acc):
+            for grad_ref, grad_acc in zip(step_ref, step_acc):
+                torch.testing.assert_close(grad_ref, grad_acc, rtol=2e-5, atol=2e-6)
+
+
 def test_refiner_selects_initial_candidate_and_saves_gan_state(tmp_path, monkeypatch):
     import yaml
     impl = module("scripts/figure03_content_aware/train_swinir.py")

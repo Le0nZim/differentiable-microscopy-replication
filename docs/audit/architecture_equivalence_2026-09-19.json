@@ -1,0 +1,211 @@
+{
+  "original_commit": "f8cc74b51847bd31b320a7f153dcf3eedecc3e7a",
+  "torch_version": "2.14.0+cpu",
+  "device": "cpu",
+  "scope": "Copied-weight forward and input-gradient checks; not training equivalence or paper-result replay",
+  "cases": 24,
+  "max_forward_error": 0.0,
+  "max_input_gradient_error": 9.5367431640625e-07,
+  "parameter_counts_H256_T4_d8": {
+    "original_locality": 327788,
+    "rewritten_locality": 262144,
+    "original_transpose": 804,
+    "rewritten_transpose": 1028,
+    "original_width_decoder": 4849,
+    "rewritten_width_decoder": 72193
+  },
+  "rows": [
+    {
+      "module": "original_locality",
+      "T": 1,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 1.862645149230957e-08
+    },
+    {
+      "module": "original_locality",
+      "T": 1,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 9.5367431640625e-07
+    },
+    {
+      "module": "original_transpose",
+      "T": 1,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_transpose",
+      "T": 1,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_decoder_widths",
+      "T": 1,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_decoder_widths",
+      "T": 1,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_locality",
+      "T": 4,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_locality",
+      "T": 4,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_transpose",
+      "T": 4,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_transpose",
+      "T": 4,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_decoder_widths",
+      "T": 4,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_decoder_widths",
+      "T": 4,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_locality",
+      "T": 8,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_locality",
+      "T": 8,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_transpose",
+      "T": 8,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_transpose",
+      "T": 8,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_decoder_widths",
+      "T": 8,
+      "d": 8,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_decoder_widths",
+      "T": 8,
+      "d": 8,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_locality",
+      "T": 4,
+      "d": 4,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_locality",
+      "T": 4,
+      "d": 4,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_transpose",
+      "T": 4,
+      "d": 4,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_transpose",
+      "T": 4,
+      "d": 4,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_decoder_widths",
+      "T": 4,
+      "d": 4,
+      "training": false,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    },
+    {
+      "module": "original_decoder_widths",
+      "T": 4,
+      "d": 4,
+      "training": true,
+      "output_max_abs": 0.0,
+      "input_gradient_max_abs": 0.0
+    }
+  ]
+}

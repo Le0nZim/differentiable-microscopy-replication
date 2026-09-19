@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""MCF7 Figure 8 & 9 — paper-faithful SwinIR high-resolution reconstruction (fix).
+"""MCF7 Figure 8 & 9 — SwinIR and CNN reconstruction pipelines.
 
-Ports the VALIDATED Table-2/Fig-7 SwinIR recipe (full pixel+perceptual+adversarial loss,
-SwinIR-M capacity) onto the MCF7 end-to-end pipeline with the Algorithm-1 sharpness
-schedule, fixing the "SwinIR resolution deviates" defect of the frozen mcf7_fig8_qr run.
+Reuses the Table-2/Fig-7 recipe (pixel+perceptual+adversarial loss, SwinIR-M)
+with a declared sharpness schedule that differs from the original cumulative
+rule. These conditions compare complete pipelines, varying the upsampler,
+loss, checkpoint selection and, for Figure 9, patch size. See
+docs/IMPLEMENTATION_COMPARISON.md before attributing gains to the backbone.
 
 Conditions (paper §5.6, Fig 8/9):
   wswinir      Q / wSwinIR : locality-aware upsampling + SwinIR(upscale=1), 256x256,
@@ -30,6 +32,7 @@ import json
 import sys
 import time
 from datetime import datetime, timezone
+from itertools import islice
 from pathlib import Path
 
 import torch
@@ -170,7 +173,7 @@ def _loaders(cfg: dict, image_size: int, micro: int, seed: int,
     for split, shuffle in (("train", True), ("val", False), ("test", False)):
         ds = MCF7Channel2Dataset.from_dict(ds_cfg, split=split)
         bs = micro if split == "train" else 1
-        out[split] = DataLoader(ds, batch_size=bs, shuffle=shuffle, drop_last=(split == "train"))
+        out[split] = DataLoader(ds, batch_size=bs, shuffle=shuffle, drop_last=False)
         print(f"  -> {split}: {len(ds)} patches", flush=True)
     return out
 
@@ -236,6 +239,8 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
           f"image_size={image_size} | GAN warmup epochs={gan_warmup_epochs}", flush=True)
     micro = int(tr["micro_batch_size"]) if full_loss else int(tr.get("conv_batch_size", 8))
     accum = int(tr["grad_accum"]) if full_loss else 1
+    if micro < 1 or accum < 1:
+        raise ValueError("Microbatch size and gradient accumulation must be positive")
     amp_dtype = torch.bfloat16 if str(tr.get("amp_dtype", "bfloat16")) == "bfloat16" else None
     m_values = [float(v) for v in cfg["algorithm1"]["m_values"]]
     eval_m = float(tr.get("eval_sigmoid_m", 8.0))
@@ -297,41 +302,43 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
         use_gan = full_loss and (opt_d is not None) and (epoch >= gan_warmup_epochs)
         comp = {"pixel": 0.0, "perceptual": 0.0, "adv": 0.0, "d": 0.0, "g_total": 0.0}
         opt_steps = 0
+        train_images = 0
         it = iter(loaders["train"])
-        exhausted = False
-        while not exhausted:
+        while True:
             if max_steps_per_epoch is not None and opt_steps >= max_steps_per_epoch:
                 break
+            # Keep this small group on the CPU. Normalize by its actual image
+            # count, including incomplete accumulation groups and microbatches.
+            batches = list(islice(it, accum))
+            if not batches:
+                break
+            group_images = sum(batch.shape[0] for batch in batches)
             if use_gan:
                 opt_d.zero_grad(set_to_none=True)
             opt_g.zero_grad(set_to_none=True)
-            micro_done = 0
-            for _ in range(accum):
-                try:
-                    x = next(it).to(device)
-                except StopIteration:
-                    exhausted = True
-                    break
+            for batch in batches:
+                x = batch.to(device)
+                weight = x.shape[0] / group_images
                 with _autocast(device, amp_dtype):
                     rec = adapter.forward(x, m)
                     if full_loss:
                         if use_gan:
                             d_loss = (stack["gan_loss"](disc(x), True)
-                                      + stack["gan_loss"](disc(rec.detach()), False)) / accum
+                                      + stack["gan_loss"](disc(rec.detach()), False)) * weight
                         g_pix = stack["pixel_weight"] * pixel_loss(rec, x, stack["pixel_kind"])
                         g_loss = g_pix
-                        comp["pixel"] += float(g_pix.item()) / accum
+                        comp["pixel"] += float(g_pix.item()) * weight
                         if "perceptual" in stack:
                             g_perc = stack["perceptual_weight"] * stack["perceptual"](rec, x)
                             g_loss = g_loss + g_perc
-                            comp["perceptual"] += float(g_perc.item()) / accum
+                            comp["perceptual"] += float(g_perc.item()) * weight
                         if use_gan:
                             g_adv = stack["gan_weight"] * stack["gan_loss"](disc(rec), True)
                             g_loss = g_loss + g_adv
-                            comp["adv"] += float(g_adv.item()) / accum
-                        g_loss = g_loss / accum
+                            comp["adv"] += float(g_adv.item()) * weight
+                        g_loss = g_loss * weight
                     else:
-                        g_loss = F.l1_loss(rec, x) / accum
+                        g_loss = F.l1_loss(rec, x) * weight
                         comp["pixel"] += float(g_loss.item())
                 if use_gan:
                     d_loss.backward()
@@ -345,17 +352,16 @@ def train(cfg: dict, condition: str, device, *, epochs: int, baseline: int, step
                 comp["g_total"] += float(g_loss.item())
                 if not torch.isfinite(g_loss).item():
                     finite = False
-                micro_done += 1
-            if micro_done == 0:
-                break
             if use_gan:
                 opt_d.step()
             opt_g.step()
             opt_steps += 1
+            train_images += group_images
 
         val = _evaluate(adapter, loaders["val"], device, eval_m, amp_dtype, max_items=val_subset)
         ep_sec = time.time() - ep_t0
         rec_line = {"epoch": epoch, "m": m, "illum_unfrozen": unfreeze, "opt_steps": opt_steps,
+                    "train_images": train_images,
                     **{k: round(v, 6) for k, v in comp.items()},
                     "val_mse": val["mse"], "val_ssim": val["ssim"], "val_psnr": val["psnr"],
                     "epoch_sec": round(ep_sec, 1)}

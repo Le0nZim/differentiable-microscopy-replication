@@ -268,13 +268,15 @@ def test_worker_executes_mcf_cnn_with_current_paths_and_data_seed(tmp_path):
         writer.writerows(rows)
     out = tmp_path / "attempt"
     resolved = materialize(job, cfg, prep, out, {})
-    resolved["dataset"].update(num_train=4, num_val=2, num_test=2, verbose=False)
+    resolved["dataset"].update(num_train=5, num_val=2, num_test=2, verbose=False)
     resolved["training"].update(conv_batch_size=2, amp_dtype="none")
     resolved["algorithm1"].update(epochs=2, epoch_baseline=0, epoch_step=1)
     spec = tmp_path / "job.json"
     write_json(spec, {"job": job, "config": resolved, "output": str(out), "device": "cpu", "dependencies": {}})
     execute(spec)
-    assert read_json(out / "result.json")["epochs"] == 2
+    result = read_json(out / "result.json")
+    assert result["epochs"] == 2
+    assert all(row["train_images"] == 5 and row["opt_steps"] == 3 for row in result["history"])
     assert record_artifacts(out)
     loaders = module("scripts/figure08_mcf7/train.py")._loaders(resolved, 64, 2, 43, 4, 2, 2)
     assert loaders["test"].dataset.config.seed == 17
